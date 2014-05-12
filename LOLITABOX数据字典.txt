@@ -1,0 +1,1692 @@
+activity_benefit
+
+表注释: benefit活动 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增id
+userid	mediumint(9)	否		用户id
+type	varchar(10)	否		存在奖品类型 [everyone-见者有份,page-出现氧气瓶的页面、evaluate-评测、question-回答问题]
+placeinfo	varchar(30)	是		氧气瓶出现的位置或评测的单品id
+bottletype	varchar(20)	是		氧气瓶中的奖品类型[碎片，优惠券，空]
+bottleinfo	varchar(20)	是		氧气瓶内的详细信息[优惠券代码]
+status	tinyint(1)	否	0	是否兑换 1：是 0：否
+postdate	datetime	否		提交时间
+activity_okgirl_profile
+
+表注释: OK_girl 报名信息 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+name	varchar(20)	否		姓名
+birthday	date	否		出生日期
+target_city	set('北京', '上海', '武汉', '成都')	否		报名城市
+id_card	varchar(18)	否		身份证号码
+height	smallint(3)	否		身高（cm）
+weight	smallint(3)	否		体重（KG）
+native_place	varchar(20)	否		籍贯
+school	varchar(20)	否		学校
+profession	varchar(30)	否		职业
+telphone	varchar(20)	否		联系电话
+email	varchar(50)	否		邮箱
+img1	varchar(100)	否		照片1
+img2	varchar(100)	否		照片2
+experience	text	否		经历
+intro	text	否		自我介绍
+userid	int(10)	否	0	关联萝莉盒用户ID
+is_loliuser	tinyint(1)	否	0	是否为萝莉用户注册[0-非萝莉盒用户注册，1-萝莉盒用户注册]
+apply_datetime	datetime	否		报名申请时间
+activity_okgirl_surveystat
+
+表注释: 产品调查投票统计数据表 
+
+字段	类型	空	默认	注释
+questionid	tinyint(4)	否		问题ID
+answer	varchar(5)	否		答案
+answer_other	varchar(200)	否		其他输入
+userid	int(11)	否		用户ID
+add_datetime	datetime	否		参与调查时间
+activity_okgirl_votestat
+
+表注释: 产品投票统计数据表 
+
+字段	类型	空	默认	注释
+city	enum('北京', '上海', '成都', '武汉')	是	NULL	赛区
+girlid	smallint(6)	否		被投票目标ID(article：id)
+userid	int(11)	是	NULL	萝莉盒用户ID
+vote_ip	varchar(15)	否		IP地址
+vote_datetime	datetime	否		投票时间
+activity_spread
+
+表注释: 萝莉盒活动微博转发用户记录表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+userid	int(11)	否		用户ID
+activitykey	varchar(10)	否		活动标识
+spreadtype	enum('qq', 'sina')	否		传播通道(qq,sina)
+postdate	date	否		发布日期
+posttime	int(11)	否		发布时间
+api_access_log
+
+表注释: API调用日志记录表 
+
+字段	类型	空	默认	注释
+ip	varchar(16)	否		
+addtime	int(11)	否		
+agent	varchar(100)	否		
+module	varchar(20)	否		
+action	varchar(20)	否		
+parameter	varchar(250)	否		参数
+area
+
+表注释: 省市区县信息表 
+
+字段	类型	空	默认	注释
+area_id	int(11)	否		
+title	varchar(255)	否		
+pid	int(11)	否	0	
+status	tinyint(1)	否	1	显示状态 [0-不显示,1-显示]
+article
+
+表注释: article
+
+字段	类型	空	默认	注释
+id	int(10)	否		自增ID
+cate_id	smallint(5)	否		分类ID
+title	varchar(255)	否		文章标题
+orig	varchar(255)	否		内容来源
+img	varchar(255)	否		文章配图
+bigimg	varchar(255)	否		文章配图[大图]
+url	varchar(255)	否		自定义转向地址
+abst	varchar(255)	否		简述
+info	text	否		正文内容
+add_time	datetime	否		发布时间
+ordid	smallint(6)	否		人工排序ID
+is_hot	tinyint(1)	否	0	是否热点
+is_best	tinyint(1)	否	0	是否推荐
+status	tinyint(1)	否	0	审核状态：0-待审核 1-已审核
+seo_title	varchar(255)	否		搜索引擎优化TITLE
+seo_keys	varchar(255)	否		搜索引擎优化KEY
+seo_desc	text	否		搜索引擎优化DES
+box
+
+表注释: box
+
+字段	类型	空	默认	注释
+boxid	mediumint(8)	否		盒子ID
+name	varchar(200)	否		盒子名称
+name_modifier	varchar(30)	否		盒子名称修饰语
+category	tinyint(3)	否		商品（会员）分类
+pic	varchar(128)	是	NULL	盒子图片
+pic_big	varchar(200)	否		盒子封皮页大图
+quantity	smallint(5)	是	0	盒子数量
+starttime	date	否		开始时间
+endtime	date	否		截止时间
+addtime	datetime	否		添加时间
+box_price	smallint(6)	否		盒子价格
+member_price	smallint(5)	否		特权会员价格
+box_intro	text	否		盒子描述
+box_remark	text	是	NULL	盒子发送信息备注
+box_senddate	varchar(30)	是	NULL	
+state	tinyint(1)	是	1	盒子状态
+only_newuser	tinyint(1)	否		是否只允许无订单用户购买[0-不限制,1-限制]
+only_member	tinyint(1)	否	0	是否只允许特权会员购买
+if_repeat	tinyint(1)	否	0	是否可以重复购买[0-不可以,1-可以]
+if_use_coupon	tinyint(1)	否	1	是否能够使用优惠券[0-不能,1-可以]
+if_give_coupon	tinyint(3)	否	0	购买盒子是否赠送优惠券,填写赠送金额，默认为0表示不赠送
+if_give_member	tinyint(2)	否	0	购买盒子后是否赠送特权会员(0-不赠送,1-单月特权,6-半年,12-全年)
+coupon_valid_date	date	否		购买盒子发送优惠券的有效期
+boxcost	text	否		盒子价值描述
+icontype	tinyint(1)	否	0	UI小图标显示[0-不显示,1-new新,2-hot热]
+ifshowtime	tinyint(1)	否	1	是否显示倒计时[0-不显示,1-显示]
+toptime	int(11)	否	0	推荐置顶（用于推荐并排序，降序）
+special_url	varchar(200)	否		与盒子关联的专题链接
+if_hidden	int(11)	否	0	是否隐藏,用于前台显示控制(0-不隐藏,1-隐藏)
+box_detail
+
+表注释: 盒子详情页 
+
+字段	类型	空	默认	注释
+boxid	smallint(6)	否		盒子ID
+instruction	text	否		盒子订购须知
+details	text	否		盒子产品详情
+product_list	varchar(100)	否		产品列表(只填写产品ID，中间用半角逗号分隔)
+box_order_set
+
+表注释: 盒子所属订单设置表 
+
+字段	类型	空	默认	注释
+boxid	int(11)	否		盒子ID
+months	tinyint(2)	否	0	月份数量{0即时发送，1、3、6、12按月发送}
+if_quarter	tinyint(1)	否	0	是否按季度发货：0否，1是
+post_day	tinyint(2)	是	0	发送日
+post_date	date	是	NULL	自定义起始发货日期
+box_products
+
+表注释: 盒子自选产品产表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+boxid	smallint(5)	否		盒子ID
+pid	smallint(5)	否		库存单品ID
+pquantity	tinyint(3)	否		数量
+ptotal	smallint(5)	否		总份数
+saletotal	smallint(6)	否	0	已经售出总份数
+maxquantitytype	tinyint(3)	否		最多可选数量
+iscommend	tinyint(1)	否	0	是否推荐[0-否,1-推荐]
+ishidden	tinyint(1)	否		是否隐藏显示[0-不隐藏,1-隐藏]
+sortnum	smallint(6)	否	0	人工排序值
+settotal	smallint(5)	否	0	设置限量总数-用于前台显示
+discount	decimal(3,2)	否		折扣率
+box_products_cname
+
+表注释: 自选盒多先分组名描述数据表 
+
+字段	类型	空	默认	注释
+boxid	smallint(5)	否		自选类型盒子ID
+maxquantity	tinyint(2)	否		分组最大数
+title	varchar(30)	否		别名描述
+box_project
+
+表注释: 盒子商品增值方案数据表 
+
+字段	类型	空	默认	注释
+id	smallint(5)	否		自增ID
+projectname	varchar(30)	否		名称
+price	decimal(6,2)	否		价格
+remark	text	否		描述
+status	tinyint(1)	否		有效状态[0-关闭,1-开启]
+box_project_list
+
+表注释: 盒子商品增值方案附属库存单品数据表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+projectid	smallint(5)	否		方案ID
+pid	mediumint(8)	否		库存单品ID
+box_project_relation
+
+表注释: 盒子商品与增值方案关系表 
+
+字段	类型	空	默认	注释
+boxid	smallint(5)	否		盒子ID
+projectid	smallint(5)	否		盒子商品增值方案ID
+status	tinyint(1)	否		关系状态[0-无效，1-有效]
+category
+
+表注释: 分类表 
+
+字段	类型	空	默认	注释
+cid	mediumint(8)	否		分类ID
+cname	varchar(50)	否		分类名称
+pcid	mediumint(8)	否		所属上级分类ID
+cpath	varchar(50)	是	NULL	分类层级
+ctype	tinyint(3)	否		分类的类型
+sortid	mediumint(9)	否		人工排序ID
+cstatu	tinyint(4)	否		分类状态
+imgurl	varchar(100)	否		配图URL
+description	text	否		描述
+club_benefit_flawless
+
+表注释: benefit伪妆清单记录表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否		用户ID
+mylist	varchar(100)	否		选择清单(产品ID集合，逗号分割)
+dtime	datetime	否		选择时间
+club_benefit_votestat
+
+表注释: benefit活动投票统计表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否		用户ID
+target_id	int(11)	否		目标ID
+cate_id	int(11)	否		分类ID
+if_weibo	tinyint(1)	否	0	是否发送到微博 0:否 1:是
+vote_datetime	date	否		投票时间
+club_prize
+
+表注释: 俱乐部-用户抽奖记录表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否		用户ID
+groupname	varchar(20)	否		分组名称(每一次不同的抽奖活动，都会有自己定义的分组名)
+prizeid	smallint(6)	否		奖品ID
+prizetitle	varchar(50)	否		奖品名称
+remark	varchar(200)	否		奖品备注
+ifwin	tinyint(1)	否	0	是否中奖（0-没有，1-中奖)
+dtime	datetime	否		参与日期时间
+club_users
+
+表注释: 俱乐部-用户信息表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否		用户ID
+name	varchar(20)	否		活动名称
+score	int(11)	否	0	分数
+addtime	int(11)	否		记录首次时间
+coupon
+
+表注释: 优惠券表 
+
+字段	类型	空	默认	注释
+id	mediumint(8)	否		
+code	varchar(14)	否		优惠券编码
+starttime	datetime	否		
+endtime	datetime	否		优惠券有效截止日期
+status	tinyint(1)	否		优惠券使用状态：1-未使用 2-已使用
+price	float(5,0)	否	0	优惠券定价
+addtime	datetime	否		生产时间
+ordernmb	bigint(20)	是	0	使用该优惠券的有效付费订单号
+rndnmb	int(11)	否	0	字段前设，待查
+adminid	int(11)	否		
+owner_uid	int(11)	否	0	优惠券所属用户ID
+remark	varchar(200)	是	NULL	
+edm_index
+
+表注释: EDM项目表 
+
+字段	类型	空	默认	注释
+edm_no	smallint(6)	否		自增ID
+name	varchar(50)	否		EDM名称
+tourl	varchar(100)	否		最终跳转地址
+pv	int(11)	否	0	展示数
+uv	int(11)	否	0	唯一展示数
+click	int(11)	否	0	点击数
+unique_click	int(11)	否	0	唯一点击数
+click_rate	decimal(5,2)	否	0.00	点击率
+unique_click_rate	decimal(5,2)	否	0.00	唯一点击率
+c_datetime	datetime	否		创建日期时间
+edm_stat
+
+表注释: EDM统计记录表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+edm_no	smallint(6)	否		EDM编号
+type	tinyint(1)	否		类型[1-展示,2-点击]
+ipaddress	varchar(20)	否		客户端IP
+c_datetime	datetime	否		发生日期时间
+edm_stat_ymd
+
+表注释: EDM日报数据统计表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+eid	smallint(5)	否		edmID
+pv	int(10)	否	0	展示数
+uv	int(10)	否	0	唯一展示数
+hits	int(10)	否	0	点击数
+unique_hits	int(10)	否	0	唯一点击数
+etime	date	否		日期
+email_blacklist
+
+表注释: 邮件地址黑名单 
+
+字段	类型	空	默认	注释
+email	varchar(50)	否		邮件地址
+fee_product
+
+表注释: fee_product
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+name	varchar(100)	是		
+price	decimal(8,0)	否	0	
+type	int(11)	否		
+pic	varchar(128)	是	NULL	
+score	int(11)	是	0	
+description	varchar(200)	是		
+filterword
+
+表注释: 敏感词库 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+words	varchar(20)	否		敏感词
+replacewords	varchar(20)	否	*	替换词
+status	tinyint(1)	否	1	状态[1有效，0无效]
+follow
+
+表注释: 用户关注行为表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否		用户ID
+whoid	int(11)	否		对应用户ID
+type	tinyint(1)	否	0	1-用户，2-代表产品，3-品牌，4-解决方案
+addtime	int(11)	否		时间戳
+giftcard
+
+表注释: 萝莉礼品卡数据表 
+
+字段	类型	空	默认	注释
+card_id	varchar(16)	否		礼品卡编号
+card_pwd	varchar(8)	否		礼品卡密码
+price	smallint(6)	否		礼品卡面额
+indate	date	否		礼品卡有效期
+userid	int(11)	否		用户ID
+activate_datetime	datetime	否		激活时间
+remark	varchar(200)	否		备注信息
+add_datetime	datetime	否		礼品卡创建日期
+inventory_in
+
+表注释: 入库单表 
+
+字段	类型	空	默认	注释
+id	mediumint(8)	否		ID
+title	varchar(50)	否		入库单名称
+customer	varchar(20)	否		客户名称
+arrivaldate	date	否		预计到达日期
+area	varchar(20)	否		所属区域
+description	varchar(200)	否		备注
+operator	varchar(20)	否		入库单创建者
+cdatetime	datetime	否		入库单创建时间
+status	tinyint(1)	否		显示状态[0-不显示,1-显示]
+ifconfirm	tinyint(1)	否	0	入库单确认状态[0-未确认,1-确认]
+confirmoperator	varchar(20)	否		入库单确认操作人
+confirmdatetime	datetime	否		入库单确认时间
+inventory_item
+
+表注释: 库存单品表 
+
+字段	类型	空	默认	注释
+id	mediumint(9)	否		库存单品ID
+name	varchar(30)	否		单品名称
+intro	varchar(255)	否		库存单品描述
+firstcid	mediumint(8)	否		
+secondcid	mediumint(8)	否		
+relation_type	varchar(20)	否	inventory	单品关联类型[intentory-无关联,product-关联单品表,other-其它]
+relation_id	int(11)	否	0	关联ID[如单品，则需要关联pid]
+relation_out_quantity	mediumint(9)	否	0	关联单品出库量[关联类型为product时，从user_order_send_productdetail中统计出量]
+inventory_in	mediumint(9)	否	0	入库总数
+inventory_out	mediumint(9)	否	0	出库总数
+inventory_real	mediumint(9)	否	0	实际库存数
+inventory_estimated	mediumint(9)	否	0	理论（估计）库存数
+status	tinyint(1)	否	1	记录状态,供逻辑删除使用[0-无效,1-有效]
+price	decimal(6,2)	否	0.00	价格
+brandid	mediumint(9)	否		品牌ID
+category	varchar(10)	否		类别[正品,试用装,耗材]
+norms	varchar(20)	否		规格
+validdate	date	否		有效期
+shelfinfo	varchar(20)	否		货架号信息
+weight	decimal(5,2)	否	0.00	重量(g)
+remark	varchar(200)	否		备注信息
+exchange_interval	tinyint(1)	否	0	单品兑换周期[0-不限制,N-代表N天]
+inventory_out
+
+表注释: 出库单表 
+
+字段	类型	空	默认	注释
+id	mediumint(8)	否		ID
+type	tinyint(1)	否		出库单类似[1-系统,2-人工]
+title	varchar(50)	否		出库单名称
+outdate	date	否		预计出库日期
+description	varchar(200)	否		备注
+operator	varchar(20)	否		出库单创建者
+cdatetime	datetime	否		出库单创建时间
+status	tinyint(1)	否		显示状态[0-不显示,1-显示]
+ifagree	tinyint(1)	否	0	是否审核[0-未审核,1-审核]
+agreeoperator	varchar(20)	否		审核人
+agreedatetime	datetime	否		审核时间
+ifconfirm	tinyint(1)	否	0	出库单确认状态[0-未确认,1-确认]
+confirmoperator	varchar(20)	否		出库单确认操作人
+confirmdatetime	datetime	否		出库单确认时间
+inventory_stat
+
+表注释: 库存增减记录表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+itemid	int(10)	否		库存商品关联ID
+message	varchar(200)	否		备注信息
+operator	varchar(20)	否		操作者
+quantity	mediumint(9)	否	0	数量[可以是负数]
+add_time	int(11)	否		操作记录时间
+status	tinyint(1)	否	1	记录状态[1-有效，0-无效]
+in_out_id	mediumint(9)	否	0	出库单或入库单ID
+inventory_virtual_relation
+
+表注释: 虚拟出库入库关联表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+in_id	int(11)	否		入库单ID
+out_id	int(11)	否		出库单ID
+ip_blacklist
+
+表注释: IP黑名单 
+
+字段	类型	空	默认	注释
+ip	varchar(20)	否		IP_ADDRESS
+jump_stat
+
+表注释: EDM统计记录表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+ip	varchar(20)	否		客户端IP
+dtime	datetime	否		发生日期时间
+fromreferer	varchar(100)	否		REFERER
+member
+
+表注释: 用户特权有效期表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否		用户ID
+endtime	date	否		特权有效截止日期
+member_order
+
+表注释: 会员特权订单表 
+
+字段	类型	空	默认	注释
+ordernmb	bigint(20)	否		订单ID
+pay_bank	varchar(30)	否		支付方式
+m_type	tinyint(2)	否		会员特权类型
+price	int(11)	否		会员特权价格
+userid	int(11)	否		会员ID
+addtime	datetime	否		订单生产时间
+paytime	datetime	是	NULL	订单支付时间
+state	tinyint(1)	否	0	订单状态：0未支付，1已支付，2已退款
+ifavalid	tinyint(1)	否	1	订单是否有效：0无效，1有效
+trade_no	varchar(30)	是	NULL	支付宝订单号
+fromid	smallint(6)	否	0	来源ID
+frominfo	varchar(200)	是	NULL	来源信息
+msg
+
+表注释: 私信表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+from_uid	int(11)	否		发送方用户ID
+to_uid	int(11)	否		接收方用户ID
+from_status	tinyint(1)	否	1	发送方是否显示,1-显示，0-不显示
+to_status	tinyint(1)	否	1	接受方是否显示，1-显示，0-不显示
+k	int(11)	否		此值为(from_uid-to_uid)的绝对值
+dataid	int(11)	否		内容ID
+addtime	int(11)	否		发送时间
+msg_data
+
+表注释: msg_data
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+message_id	int(11)	否		user_message表的ID
+content	text	否		
+product_effect_relation
+
+表注释: 单品与功效对应关系表 
+
+字段	类型	空	默认	注释
+pid	mediumint(8)	否		单品ID
+effectcid	mediumint(8)	否		功效分类ID
+products
+
+表注释: 单品表 
+
+字段	类型	空	默认	注释
+pid	int(10)	否		产品ID
+pname	varchar(50)	否		产品名称
+product_alias	varchar(100)	是	NULL	产品别名
+productlist	varchar(200)	否		子产品列表[非空则表示为套装产品]
+firstcid	mediumint(8)	否		一级分类
+secondcid	mediumint(8)	否		二级分类ID
+effectcid	mediumint(8)	否		功效分类
+brandcid	mediumint(8)	否		品牌分类
+pimg	varchar(200)	否		产品图片
+goodssize	varchar(50)	否		正品规格
+goodsprice	float	否		正品价格
+trialsize	varchar(50)	否		试用品规格
+trialprice	float	否		试用品价格
+pintro	text	否		产品介绍
+taglist	varchar(200)	否		心水标签
+maincomponent	varchar(200)	否		主要成分
+officialweburl	varchar(200)	否		官方网址
+buyurl	mediumtext	否		购买URL[需要定义]
+inventory	mediumint(8)	否	0	单品库存数
+inventoryreduced	mediumint(8)	否	0	库存减少数
+usednum	int(10)	否	0	用过人数统计
+thinkusenum	int(10)	否	0	想用人数统计
+evaluateusernum	int(10)	否	0	参与评测人数统计
+evaluatenum	int(10)	否	0	评测总数
+sharenum	smallint(5)	否		分享数
+evaluate_lasttime	int(11)	否	0	记录该产品发布评测最后时间，时间戳
+totalscore	float(3,1)	否	0.0	产品得分统计
+surveyid	smallint(6)	否	0	调查问卷ID
+fans_num	int(11)	否	0	粉丝数
+status	tinyint(1)	否	0	发布状态[0-不发布,1-发布]
+readme	text	否		使用方法
+if_super	tinyint(1)	否	0	是否加V(0-否,1-是)
+sharelist	varchar(50)	否		精彩分享ID列表 [格式 shareid,shareid]
+ad_pic	varchar(100)	否		产品页配置广告图片保存地址
+ad_url	varchar(100)	否		产品页配置广告图片URL
+sale_tag	varchar(100)	否		促销TAG，多个TAG用逗号分开
+commend_tag	tinyint(1)	否		1-新,2-推荐,3-热
+try_viewpoint	mediumtext	否		产品试用观点
+for_skin	set('所有', '中性', '干性', '油性', '混合性', '敏感性')	是	NULL	适用肤质
+for_people	set('所有', '男士', '女士', '婴幼儿', '孕妇', '化妆人群')	否		适用人群
+for_hair	set('所有', '中性', '干性', '油性', '敏感', '染发', '烫发')	是	NULL	适合发质
+sort_num	smallint(5)	否	0	人工排序权重值（值越大，权重越高）
+products_brand
+
+表注释: 品牌数据表 
+
+字段	类型	空	默认	注释
+id	mediumint(9)	否		ID
+name	varchar(30)	否		品牌中文名称
+name_foreign	varchar(30)	否		品牌国外名称
+firstchar	varchar(1)	否		拼音首字母
+foreign_firstchar	char(1)	否		英文首字母
+area	tinyint(1)	否		品牌区域分类[1-欧美 2-日韩 3-国产 9-其他]
+founders	varchar(30)	否		创办人
+found_time	varchar(30)	否		创办时间
+logo_url	varchar(100)	否		LOGO图片地址
+pic_url	varchar(100)	否		宣传图地址
+description	text	否		品牌介绍
+website_url	varchar(100)	否		品牌官方网址
+category_id_rel	mediumint(9)	否		关联：品牌分类ID,唯一
+space_id_rel	int(11)	否		关联：空间ID
+product_list	varchar(50)	否		品牌产品推荐列表
+visit_num	int(10)	否	0	品牌人气数
+visitor_list	varchar(100)	否		来访人最后列表(uid,uid,uid)
+product_num	smallint(5)	否	0	品牌产品数
+tryout_num	mediumint(8)	否	0	品牌试用人数[统计该品牌所有商品的试用人数]
+fans_num	int(11)	否	0	粉丝数
+share_num	int(11)	否	0	分享数
+status	tinyint(1)	否	0	发布状态[0-不发布,1-发布]
+iscommend	tinyint(1)	否	0	1-推荐，0不推荐
+if_super	tinyint(1)	否	0	是否加V(0-否,1-是)
+weibo_account	varchar(30)	否		品牌微博账号
+grade	varchar(2)	否		品牌等级
+products_buy_channel
+
+表注释: 产品与购买渠道关系表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		ID自增
+pid	int(10)	否		单品ID
+channelname	varchar(30)	否		购买渠道名称
+url	varchar(250)	否		购买URL
+basehit	int(11)	否		预设点击数
+realhit	int(11)	否		真实点击数
+sortnum	int(10)	否	0	排序
+addtime	datetime	否		添加时间
+price	decimal(6,2)	否		价格
+products_evaluate
+
+表注释: 产品评测表 
+
+字段	类型	空	默认	注释
+evaluateid	int(11)	否		评测ID
+productid	int(11)	否		产品ID
+userid	int(11)	否		用户id
+title	varchar(200)	是	NULL	评测主题
+content	text	是	NULL	评测内容
+buychannel	varchar(30)	否		评测用户的购买渠道信息
+skin_type	tinyint(1)	否	0	肤质[0-无,1-中性,2-油性,3-干性,4-混合性,5-敏感性]
+postdate	datetime	是	NULL	发布时间
+agreenum	mediumint(9)	是	0	赞成数
+replynum	mediumint(9)	是	0	回复数
+contentlevel	tinyint(1)	是	1	内容级别(0-不发布,1-普通,5-精华)
+toptime	int(11)	否	0	置顶时间戳[保存操作时的time()值]
+score_avg	decimal(2,1)	否	0.0	评测平均分
+if_sync_weibo	tinyint(1)	否	0	是否同步到新浪微博[0-没有,1-同步]
+products_evaluate_img
+
+表注释: 产品评测图片附件表 
+
+字段	类型	空	默认	注释
+imgid	int(11)	否		图片ID
+productid	int(10)	否		产品ID
+evaluateid	int(11)	是	0	
+userid	int(11)	是	NULL	用户ID
+formtoken	varchar(45)	是	NULL	表单系列号
+imgpath	varchar(100)	是	NULL	图片路径
+postdate	datetime	是	NULL	上传时间
+imginfo	varchar(200)	是	NULL	图片信息
+products_evaluate_reply
+
+表注释: 产品评论回复表 
+
+字段	类型	空	默认	注释
+replyid	int(11)	否		产品评论回复ID
+evaluateid	int(11)	是	NULL	评测ID
+userid	int(11)	是	NULL	用户ID
+replycontent	mediumtext	是	NULL	回复内容
+postdate	datetime	是	NULL	回复时间
+products_evaluate_stat
+
+表注释: products_evaluate_stat
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+stat_date	date	否	0000-00-00	统计日期[年-月-日]
+inner_post_num	int(11)	是	0	内部合作用户评测统计
+real_post_num	int(11)	是	0	真实用户评测统计
+real_user_num	int(11)	是	0	真实评论用户人数
+reply_num	int(11)	是	0	回复评测数统计
+reply_user_num	int(11)	是	0	回复用户统计
+post_total	int(11)	是	0	当日用户发布评测总数
+user_total	int(11)	是	0	当日参与评测用户总数
+products_package
+
+表注释: 产品套餐表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+name	varchar(50)	否		套餐名称
+num	int(11)	否	0	套餐含产品数量
+price	int(11)	否	0	套餐总价格
+package	varchar(255)	否		套餐包含的产品
+status	tinyint(1)	否	0	0：不能使用1:使用
+addtime	int(11)	否		
+products_pic
+
+表注释: 产品图片数据表 
+
+字段	类型	空	默认	注释
+id	int(10)	否		自增ID
+pid	int(11)	否		产品ID
+pic_url	varchar(200)	否		图片保存路径
+toptime	int(11)	否		排序时间戳
+products_stat
+
+表注释: 产品数据统计 
+
+字段	类型	空	默认	注释
+statid	bigint(20)	否		统计ID
+stattype	varchar(10)	是	NULL	统计类型(recommend-推荐,agree-赞同,used-用过,thinkuse-想用,effect-功效)
+productid	int(11)	是	0	产品ID
+userid	int(11)	是	0	用户ID
+score	decimal(2,1)	是	0.0	用户评分
+postdate	datetime	是	NULL	统计日期
+paramid	int(11)	是	0	其它扩展参数ID,如产品功效分类ID
+products_survey
+
+表注释: 产品调查结果表 
+
+字段	类型	空	默认	注释
+pid	int(11)	否		单品ID
+surveyid	int(11)	否		调查ID
+surveyresult	mediumtext	否		调查结果[in-序列化,out-反序列化]
+votetotal	int(11)	否		投票总人数
+summary	mediumtext	否		调查结果简述
+summary_struct	mediumtext	否		摘要的数据结构
+products_survey_answer
+
+表注释: 产品调查结果表 
+
+字段	类型	空	默认	注释
+pid	int(11)	否		单品ID
+surveyid	int(11)	否		调查ID
+surveyresult	mediumtext	否		调查结果[in-序列化,out-反序列化]
+userid	int(11)	否		用户ID
+addtime	int(11)	否		提交问卷时间
+addip	varchar(20)	否		用户IP地址
+products_survey_stat
+
+表注释: 产品调查投票统计数据表 
+
+字段	类型	空	默认	注释
+pid	int(11)	否		产品ID
+surveyid	tinyint(4)	否		调查ID
+questionid	tinyint(4)	否		问题ID
+answer	varchar(200)	否		答案
+userid	int(11)	否		用户ID
+products_tryout_info
+
+表注释: 产品试用请求记录表 
+
+字段	类型	空	默认	注释
+userid	int(10)	否		
+pid	int(10)	否		
+content	varchar(255)	否		
+addtime	int(11)	否		
+promotion
+
+表注释: 推广用户基本信息表 
+
+字段	类型	空	默认	注释
+code	smallint(4)	否		唯一标识ID[四位数字]
+name	varchar(30)	否		推广名称
+validate	tinyint(2)	否	1	确认期[默认30天]
+params	varchar(200)	否		参数设置[多个参数用空格隔开]
+apikey	varchar(32)	否		API获取订单数据口令
+pushurl	varchar(200)	否		PUSH订单数据URL
+remark	text	否		备注
+send_log
+
+表注释: 推广任务发送日志表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+taskid	int(11)	否		任务关联ID
+artid	int(11)	否		article关联ID
+userid	int(11)	否		用户ID
+target	varchar(30)	否		发送对象（手机号或邮件）
+status	tinyint(1)	否	0	是否发送成功[0不成功，1不成功]
+sendtime	int(11)	否	0	
+send_task
+
+表注释: 推广任务表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+artid	int(11)	否		article关联id
+filtersql	tinytext	否		
+status	tinyint(1)	否	0	
+type	tinyint(1)	否	1	类型[1代表邮件，2代表手机]
+totalnum	int(11)	否	0	
+remark	varchar(300)	否		描述
+addtime	int(11)	否	0	
+share_task
+
+表注释: 分享任务表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+userid	int(11)	否		用户id
+data	text	否		序列化数据,比如分享内容，图片地址，souceid,scourcetype等值
+sendtime	int(11)	否	0	时间戳
+shareid	int(11)	否	0	
+status	tinyint(1)	否	0	0-未完成，1-巳完成
+shop
+
+表注释: 店铺地理位置信息表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+name	varchar(80)	否		店铺名称
+brandid	smallint(6)	否		所属品牌
+province_areaid	smallint(6)	否		省ID
+city_areaid	smallint(6)	否		市ID
+county_areaid	smallint(6)	否	0	区县ID
+address	varchar(50)	否		详细地址
+longitude	double	否		经度
+latitude	double	否		纬度
+linkman	varchar(20)	否		联系人
+telphone	varchar(20)	否		联系电话
+status	tinyint(1)	否	1	显示状态[0-不显示，1-显示]
+c_datetime	datetime	否		创建日期时间
+shop_info
+
+表注释: 店铺信息表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+title	varchar(50)	否		标题
+content	text	否		内容
+shopid	int(11)	否		所属店铺
+sortid	smallint(6)	否	0	排序ID
+status	tinyint(1)	否	1	显示状态[0-不显示,1-显示]
+c_datetime	datetime	否		发布日期时间
+stat_user_order
+
+表注释: 订单统计 
+
+字段	类型	空	默认	注释
+statdate	date	否		统计某一天的时间
+ordernum	int(11)	否	0	订单总数
+ordernum_exchange	smallint(6)	否		积分试用订单数
+ordernum_postage	smallint(6)	否		付邮试用订单数
+registernum	int(11)	否	0	注册总数
+sales	int(11)	否	0	销售总额
+sales_exchange	decimal(8,2)	否		积分兑换订单销售额
+sales_postage	decimal(8,2)	否		付邮试用订单销售额
+discount	int(11)	否	0	折扣总额
+totalvalue	decimal(8,2)	否	0.00	订单总价值
+totalvalue_all	decimal(8,2)	否		订单产品总价值
+totalprice	int(11)	否		应收金额总和
+addtime	int(11)	否		加入时间
+system_config
+
+表注释: 系统配置常量表 
+
+字段	类型	空	默认	注释
+id	smallint(5)	否		ID自增
+type	varchar(20)	是	default	常量类别
+key	varchar(30)	否		常量名
+val	varchar(255)	否		常量值
+remark	varchar(50)	否		常量描述
+tag_index
+
+表注释: 标签索引表 
+
+字段	类型	空	默认	注释
+tagid	int(11)	否		自增标签ID
+tagname	varchar(30)	否		标签名称
+tagcategory	tinyint(4)	否		标签分类[11-产品品牌,12-产品分类,13-产品名称,14-产品功效]
+sid	int(11)	否		源ID
+status	tinyint(1)	否	1	
+tag_relation
+
+表注释: 标签资源关系对应表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+userid	int(11)	否		用户ID
+tagid	int(11)	否		标签ID
+relationid	int(11)	否		关联记录（资源）ID
+relationtype	tinyint(4)	否		关联类型（根据需求定义）
+createtime	int(11)	否		创建时间
+task
+
+表注释: task
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+name	varchar(20)	否		
+status	tinyint(1)	否	0	0--代表删除，1代表一次性任务，2代表永久任务，3代表动态任务
+style	varchar(30)	否		样式
+sort	tinyint(4)	否	0	排序
+task_child
+
+表注释: 任务-子任务表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+relationid	int(11)	否		
+taskid	int(11)	否		
+title	varchar(30)	否		
+from	int(11)	否		开始时间
+to	int(11)	否		结束时间
+rules	tinytext	否		代表规则，结构化数据
+credit	smallint(11)	否		积分
+status	tinyint(2)	否	0	1代表开启
+task_order_stat
+
+表注释: 任务—晒单完成记录表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否		
+shareid	int(11)	否		
+orderid	bigint(17)	否		
+status	tinyint(1)	否	0	1---巳完成。2----巳收录，3----未收录
+addtime	int(11)	否	0	参与时间
+task_stat
+
+表注释: 任务-统计记录表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否		用户
+taskid	int(11)	否		任务
+childid	int(11)	否	0	
+relationid	int(11)	否	0	关联ID，在发分享任务中，此字段代表分享ID
+status	tinyint(1)	否		1---巳完成。2----巳收录，3----未收录
+addtime	int(11)	否	0	 参与时间
+telphone
+
+表注释: telphone
+
+字段	类型	空	默认	注释
+tel	varchar(20)	否		
+telphone_valid
+
+表注释: telphone_valid
+
+字段	类型	空	默认	注释
+tel	varchar(20)	否		手机号
+think_access
+
+表注释: think_access
+
+字段	类型	空	默认	注释
+role_id	smallint(6)	否		
+node_id	smallint(6)	否		
+level	tinyint(1)	否		
+pid	smallint(6)	否		
+module	varchar(50)	是	NULL	
+think_admin
+
+表注释: think_admin
+
+字段	类型	空	默认	注释
+id	smallint(5)	否		
+account	varchar(64)	否		
+nickname	varchar(50)	否		
+password	char(32)	否		
+bind_account	varchar(50)	否		
+last_login_time	int(11)	是	0	
+last_login_ip	varchar(40)	是	NULL	
+login_count	mediumint(8)	是	0	
+verify	varchar(32)	是	NULL	
+email	varchar(50)	否		
+remark	varchar(255)	否		
+create_time	int(11)	否		
+update_time	int(11)	否		
+status	tinyint(1)	是	0	
+type_id	tinyint(2)	是	0	
+info	text	否		
+think_group
+
+表注释: think_group
+
+字段	类型	空	默认	注释
+id	smallint(3)	否		
+name	varchar(25)	否		
+title	varchar(50)	否		
+create_time	int(11)	否		
+update_time	int(11)	否	0	
+status	tinyint(1)	否	0	
+sort	smallint(3)	否	0	
+show	tinyint(1)	否	0	
+think_node
+
+表注释: think_node
+
+字段	类型	空	默认	注释
+id	smallint(6)	否		
+name	varchar(100)	否		
+title	varchar(100)	是	NULL	
+status	tinyint(1)	是	0	
+remark	varchar(255)	是	NULL	
+sort	smallint(6)	是	NULL	
+pid	smallint(6)	否		
+level	tinyint(1)	否		
+type	tinyint(1)	否	0	0:在菜单中显示1：不显示
+group_id	tinyint(3)	是	0	
+think_role
+
+表注释: think_role
+
+字段	类型	空	默认	注释
+id	smallint(6)	否		
+name	varchar(20)	否		
+pid	smallint(6)	是	NULL	
+status	tinyint(1)	是	NULL	
+remark	varchar(255)	是	NULL	
+ename	varchar(5)	是	NULL	
+create_time	int(11)	否		
+update_time	int(11)	否		
+think_role_user
+
+表注释: think_role_user
+
+字段	类型	空	默认	注释
+role_id	mediumint(9)	是	NULL	
+user_id	char(32)	是	NULL	
+think_simplelog
+
+表注释: think_simplelog
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+username	varchar(20)	否		
+module	varchar(20)	否		
+action	varchar(20)	否		
+param	text	是	NULL	
+ip	varchar(20)	否		
+optime	int(11)	是	NULL	
+tryout_stat
+
+表注释: 想试用统计表 
+
+字段	类型	空	默认	注释
+userid	int(10)	否		
+resourcetype	tinyint(1)	否		想试用类型[1-产品,2-盒子]
+resourceid	int(11)	否		资源ID
+addtime	int(11)	否		
+url_click
+
+表注释: url_click
+
+字段	类型	空	默认	注释
+id	int(11)	否		监测点id
+type	varchar(20)	否		监测项类型
+clicktime	int(10)	否		点击时间
+user_activity
+
+表注释: 用户参与活动记录表 
+
+字段	类型	空	默认	注释
+id	mediumint(8)	否		自增ID
+userid	int(11)	否		用户ID
+activitytype	varchar(10)	否		活动类型
+gifttype	varchar(20)	是	NULL	奖品类型
+giftinfo	varchar(20)	否		奖品信息
+addtime	datetime	否		抽奖时间
+remark	varchar(100)	是	NULL	说明信息
+user_address
+
+表注释: 用户多地址表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+userid	int(11)	否		
+linkman	varchar(20)	否		
+telphone	varchar(20)	否		
+province	varchar(20)	否		
+city	varchar(20)	否		
+district	varchar(40)	否		
+address	varchar(100)	否		
+postcode	varchar(20)	否		
+if_active	tinyint(1)	否	0	是否是默认地址，0-否，1-是
+addtime	datetime	否		
+if_del	int(1)	否		0-不删除，1-删除
+user_atme
+
+表注释: AT表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+relationid	int(11)	否		分享或评论的id号
+relationtype	tinyint(1)	否	1	1代表分享，2代表评论
+sourceid	int(11)	否	0	@的源id号
+sourcetype	tinyint(1)	否	0	1-用户，2-产品，3-品牌， 4-解决方案
+state	tinyint(1)	否	0	1代表收录，0代表不收录
+level	int(10)	否	0	置顶级别,降序排列
+pk	tinyint(1)	否	0	pk,1-正方，2-反方
+hot	mediumint(9)	否	0	热度排行值(评论数+赞数+转发数)
+addtime	int(11)	否		时间
+user_behaviour_relation
+
+表注释: 用户行为关系表 
+
+字段	类型	空	默认	注释
+userid	int(10)	否		行为发起用户ID
+usertype	tinyint(1)	否	1	动态用户类型[1-用户,2-产品,3-品牌,4-解决方案]
+whoid	int(10)	否		对应表关系id
+type	varchar(20)	否		用户行为_与行为相关的表主键ID
+status	tinyint(2)	否	1	状态
+addtime	int(11)	否		
+user_behaviour_trace
+
+表注释: user_behaviour_trace
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+userid	int(11)	是	NULL	
+url	varchar(80)	否		
+ip	char(16)	否		用户的ip
+optime	int(11)	否		
+module	varchar(20)	否	0	
+action	varchar(20)	否	0	
+user_blacklist
+
+表注释: 用户黑名单 
+
+字段	类型	空	默认	注释
+userid	int(10)	否		用户ID
+user_blog
+
+表注释: 用户日志表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		日志ID
+cateid	mediumint(9)	否		日志分类ID
+userid	int(11)	否		用户id
+title	varchar(200)	否		日志主题
+content	text	否		日志内容
+postdate	int(11)	否		发布时间
+replynum	mediumint(9)	是	0	回复数
+contentlevel	tinyint(1)	是	1	内容级别(0-草稿，1-普通,5-精华)
+toptime	int(11)	否	0	置顶时间戳[保存操作时的time()值]
+status	tinyint(1)	否	1	日志状态 0--不显示，1--显示
+user_blog_category
+
+表注释: 用户日志分类表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		日志分类ID
+name	varchar(30)	否		分类名称
+blognum	smallint(6)	否	0	所属分类记录数
+userid	int(11)	否		用户ID
+status	tinyint(11)	否	1	信息状态[0-不显示，1-显示]
+user_blog_content
+
+表注释: 用户日志表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		日志ID
+parentid	int(11)	否		博客日志所属父ID
+sid	varchar(10)	否		
+img	varchar(200)	是	NULL	内容配图
+content	text	否		日志内容
+sortid	int(11)	是	0	排序ID
+posttime	int(11)	否	0	发布时间戳
+user_blog_index
+
+表注释: 用户日志表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		日志ID
+cateid	mediumint(9)	否		日志分类ID
+type	tinyint(1)	否	1	类型[1-普通日志,2-图片日志]
+userid	int(11)	否		用户id
+title	varchar(200)	否		日志主题
+postdate	int(11)	否		发布时间
+replynum	mediumint(9)	是	0	回复数
+contentlevel	tinyint(1)	是	1	内容级别(0-草稿，1-普通,5-精华)
+toptime	int(11)	否	0	置顶时间戳[保存操作时的time()值]
+status	tinyint(1)	否	1	日志状态 0--不显示，1--显示
+is_mobile	tinyint(1)	否	0	是否为移动用户[0不是,1是]
+user_blog_reply
+
+表注释: 用户日志回复表 
+
+字段	类型	空	默认	注释
+replyid	int(11)	否		日志回复ID
+pid	int(11)	否	0	评论父ID[0表示根评论,大于0表示某个评论的回复]
+blogid	int(11)	否		日志ID
+userid	int(11)	否		用户ID
+replycontent	mediumtext	否		回复内容
+postdate	datetime	否		回复时间
+user_boxcard
+
+表注释: 用户购盒卡记录 
+
+字段	类型	空	默认	注释
+id	mediumint(8)	否		自增ID
+price	smallint(6)	否		购盒卡面值
+userid	int(10)	否		用户ID
+status	tinyint(1)	否	0	购盒卡的状态
+addtime	datetime	否		购盒卡创建时间
+validdate	date	否		购盒卡结束时间
+cardname	varchar(100)	否		购盒卡名称
+remark	varchar(200)	否		购盒卡信息
+orderid	bigint(20)	是	NULL	订单ID
+user_credit_set
+
+表注释: 用户信誉积分经验配置表 
+
+字段	类型	空	默认	注释
+action_id	varchar(30)	否		行为动作标识
+action_name	varchar(50)	否		行为动作名称
+score	tinyint(4)	否	0	积分值
+experience	tinyint(4)	否	0	经验值
+score_daylimit	tinyint(4)	否	0	当日积分值上限
+experience_daylimit	tinyint(4)	否	0	当日经验值上限
+is_unique	tinyint(1)	否	0	是否限制只记录一次
+status	tinyint(1)	否	1	显示状态[0-不发布,1-发布]
+user_credit_stat
+
+表注释: 用户信用统计表 
+
+字段	类型	空	默认	注释
+id	bigint(20)	否		ID自增
+action_id	varchar(50)	否		行为ID
+userid	int(10)	否		用户ID
+credit_type	tinyint(1)	否		行为类型[1-score,2-experience]
+credit_value	smallint(6)	否		行为变化值(允许负数)
+add_datetime	datetime	否		行为发生时间
+user_credit_stat_extend
+
+表注释: 用户积分经验值统计扩展表 
+
+字段	类型	空	默认	注释
+id	bigint(20)	否		user_credit_stat中的id
+remark	varchar(200)	否		备注
+user_daren_apply
+
+表注释: 用户申请达人信息表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否		用户ID
+blog_url	varchar(200)	否		博客地址
+weibo_url	varchar(100)	否		微博地址
+qq	varchar(15)	否		QQ号
+expert	varchar(200)	否		擅长方向
+update_current	varchar(100)	否		更新LOLITABOX频率
+apply_datetime	datetime	否		
+status	tinyint(2)	否	0	审核状态[0-未审核,10-审核拒绝,11-审核通过]
+user_data
+
+表注释: 用户事件信息表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		主键ID
+userid	int(11)	否		户用UID
+type	varchar(20)	否		type
+value	text	否		对应type的 值
+mtime	timestamp	否	CURRENT_TIMESTAMP	前当时间戳
+user_dynamic
+
+表注释: 用户动态表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否	0	
+nickname	char(20)	否		用户昵称
+remark	text	否		描述
+addtime	int(11)	否		
+user_gift
+
+表注释: 用户奖品数据表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+placeid	tinyint(3)	否		排序
+userid	int(11)	否		用户id
+type	varchar(40)	否		奖品类型
+giftinfo	varchar(100)	否		奖品信息
+giftid	int(10)	否		奖品product的id
+status	tinyint(1)	否	0	是否兑奖，1：是，0：否
+addtime	datetime	否		兑奖时间
+user_gift_item
+
+表注释: 奖品项目数据表 
+
+字段	类型	空	默认	注释
+id	mediumint(9)	否		自增id
+code	varchar(20)	否		优惠序列号
+status	tinyint(1)	否	0	是否被分配出去 0-否，1-是
+type	varchar(20)	否		优惠券类型
+userid	int(10)	否		分配到的用户id
+addtime	datetime	否		抽取时间
+user_lottery
+
+表注释: user_lottery
+
+字段	类型	空	默认	注释
+id	int(10)	否		自增id
+userid	int(11)	否		用户id
+code	varchar(10)	否		抽奖号码
+lottery_id	smallint(6)	否		活动期号
+addtime	int(11)	否		抽奖时间
+user_message
+
+表注释: user_message
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+from_uid	int(11)	否		发送人USERID
+to_uid	int(11)	否		发信人USERID
+title	varchar(100)	否		信息标题
+content	text	否		信息内容
+parentid	int(11)	否	0	信息上级ID
+if_read	tinyint(1)	否	0	信息阅读状态(0-未读,1-已读)
+addtime	int(11)	否		信息发送时间[时间戳]
+from_status	tinyint(1)	否	1	发送方信息状态[1-显示，0-不显示]
+to_status	tinyint(1)	否	1	接收方信息状态[1-显示，0-不显示]
+user_openid
+
+表注释: 开放合作用户数据表 
+
+字段	类型	空	默认	注释
+id	int(10)	否		
+type	varchar(10)	否	0	第三方开放平台类型(sina-新浪,qq-腾讯)
+uid	int(11)	否	0	LOLITABOX用户ID
+openid	varchar(50)	否	0	第三方登录平台_用户ID
+info	text	是	NULL	第三方平台用户信息
+logindate	datetime	否		最后一次登录日期
+accesstoken	varchar(50)	否		授权TOKEN
+tokensecret	varchar(50)	否		TOKEN授权密匙
+isbind	tinyint(1)	否		绑定状态[0-未绑定,1-绑定]
+user_order
+
+表注释: user_order
+
+字段	类型	空	默认	注释
+ordernmb	bigint(20)	否		
+pay_bank	varchar(30)	否		银联支付方式
+userid	int(10)	否		用户ID
+boxid	smallint(6)	否		盒子ID
+boxprice	float	是	0	
+credit	smallint(5)	否	0	订单扣减积分
+type	tinyint(2)	否	1	订单的盒子类型
+state	tinyint(1)	否	0	订单付费状态 0-未付费,1-付费,2-退款
+addtime	datetime	否		
+paytime	datetime	是	NULL	
+coupon	varchar(20)	是	NULL	
+discount	float	是	0	折扣金额
+giftcard	smallint(5)	否	0	礼品卡消费金额
+trade_no	varchar(30)	是	NULL	
+ifavalid	tinyint(1)	否	1	是否为有效订单数据[0-无效,1-有效]
+fromid	smallint(6)	否	0	订单来源ID
+frominfo	varchar(200)	否		订单来源参数返回值[各参数值之间用空格隔开]
+address_id	int(11)	否	0	用户地址记录ID
+inventory_out_id	mediumint(9)	否	0	出库单ID
+inventory_out_status	tinyint(1)	否	0	出库单出库状态[0-未完成,1-完成]
+projectid	smallint(6)	否	0	订单增值方案ID
+sendword	varchar(200)	是	NULL	订单赠言
+user_order_address
+
+表注释: 用户订单收货地址表 
+
+字段	类型	空	默认	注释
+orderid	bigint(20)	否		订单ID
+linkman	varchar(20)	否		收货人
+telphone	varchar(20)	否		联系电话
+province	varchar(20)	否		省
+city	varchar(20)	否		市
+district	varchar(40)	否		区县
+address	varchar(100)	否		地址信息
+postcode	varchar(20)	否		邮编
+user_order_proxy
+
+表注释: 用户物流信息表 
+
+字段	类型	空	默认	注释
+orderid	bigint(20)	否		订单号
+child_id	mediumint(6)	否	0	 子订单ID(年月yyyymm)
+proxysender	varchar(50)	否		快递公司
+proxyorderid	varchar(30)	否		快递单号
+status	tinyint(1)	否	0	0代表在路途中，1代表己签收或己经完成
+counter	smallint(2)	否		计数器，表示请求失败的次数
+requesttotal	smallint(6)	否	0	请求总数
+proxyinfo	text	否		物流信息
+lasttime	datetime	否	0000-00-00 00:00:00	最后请求的时间
+user_order_send
+
+表注释: 用户订单发送记录表 
+
+字段	类型	空	默认	注释
+orderid	bigint(20)	否		用户订单ID
+child_id	mediumint(6)	否	0	 子订单ID(年月yyyymm)
+boxid	int(11)	是	NULL	盒子ID
+boxtype	smallint(6)	是	NULL	会员商品类型(1月,3月,6月,12月)
+userid	int(11)	否		发送盒子的用户ID
+senddate	date	是	NULL	发送日期
+proxysender	varchar(50)	是	NULL	中间发送商描述-快递公司
+proxyorderid	varchar(30)	是	NULL	中间发送者订单ID-快递单号
+productnum	tinyint(4)	是	0	单品数量
+productprice	decimal(8,2)	是	0.00	单品总价
+inventory_out_id	mediumint(9)	否		出库单ID
+inventory_out_status	tinyint(1)	否	0	出库单出库状态[0-未完成,1-完成]
+user_order_send_productdetail
+
+表注释: 用户订单发送详细单品记录表 
+
+字段	类型	空	默认	注释
+orderid	bigint(20)	否		订单ID
+child_id	mediumint(6)	否	0	 子订单ID(年月yyyymm)
+userid	int(11)	否		用户ID
+productid	int(11)	是	NULL	单品ID
+productprice	decimal(8,2)	是	NULL	单品试用装价格
+user_order_sendword
+
+表注释: 子订单礼品赠言表 
+
+字段	类型	空	默认	注释
+orderid	bigint(20)	否		订单号
+child_id	mediumint(6)	否		子订单编号
+userid	int(11)	否		用户ID
+content	text	是	NULL	寄语内容
+add_date	timestamp	否	0000-00-00 00:00:00	填写日期
+user_profile
+
+表注释: user_profile
+
+字段	类型	空	默认	注释
+userid	int(11)	否		用户ID
+linkman	varchar(20)	是	NULL	
+realname	varchar(20)	是		
+age	int(11)	是	0	
+sex	int(11)	是	-1	
+telphone	varchar(20)	是		
+email	varchar(50)	是		
+skin	int(11)	是	0	
+province	varchar(20)	是	NULL	省
+city	varchar(20)	是	NULL	市
+district	varchar(20)	是	NULL	区县
+address	varchar(120)	是		
+job	int(11)	是	0	
+description	varchar(400)	是		
+postcode	varchar(6)	是		
+edu	int(11)	是	0	
+years	varchar(5)	是	0	
+months	varchar(2)	是	0	
+days	varchar(2)	是	0	
+skin_property	varchar(20)	否		肤质
+hair_property	varchar(20)	否		发质
+profession	varchar(20)	否		职业
+userface	varchar(100)	否		用户头像
+fromid	smallint(6)	否	0	注册来源ID
+frominfo	varchar(200)	否		注册参数
+user_question
+
+表注释: 用户问题数据表 
+
+字段	类型	空	默认	注释
+id	int(10)	否		自增id
+userid	int(1)	否		用户id
+title	varchar(200)	否		问答标题
+content	text	否		问答内容
+img	varchar(100)	否		问答图片
+tag	varchar(100)	否		问答标签
+replynum	mediumint(9)	否		问答回复数
+postdate	datetime	否		创建时间
+user_question_reply
+
+表注释: 用户问题回答数据表 
+
+字段	类型	空	默认	注释
+replyid	int(11)	否		回复id
+questionid	int(11)	否		问答id
+userid	int(11)	否		用户id
+img	varchar(100)	否		
+replycontent	text	否		回复内容
+postdate	datetime	否		回复时间
+user_score
+
+表注释: user_score
+
+字段	类型	空	默认	注释
+id	bigint(20)	否		
+userid	bigint(20)	否		
+content	varchar(200)	是	NULL	
+score	int(11)	否	0	
+addtime	datetime	是	NULL	
+user_score_exchange
+
+表注释: 用户积分兑换记录表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		用户积分兑换记录ID
+goodsid	smallint(6)	否		兑换商品ID
+relation_id	int(11)	否	0	关联ID[如：优惠券ID]
+userid	int(11)	否		用户ID
+addtime	int(11)	否		兑换时间
+addressid	int(11)	否	0	用户收货地址ID
+user_score_goods
+
+表注释: 用户积分商品信息表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		用户积分商品ID
+name	varchar(60)	否		商品名称
+description	mediumtext	否		商品描述
+imgurl	varchar(100)	否		商品配图
+score	smallint(6)	否		兑换积分数
+addtime	datetime	否		加入时间
+status	tinyint(1)	否	1	显示状态[0-不显示,1-显示]
+user_send_task
+
+表注释: user_send_task
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+title	varchar(50)	否	0	标题
+content	text	否		发送内容
+type	tinyint(1)	否		发送类型[1-邮件,2-短信]
+receiver	varchar(50)	否		接收者[type=1时为邮件地址,type=2时为手机号]
+add_time	int(11)	否		进入任务列表时间
+send_time	int(11)	否		发送执行时间
+status	tinyint(1)	否	0	发送状态[0-未发送,1-已发送]
+operator	varchar(30)	否		操作人
+userid	int(11)	否		发送人UID[关联users表中的userid]
+user_share
+
+表注释: 分享数据索引表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+blogid	int(11)	否		评测或日志ID
+blogtype	tinyint(4)	否		1：评测 2：日志
+userid	int(11)	否		用户ID
+sharetype	tinyint(1)	否	1	1代表原创,2代表非原创
+parentid	int(11)	否	0	上级分享ID[所赞ID或所转发分享ID)
+rootid	int(11)	否	0	根分享ID
+commentnum	int(11)	否	0	评论数
+agreenum	int(11)	否	0	赞数
+treadnum	int(11)	否	0	
+outnum	mediumint(8)	否	0	对外分享转发数
+tagid	int(11)	否	0	代表对某某发的分享，如产品，品牌，解决方案
+resourcetype	tinyint(1)	否		资源类型[1-product,2-brand,3-solution,4-订单]
+resourceid	bigint(17)	否	0	资源ID
+boxid	int(11)	否	0	盒子ID,当resourcetype为4时，此字段才有用
+ischeck	tinyint(1)	否	1	是否审核,1代表己审核，0代表未审核
+clienttype	tinyint(1)	否	0	客户端类型，0：网站；1：手机网页版；2：android；3：iphone
+status	tinyint(1)	否	1	是否有效[0-无效，1-有效(数值越大，内容质量越好])]
+posttime	int(11)	否		时间戳，发表时间
+toptime	int(10)	否	0	置顶时间戳
+iscommend	tinyint(1)	否	0	是否推荐[0-不推荐,1-推荐]
+pk	tinyint(1)	否	0	分享正负面属性[0-中性分享,1-正面分享,2-负面分享]
+pick_status	tinyint(1)	否	0	收录状态
+user_share_action
+
+表注释: 用户分享动作表 
+
+字段	类型	空	默认	注释
+userid	int(11)	否		用户ID
+shareid	int(11)	否		
+type	tinyint(1)	否		1---踩，2---赞
+status	tinyint(1)	否	1	
+addtime	int(11)	否		动作发生时间
+user_share_attach
+
+表注释: 分享附件数据表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+shareid	int(11)	否		分享ID
+userid	int(11)	否		用户ID
+imgpath	varchar(100)	否		服务器保存路径
+title	varchar(255)	否		图片标题
+status	tinyint(1)	否	1	有效状态[0-关闭,1-开启]
+user_share_comment
+
+表注释: 分享评论回复表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+shareid	int(11)	否		分享ID号
+userid	int(11)	否		用户id
+content	varchar(140)	否		评论内容
+to_uid	int(11)	否	0	被回复的评论的UID
+to_commentid	int(11)	否	0	被回复的评论的ID
+commentdata	tinytext	否		用户回复的评论或分享内容片段以及评论的id号等格式化数据
+ischeck	tinyint(1)	否	1	是否审核，1代表审核，0代表未审核
+isdel	tinyint(1)	否	0	是否删除
+posttime	int(11)	否		评论回复时间
+user_share_data
+
+表注释: 分享详细数据表 
+
+字段	类型	空	默认	注释
+shareid	int(11)	否		分享id号
+content	text	否		分享内容
+sharedata	text	否		序列化数据
+details	text	否		用于兼容V3之前的评测、普通日志、图片日志数据
+alltext	text	否		
+user_share_out
+
+表注释: 用户分享外部转发数据表 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+userid	int(11)	否	0	转发分享的用户ID
+shareid	int(11)	否		分享ID
+outtype	tinyint(1)	否		外部转发类型[1-新浪微博,2-腾讯微博]
+openid	int(10)	否	0	第三方openid
+posttime	int(11)	否		转发时间
+user_share_stat
+
+表注释: user_share_stat
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+stat_date	date	否	0000-00-00	统计日期[年-月-日]
+inner_post_num	int(11)	是	0	内部合作用户发布分享数
+real_post_num	int(11)	是	0	真实用户发布分享数
+real_user_num	int(11)	是	0	真实参与发布分享人数
+reply_num	int(11)	是	0	评论分享数
+reply_user_num	int(11)	是	0	评论分享用户数
+post_total	int(11)	是	0	当日用户发布分享总数
+user_total	int(11)	是	0	当日参与分享用户总数
+user_telphone
+
+表注释: 用户手机验证 
+
+字段	类型	空	默认	注释
+id	int(11)	否		自增ID
+userid	int(11)	否		用户ID
+tel	varchar(20)	否		手机号
+code	int(6)	否		手机验证码
+addtime	int(11)	否		生成验证码时间
+if_check	tinyint(2)	否	0	是否已绑定
+user_vote
+
+表注释: user_vote
+
+字段	类型	空	默认	注释
+id	int(10)	否		自增ID
+question	tinyint(5)	否		调查问题数字编号
+answer	tinytext	否		调查结果
+answer_score	tinyint(3)	否	0	调查结果得分
+userid	int(10)	否		用户ID
+user_work_order
+
+表注释: user_work_order
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+order	bigint(40)	否		订单号
+email	varchar(40)	是	NULL	邮箱
+linkman	varchar(40)	是	NULL	联系人
+telephone	bigint(40)	是	NULL	联系电话
+boxin	varchar(60)	否		盒子信息
+orderdate	int(40)	否		创建工单日期
+status	int(10)	是	0	状态
+cpeople	varchar(20)	否		创建工单处理人
+user_work_order_infomation
+
+表注释: user_work_order_infomation
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+pid	int(10)	是	0	同一订单序列
+ordernmb	bigint(40)	否		订单号
+reason	text	否		原因
+note	varchar(200)	否		备注
+cpeople	varchar(40)	否		处理人
+time	int(40)	否		处理时间
+status	tinyint(10)	是	0	状态
+users
+
+表注释: users
+
+字段	类型	空	默认	注释
+userid	int(10)	否		
+nickname	varchar(40)	否		
+password	varchar(32)	否		
+usermail	varchar(40)	否		
+state	tinyint(1)	否	1	
+addtime	datetime	否		
+score	mediumint(9)	否	0	积分
+experience	mediumint(9)	否	0	经验值
+invitecode	varchar(10)	否		
+invite_uid	int(11)	否	0	推荐人UID
+order_num	smallint(6)	否	0	用户订单总数
+evaluate_num	smallint(6)	否	0	评测数
+collect_num	smallint(6)	否	0	收藏数
+follow_num	smallint(6)	否	0	关注数
+fans_num	smallint(6)	否	0	粉丝数
+blog_num	smallint(6)	否	0	用户日志统计数
+coupon_num	smallint(6)	否	0	有效优惠券数
+if_super	tinyint(1)	否	0	是否为达人会员(0-不是,1-是)
+is_mobile	tinyint(1)	否	0	是否为移动用户[0不是,1是]
+tel_status	tinyint(1)	否	0	是否验证手机：0未难，1已验证
+is_solution	tinyint(1)	否	0	1为解决方案。0不是解决方案
+is_spreader	tinyint(1)	否	0	是否为推广者（代言人）
+know_way	varchar(50)	否		用户知道我们的渠道
+users_invite
+
+表注释: users_invite
+
+字段	类型	空	默认	注释
+id	int(11)	否		
+code	int(10)	否		邀请码
+status	tinyint(1)	是	1	邀请码 1-未用 2-已用
+remark	varchar(200)	是	NULL	
+owner_uid	int(10)	否		所有者USERID
+adminid	int(11)	否		
+addtime	datetime	否		
