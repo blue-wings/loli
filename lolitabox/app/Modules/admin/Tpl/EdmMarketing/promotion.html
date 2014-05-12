@@ -1,0 +1,240 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="/public/js/jquery_theme/base/jquery.ui.all.css">
+<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+<style>
+tr{
+	text-align:center;
+}
+.f_width{
+	display:block;
+	width:120px;
+	float:left;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+}
+input,select{
+	border-color:#008080;
+}
+.createmakt,.particular{
+	display:none;
+}
+.show{
+	display:none;
+}
+.ntitle{
+	font-size:16px;
+	color:#004040;
+}
+.left{
+	padding:10px  50px;
+}
+.fo{
+	font-size:14px;
+	color:#004040;
+}
+.onum{
+	color:red;
+}
+</style>
+<script>
+$(function(){
+	$("#tpro").hide();
+})
+</script>
+<div class="panel">
+	<div align="left"  style="color:#0080FF;font-size:16px">
+			<include file="Public:returnUserOrderOrUserRegister" />
+			
+			<fieldset class="fieldset"><legend>查询条件</legend>
+			<form name="myform"  action="__ACTION__" method="POST">
+				推广名称：<input name='pmname' type='text' value='{$Think.post.pmname}'>
+				<input type='submit' name='search' value=" 查 询">
+			</form>
+			<br/><br/><input type="button" value="创建新推广用户" name="create">
+			<p class="cea"><a href="__ACTION__" class="show">返回上级</a><p>
+			</fieldset>	
+	</div>
+</div>
+
+<div class="showcontents">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />推广用户列表</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+        {$page}
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+          	<td width="2%" height="26">序号</td>
+          	<td width="3%" height="18">唯一标识ID</td>
+            <td width="5%" height="26">推广名称</td>
+            <td width="2%" height="18">确认期</td>  
+             <td width="8%" height="18">参数设置</td>
+            <td width="3%" height="18">API口令</td>
+            <td width="3%" height="18">PUSH-URL</td>          
+            <td width="8%" height="18">备注</td>
+            <td width="5%" height="18">功能</td>  
+          </tr>
+          <volist name="list" id="pro"  key="k">
+          <tr height="30px">
+          	 <td bgcolor="#FFFFFF" height="18">{$k}</td>
+          	 <td bgcolor="#FFFFFF" height="18">{$pro.code}</td>
+             <td bgcolor="#FFFFFF" height="18"><a href="#" onclick="return edit('{$pro.code}')">{$pro.name}</a></td>
+             <td bgcolor="#FFFFFF" height="18">{$pro.validate}</td>
+			 <td bgcolor="#FFFFFF" height="18">{$pro.params}</td>
+			 <td bgcolor="#FFFFFF" height="18">{$pro.apikey}</td>
+			 <td bgcolor="#FFFFFF" height="18">{$pro.pushurl}</td>
+			 <td bgcolor="#FFFFFF" height="18">{$pro.remark}</td>
+			 <td bgcolor="#FFFFFF" height="18">
+			 	<a href="#" onclick="return edit('{$pro.code}')">编辑</a>/
+			 	<a href="javascript:deldata('{$pro.code}')">删除</a>
+			 </td>
+          </tr>
+		</volist>
+        </table>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+	<if condition="$list eq ''">
+	<td  colspan='9'><b>无数据</b></td>
+	<else />
+	<td  colspan='9'>{$page}</td>
+	</if>
+  </tr>
+</table>
+</div>
+<table align="center" id="tpro">
+<form action="__ACTION__" method="POST" name='prom' onsubmit="return checkform()">
+	<tr><td>唯一标识ID[四位数字]<font color="red">*</font></td>	<td><input name="code" type="text" value=""></td></tr>
+	<tr><td>推广名称<font color="red">*</font></td><td><input name="proname" type="text" value=""></td></tr>
+	<tr><td>确认期<font color="red">*</font></td>	<td><input name="valid" type="text" value=""></td></tr>
+	<tr><td>参数设置</td>	<td><input name="param" type="text" value=""></td></tr>
+	<tr><td>API口令</td>	<td><input name="api" type="text" value=""></td></tr>
+	<tr><td>PUSH-URL</td><td><input name="url" type="text" value=""></td></tr>
+	<tr><td>备注</td><td><input name="message" type="text" value=""><input type='hidden' name='status' value=''></td></tr>	
+	<tr align="center"><td colspan="2"><font color="red">*</font><span  style="color:#408080;font-size:5">为必填项!</span></td></tr>
+	<tr><td colspan="2"><input type="submit" name="submit" value="提交"><input type="reset" value="重置"><input type="button" name="back" value="返回上一级"></td></tr>
+</form>
+</table>
+<script>
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+
+
+$(function() {
+	$( "#from" ).datepicker({
+		defaultDate: "-1w",
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$( "#to" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$( "#to" ).datepicker({
+		defaultDate: "1w",
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$( "#from" ).datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+})
+
+$(":button[name='create']").bind('click',function(){
+	$("#tpro").show('fast',function(){
+		$(".showcontents").hide();
+		$(":hidden[name='status']").val('add');
+	});
+});
+
+
+$(":button[name='back']").bind('click',function(){
+	$("#tpro").hide('fast',function(){
+		$(".showcontents").show();
+		$(":hidden[name='status']").val('');
+	});
+})
+
+
+function checkform(){
+	var reg=/^\d{4}$/;
+	var reg1=/^[0-9]*$/;
+
+	if(!reg.test($(":input[name='code']").val())){alert('标识ID应为4位数字!');return false;}
+	if($(":text[name='proname']").val()==''){alert('推广名称不能为空!');return false;}
+	if(!reg1.test($(":text[name='valid']").val())){alert('确认期应为数字!');return false;}
+	if($(":text[name='message']").val()==''){alert('备注不能为空!');}
+}
+
+function edit(codenum){
+	if(codenum){
+		$.ajax({
+			url:"__ACTION__",
+			type:"post",
+			dataType:"json",
+			data:"code="+codenum+'&action=getproinfo',
+			success: function(chkresult){
+				if(parseInt(chkresult.status)==1){
+					var data=chkresult.data;
+					$(":text[name='code']").parent().parent().remove();
+					$("form[name='prom']").append('<input name="code" type="hidden" value="'+data.code+'">');
+					$(":text[name='proname']").val(data.name);
+					$(":text[name='valid']").val(data.validate);
+					$(":text[name='param']").val(data.params);
+					$(":text[name='api']").val(data.apikey);
+					$(":text[name='url']").val(data.pushurl);
+					$(":text[name='message']").val(data.remark);
+					$(".showcontents").hide('fast');
+					$("#tpro").show('fast');
+				}else{
+					alert(chkresult.info);
+				}
+			}
+		})
+	}
+}
+//删除数据
+function deldata(number){
+	if(confirm("确认删除么?")){
+		location.href="__ACTION__/action/delete/codenum/"+number;
+	}
+}
+</script>
+<include file="Public:footer" />

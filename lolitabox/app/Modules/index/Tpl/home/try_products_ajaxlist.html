@@ -1,0 +1,37 @@
+                 <gt name="total"   value="0">
+                 <div class="cfl My_order_fabirc">
+						<!----内容块1---->
+						<volist name="list"  id="vo">
+						<include file="brand:public_productsinfo" />
+						</volist>
+						<!----内容块1---->
+					</div>	
+					<!---列表---->
+					<div class="W_pages"  id="page">
+						<{$page}>
+					</div>
+<script>
+	$(function () {
+		$("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
+	});
+</script>
+					<else/>
+					<script>
+					   $(function(){
+						    if("<{$Think.MODULE_NAME}>"  =="home"){
+						    	 var title="您还米有试用过产品。可以<a href='<{:u('try/index')}>' > 去试用中心</a>看看最近推出的产品试用哦~";
+								    var content='';
+									if('<{$Think.get.type}>' =='3'){
+										 title = "您还没有对产品发表过分享，分享被收录后就能获得积分奖励哦";
+										 content = "赶紧<a href='<{:u('home/try_products')}>'  >去您的试用产品列表</a>发表分享吧~"
+									}
+						    }
+						    if("<{$Think.MODULE_NAME}>" == "space"){
+						    	var title = "他还米有试用过产品";
+						    	var content = "";
+						    }
+							nodata("ajax_content",title,content);
+							
+					   })
+					</script>
+					</gt>

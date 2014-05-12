@@ -1,0 +1,41 @@
+<include file="Public:header" />
+	<div class="panel"  >
+		<div align="left">			
+		  <fieldset class="fieldset"  style='font-size:12px'>
+			<legend>编辑/增加常量</legend><br>
+			<form action="__ACTION__" method="get"  id="find_form">
+			 <input type='hidden'  name='id'  value="{$Think.request.id}">
+			 配置名：<input type="text" name="key"  value="{$info.key}"  ><br><br>
+			 配置值：<input type="text" name="val"  value="{$info.val}"  ><br><br>
+			<div id="type_show" >
+			      <div id="old"> 配置类型：
+			              <select name="type">
+			                   <option value="">添加新的类型</option>
+			                   <volist name="typelist" id="vo">
+			                       <option value="{$vo.type}"
+			                       <eq name="info.type"  value="$vo[type]">selected</eq>
+			                       >{$vo.type}</option>
+			                    </volist>
+			              </select>
+			      </div>
+			 </div>	          
+			          
+			  <br>
+			 配置描述：<br>
+			<textarea name="remark"  cols="30"  rows="3"   >{$info.remark}</textarea><br><br>
+			<input type="submit" name='submit' value="提 交">&nbsp;&nbsp;
+			</form>
+		 </fieldset>
+		</div>
+	</div>	
+	<script>
+	   $(selecttype);
+	   $("select[name='type']").change(selecttype);
+	   function selecttype(){
+		   if($("select[name='type']").val()==""){
+			   $("select[name='type']").after(' <input name="type1"  size="8">');
+		   }  else{
+			   $("input[name='type1']").remove();
+		   }
+	   }
+	</script>

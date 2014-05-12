@@ -1,0 +1,27 @@
+	       <table class="order_tables" border="0" cellspacing="0" cellpadding="0" width="100%">
+											<tbody>        
+												<tr height="46"> 
+													<th>产品图片</th>
+													<th>产品名称</th>
+													<th>任务奖励</th>
+													<th>操作</th>
+												</tr>
+												
+												<volist name="info.list"   id="vo">
+												<tr>
+													<td><a href="<{$vo.pid|getProductUrl=###}>" target="_blank"><img src="<{$vo.pimg}>" width="60" height="60" alt="<{$vo[pname]}>"/></a></td>
+													<td><{$vo.pname}></td>
+													<td>20积分</td>
+													<td>
+													    <a href="<{$vo.relationid|getShareUrl=###}>"  target="_blank">查看分享</a> | 
+														<a href="javascript:void(0)"  title="发分享" class="W_btn" onclick="dialog_share('<{$vo.pid}>',1)" id="share_<{$i}>">
+														<span>再次分享</span>
+													   </a>
+												</tr>
+												</volist>
+											</tbody>
+		   </table>	
+<div class="W_order_wrap">
+	<!---分页--->
+	<div class="W_pages" id="page"><{$page}></div>
+</div>					

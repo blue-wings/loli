@@ -1,0 +1,56 @@
+              <ul class="boxs_share cfl boxs_share_info" id="container">
+					<volist name="list"  id="vo">
+								<li class="masonry-brick" style="position: absolute; top: 778px; left: 235px;">
+									<div class="hd"></div>
+									<div class="main_show">
+									<div class="boxs_share_wrap">
+								<notempty name="vo.img">
+									<!-- 没有配图时隐藏BLOCK START -->
+
+									<div style="width:<{$vo.img_w}>px;height:<{$vo.img_h}>px"><a href="<{$vo.shareurl}>" target="_blank"><img <gt name="i"  value="5">src="public/images/modbg_v5.jpg" data-original="<{$vo.img}>"<else/>src="<{$vo.img}>"</gt>  width="<{$vo.img_w}>" height="<{$vo.img_h}>" alt="<{$vo[boxname]}>"/></a></div>
+									<if condition="$vo.pick_status eq 1">
+									 <p class="i_divider">&nbsp;</p>
+									 </if>
+									 <!-- 没有配图时隐藏BLOCK END -->
+								 </notempty>
+									<notempty name="vo.boxname">
+										<p class="mb5"><a href="<{$vo[boxurl]}>" target="_blank"   class="a_more"><{$vo.boxname}></a></p>
+									</notempty>
+									<dl class="box_share_dl cfl box_share_info">
+											<dt>
+												<a href="<{$vo.spaceurl}>"><img src="<{$vo.userface}>" width="30" height="30" alt="<{$vo.nickname}>"/></a>
+											</dt>
+											<dd class="share_text">
+												<a href="<{$vo.spaceurl}>" target="_blank"  class="a_more"><{$vo.nickname}></a> &nbsp;
+												<{$vo.content}>
+												<a href="<{$vo.id|getShareUrl=###}>" target="_blank" class="a_more">详情>></a>
+											</dd>
+									</dl>
+									</div>
+										 <ul class="favorite" value_id="<{$vo[id]}>">
+											<li><a href="javascript:void(0)" class="praise" onclick="agree_share('<{$vo.id}>',this)" title="我喜欢"><em class="pbl_praise">&nbsp;</em><{$vo.agreenum}></a>
+											</li>
+											<li><a href="javascript:void(0)" class="step" onclick="tread_share('<{$vo.id}>',this)" title="我不喜欢"><em class="pbl_step">&nbsp;</em><{$vo.treadnum}></a>
+											</li>
+											<li><a href="<{$vo.id|getShareUrl=###}>" class="review" ><em class="pbl_review" title="我要评论">&nbsp;</em><{$vo.commentnum}></a>
+											</li>
+											<li><a href="javascript:void(0)" class="forwarding" onclick="dialog_shareto('<{$vo.id}>')" title="转发微博"> <em class="pbl_forwarding">&nbsp;</em><{$vo.outnum}></a>
+											</li>
+									     </ul>		
+								     </div>
+								     <div class="ft_b"></div>
+								</li> 
+					</volist>
+				</ul>
+				<include file="public:masonry" />
+				 <script>
+                  $(function(){
+						$("img[data-original]").lazyload({
+							threshold : 200,
+							effect : "fadeIn"
+						});
+					});
+				</script>
+				<div class="W_pages"  id="page">
+				    <{$page}>
+				</div>

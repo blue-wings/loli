@@ -1,0 +1,187 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="/public/js/jquery_theme/base/jquery.ui.all.css">
+<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+<div class="panel">
+		<div align="left">			
+			<fieldset class="fieldset">
+			<legend>查询条件</legend>
+			    <form name="listform" id="listform" action="__ACTION__"
+				method="post">
+			         统计时间：从<input type="text" id="starttime" name="starttime"
+					value="{$Think.request.starttime}">到<input type="text"
+					id="endtime" name="endtime" value="{$Think.request.endtime}">
+			         <input type="submit" name="submit" value="查询">
+		        </form>
+<script>
+	jQuery(function($){
+		$.datepicker.regional['zh-CN'] = {
+			closeText: '关闭',
+			prevText: '&#x3c;上月',
+			nextText: '下月&#x3e;',
+			currentText: '今天',
+			monthNames: ['一月','二月','三月','四月','五月','六月',
+			'七月','八月','九月','十月','十一月','十二月'],
+			monthNamesShort: ['一','二','三','四','五','六',
+			'七','八','九','十','十一','十二'],
+			dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+			dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+			dayNamesMin: ['日','一','二','三','四','五','六'],
+			weekHeader: '周',
+			dateFormat: 'yy-mm-dd',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: true,
+			yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+	});
+	$(function() {
+		$( "#starttime" ).datepicker({
+			defaultDate: "-1w",
+			changeMonth: true,
+			numberOfMonths: 3,
+			onSelect: function( selectedDate ) {
+				$( "#endtime" ).datepicker( "option", "minDate", selectedDate );
+			}
+		});
+		$( "#endtime" ).datepicker({
+			defaultDate: "+1w",
+			changeMonth: true,
+			numberOfMonths: 3,
+			onSelect: function( selectedDate ) {
+				$( "#starttime" ).datepicker( "option", "maxDate", selectedDate );
+			}
+		});
+	});
+</script>
+		   </fieldset>			
+		</div>
+</div>
+
+<table width="100%" border="0" align="center" cellpadding="0"
+	cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0"
+				cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img
+						src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img
+						src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span
+						class="STYLE4">评测统计列表</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table
+							border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif"
+						width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+   <tr>
+    <td><table width="100%" border="0" cellspacing="0"
+				cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3"><table width="99%" border="0"
+							align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif" align="center">
+              <td width="15%" height="18">统计日期</td>
+               <td width="10%" height="18">内部评测数</td>
+              <td width="10%" height="18">真实评测数</td>
+              <td width="10%" height="18">真实用户数</td>
+              <td width="10%" height="18">回复条数</td>
+              <td width="10%" height="18">回复用户数</td>
+              <td width="10%" height="18">评测总计</td>
+              <td width="10%" height="18">评测用户总计</td>
+          </tr>	
+		<volist name="list" id="vo" emtpy="还没有统计数据">
+          <tr align="center" bgcolor="FFFFFF">
+              <td width="15%" height="18"><a href="{:u('ProductsEvaluate/productEvaluateList',array('from'=>$vo[stat_date],'to' => $vo[stat_date]))}">{$vo.stat_date}</a></td>
+              <td width="10%" height="18"><a href="{:u('ProductsEvaluate/productEvaluateList',array('from'=>$vo[stat_date],'to' => $vo[stat_date],'usertype' =>100))}">{$vo.inner_post_num}</a></td>
+              <td width="10%" height="18"><a href="{:u('ProductsEvaluate/productEvaluateList',array('from'=>$vo[stat_date],'to' => $vo[stat_date],'usertype' =>10))}">{$vo.real_post_num}</a></td>
+              <td width="10%" height="18">{$vo.real_user_num}</td>
+              <td width="10%" height="18">{$vo.reply_num}</td>
+              <td width="10%" height="18">{$vo.reply_user_num}</td>
+              <td width="10%" height="18"><a href="{:u('ProductsEvaluate/productEvaluateList',array('from'=>$vo[stat_date],'to' => $vo[stat_date]))}">{$vo.post_total}</a></td>
+              <td width="10%" height="18">{$vo.user_total}</td>
+          </tr>
+		</volist>
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0"
+				cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img
+						src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table
+							width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="25%" height="29" nowrap="nowrap"><span
+									class="STYLE1">{$page}</span></td>
+            <td width="75%" valign="top" class="STYLE1"></td>
+          </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif"
+						width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table><br>
+<table width="100%" border="0" align="center" cellpadding="0"
+	cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0"
+				cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img
+						src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img
+						src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span
+						class="STYLE4">评测总计</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table
+							border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif"
+						width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+<table width="99%" border="0"  align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif"  align="center">
+              <td width="15%" height="30">统计日期</td>
+               <td width="10%" height="30">内部评测数</td>
+              <td width="10%" height="30">真实评测数</td>
+              <td width="10%" height="30">真实用户数</td>
+              <td width="10%" height="30">回复条数</td>
+              <td width="10%" height="30">回复用户数</td>
+              <td width="10%" height="30">评测总计</td>
+              <td width="10%" height="30">评测用户总计</td>
+          </tr>	
+          <if condition="$total_list">
+          <tr align="center" bgcolor="FFFFFF">
+          <volist name="total_list" id="vo" empty="空">
+          <td width="15%" height="30">{$stat_date}</td>
+              <td width="10%" height="30"><a href="{:u('ProductsEvaluate/productEvaluateList',array('from'=>$vo[min],'to' => $vo[max],'usertype' =>100))}">{$vo.b}</a></td>
+              <td width="10%" height="30"><a href="{:u('ProductsEvaluate/productEvaluateList',array('from'=>$vo[min],'to' => $vo[max],'usertype' =>10))}">{$vo.c}</td>
+              <td width="10%" height="30">{$vo.d}</td>
+              <td width="10%" height="30">{$vo.e}</td>
+              <td width="10%" height="30">{$vo.g}</td>
+              <td width="10%" height="30"><a href="{:u('ProductsEvaluate/productEvaluateList',array('from'=>$vo[min],'to' => $vo[max]))}">{$vo.g}</a></td>
+              <td width="10%" height="30">{$vo.h}</td>
+          </volist>
+          </tr>
+          </if>
+</table>
+</tr>
+</table>
+  
+<include file="Public:footer" />

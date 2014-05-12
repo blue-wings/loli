@@ -1,0 +1,257 @@
+<include file="Public:header" />
+<style>
+tr{
+	width:100%;
+	text-align:left;
+}
+td{
+	border:0;
+}
+.f_width{
+	display:block;
+	width:120px;
+	float:left;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+}
+input,select{
+	border-color:#008080;
+}
+.createmakt,.particular{
+	display:none;
+}
+.show{
+	display:none;
+}
+.ntitle{
+	font-size:16px;
+	color:#004040;
+}
+.left{
+	padding:10px  50px;
+}
+.fo{
+	font-size:14px;
+	color:#004040;
+}
+.createshop{
+	display:none;
+	font-size:16px;
+	color:#808080;
+}
+.wh{
+	width:90%;
+	border:0;
+	padding:20px 100px;
+}
+.crshop{
+	width:100px;
+}
+.red{
+	color:red;
+}
+td.left{
+	float:left;
+}
+td.tdwidth{
+	width:20%;
+	padding-left:50px;
+}
+.maxwidth{
+	width:90%;
+}
+.site{
+	display:block;
+	margin:10px 150px;
+	border:#91C351;
+}
+</style>
+<div class="panel">
+	<div align="left">
+		<fieldset class="fieldset"><legend>查询条件</legend>
+			<form name="myform" id="myform" action="__ACTION__" method="GET">
+				用户ID:<input name='userid' type='text' value='{$Think.get.userid}'>&nbsp;
+				订单号:<input name='ordernum' type='text' value='{$Think.get.ordernum}'>&nbsp;&nbsp;&nbsp;
+				用户名:<input name='linkname'  type='text' value='{$Think.get.linkname}'>&nbsp;&nbsp;&nbsp;
+				手机号:<input name='tel' type='text' value='{$Think.get.tel}'>&nbsp;&nbsp;&nbsp;
+				出库单ID:<input name='outid' type='text' value='{$Think.get.outid}'>
+				<br><br>
+				
+				支付时间:<input name='startdate'  type='text' value='{$Think.get.startdate}'>&nbsp;&nbsp;到&nbsp;&nbsp;<input name='enddate' type='text' value='{$Think.get.enddate}'>
+
+				盒子名称:
+				<select name="bname">
+					<option value="">按盒子名称筛选</option>
+					<volist name="boxlist" id="boxname">
+					<option value="{$boxname.boxid}">{$boxname.boxname}</option>
+					</volist>
+				</select>
+				
+				&nbsp;
+				子订单时间:
+				<select name="child_id">
+					<option value="">请选择发货时间</option>
+					<volist name="timelist" id="vo">
+					<option value="{$vo}">{$vo}</option>
+					</volist>
+				</select>
+				&nbsp;&nbsp;&nbsp;		
+						
+				订单类型
+				<select name="proposer">
+					<option value="">请选择订单类型</option>
+					<option value="1">已出库订单</option>
+					<option value="2">未出库订单</option>
+				</select>
+				&nbsp;&nbsp;&nbsp;<br>
+				<input type='submit' name='search' value=" 查 询">
+			</form>
+		</fieldset>			
+	</div>
+</div>
+<form action="__URL__/orderStatistics" method="POST" onsubmit="return checkform()">
+<div class="showcontents">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />出库管理>系统出库列表</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+        {$page}
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+	    	<td width="2%" height="26"><div align="center" class="STYLE2 STYLE1"></div></td>
+			<td width="3%" height="26"><div align="center" class="STYLE2 STYLE1">序号</div></td>
+			<td width="3%" height="26"><div align="center" class="STYLE2 STYLE1">用户ID</div></td>
+            <td width="10%" height="18"><div align="center" class="STYLE2 STYLE1">订单号</div></td>
+            <td width="5%" height="18"><div align="center" class="STYLE2 STYLE1">子订单号</div></td>
+            <td width="12%" height="18"><div align="center" class="STYLE2">盒子名称</div></td>
+            <td width="12%" height="18"><div align="center" class="STYLE2">单品数量</div></td>
+            <td width="13%" height="18"><div align="center" class="STYLE2">支付时间</div></td>
+          </tr>
+          <volist name="list" id="list"  key="k">
+          <tr height="30px" class="emy">
+             <td bgcolor="#FFFFFF" height="18" class="mmy" align="center"><input type="checkbox" name="order[]"  value ="{$list.ordernmb}-{$list.child_id}"   style="border:0"></td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">{$k}</td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">{$list.userid}</td>
+             <td bgcolor="#FFFFFF" height="18" align="center">{$list.ordernmb}</td>
+             <td bgcolor="#FFFFFF" height="18" align="center">{$list.child_id}</td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">{$list.boxname}</td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">
+			 {$list.productnum}&nbsp;&nbsp;
+			 <a href="javascript:void(0);" onclick="chakanproduct('{:U('Inventory/getBoxMessage',array('orderid'=>$list[ordernmb].'-'.$list[child_id],'outid'=>$list[inventory_out_id]))}');">查看商品信息</a>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">{$list.paytime}</td>
+          </tr>
+		</volist>
+        </table>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+   <tr>
+  <if condition="$list neq ''">
+  	<td bgcolor="#FFFFFF" height="18" colspan="2"><input type="button" value="全选" name="all"><input type="submit" value="申请出库" name="sub">{$page}</td>
+  <else/>
+	<td bgcolor="#FFFFFF" height="18" colspan="2"><b>无数据</b></td>
+  </if>
+   </tr>
+</table>
+</div>
+</form>
+<script type="text/javascript">
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+$(function() {
+	$(":button[name='all']").toggle(
+	function(){
+		$(":checkbox[name='order[]']").attr('checked',true);
+	},function(){
+		$(":checkbox[name='order[]']").attr('checked',false);
+	}
+	);
+	
+	
+	var resour = "{$resour}";
+	if(resour){
+		$("form[name='myform']").append("<input type='hidden' name='resour' value="+resour+">");
+	}
+	
+	$("select[name='bname']>option[value='"+"{$_GET['bname']}"+"']").attr("selected",'true')
+	$("select[name='child_id']>option[value='"+"{$_GET['child_id']}"+"']").attr("selected",'true')
+	
+	var proposer="{$Think.get.proposer}";
+	var outid="{$Think.get.outid}";
+	$("select[name='proposer']>option[value='"+proposer+"']").attr("selected",'true');
+	if(proposer==1 || outid){
+		$("tr.emy").each(function(){
+			$(this).children(".mmy").empty();
+		})
+		$(":button[name='all']").remove();
+		$(":submit[name='sub']").remove();
+	}
+	$("input[name='human']").bind('click',function(){
+		dialogmeseeage("{:U('Inventory/outOrderHuman')}","快速创建人工出库单");
+	})
+
+
+	$(":text[name='startdate']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$(":text[name='startdate']").datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$(":text[name='enddate']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$(":text[name='enddate']").datepicker( "option", "maxDate", selectedDate );
+		}
+	})
+});
+//查看盒子详细信息
+function chakanproduct(url){
+	$.dialog({title:"查看单品",content: "url:"+url,width:"500px",height:"400px"});
+}
+function checkform(){
+	var num=$(":checkbox[name='order[]'][checked]").length;
+	if(num==0){
+		alert('请选中订单再申请出库!');
+		return false;	
+	}	
+}
+</script>
+<include file="Public:footer" />

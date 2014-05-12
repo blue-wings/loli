@@ -1,0 +1,33 @@
+  <style>
+  .b_title_c{color:#fff;text-decoration:none;}
+  </style>
+  
+   	<ul class="be_banner_menu cfl">
+   		<li id="type_1">
+   		<a href="<{:u('club/benefit_task')}>" class="b_title_c">
+   			<p class="name">挑战丰盈靓女</p>
+   			<p class="time">2013.12.15-2014.1.10</p>
+   			</a>
+   		</li>
+   		<li id="type_2">
+   		<a href="<{:u('club/benefit_task',array('type'=>2))}>" class="b_title_c">
+   			<p class="name">见证丰盈奇迹</p>
+   			<p class="time">2014.01.11-2014.1.30</p>
+   			</a>
+   		</li>
+   		<li id="type_3">
+   		<a href="<{:u('club/benefit_task',array('type'=>3))}>" class="b_title_c">
+   			<p class="name">“眉”来运转 美梦成真 </p>
+   			<p class="time">2014.02.10-2014.02.25</p>
+   			</a>
+   		</li>
+   	</ul>
+   	
+<script>
+var type="<{$Think.GET.type}>";
+if(!type){
+	type=1;
+}
+$(".be_banner_menu li").removeClass("be_banner_menu_selected");
+$("#type_"+type).addClass("be_banner_menu_selected");
+</script>

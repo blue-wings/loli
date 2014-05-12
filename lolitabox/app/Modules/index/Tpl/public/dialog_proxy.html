@@ -1,0 +1,19 @@
+				
+				<div class="W_order_wrap" >
+					<div class="order_gl_t">
+						<h3 class="title"><notempty name="return.title_info"><{$return.title_info}><else />物流信息</notempty></h3>
+					</div>
+					<div class="order_gl_l">
+						<ul>
+							<li><b>物流公司：</b><{$return[orderinfo][proxyinfo][proxysender]}></li>
+							<li><b>运单号码：</b><{$return[orderinfo][proxyinfo][proxyorderid]}></li>
+							<li><b>物流动态：</b></li>
+							<li>
+							<div style="padding-left:15px;margin-left:30px;background-color:#eeeeee;"><{$return[orderinfo][proxyinfo][proxyinfo]|default='非常抱歉，暂时还不能获取物流跟踪信息。'}>
+							<br/>如有疑问，请查询快递公司官方网站或其公示电话。>><if condition="$return[orderinfo][proxyinfo][proxysender] eq '申通'"><a href="http://www.sto.cn" target="_blank">申通官网</a></if>
+							</div>
+							</li>
+							<li class="foolter_mt"></li>
+						</ul>
+					</div>
+				</div>

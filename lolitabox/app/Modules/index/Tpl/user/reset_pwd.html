@@ -1,0 +1,165 @@
+<include file="public:header_simple.inc" />
+<i class="zc_hd_register"></i>
+<div class="mb16">
+<div class="fm1024">
+	<div class="wp1020">
+		<div class="hd_t"></div>
+		<div class="main">
+			<div class="login_user_con login_wrap">
+					<div class="W_reg_info cfl">
+						<!------左边表单栏------------>
+						<div class="W_reg_form">
+						<form name="resetpwd" method="POST" action="__URL__/change_pwd_ajax">				
+							<input type="hidden"  name="mailauth" value="<{$return.mailauth}>">
+							<input type="hidden"  name="usermail" value="<{$return.usermail}>">					
+							<div class="forget_pass_wrao">
+								<h1>重置密码</h1>
+								
+								<div class="reset_pass_wrap">
+									<div class="info_list cfl">
+											<div class="tit">新密码：</div>
+											<div class="inp">
+												<input type="password" name="password" class="W_input_ws">
+											</div>
+											<div class="tips">
+												<div class="notice">
+													<span class="W_ico20 ico_eryes"></span>
+													<span>6-16个字符，推荐使用字母、数字和符号组合的密码</span>
+												</div>
+											</div>
+									</div>
+									<div class="info_list cfl">
+											<div class="tit">确认密码：</div>
+											<div class="inp">
+												<input type="password"  name="re_password" class="W_input_ws">
+											</div>
+											<div class="tips">
+												<div class="notice">
+													<span class="W_ico20 ico_error"></span>
+													<span>6-16个字符，推荐使用字母、数字和符号组合的密码</span>
+												</div>
+											</div>
+									</div>
+									<div class="info_submit cfl">
+										<div class="inp">
+											<a href="javascript:void(0)" onclick="checkf()" class="W_pin_b">
+												确定
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							</form>
+						</div>
+						<!------右边表单栏------------>
+						<div class="W_reg_sidebar">
+							<div class="sidebar_title">
+								<div class="pass_ico"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+</div>
+
+	<script>
+
+	function checkf(){
+		var pw1 = $(":password[name='password']").val(),
+			pw2=$(":password[name='re_password']").val(),
+			usermail=$("input[name='usermail']").val(),
+			mailauth=$("input[name='mailauth']").val();
+			
+			$(":password[name='password']").blur();
+			$(":password[name='re_password']").blur();
+			
+			if($("span.ico_eryes").length == 2){
+				var doma = $("form[name='resetpwd']"); 
+				
+				$.post(doma.attr('action'),doma.serialize(),
+					function(data){
+						tips(data);	
+				});
+				return false;
+				$("form[name='resetpwd']").submit();
+			}
+	}
+
+	function tips(obj){
+			
+		if(obj.status == 1){
+			$.dialog({type:1,title:"修改成功!"});
+			window.setTimeout(function(){
+				location="<{:U('home/index')}>"
+			},2000);	
+		}else{
+			$.dialog({type:2,title:"修改失败!",content:obj.info});
+		}
+	}
+	
+		$(function(){$(".notice").hide();})
+		
+		$(":password[name='password'],:password[name='re_password']").live({
+			focus:function(){
+				if($(this).val() == ''){
+					rules($(this),1);
+					$('div.notice').css({paddingLeft:'0',textIndent:'0px'})
+				}else{
+					rules($(this),2);
+					
+				}									
+			},
+			blur:function(){
+				rule1($(this));
+				$('div.notice').css({paddingLeft:'20px',textIndent:'-20px'})
+			}
+		})
+		
+		function rules(obj,num){
+			var str;
+			if(num == 2){
+				if(!rule2(obj.val())){
+					str = '6-16个字符，推荐使用字母、数字和符号组合的密码';
+				}
+			}
+
+			var ndom = obj.parent().next().find("div.notice");
+				ndom.children("span:first").hide();	
+				ndom.children("span:last").text(str).show();
+				
+				ndom.show();
+		}
+		
+		function  rule1(obj){
+			var clas,txt='';
+			if(rule2(obj.val())){
+				if(obj.attr("name") == 're_password'){
+					if(obj.val() == $(":password[name='password']").val()){
+						clas="ico_eryes";
+					}else{			
+						clas="ico_error";
+						txt='您两次输入的账号密码不一致！';
+					}
+				}else{	
+					clas="ico_eryes";
+				}
+			}else{
+				clas="ico_error";
+				txt='6-16个字符，推荐使用字母、数字和符号组合的密码';
+			}
+
+			var ndom = obj.parent().next().find("div.notice");
+			ndom.children("span:first").removeClass(ndom.children("span:first").attr('class').split(' ')[1]).addClass(clas).show();	
+			ndom.children("span:last").text(txt).show();	
+			ndom.show();
+		}
+
+		function rule2(val){
+			var reg = /[\w]{6,16}/;
+			return reg.test(val)?true:false;
+		}
+	</script>
+<include file="public:footer.inc" />

@@ -1,0 +1,198 @@
+<include file="public:header.inc" />
+<style type="text/css">
+body {text-align: center; margin:0;  padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif; }
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p,h4{margin: 0; padding: 0; border: 0}
+a {color:#707070; text-decoration:none;}
+a:hover {color: #707070; text-decoration:underline} 
+font{font-size:14px}
+b{color:#fff}
+/*公有*/
+
+.Block01{width:1004px; height:286px; position:relative; margin:0 auto; text-align:left; background:url(public/special/20121116_1/bg_01.jpg) no-repeat;}
+.Block02{width:1004px; height:320px; position:relative; margin:0 auto; text-align:left; background:url(public/special/20121116_1/bg_02.jpg) no-repeat;}
+.Block02 .tt1{ position:absolute; color:#5b390d; font-size:16px; line-height:24px; left: 53px; top: 223px; width: 877px; height: 50px; } .Block03{width:1004px; height:483px; position:relative; margin:0 auto; text-align:left; background:url(public/special/20121116_1/bg_03.gif) no-repeat;} .Block03 .tt1{ position:absolute; width: 897px; height: 194px; left: 75px; top: 197px; } .Block03 .tt1 .list{} .Block03 .tt1 .list li{float:left; margin-right:40px; width:184px; height:192px;} .Block03 .tt2{ position:absolute; left: 442px; top: 411px; width: 118px; height: 40px; }  .Block04{width:1004px; height:512px; position:relative; overflow:hidden; margin:0 auto; text-align:left; background:url(public/special/20121116_1/bg_04.gif) no-repeat;} .Block04 .tt1{position:absolute; left: 104px; top: 223px; width: 831px; height: 288px;} .zt_listC{} .zt_listC li{ position:relative; float:left; width:185px; margin-right:20px;} .zt_listC li p{ text-align:center; height:28px; line-height:28px; padding-bottom:15px;}  .Block05{width:1004px; height:391px; position:relative; margin:0 auto; text-align:left; background:url(public/special/20121116_1/bg_05.gif) no-repeat;} .Block05 .tt1{ position:absolute; left: 104px; top: 22px; width: 822px; height: 299px; } .Block05 .tt2{ position:absolute; left: 457px; top: 322px; width: 119px; height: 38px; } .Block06{width:1004px; height:252px; position:relative; margin:0 auto; text-align:left; background:url(public/special/20121116_1/bg_06.gif) no-repeat;} .Block06 .tt1{ position:absolute; left: 101px; top: 125px; width: 786px; font-size:14px; line-height:18px; height: 57px; } .Block06 .tt2{ position:absolute; left: 451px; top: 189px; width: 118px; height: 40px; }  .zt_btn1{width:113px; height:35px; display:block; background:url(public/special/20121116_1/btn.jpg) no-repeat; text-align:center; line-height:33px; color:#fff; font-size:17px; } .zt_btn1:hover{background-position:0 -44px;  text-decoration:none; color:#fff;}  .zt_btn2{width:111px; height:31px; background:url(public/special/20121116_1/btn.jpg) 0 -86px no-repeat; text-align:center; line-height:30px; font-size:17px; color:#e02978; display:block; text-decoration:none; margin: 0 auto 8px;}
+.zt_btn2:hover{ text-decoration:none; color:#e02978;}
+.bgs{color:#707070; background-color:#fff; background-image:url(public/special/20121116_1/bg.jpg); background-position:center top; background-repeat:no-repeat; font-size:14px; line-height:18px;margin-top:56px;}
+.zt_btn4{width:113px; height:35px; display:block; background:url(public/special/20121116_1/btn.jpg) 0 -123px no-repeat; text-align:center; line-height:33px; color:#fff; font-size:17px;}
+.zt_btn4:hover{ text-decoration:none; color:#fff;}
+.zt_listC li .abs{ width:25px; height:25px; position:absolute; background:url(public/special/20121116_1/sele.png) no-repeat; left: 15px; top: 12px;}
+.tc_dp .abs{cursor:pointer}
+</style>
+<div class="bgs">
+<div class="Block01"></div>
+<div class="Block02"> <div class="tt1">想享受优惠价格订购萝莉盒？还想免费获得萝莉盒？这不是陷阱，这是LOLITABOX掉下的馅饼，货真价实，童叟无欺！只要你动动手指，完成美丽任务就能惊喜连连来，把免费萝莉盒轻松带回家！LOLITABOX魔盒的神秘力量来袭，赶快来参加吧！</div>
+</div>
+<div class="Block03"> <div class="tt1">
+    	<ul class="list">
+    	<if condition="$task_first neq ''">
+    	<volist name="task_first" id="vo" key="ekey" offset="0" length="4">
+    	<if condition="$vo eq 1">
+        	<li><img src="public/special/20121116_1/<{$ekey+4}>.png" width="181" height="193" /></li>
+        	<else />
+        	<li>
+        	<if condition="$ekey eq 1"><a href="<{:u('home/myface')}>" target="_blank"><elseif condition="$ekey eq 2" /><a href="<{:u('home/myinformation')}>" target="_blank"><elseif condition="$ekey eq 3" /><a href="<{:u('home/myaccount')}>" target="_blank"><elseif condition="$ekey eq 4" /><a href="<{:u('daren/index')}>" target="_blank"></if>
+        	<img src="public/special/20121116_1/<{$ekey}>.png" width="181" height="193" /></a>
+        	
+        	</li>
+        	</if>
+        	</volist>
+        	<else />
+        	<li><a href="javascript:void(0)"  onclick="open_login()" ><img src="public/special/20121116_1/1.png" width="181" height="193" /></a></li>
+        	<li><a href="javascript:void(0)" onclick="open_login()"><img src="public/special/20121116_1/2.png" width="181" height="193" /></a></li>
+        	<li><a href="javascript:void(0)" onclick="open_login()"><img src="public/special/20121116_1/3.png" width="181" height="193" /></a></li>
+        	<li><a href="javascript:void(0)" onclick="open_login()"><img src="public/special/20121116_1/4.png" width="181" height="193" /></a></li>
+        	</if>
+        </ul>
+    </div>
+    <if condition="$task_first[5] eq '1'">
+    <div class=" tt2"><a href="javascript:void(0)" class="zt_btn1" onclick="check_coupon(1)">获取代金券</a></div>
+    <else />
+    <div class="tt2"><a href="javascript:void(0)"  class="zt_btn4">获取代金券</a></div>
+</if>
+</div>
+<div class="Block04"> <div class="tt1">
+    	<ul class="zt_listC">
+    	<div class="abs"></div>
+        	<li><if condition="$pro_list[0][1] eq 1 && $pro_list[0][2] eq 1"><div class="abs"></div></if> <a href="<{:u('products/143')}>" target="_blank"><img src="public/special/20121116_1/cp_08.jpg" alt="雙妹玉容洁肤乳" width="184" /></a>
+            	<p><a href="<{:u('products/143')}>" target="_blank">雙妹玉容洁肤乳</a></p>
+                <a href="<{:u('mysurvey/survey',array('sid'=>1,'pid'=>143))}>"  target="_blank" class="zt_btn2">填写问卷</a>
+                <a href="<{:u('products/143')}>#pingce" target="_blank" class="zt_btn2">进行评测</a>
+            </li>
+            <li> <if condition="$pro_list[1][1] eq 1 && $pro_list[1][2] eq 1"><div class="abs"></div></if><a href="<{:u('products/111')}>" target="_blank"><img src="public/special/20121116_1/cp_10.jpg" alt="贝玲妃柔焦亮颜液" width="184" /></a>
+            	<p><a href="<{:u('products/111')}>" target="_blank">贝玲妃柔焦亮颜液</a></p>
+                <a href="<{:u('mysurvey/survey',array('sid'=>1,'pid'=>111))}>" target="_blank" class="zt_btn2">填写问卷</a>
+                <a href="<{:u('products/111')}>#pingce" target="_blank" class="zt_btn2">进行评测</a>
+            </li>
+            <li><if condition="$pro_list[2][1] eq 1 && $pro_list[2][2] eq 1"><div class="abs"></div></if> <a href="<{:u('products/121')}>" target="_blank"><img src="public/special/20121116_1/cp_12.jpg" alt="施丹兰覆盆子黑莓皂" width="184" /></a>
+            	<p><a href="<{:u('products/121')}>" target="_blank">施丹兰覆盆子黑莓皂</a></p>
+                <a href="<{:u('mysurvey/survey',array('sid'=>1,'pid'=>121))}>" target="_blank" class="zt_btn2">填写问卷</a>
+                <a href="<{:u('products/121')}>#pingce" target="_blank" class="zt_btn2">进行评测</a>
+            </li>
+            <li><if condition="$pro_list[3][1] eq 1 && $pro_list[3][2] eq 1"><div class="abs"></div></if> <a href="<{:u('products/142')}>" target="_blank"><img src="public/special/20121116_1/cp_14.jpg" alt="雙妹玉容霜" width="184" /></a>
+            	<p><a href="<{:u('products/142')}>" target="_blank">雙妹玉容霜</a></p>
+                <a href="<{:u('mysurvey/survey',array('sid'=>1,'pid'=>142))}>" target="_blank" class="zt_btn2">填写问卷</a>
+                <a href="<{:u('products/142')}>#pingce" target="_blank" class="zt_btn2">进行评测</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="Block05"> <div class="tt1">
+    <ul class="zt_listC">
+        	<li> <if condition="$pro_list[4][1] eq 1 && $pro_list[4][2] eq 1"><div class="abs"></div></if><a href="<{:u('products/151')}>" target="_blank"><img src="public/special/20121116_1/cp_22.jpg" alt="贝玲妃妆前亮丽蜜露" width="184" /></a>
+            	<p><a href="<{:u('products/151')}>" target="_blank">贝玲妃妆前亮丽蜜露</a></p>
+                <a href="<{:u('mysurvey/survey',array('sid'=>1,'pid'=>151))}>" target="_blank" class="zt_btn2">填写问卷</a>
+                <a href="<{:u('products/151')}>#pingce" target="_blank" class="zt_btn2">进行评测</a>
+            </li>
+            <li><if condition="$pro_list[5][1] eq 1 && $pro_list[5][2] eq 1"><div class="abs"></div></if> <a href="<{:u('products/62882')}>" target="_blank"><img src="public/special/20121116_1/cp_24.jpg" alt="玉兰油OLAY新生塑颜金纯面霜" width="184" /></a>
+            	<p><a href="<{:u('products/62882')}>" target="_blank">玉兰油新生塑颜金纯面霜</a></p>
+                <a href="<{:u('mysurvey/survey',array('sid'=>1,'pid'=>62882))}>" target="_blank" class="zt_btn2">填写问卷</a>
+                <a href="<{:u('products/62882')}>#pingce" target="_blank" class="zt_btn2">进行评测</a>
+            </li>
+            <li><if condition="$pro_list[6][1] eq 1 && $pro_list[6][2] eq 1"><div class="abs"></div></if> <a href="<{:u('products/149')}>" target="_blank"><img src="public/special/20121116_1/cp_26.jpg" alt="雙妹袭人皂（玉兰）" width="184" /></a>
+            	<p><a href="<{:u('products/149')}>" target="_blank">雙妹袭人皂（玉兰）</a></p>
+                <a href="<{:u('mysurvey/survey',array('sid'=>1,'pid'=>149))}>" target="_blank" class="zt_btn2">填写问卷</a>
+                <a href="<{:u('products/149')}>#pingce" target="_blank" class="zt_btn2">进行评测</a>
+            </li>
+            <li> <if condition="$pro_list[7][1] eq 1 && $pro_list[7][2] eq 1"><div class="abs"></div></if><a href="<{:u('products/150')}>" target="_blank"><img src="public/special/20121116_1/cp_28.jpg" alt="施丹兰欲望都市精油球" width="184" /></a>
+            	<p><a href="<{:u('products/150')}>" target="_blank">施丹兰欲望都市精油球</a></p>
+                <a href="<{:u('mysurvey/survey',array('sid'=>1,'pid'=>150))}>" target="_blank" class="zt_btn2">填写问卷</a>
+                <a href="<{:u('products/150')}>#pingce" target="_blank" class="zt_btn2">进行评测</a>
+            </li>
+        </ul>
+        <if condition="$num egt 5" >
+    </div> <div class="tt2"><a  href="javascript:void(0)"  onclick="check_coupon(2)" class="zt_btn1">获取代金券</a></div>
+    <input type="hidden" name="if_gettwo" id="if_gettwo" value="<{$task_first[5]}>" />
+<else />
+</div> <div class="tt2"><a href="javascript:void(0)" class="zt_btn4">获取代金券</a></div>
+</if>
+</div>
+<div class="Block06"> <div class="tt1">　　活动期间，在你的LOLITABOX个人空间里以"LOLITABOX 11月晒盒记+自定义内容"为日记标题，晒出你的11月盒子（例如：
+LOLITABOX11月晒盒记+脱光秘器--爱的宣言盒），并把链接贴到本日记的评论里，就有机会获得LOLITABOX派送的神秘大礼！数量有限，才华横溢的你，赶快一展文采吧！</div> <div class="tt2"><a href="http://www.lolitabox.com/space/blog_detail/blogid/1255/id/2375.html" target="_blank" class="zt_btn1">马上参加</a></div>
+	</div>
+</div>  
+<div id="confirm_kuan"  style="display:none;">
+<div class="tc_dp tc_Points" >
+  <div class="abs" ><img src="public/images/zhuce_close.png"  id="close_div" /></div>
+  <div class="tc_dpTop"></div>
+  <div class="tc_dpCont convert">
+  <div class="add_giftinfo">
+  </div>
+  <p id="go_confirm" style="display:none;" ><a class='a-pink' href="<{:u('home/mycoupon')}>"   target="_blank">马上去查看>></a></p>
+  </div>
+  <div class="tc_dpBtm">
+  </div>
+</div>
+</div>  
+<script>
+function show_succ_div(){
+	$(this).openDOMWindow({
+		windowSourceID:'#confirm_kuan',
+		width:532,
+		height:296,
+		draggable:1,
+		borderColor:'',
+		borderSize:'0',
+		windowBGColor:'none',
+		overlayOpacity:10,
+		modal:1
+	});
+}
+$("#close_div").click(function(){
+	 $("#confirm_kuan").hide();
+	 location.href="__SELF__";
+})
+
+function check_coupon(n){
+	alert("活动已结束！");
+	return false;
+	var if_gettwo=$("#if_gettwo").val();
+	if(n==1){
+		var price=10;
+		var title="美丽任务之基本任务";
+	}
+	if(n==2){
+		var price=25;
+		var title="美丽任务之中级任务";
+	}
+	$.ajax({
+		url:"<{:u('special/getTaskGiftFirst')}>",
+		type:'post',
+		data:"price="+price+"&title="+title+"&if_gettwo="+if_gettwo,
+		dataType:"json",
+		success:function(ret){
+			show_succ_div();
+			 $("#confirm_kuan").show();
+			if(ret.status==1){
+				$("#go_confirm").show();
+				$(".add_giftinfo").html("<p>恭喜您，获得"+ret.data+"元优惠券一张</p><p>您可以到个人中心-我的优惠券中进行查看。</p>");
+			}else  if(parseInt(ret.data)==100){
+				$(".add_giftinfo").html("<p>您需要先完成基本任务才能领取中级任务的奖励哦。</p><p>赶紧去完成基本任务吧！</p>");
+			}else  if(parseInt(ret.data)==200){
+				$("#go_confirm").show();
+				$(".add_giftinfo").html("<p>您已经领取过优惠券啦，不要太贪心哦！</p><p>您可以到个人中心-我的优惠券中进行查看</p>");
+			}else{
+				 $(".add_giftinfo").html("<p>请您稍后再试，现在有点小抽抽~~~</p><p><a href=\"__SELF__\">重新打开该页</a></p>");
+			}
+		}
+	})
+}
+
+function check_coupon_first(){
+	$.ajax({
+		url:"<{:u('special/getTaskGiftFirst')}>",
+		type:'post',
+		dataType:"json",
+		success:function(ret){
+			alert(ret.info);
+			location.href="__SELF__";
+		}
+	})
+}
+
+function open_login(){
+	open_login_div("");
+}
+
+</script>
+<include file="public:footer.inc" />

@@ -1,0 +1,312 @@
+<include file="Public:header" />
+<style>
+.p30{
+	padding:3% 20% 2% 20%;
+	width:100%;
+	height:150px;
+}
+.p10{
+	clear: both;
+	padding:1% 20%;
+	width:100%;
+}
+.p101{
+	clear: both;
+	padding:0% 20% 2% 20%;
+	width:100%;
+}
+.flt{
+	float:left;
+	padding-top:5px;
+	font-size:14px;
+	color:#333333;
+	height:150px;
+	width:60px;
+}
+.flt2{
+	float:left;
+	padding-top:5px;
+	font-size:14px;
+	color:#333333;
+	height:60px;
+	width:60px;
+}
+.flg{
+	float:left;
+	margin-left:20px;
+	border:#F5F5F5 1px solid;
+	width:50%;
+}
+.flg2{
+	height:60px;
+	float:left;
+	margin-left:20px;
+	border:#F5F5F5 1px solid;
+	width:50%;
+}
+.flg3{
+	float:left;
+	margin-left:20px;
+	width:50%;
+}
+tr{
+	height:25px;
+}
+input{
+	border:1;
+}
+.w50{
+	width:50px;
+}
+.lef{
+	height:30px;
+	width:2%;
+	float:left;
+	background:url(__PUBLIC__/images/tab_03.gif);
+}
+.midd{
+	height:30px;
+	width:95%;
+	float:left;
+	background:url(__PUBLIC__/images/tab_05.gif);
+}
+.rig{
+	height:30px;
+	width:2%;
+	float:left;
+	background:url(__PUBLIC__/images/tab_07.gif);	
+}
+
+.f1{
+	padding:10px 0px 0px 40px;
+	margin-left:35px;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.f2{
+	padding:10px 0px 0px 25px;
+	margin-left:150px;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.f3{
+	padding:10px 0px 0px 30px;
+	margin-left:110px;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.addsize{
+	margin-right:20px;
+}
+.writebreak{
+	width:300px;
+	word-break:break-all;
+}
+</style>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />出库管理>出库单详情</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+ 			 <if condition="$alonemessage['status'] eq 0">已删除
+			 <elseif condition="$alonemessage['ifagree'] eq 1 AND $alonemessage['ifconfirm'] eq 1" />已出库
+			 <elseif condition="$alonemessage['ifagree'] eq 0" />
+			 <a href="{:U('Inventory/deleteorder',array('model'=>'out','id'=>$alonemessage['id']))}">删除本单</a>
+			<elseif condition="$alonemessage['ifagree'] eq 1 AND $alonemessage['ifconfirm'] eq 0" />
+			 <a href="{:U('Inventory/deleteorder',array('model'=>'out','id'=>$alonemessage['id']))}">删除本单</a>已审核,未确认
+			 </if> 
+        <a href="{:U('Inventory/outOrderEntry')}">返回上级</a>
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<div class="p30">
+	<div class="flt">
+		<span>基本信息</span>
+	</div>
+	<div class="flg">
+		<table width="80%" cellpadding="0" cellspacing="0" style="padding:5px;" border="0">
+			<tr>
+				<td>出库单类型:</td>
+				<td colspan="2"><div style="color:red">
+					<switch name="alonemessage.type">
+					<case value="1">系统</case>
+					<case value="2">人工</case>	
+				    <case value="3">虚拟出库</case>						
+					</switch></div>
+				</td>
+			</tr>
+			<tr>
+				<td>出库单名称:</td>
+				<td colspan="2"><p class="writebreak">{$alonemessage.title}</p></td>
+			</tr>
+			<tr>
+				<td>出库备注:</td>
+				<td colspan="2"><p class="writebreak">{$alonemessage.description}</p></td>
+			</tr>			
+			<tr>
+				<td>预计出库时间:</td>
+				<td colspan="2">{$alonemessage.outdate}</td>
+			</tr>
+			<tr>
+				<td>申请人:</td>
+				<td colspan="2"><p class="writebreak">{$alonemessage.operator}</p></td>
+			</tr>																
+		</table>
+	</div>
+</div>
+
+<div class="p101">
+	<div class="flt2">
+		<span>出库信息</span>
+	</div>
+	<div class="flg3">
+      <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98" id='tab'>
+      <tr style="text-align:left;height:18" >
+      	<td colspan="4" height="30">
+      		<table width="100%" border="0">
+      		 <tr align="center">
+      			<td width="20%">单品id</td>
+      			<td width="35%">单品名称</td>
+      			<td width="7%">数量</td>
+      			<td width="20%">货架号信息</td>
+      		 </tr>	
+      		</table>
+      	</td>
+      </tr>
+      	<volist name="alonemessage.list" id="list">
+      	<tr align="center">
+				<td height="18" bgcolor="#FFFFFF" width="18%">{$list.itemid}</td>
+				<td height="18" bgcolor="#FFFFFF" width="35%" class="pnamevalue">{$list.name}</td>
+				<td height="18" bgcolor="#FFFFFF" width="10%">{$list.quantity}</td>
+				<td height="18" bgcolor="#FFFFFF" width="20%">{$list.shelfinfo}</td>
+		</tr>
+      	</volist>
+      	<tr>
+      		<td height="18" bgcolor="#FFFFFF" colspan="4"><p>总计:<span style="color:red">{$alonemessage.price}</span>元</p></td>
+      	</tr>
+    </table>
+	</div>
+</div>
+<if condition="$alonemessage[type] eq 3" >
+<div class="p101">
+	<div class="flt2">
+		<span>入库信息</span>
+	</div>
+	<div class="flg3">
+      <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98" id='tab'>
+      <tr style="text-align:left;height:18" >
+      	<td colspan="4" height="30">
+      		<table width="100%" border="0">
+      		 <tr align="center">
+      			<td width="20%">单品id</td>
+      			<td width="35%">单品名称</td>
+      			<td width="7%">数量</td>
+      			<td width="20%">货架号信息</td>
+      		 </tr>	
+      		</table>
+      	</td>
+      </tr>
+      	<volist name="alonemessage.in_list" id="list">
+      	<tr align="center">
+				<td height="18" bgcolor="#FFFFFF" width="18%">{$list.itemid}</td>
+				<td height="18" bgcolor="#FFFFFF" width="35%" class="pnamevalue">{$list.name}</td>
+				<td height="18" bgcolor="#FFFFFF" width="10%">{$list.quantity}</td>
+				<td height="18" bgcolor="#FFFFFF" width="20%">{$list.shelfinfo}</td>
+		</tr>
+      	</volist>
+    </table>
+	</div>
+</div>
+</if>
+
+<div class="p10">
+	<div class="flt2">
+		<span>审核</span>
+	</div>
+	<div class="flg2">
+		<table width="50%" cellpadding="0" cellspacing="0" style="padding:5px;">
+			<tr>
+				<td colspan="3" class="agree">
+					<if condition="$alonemessage['status'] eq 0">已删除
+					<elseif  condition="$alonemessage['ifagree'] eq 1"/>
+					已审核&nbsp;&nbsp;{$alonemessage.agreeoperator}&nbsp;&nbsp;{$alonemessage.agreedatetime}
+					<else/>
+					<input type="button" value="审核通过" name="confrim" onclick="laidUp('{$alonemessage.id}',1,'{$alonemessage.type}')" style="margin:5px;">
+					</if>
+				</td>
+			</tr>													
+		</table>
+	</div>
+</div>
+<div class="p10">
+	<div class="flt2">
+		<span>出库</span>
+	</div>
+	<div class="flg2">
+		<table width="50%" cellpadding="0" cellspacing="0" style="padding:5px;">
+			<tr>
+				<td colspan="3" class="confrim">
+				 	<if condition="$alonemessage['status'] eq 0">已删除
+					<elseif  condition="$alonemessage['ifconfirm'] eq 1"/>
+					已确认&nbsp;&nbsp;{$alonemessage.confirmoperator}&nbsp;&nbsp;{$alonemessage.confirmdatetime}
+					<else/>
+					<input type="button" value="确认出库" name="confrim" onclick="laidUp('{$alonemessage.id}',2,'{$alonemessage.type}')" style="margin:5px;">
+					</if>
+				</td>
+			</tr>													
+		</table>
+	</div>
+</div>
+<input type="hidden" value="{$alonemessage.ifagree|default=0}" name="flag">
+<script type="text/javascript">
+function laidUp(id,key,type){
+
+	var d='';
+	var url='';
+	if(key==1){
+		if(type==1){
+			url="{:U('Inventory/verifyOutInventorySystem')}";
+		}else if(type==2){
+			url="{:U('Inventory/verifyOutInventoryHuman')}";
+		}else if(type==3)
+			url="{:U('Inventory/verifyOutInventoryVirtual')}";
+		d="id="+id+'&type=out&status=agreeoperator&n='+Math.random();
+	}else{
+		if($(":hidden[name='flag']").val()==0){
+			alert('请先审核再确认出库!');
+			return false;
+		}else{
+			url="{:U('Inventory/outConfirm')}";
+			d="id="+id+'&type='+type+'&status=confirm&n='+Math.random();
+		}
+	}
+
+	$.ajax({
+		url:url,
+		type:"post",
+		dataType:"json",
+		data:d,
+		success: function(chkresult){
+			if(parseInt(chkresult.status)==1){
+				if(key==1){
+					$(".agree").empty().text("已审核  "+chkresult.data+"  "+chkresult.info);
+					$(":hidden[name='flag']").val('1');
+				}else{
+					$(".confrim").empty().text("已确认  "+chkresult.data+"  "+chkresult.info);
+				}
+			}else{
+				alert("权限不足!");
+			}
+		}
+	})
+}
+</script>
+<include file="Public:footer" />

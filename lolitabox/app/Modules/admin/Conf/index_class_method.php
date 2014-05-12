@@ -1,0 +1,66 @@
+<?php 
+ $class_method_list=array (
+  'Index' => 
+  array (
+    'ceshi' => '测试',
+    'index' => '(index)',
+    'ceshi1' => '(ceshi1)',
+  ),
+  'common' => 
+  array (
+    '_initialize' => '(_initialize)',
+    'checkBlacklist' => '(checkBlacklist)',
+    'check_login' => '(check_login)',
+    'getUserid' => '(getUserid)',
+    'getNickname' => '(getNickname)',
+    'getUsername' => '(getUsername)',
+    'getEvaluateEffectList' => '(getEvaluateEffectList)',
+    'getEvaluateEffectTop' => '(getEvaluateEffectTop)',
+    'collect' => '(collect)',
+    'cancel_collect' => '(cancel_collect)',
+    'agreewith' => '(agreewith)',
+    'send_reply' => '(send_reply)',
+    'follow' => '(follow)',
+    'getFollowStatus' => '(getFollowStatus)',
+    'getBehaviourStatus' => '(getBehaviourStatus)',
+    'addBehaviour' => '(addBehaviour)',
+    'postSinaWeibo' => '(postSinaWeibo)',
+    'shortenSinaUrl' => '(shortenSinaUrl)',
+    'getUserSinaOpenInfo' => '(getUserSinaOpenInfo)',
+    'cancel_follow' => '(cancel_follow)',
+    'getBestEvaluateList' => '(getBestEvaluateList)',
+    'getFollowList' => '(getFollowList)',
+    'getVisitList' => '(getVisitList)',
+    'ishaveuseraddress' => '(ishaveuseraddress)',
+    'blog_category' => '(blog_category)',
+    'getDarenTopList' => '(getDarenTopList)',
+    'remoteimg' => '(remoteimg)',
+    'userTraceStat' => '(userTraceStat)',
+    'upBrandVisitNum' => '(upBrandVisitNum)',
+    'getUserTaskTwo' => '(getUserTaskTwo)',
+    'setPromotionCookie' => '(setPromotionCookie)',
+    'getPromotionCookie' => '(getPromotionCookie)',
+    'page' => '(page)',
+  ),
+  'products' => 
+  array (
+    '_empty' => '(_empty)',
+    'detail' => '(detail)',
+    'add_channel_hitcount' => '(add_channel_hitcount)',
+    'send_comments' => '(send_comments)',
+    'postCommentSyncSinaWeibo' => '(postCommentSyncSinaWeibo)',
+    'kindeditor_upload_json' => '(kindeditor_upload_json)',
+    'ishavefollow' => '(ishavefollow)',
+    'ifHaveBuyPro' => '(ifHaveBuyPro)',
+    'public function getProductinfo' => '(public function getProductinfo)',
+    'updateEvaluateAvg' => '(updateEvaluateAvg)',
+    'getSkinTypePercent' => '(getSkinTypePercent)',
+  ),
+  'special' => 
+  array (
+    '_empty' => '(_empty)',
+    'index' => '(index)',
+    'show' => '(show)',
+  ),
+)
+  ?>

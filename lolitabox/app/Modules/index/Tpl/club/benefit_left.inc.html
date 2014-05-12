@@ -1,0 +1,17 @@
+	
+	
+	<div class="side_bar">
+    	<ul>
+    		<li><a href="<{:u('club/benefit')}>"><em class="benefit_index">&nbsp;</em></a></li>
+    		<li><a href="<{:u('club/benefit_task')}>" >玩美任务</a></li>
+    		<li><a href="<{:u('club/benefit_products')}>" >伪妆宝贝</a></li>
+    		<li><a href="<{:u('club/benefit_detail')}>" >品牌信息</a></li>
+    		<li><a href="<{:u('club/benefit_track')}>"  class="judge_login">我的足迹</a></li>
+    	</ul>
+    </div>
+    
+    <script>
+    	var url = "<{:u(MODULE_NAME.'/'.ACTION_NAME)}>";
+ 		$(".side_bar a[href*='"+url+"']").closest("li").addClass("side_bar_select");
+    </script>
+    <!--侧边导航-end-->

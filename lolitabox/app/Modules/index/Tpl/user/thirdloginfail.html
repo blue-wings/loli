@@ -1,0 +1,42 @@
+<include file="public:header_simple.inc" />
+<!--公用---头部--end------->
+<i class="zc_hd_register"></i>
+
+<div class="mb16">
+<div class="fm1024">
+	<div class="wp1020">
+		<div class="hd_t"></div>
+		<div class="main">
+			<!--第三方登录失败--内容--start-->
+				<div class="login_bound_con">
+					<!---内容信息提示---->
+					<div class="no_bound_wrap">
+						<p class="icon">
+							<img src="public/images/face/feel.gif" width="120" height="120">
+						</p>
+						<p class="tit">很抱歉，账号绑定失败了，太没天理了~</p>
+						<p class="text"><span class="S_txt1">3</span> 秒后将自动跳转到LOLITABOX网站首页</p>
+						<p class="btn">
+							<a href="/" target="_target" class="W_pin_b">跳转到首页</a>
+							<if condition="$return.bingurl eq 'qq'">
+								<a href="<{:U("user/qq_login")}>" target="_target" class="W_pin_b">
+									<span>重新绑定</span>
+								</a>
+							<elseif condition="$return.bingurl eq 'sina'" />
+								<a href="<{:U("user/sina_login")}>"  target="_target" class="W_pin_b">
+									<span>重新绑定</span>
+								</a>						
+							</if>			
+						</p>
+					</div>
+				</div>
+			<!--第三方登录失败--内容--end-->
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+</div>
+
+
+<!--标准底---start--->
+<include file="public:footer_simple.inc" />

@@ -1,0 +1,134 @@
+<include file="public:header.inc" />
+
+<!--分页--start-->
+<div class="fm1020 top_guide">
+	所在位置：<a href="/">网站首页</a> > <a href="<{:U('home/index')}>">个人主页</a> ><span class="g9">已完成任务</span>
+</div>
+<!--分页--end-->
+
+<!--个人中心--内容--start-------->
+<div class="fm1020_b cfl">
+	<!--左侧导航--->
+	<include file="home:left.inc" />
+	
+	
+	<!--右侧-内容-->
+	<div class="f738 r wp738">
+		<!--分享详情页内容-->
+		<div class="hd">
+			<div class="tit_hd_tab l">
+				<h2 class="tit_hd_strong">我的任务</h2>
+				<span class="tit_hd_con"><a href="<{:u('home/task')}>">未完成任务(<{$datanum['ntasknum']}>)</a></span>
+				<span class="tit_hd_con  select"><a href="<{:('home/finished_task')}>">已完成任务(<{$datanum['ytasknum']}>)</a></span>
+			</div>
+		
+		</div>
+		<div class="main My_details_wrap"   id="main_contaner">
+			<notempty name="return.tasklist">
+			<!---已完成任务--->
+			<div class="W_main_task">
+				<div class="task_domain cfl">
+					<i class="task_top_bg"></i>
+					<i class="task_btm_bg"></i>
+					<!--左导航--start---->
+					<div class="task_domain_l">
+					       <if condition="$return[tasklist] neq ''">
+								<ul class="task_domain_l_list">
+									<volist name="return.tasklist" id="vo">
+									<li>
+											<if condition="$return[type] eq $vo[taskid]">
+												<a href="javascript:void(0)" onclick="get_task_info('<{$vo[taskid]}>')" id="index_list_<{$vo.taskid}>" class="index_list select"><i class="W_ico20 <{$vo[style]}>"></i><{$vo[title]}><notempty name="vo.count">(<{$vo.count}>)</notempty></a>
+											<else />
+												<a href="javascript:void(0)" onclick="get_task_info('<{$vo[taskid]}>')" id="index_list_<{$vo.taskid}>" class="index_list"><i class="W_ico20 <{$vo[style]}>"></i><{$vo[title]}><notempty name="vo.count">(<{$vo.count}>)</notempty>
+												</a>
+											</if>
+										</li> 
+									</volist>
+								</ul>
+							</if>
+						
+					</div>
+					<!--左导航--end---->
+					<!----内容--star------>
+					<div class="task_domain_r"   id="task_info">
+					</div>
+					<!----内容--end------>
+				</div>
+			
+			</div>
+			<else/>
+		      <script>
+		  $(function(){
+					 nodata("main_contaner","哎呀呀，您还没有完成过任何任务呢~~","赶快去看看还有什么<a href='<{:U('home/task')}>'>任务</a>吧~~");
+		  })
+	         </script>
+		    </notempty>
+		</div>
+		
+		<div class="ft"></div>
+	</div>
+</div>
+<script>
+
+function get_task_info(id){
+	if(!id){
+		return false
+	}
+	$(".index_list").removeClass("select");
+	$("#index_list_"+id).addClass("select");
+	$.ajax({
+		url:"<{:u('task/finished')}>",
+		type:"get",
+		data:"id="+id,
+		dataType:"html",
+		success:function(data){
+			$("#task_info").html("");
+			$("#task_info").append(data);
+		}
+	})
+}
+
+$(function(){
+	var typeid="<{$return[taskid]}>";
+	get_task_info(typeid);
+})
+
+var dialog_bound;
+function if_unbound(type,stat,obj){
+	$("#bound_type").val(type);
+	var info="";
+	if(type=='sina'){
+		if(stat==1){
+			info="取消新浪账号绑定，您是否确认要取消绑定？";
+		}else{
+			info="取消新浪账号绑定，将扣减50积分，您是否确认要取消绑定？";
+		}
+	}else if(type=='qq'){
+		if(stat==1){
+			info="取消腾讯账号绑定，您是否确认要取消绑定？";
+		}else{
+			info="取消腾讯账号绑定，将扣减50积分，您是否确认要取消绑定？";
+		}		
+	}
+	var info=info+"<p style='text-align:center;'><a href='javascript:void(0)' onclick='to_bound()' class='W_pin_b'>确定</a></p>";
+	$("#bound_info").html(info);
+	var dialog_bound=$.dialog({
+		content:info,
+		opacity:0.2,
+		lock:true,
+		follow:obj,
+		padding:"20px 20px",
+	})
+}
+
+function to_bound(){
+	var type=$("#bound_type").val();
+	if(type){
+		var url="__APP__/task/jumpto_unbound?type="+type;
+		window.location=url;
+	}
+}
+
+</script>
+<!--标准底---start--->
+<include file="public:footer.inc" />

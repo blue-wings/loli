@@ -1,0 +1,28 @@
+	
+	
+	<div class="hd">
+		<div class="tit_hd_tab l">
+			
+			<if condition="ACTION_NAME eq 'index' && $type neq 1">
+				<span class="tit_hd_con select"><a href="<{:u('try/index')}>" >全部试用</a></span>
+			<else />
+				<span class="tit_hd_con"><a href="<{:u('try/index')}>" >全部试用</a></span>
+			</if>
+			
+			<span class="tit_hd_con <eq name='ACTION_NAME' value='iexchange'>select</eq>"><a href="<{:u('try/iexchange')}>">积分试用</a></span>			
+			
+			<if condition="ACTION_NAME eq 'index' && $type eq 1">
+				<span class="tit_hd_con select"><a href="<{:u('try/index',array('type'=>1))}>" >付邮试用</a></span>
+			<else />
+				<span class="tit_hd_con hd_ft"><a href="<{:u('try/index',array('type'=>1))}>" >付邮试用</a></span>
+			</if>			
+			
+			<!--span class="tit_hd_con"><a href="#"><em class="i_giftbox">&nbsp;</em>免费试用</a></span-->
+
+		</div>
+	</div>
+<script>
+$(function(){
+	ajax_replace("type","__ACTION__");
+})
+</script>

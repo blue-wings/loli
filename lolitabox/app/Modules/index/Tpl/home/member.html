@@ -1,0 +1,129 @@
+<include file="public:header.inc" />
+<!--分页--start-->
+<div class="fm1020 top_guide">
+	所在位置：<a href="/">网站首页</a> > <a href="<{:u('home/index')}>">个人主页</a> > <span class="g9">我的特权</span></a>
+</div>
+<!--分页--end-->
+
+<!--个人中心--内容--start-------->
+<div class="fm1020_b cfl">
+	<!--左侧导航--->
+	<include file="left.inc" />
+	
+	<!--右侧-内容-->
+	<div class="f738 r wp738">
+		<!--分享详情页内容-->
+		<div class="hd">
+			<div class="tit_hd_tab l">
+				<span class="tit_hd_member select"><a>我的特权</a></span>
+			</div>
+		</div>
+		<div class="main My_details_wrap">
+			<div class="pl_content_orders">
+				<!----内容--->
+				<i class="hei1 mb16"></i>
+				<!--会员状态-->
+				<div class="member_state_regular">
+					<if condition="$return[memberinfo][state] eq 0">
+						<ul>
+							<li>我当前会员类型：普通会员</li>
+						</ul>
+			               <a href="<{:u('member/index')}>" target="_blank" class="W_pin_b">升级特权会员</a>
+			               <a href="<{:u('special/member')}>" target="_blank">特权会员有哪些特权？</a>					
+					<elseif condition="$return[memberinfo][state] eq 1" />
+						<ul>
+							<li>我当前会员类型：特权会员</li>
+							<li>有效期：<{$return[memberinfo][date]}></li>
+							<li>距离特权失效还有：<{$return[memberinfo][uptime]}> 天</li>
+						</ul>
+			            <a href="<{:u('member/index')}>" target="_blank" class="W_pin_b">续费特权会员</a>							
+					<elseif condition="$return[memberinfo][state] eq 2" />
+						<ul>
+							<li>我当前会员类型：特权已经过期</li>
+							<li>有效期：<{$return[memberinfo][date]}></li>
+						</ul>
+			            <a href="<{:u('member/index')}>" target="_blank" class="W_pin_b">续费特权会员</a>					
+					</if>
+				</div>
+
+				<!--会员状态end-->                                 
+				<div class="W_order_wrap">
+					<p class="order_tables_title">特权会员订单记录</p>
+					<notempty name="return.list">	
+						<table class="order_tables" border="0" cellspacing="0" cellpadding="0" width="100%">
+							<tbody>
+							<tr height="46">                                                                                    
+								<th>订单编号</th>
+								<th>金额</th>
+								<th>支付时间</th>
+								<th>特权会员类型</th>
+								<th>特权有效期</th>
+							</tr>
+							<volist name="return.list" id="vo">
+								<tr <if condition="$i%2 eq 0">class="hav_bac"</if>>
+									<td><{$vo[ordernmb]}></td>
+									<td><{$vo[price]}>元</td>
+									<td><{$vo[paytime]}></td>
+									<td><{$vo[name]}>(<{$vo[m_type]}>个月)</td>
+									<td><{$vo[from]}> 至 <{$vo[to]}></td>
+								</tr>
+							</volist>
+							</tbody>
+						</table>
+					<else />	
+					<div id="no_msg" style="border:1px solid #eee;width:690px;"></div>
+					<script>
+					    $(function(){
+							nodata("no_msg","您还没有购买过特权会员");
+					   })
+					</script>	
+					</notempty>	
+
+				</div>
+                <div class="member_con">
+                	<p>特权内容</p>
+                	<div class="member_list">
+                		<dl>
+                			<dt>
+                				<p><img src="public/images/member/icon_01.png" width="106" height="106" alt=""/></p>
+                				<p><a href="<{:U("buy/index")}>" target="_blank" class="A_line3">超低折扣购买萝莉盒</a></p>
+                			</dt>
+                			<dd><span>尊享4至6折购买售卖中的萝莉盒。</span></dd>
+                		</dl>
+                		<dl>
+                			<dt>
+                				<p><img src="public/images/member/icon_02.png" width="106" height="106" alt=""/></p>
+                				<p><a href="<{:U("try/index",array("type"=>1))}>" target="_blank" class="A_line3">尊享付邮试用</a></p>
+                			</dt>
+                			<dd><span>付邮试用只对特权会员开放，是特权会员的特殊权利。</span></dd>
+                		</dl>
+                		<dl>
+                			<dt>
+                				<p><img src="public/images/member/icon_03.png" width="106" height="106" alt=""/></p>
+                				<p><a href="<{:U("try/iexchange")}>" target="_blank" class="A_line3">最少积分免费兑换</a></p>
+                			</dt>
+                			<dd><span>特权会员享受积分折扣，可以用最少的积分轻松实现免费兑换。</span></dd>
+                		</dl>
+                		<dl>
+                			<dt>
+                				<p><img src="public/images/member/icon_04.png" width="106" height="106" alt=""/></p>
+                				<p><a href="<{:U("buy/show",array("boxid"=>143))}>" target="_blank" class="A_line3">特享随心选试用</a></p>
+                			</dt>
+                			<dd><span>仅对特权会员开放随心选试用，随心所欲获取您最心水的品牌试用装</span></dd>
+                		</dl>
+                		<dl>
+                			<dt>
+                				<p><img src="public/images/member/icon_05.png" width="106" height="106" alt=""/></p>
+                				<p><a href="<{:U("special/member")}>" target="_blank" class="A_line3">更多特权与惊喜</a></p>
+                			</dt>
+                			<dd><span>尊享服务、备受呵护<br>尽在更多特权与惊喜</span></dd>
+                		</dl>
+                	</div>
+                </div>
+				<em class="hei1"></em>
+			</div>
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+<include file="public:footer.inc" />

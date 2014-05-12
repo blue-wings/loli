@@ -1,0 +1,231 @@
+      <div class="zt_content_main cfl" id="loliboxsChangeWrap">
+        <div class="zt_content_l">
+          <div class="zt_flow cfl">
+            <div class="zt_flow_tit l">限时购抢购流程</div>
+            <div class="zt_flow_list l"></div>
+          </div>
+          <div class="zt_flow cfl">
+            <div class="zt_flow_tit l">限时购抢购规则</div>
+            <div class="zt_flow_text l cfl">
+              <ul class="l">
+                <li>1、0积分产品，每一单最多选择1件。</li>
+                <li>2、3折优惠产品，每一单最多选择2件。</li>
+                <li>3、5折优惠产品，每一单最多选择5件。</li>
+                <li>4、抢购成功的产品，2个工作日后发出。</li>
+                <li>5、每单最多可选5件产品。</li>
+              </ul>
+              <ul class="l">
+                <li>6、每单需扣除300积分作为邮费，</li>
+                <li>　　订单不予合并。</li>
+                <li>7、抢购成功后可继续抢购下一单。</li>
+                <li>8、限时抢活动，只在法定工作日进行。</li>
+              </ul>
+            </div>
+          </div>
+          <!--div class="zt_times"> <i>今天限时抢剩余时间：</i>0时0分0秒 </div-->
+          <p class="zt_times" id="timer"><i>活动倒计时：</i><span>0</span>天<span>00</span>时<span>00</span>分<span>00</span>秒</p>
+		
+  <script type="text/javascript">
+	  var time_now_server,time_now_client,time_end,time_server_client,timerID;
+	  var e_time="<{$return['endtime']}>";
+	  var s_time="<{$return['starttime']}>";
+	  time_end=new Date(e_time);//结束的时间
+	  time_end=time_end.getTime(); 
+	  time_now_server=new Date(s_time);//开始的时间
+	  time_now_server=time_now_server.getTime();
+	  time_now_client=new Date();
+	  time_now_client=time_now_client.getTime();
+	  time_server_client=time_now_server-time_now_client;
+	  setTimeout("show_time()",1000);
+	  function show_time(){
+	   var timer = document.getElementById("timer");
+	   if(!timer){
+	   return ;
+	   }
+	   timer.innerHTML =time_server_client;
+	   var time_now,time_distance,str_time;
+	   var int_day,int_hour,int_minute,int_second;
+	   var time_now=new Date();
+	   time_now=time_now.getTime()+time_server_client;
+	   time_distance=time_end-time_now;
+	   if(time_distance>0){
+	    int_day=Math.floor(time_distance/86400000)
+	    time_distance-=int_day*86400000;
+	    int_hour=Math.floor(time_distance/3600000)
+	    time_distance-=int_hour*3600000;
+	    int_minute=Math.floor(time_distance/60000)
+	    time_distance-=int_minute*60000;
+	    int_second=Math.floor(time_distance/1000)
+	    if(int_hour<10)
+	     int_hour="0"+int_hour;
+	    if(int_minute<10)
+	     int_minute="0"+int_minute;
+	    if(int_second<10)
+	     int_second="0"+int_second;
+	    str_time= "<i>活动倒计时：</i><span>"+int_day+"</span>天<span>"+int_hour+"</span>时<span>"+int_minute+"</span>分<span>"+int_second+"</span>秒";
+	    timer.innerHTML=str_time;
+	    setTimeout("show_time()",1000);
+	   }
+	   else
+	   {
+	  	 timer.innerHTML ="<i>活动倒计时：</i><span>0</span>天<span>00</span>时<span>00</span>分<span>00</span>秒";
+	  	 $.dialog({
+	  		 content:"非常抱歉，今天的活动已经结束，欢迎您再次参与限时抢活动。",
+	 		fixed:true,
+			opacity:0.2,
+			lock:true,
+			icon:"error",
+			close:function(){
+				location.reload();
+			},
+			padding:"20px"
+	  	 })
+	    clearTimeout(timerID)
+	   }
+	  }	  
+	  
+	  
+
+</script>
+
+  <div class="zt_showboxs_minute cfl">
+          
+        <foreach name="return['productlist']" item="pro" key="ikey">  
+            <div class="cont_bg"><{$return[cnamelist][$ikey][title]}>产品，每单最多选<{$ikey}>个</div>
+            <div class="cfl My_order_fabirc"> 
+            
+              <foreach name="pro" item="vo" key="keys">
+              <div class="fabric_list_cont auto">
+                <dl>
+                  <dt><a href="javascript:void(0)" onclick="dialog_products(<{$vo.pid}>);"><img src="<{$vo[pimg]}>" width="135" height="135" alt="<{$vo[pname]}>" style="display: inline;"></a>
+				<if condition="$vo.commend_tags_class neq ''">
+					<i class="<{$vo[commend_tags_class]}>"></i>
+				</if>
+				<i class="i_select" <neq name="vo.if_select" value="1">style="display:none;"</neq> id="i_select_<{$vo.id}>"></i>				
+                   </dt>
+                  <dd class="name"><a href="javascript:void(0)" onclick="dialog_products(<{$vo.pid}>);"><{$vo[pname]}></a></dd>
+                  <dd class="brand">
+						<volist name="vo.sale_tags"    id="v">
+							<a href="javascript:void(0)" class="t_tips t_tips_0<{$i}>"><{$v}></a>
+						</volist>
+                  </dd>
+                  <dd>试用装规格：<{$vo[norms]}></dd>
+                  <dd><span class="r rd"><b><{$vo[discount_score]}> 积分</b></span>原积分:<span class="rd"><s><{$vo[total_score]}></s></span></dd>
+                  <dd class="tc">
+                  <if condition="$vo[now_num] elt 0">
+						<a href="javascript:void(0)" class="W_pin_grey">已抢完</a>
+                  <else />
+                	  <a href="javascript:void(0)" class="<eq name='vo[if_select]' value='1'>W_pin_grey<else />W_pin_b</eq> actv5-select" select-id="<{$vo[id]}>"  select-type="<{$ikey}>" select-name="<{$return[cnamelist][$ikey][title]}>" id="act_select_<{$vo.id}>"><span><eq name='vo[if_select]' value='1'>已选择<else />我要抢购</eq></span></a>                  
+                  </if>
+                  
+                  </dd>
+                </dl>
+              </div>
+              </foreach>
+            </div>
+        </foreach>    
+   
+		   <volist name="return[select_num]" id="vo">
+		   		<input type="hidden" id="selet_type_<{$i}>" value="<{$vo}>"/>
+		   </volist>
+ 			<input type="hidden" id="boxid" value="<{$return[boxinfo][boxid]}>" />
+			<input type="hidden" id="total_selectnum" value="<{$return[total_selectnum]}>">           
+            <div id="zt_after">&nbsp;</div>
+          </div>
+        </div>
+        
+        
+        <div class="f275 r">
+          <div class="integral_wrap_perch mb16"> 
+            <!---外框--->
+            <div id="changeInventoryMeg" style="position: static; top: 0px; left: 933.5px;">
+              <div class="order_integral_xf ">
+                <div class="hd">
+                  <h2>我的积分兑换清单</h2>
+                </div>
+                <div class="main"> 
+                  <!--悬浮框内容--> 
+                  <i class="hei1"></i>
+                  <div class="integral_wrap">
+                  
+ 					<div class="integral_wrap_none" id="iexchange_nomsg" <notempty name="return[sessionlist]">style="display:none;"</notempty>>
+						您还没选择任何产品
+					</div>						
+						<ul id="zixuan_selectlist">
+						<volist name="return[sessionlist]" id="vo">
+								<li id="have_select_<{$vo[itemid]}>">
+									<dl class="cfl">
+										<dt><a href="javascript:void(0)" onclick="dialog_products(<{$vo.productid}>);"><img src="<{$vo.pimg}>" width="64" height="64" alt="<{$vo[pname]}>" /></a></dt>
+										<dd class="name"><a href="javascript:void(0)" onclick="dialog_products(<{$vo.productid}>);">【<{$return[cnamelist][$vo[type]][title]}>】<{$vo[pname]}></a></dd>
+										<dd class="select">
+										<span><{$vo[norms]}></span>
+										<a href="javascript:void(0)" class="delect" onclick="del_actv5('<{$vo.itemid}>','<{$vo[type]}>','<{$vo[discount_score]}>',this)">删除</a></dd>
+									</dl>
+								</li>
+						</volist>	
+						</ul>                   
+                    
+                    
+                  </div>
+                  <div class="integral_submit">
+                   <div class="cfl mb10">
+                   		<p class="l">共<span class="select_totalnum"><{$return[select][num]}></span>件</p>
+                    	<ul class="r">
+                        	<li>限时购消耗积分：<span class="rd pro_totalscore"><{$return[select][products_score]}></span></li>
+                            <li>邮费消耗积分：<span class="rd"><{$return[select][postage_score]}></span></li>
+                        </ul>
+                   </div>
+                    <p class="tc"><a href="javascript:void(0)" class="W_pin_b14" onclick="actv5_buy(this)">立即兑换</a></p>
+                    <p class="tc"><a href="/info/lolitabox/aid/1235.html" target="_blank" class="A_line3">积分不够怎么办？</a></p>
+                  </div>
+                  <i class="hei1"></i> </div>
+                <div class="ft"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+        
+        
+        <script>
+function findDimensions(topPeak,wrapPeak,btnPeak){
+	var isIE6 = !-[1,] && !window.XMLHttpRequest;
+	var meg = $(wrapPeak);
+	var ids =$(topPeak);
+	var scrolltop_top =  ids.offset().top;
+	var scrolltop_left =  ids.offset().left ;
+	var footer_top = $(btnPeak).offset().top-meg.height();
+	
+
+	$(window).scroll(function(){
+		var H = $(this).scrollTop();
+		var fl_left = scrolltop_left+650+ "px";
+		 if( H >= scrolltop_top){
+			 if(isIE6){
+				meg.css({position: "absolute","top":H+"px","left":fl_left});
+			 }else if(H >= footer_top){
+				meg.css({position: "absolute","top":footer_top+"px","left":fl_left});
+			 }else{
+				meg.css({"position":"fixed","top":"0","left":fl_left});
+			}
+		}
+		else{
+			meg.css({"position":"static"});
+		}
+	});
+}
+	
+	findDimensions('#loliboxsChangeWrap','#changeInventoryMeg','#zt_after');
+	window.onresize=findDimensions;	
+	
+</script> 
+      </div>
+      
+      
+      
+ <include file="activity_v5.inc" />
+<script src="/public/js/activity_v5.js"></script>
+<script src="/public/js/activity.inc.js"></script>    
+      
+      

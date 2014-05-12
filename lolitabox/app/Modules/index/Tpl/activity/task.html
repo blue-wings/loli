@@ -1,0 +1,425 @@
+<include file="public:header.inc" />
+<script src="/public/js/zeroClipboard.js"></script>
+<style type="text/css">
+body {text-align:left; color:#333; background:#1a0a38; margin:0;  padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif; background:#650319;}
+body,html{width:100%;}
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p,dl,dt,dd{margin: 0; padding: 0; border: 0;}
+a {color:#333; text-decoration:none;}
+h1,h2,h3,h4,h5,h6,h7{margin:0; padding:0;}
+a:hover {color: #333; text-decoration:underline} 
+font{font-size:14px}
+.textRight{text-align:right;}
+b{color:#fff}
+
+.zt{width:1000px;height:auto; margin:0 auto;text-align:center; margin-bottom: 20px;font-size:14px;}
+.t1,.t2,.t3,.t4,.t5,.t6,.t7,.t8,.t9,.t10,.t11{ line-height:30px;}
+.zt_bgs1{ background:url(public/special/20131101/bgs_01.jpg) center top  no-repeat;}
+.zt_bgs2{ background:url(public/special/20131101/bgs_02.jpg) center top no-repeat; margin:0 auto;}
+.zt_main{ background:url(public/special/20131101/bgs_03.jpg)  repeat-x; margin:0 auto;}
+.zt_main .zt_main_con{ background: #fff; width: 1000px; margin: 0 auto;}
+
+.zt1,.zt2{ margin-bottom: 0px;}
+.zt2{ width:950px;height:auto; background:url(public/special/20131101/bg_02.jpg) no-repeat; padding-left:50px; padding-top:20px;}
+.zt2 .t1{ float:left; margin-right:80px; }
+
+.zt3 .t1,.zt5 .t1{ color:#fff; font-size:18px;}
+.zt3 .t1{background: url(public/special/20131101/bg_05.jpg) no-repeat; height: 30px;margin-bottom: 30px;padding-top: 33px;padding-left: 60px;}
+.zt3 .t2{ padding-left: 50px; width: 950px; text-align: left;}
+.zt3 li{ float:left; padding-left:40px; width:426px; margin-bottom:20px;}
+.zt3 .t3{ background:url(public/special/20131101/star_1.png) no-repeat; }
+.zt3 .t4{background:url(public/special/20131101/star_2.png) no-repeat;}
+.zt3 .t5{background:url(public/special/20131101/star_3.png) no-repeat;}
+.zt3 .t6{background:url(public/special/20131101/star_4.png) no-repeat;}
+.zt3 .t7{background:url(public/special/20131101/star_5.png) no-repeat;}
+.zt3 .t8{ color:#c00022; padding:20px 0 20px 50px;}
+.zt3 .t9{ padding-bottom: 60px;}
+.zt3 .t9 a{ background: #b20000; padding: 5px 30px; color: #fff;}
+
+.zt4 .t1,.zt4_2 .t1{font-size:18px; width:954px; height:28px; margin-left: 20px;}
+.zt4 .t1 li,.zt4_2 .t1 li{float:left; padding:0 27px; color:#c00022;}
+.zt4 .t1 li.selected,.zt4_2 .t1 li.selected{ color:#fff;background:#c00022; border-radius: 10px 10px 0px 0px;-moz-border-radius:10px 10px 0px 0px;-webkit-border-radius:10px 10px 0px 0px;text-decoration:none;}
+.zt4 .t2{border:2px dashed #c00022; width:954px; margin-left:20px; height:auto;padding-top: 10px;}
+.zt4 .t2 dl{ float:left; text-align:center; margin:10px 40px;_margin:10px 35px; width:156px; overflow:hidden;}
+.zt4 .t2 dd{ height:30px; overflow:hidden;}
+.zt4 .t2 dl dt{ border:1px solid #999999;}
+.zt4 .t2 dl dd.fs12 a{ color:#c00022; font-size:12px;}
+.title_way{font-size:18px; color:#c00022; text-align: left;}
+.zt4_2 .t2{ padding-left:27px;border:2px dashed #c00022; width:927px;_width:900px;*width: 900px; margin-left:20px; *margin-left:0px; height:auto;padding-top: 30px;}
+.way_02,.way_03{ padding-bottom: 30px;}
+.zt4_2 .t2 .way_01{ height: 170px; margin-bottom: 5px;}
+.zt4_2 .t2 .way_01_l{width: 772px;}
+.zt4_2 .t2 .way_01_ll{border: 1px solid #eee;text-align: left;}
+.zt4_2 .t2 .way_01_l input{ width: 745px;}
+.zt4_2 .t2 .way_01_r{ margin: 33px;_margin: 33px 20px; *margin:33px 20px;}
+.zt4_2 .t2 .way_01_r a,.zt4_2 .t2 .way_03_l .free a{ background: #4ED80E; padding: 5px 30px; color: #fff;}
+.zt4_2 .t2 .way_01_r a:hover,.zt4_2 .t2 .way_03_l .free a:hover{ text-decoration: none;}
+.zt4_2 .t2 .way_03_l span{ margin-right: 10px; line-height: 18px;}
+.zt4_2 .t2 .way_03_l p{ margin-bottom: 15px;}
+.zt4_2 .t2 .way_03_l{ text-align: left;}
+.zt4_2 .email_fre input{ width: 210px;}
+.zt4_2 .Verification_code input{ width: 70px; font-size: 12px; float: left; margin-right: 10px;}
+.zt4_2 .change,.zt4_2 .code{  float: left;}
+.pd{padding: 5px 10px 10px 10px;}
+.zt4_2 .t2 .way_02 li{ float: left; margin: 0px 7px;}
+.zt4_2 .t2 .way_03_l,.zt4_2 .t2 .way_03_r{ width: 423px;*width: 410px; height: 125px; border: 1px solid #eee;}
+.zt4_2 .t2 .way_03_r{ margin: 0px 27px 0px 10px; _margin: 0px 0px 0px 10px;*margin: 0px 0px 0px 10px; _float:left; *float:left;}
+.zt4_2 .t2 .way_03_r p{ margin-bottom: 20px;_margin-bottom: 14px;}
+.zt4_2 .t2 .way_03_r li{ float: left; margin: 0px 8px;}
+.code img{ border: 1px solid #000; }
+.zt5 .t2{ margin-left: 220px;  padding-bottom: 30px;}
+.zt5 ul li{ float: left; margin:0  36px;}
+.zt5 .t1{background:url(public/special/20131101/bg_06.jpg) no-repeat; margin-bottom:30px;padding-top: 16px;padding-left: 60px;}
+/*弹框*/
+.comment_lists_target{ width:1000px; height:400px; background:#fff;}
+.comment_lists_target a{ color:#e7308c;}
+.comment_lists_target .comment_lists_hd{ height:54px; background:#f3f3f3; font-size:18px; line-height:54px;padding-left: 40px;}
+.comment_lists_target .comment_lists_con{ padding:26px 10px 20px  40px;height: 290px;overflow-y:auto; }
+.comment_lists_target .comment_lists_con ul{width:942px; min-height:70px; }
+.comment_lists_target .comment_lists_con li{ float:left;}
+.comment_lists_target .comment_lists_con  .comment_lists_le{ width:750px; padding-left:20px;}
+.comment_lists_target .comment_lists_con  .comment_lists_ri{ padding-left:35px;}
+</style>
+<div class="zt_bgs1">
+    <!--头部图片--> 
+    <div class="zt zt1 cfl">
+        <div class="bg"><img src="public/special/20131101/bg_01.jpg" width="1000" height="381"/></div>
+    </div> 
+
+<div class="zt_bgs2">
+    <!--导航栏--> 
+    <div class="zt zt2">
+    <div class="t1"><a href="<{:u('activity/task')}>"><img src="public/special/20131101/nav_1.png" width="403" height="44"/></a></div>
+    <div class="t2"><a href="<{:u('activity/task',array('type'=>2))}>"><img src="public/special/20131101/nav_2.png" width="428" height="44"/></a></div>
+    </div> 
+</div>
+
+<div class="zt_main cfl">
+
+
+<if condition="$return[type] eq 2">
+
+    <div class="zt_main_con cfl">
+    <div class="zt zt3 cfl">
+        <div class="t1">积分奖励描述</div>
+        <div class="t2 cfl">
+            <ul>
+                <li class="t3">选择列表中的产品，发表您对该产品的真实试用心得，被评为精彩分享后将获得<b><font color=red>20</font></b>个积分（非下列产品的精彩分享只能获得10个积分）；</li>
+                <li class="t4">将列表中产品的精彩分享转发到新浪微博或腾讯微博，一次可获得正常分享转发的<b><font color=red>5</font></b>倍积分，即：<b><font color=red>5</font></b> 个积分；</li>
+                <li class="t5">多次转发同一篇精彩分享到新浪或腾讯微博，只有第一次可以获得积分奖励，转发到新浪或腾讯微博每天只对前5次转发进行积分奖励；</li>
+            </ul>
+        </div>
+
+	        	<div class="t8">小贴士： <a href="<{:u('info/lolitabox',array('aid'=>'1273'))}>" class="A_line3"  target="blank">分享秘笈---分享"加精"必读此笈哦！:) </a>&nbsp;&nbsp;<a href="<{:u('info/lolitabox',array('aid'=>'1235'))}>" class="A_line3"  target="blank">积分攻略-了解更多积分的获取方式</a>    </div>
+    </div>
+
+
+
+
+	<div class="zt zt4 cfl">
+	    <div class="t1">
+	        <ul>
+	           <li class="selected">等你分享的产品列表</li>
+	            <li><a href="<{:u('home/share')}>" class="judge_login" target="_blank">查看我发的分享</a></li>
+	        </ul>
+	    </div>
+	    <div class="t2 cfl">
+	    	<notempty name="return.list">
+				<volist name="return.list" id="vo">
+				        <dl>
+				            <dt><a href="<{$vo[url]}>" target="_blank"><img src="<{$vo[pimg]}>" width="152" height="151" alt="<{$vo[pname]}>" /></a></dt>
+				            <dd style="text-align:left;margin-top:5px;height:55px; line-height:18px;" title="<{$vo[pname]}>"><a href="<{$vo[url]}>" target="_blank"><{$vo[pname]}>（规格：<{$vo[goodssize]}>）</a></dd>
+				            <dd><a href="javascript:void(0)" onclick="dialog_share('<{$vo[pid]}>',1)"><em class="W_pin_b">发分享</em></a></dd>
+				            <dd class="fs12"><a href="javascript:void(0)" onclick="dialog_sharemore('<{$vo[pid]}>')">转发精彩分享</a></dd>
+				        </dl>
+			     </volist>
+			 <else />
+			 <div style="margin-top:100px;margin-bottom:100px;font-size:16px;">暂时没有产品信息，数据正在整理中，请稍候...</div>   
+		     </notempty>
+	    </div>
+	</div>
+	
+<!--积分说明-->
+		    <div class="zt zt5 cfl">
+		        <div class="t1">积分说明</div>
+		        <div class="t2 cfl">
+		            <ul>
+		                <li>
+		                <a href="<{:u('info/lolitabox',array('aid'=>1236))}>" target="_blank">
+		                    <p><img src="public/special/20131101/jifen_1.png" width="51" height="51"/></p>
+		                    <p>积分是什么</p>
+		               </a>
+		                </li>
+		                <li>
+		                <a href="<{:u('info/lolitabox',array('aid'=>1235))}>" target="_blank">
+		                    <p><img src="public/special/20131101/jifen_2.png" width="73" height="51"/></p>
+		                    <p>如何获得积分</p>
+		                </a>
+		                </li>
+		                <li>
+		                <a href="<{:u('home/score')}>" class="judge_login" target="_blank">
+		                    <p><img src="public/special/20131101/jifen_3.png" width="62" height="51"/></p>
+		                    <p>查看我的积分</p>
+		                </a>
+		                </li>
+		                <li>
+		                <a href="<{:u('try/iexchange')}>" target="_blank">
+		                    <p><img src="public/special/20131101/jifen_4.png" width="69" height="51"/></p>
+		                    <p>积分兑换</p>
+		               </a>
+		                </li>
+		            </ul>
+		        </div>
+		    </div>
+</if>
+
+<if condition="$return[type] eq 1">
+    <div class="zt_main_con cfl">
+    <div class="zt zt3 cfl">
+        <div class="t1">积分奖励描述</div>
+        <div class="t2 cfl">
+            <ul>
+                <li class="t3">每邀请 <b><font color="#000000">1</font></b> 位好友到萝莉盒网站注册并通过手机验证，邀请人将获得 <b><font color=red>50</font></b> 积分奖励；</li>
+                <li class="t4">被邀请好友首次购买萝莉盒，邀请人可获得 <b><font color=red>100</font></b> 积分奖励(使用优惠券除外)；  </li>
+            </ul>
+        </div>
+       <if condition="$return[userinfo] eq ''">
+	        	<div class="t9"><a href="javascript:void(0)" onclick="return dialog_login();">登录</a></div>
+		 </if>
+	</div>
+
+	 
+	<if condition="$return[userinfo] neq ''">
+			<div class="zt zt4_2 cfl">
+		    <div class="t1">
+		        <ul>
+		            <li class="selected">邀请方式</li>
+		           <li> 
+		           		<a href="<{:u('task/index',array('id'=>10))}>" target="_blank">接受邀请的好友记录</a> 			</li>
+		        </ul>
+		    </div>
+		    <div class="t2">
+		        <div class="way_01 cfl">
+		            <p class="title_way">方式一：链接邀请（方便、直接）</p>
+		            <div class="way_01_l l">
+		                <div class="way_01_ll pd l">
+		                    <p id="copytext">我注册了萝莉盒，这里有很多主流品牌化妆品正在提供试用。【萝莉盒】致力于帮助爱美女性发现并找到真正适合自己的美容产品，倡导最时尚的生活消费理念：先试用后购买！强烈推荐你来啊！
+		                    链接地址：<{$return[inviteurl]}></p>
+		                </div>
+		                    <div class="way_01_lr r">小贴士：您可以点击“复制”按钮，然后将上面的内容发送给QQ或MSN好友</div>
+		                </div>
+		            <div class="way_01_r r"><a href="javascript:void(0)"  id="copy-button">复制</a></div>
+		        </div>
+<script type="text/javascript">
+		var clip = null;
+		ZeroClipboard.setMoviePath("/public/images/ZeroClipboard.swf");
+		$(document).ready(function(){
+			clip = new ZeroClipboard.Client();
+			clip.setHandCursor(true);
+			clip.setText($("#copytext").html());
+			clip.glue("copy-button");
+			clip.addEventListener("complete", function(){
+				alert("已经将邀请信息及链接地址复制到剪贴板中，现在就把邀请信息粘贴到QQ、MSN或者邮件内容中发送给好友吧：）！");
+			});
+		});
+</script>
+
+		    <div class="way_02 cfl">
+		        <p class="title_way">方式二：轻松分享（立即吸引更多好友关注）</p>
+		        <ul>
+		            <li>
+		            <a href="javascript:void(0)" onclick="javascript:bShare.share(event,'sinaminiblog',0);return false;">
+		                <p>
+		                	<img src="public/special/20131101/icon_01.png" width="98" height="96" alt=""/>
+		                </p>
+		                <p>分享到微博</p>
+		               </a>
+		            </li>
+		            <li>
+		            <a href="javascript:void(0)" onclick="javascript:bShare.share(event,'qqmb',0);return false;">
+		                <p><img src="public/special/20131101/icon_02.png" width="97" height="96" alt=""/></p>
+		                <p>分享到腾讯微博</p>
+		                </a>
+		            </li>
+		            <li>
+		            <a href="javascript:void(0)" onclick="javascript:bShare.share(event,'qqim',0);return false;">
+		                <p><img src="public/special/20131101/icon_03.png" width="97" height="96" alt=""/></p>
+		                <p>分享到QQ好友</p>
+		                </a>
+		            </li>
+		            <li>
+		            <a href="javascript:void(0)" onclick="javascript:bShare.share(event,'qzone',0);return false;">
+		                <p><img src="public/special/20131101/icon_04.png" width="98" height="96" alt=""/></p>
+		                <p>分享到QQ空间</p>
+		                </a>
+		            </li>
+		            <li>
+		            <a href="javascript:void(0)" onclick="javascript:bShare.share(event,'renren',0);return false;">
+		                <p><img src="public/special/20131101/icon_05.png" width="98" height="96" alt=""/></p>
+		                <p>分享到人人网</p>
+		                </a>
+		            </li>
+		            <li>
+		            <a href="javascript:void(0)" onclick="javascript:bShare.share(event,'meilishuo',0);return false;">
+		                <p><img src="public/special/20131101/icon_06.png" width="98" height="96" alt=""/></p>
+		                <p>分享到美丽说</p>
+		                </a>
+		            </li>
+		            <li>
+		            <a href="javascript:void(0)" onclick="javascript:bShare.share(event,'mogujie',0);return false;">
+		                <p><img src="public/special/20131101/icon_07.png" width="98" height="96" alt=""/></p>
+		                <p>分享到蘑菇街</p>
+		              </a>
+		            </li>
+		            <li>
+		            <a href="javascript:void(0)" onclick="javascript:bShare.share(event,'douban',0);return false;">
+		                <p><img src="public/special/20131101/icon_08.png" width="97" height="96" alt=""/></p>
+		                <p>分享到豆瓣</p>
+		                </a>
+		            </li>
+		        </ul>
+		    </div>
+		
+		<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=d0450ae2-8861-464d-a951-8c690dd91f17&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+		<script type="text/javascript" charset="utf-8">
+		bShare.addEntry({
+			title:"萝莉盒就是化妆品试用",
+		    summary: "我注册了萝莉盒，这里有很多主流品牌化妆品正在提供试用。【萝莉盒】致力于帮助爱美女性发现并找到真正适合自己的美容产品，倡导最时尚的生活消费理念：先试用后购买！强烈推荐你来啊！",
+		    url:"<{$return[inviteurl]}>",
+		    pic:"http://www.lolitabox.com/public/images/weibo.jpg"
+		});
+		
+		   function shareto_friend(obj){
+		  		if(!USER_ID){
+		  			dialog_login();
+		  			return false;
+		  		}else{
+		   		 var mail=$("#email").val();
+				 if(mail=="好友邮箱地址"){
+					 mail="";
+				 }
+				 if(mail==""){
+					 id_dialog("请输入您的好友的邮箱账号",obj,2);return false;
+				 }
+				 var verify=$("#verify").val();
+				 if(verify=="输入验证码"){
+					 verify="";
+				 }
+				 if(verify==""){
+					 id_dialog("请输入验证码",obj,2);return false;
+				 } 
+		   		 $.ajax({
+		   			 url:"<{:u('activity/share_tofriend')}>",
+		   			 type:"post",
+		   			 dataType:"json",
+		   			 data:{verify:verify,mail:mail},
+		   			 success:function(ret){
+		   				 if(parseInt(ret.status)==0){
+		   					 id_dialog(ret.info,obj,2);
+		   				 }else{
+		   					 id_dialog("邮件已经发送给您的好友",obj,1);
+		   					 $("#verify").val("");
+		   					 $("#email").val("");
+		   					 showa();
+		   				 }
+		   			 }
+		   		 })
+		  		}
+		   }
+		</script>
+		    
+		    <div class="way_03 cfl">
+		        <p class="title_way">方式三：邮件邀请（正式、有效）</p>
+		        <div class="way_03_l pd l">
+		            <p style="text-align:center">好东西一起分享，输入你的好友邮箱 </p>
+		            <p>
+		                <span class="email_fre">
+		                <input type="text" name="email" id="email" value="好友邮箱地址"></span>
+		                <span class="free"><a href="javascript:void(0)" onclick="shareto_friend(this)">免费发送</a></span>
+		            </p>
+		            <p>
+		                <span class="Verification_code">
+		                <input type="text" name="verify" id="verify" value="输入验证码" /></span>
+		                <span class="code"><img src="<{:U('public/verify')}>" onclick="show(this)" id="veimg" style="cursor:pointer" title="看不清？换一张"/></span>
+		                <span class="change"><a href="javascript:void(0)" onclick="showa()">看不清？换一张</a></span>
+		            </p>
+		        </div>
+		  <script>
+			  $("#email").focus(function(){
+			 	 var val=$("#email").val();
+			 	 if(val=="好友邮箱地址"){
+			 		 $("#email").val("");
+			 	 }
+			  })   
+			  
+			  $("#verify").focus(function(){
+			 	 var val=$("#verify").val();
+			 	 if(val=="输入验证码"){
+			 		 $("#verify").val("");
+			 	 }
+			  })
+		  
+		  function show(obj){
+		 		obj.src="__APP__/public/verify/random/"+Math.random();
+		 		var ve = $(":text[name='verify']");
+		 		if(ve.val() != '' && ve.val()!="输入验证码"){
+		 			cludefun();
+		 		}
+		 	}
+		
+		 	function showa(){
+		 		$("#veimg").click();
+		 	}
+		  </script>   
+		        <div class="way_03_r pd r">
+		            <p>登录您的常用邮箱，一次可以发给多位好友 </p>
+		            <ul>
+		                <li><a href="http://mail.sina.com.cn/" target="_blank"><img src="public/special/20131101/icon_m_01.png" width="63" height="64" alt=""/></a></li>
+		                <li><a href="http://mail.163.com/" target="_blank"><img src="public/special/20131101/icon_m_02.png" width="63" height="64" alt=""/></a></li>
+		                <li><a href="http://mail.sohu.com/" target="_blank"><img src="public/special/20131101/icon_m_03.png" width="65" height="64" alt=""/></a></li>
+		                <li><a href="http://m.mail.qq.com/" target="_blank"><img src="public/special/20131101/icon_m_04.png" width="62" height="64" alt=""/></a></li>
+		                <li><a href="http://mail.google.com/" target="_blank"><img src="public/special/20131101/icon_m_05.png" width="62" height="64" alt=""/></a></li>
+		            </ul>
+		        </div>
+		    </div>
+		    </div>
+		</div>
+		<!--积分说明-->
+		    <div class="zt zt5 cfl">
+		        <div class="t1">积分说明</div>
+		        <div class="t2 cfl">
+		            <ul>
+		                <li>
+		                <a href="<{:u('info/lolitabox',array('aid'=>1236))}>" target="_blank">
+		                    <p><img src="public/special/20131101/jifen_1.png" width="51" height="51"/></p>
+		                    <p>积分是什么</p>
+		               </a>
+		                </li>
+		                <li>
+		                <a href="<{:u('info/lolitabox',array('aid'=>1235))}>" target="_blank">
+		                    <p><img src="public/special/20131101/jifen_2.png" width="73" height="51"/></p>
+		                    <p>如何获得积分</p>
+		                </a>
+		                </li>
+		                <li>
+		                <a href="<{:u('home/score')}>" class="judge_login" target="_blank">
+		                    <p><img src="public/special/20131101/jifen_3.png" width="62" height="51"/></p>
+		                    <p>查看我的积分</p>
+		                </a>
+		                </li>
+		                <li>
+		                <a href="<{:u('try/iexchange')}>" target="_blank">
+		                    <p><img src="public/special/20131101/jifen_4.png" width="69" height="51"/></p>
+		                    <p>积分兑换</p>
+		               </a>
+		                </li>
+		            </ul>
+		        </div>
+		    </div>
+	</if>
+	</div>
+</if>
+</div>
+</div>
+</div>
+<include file="public:footer.inc" />

@@ -1,0 +1,146 @@
+<div class="tc_pop tc_share_wrap ">
+	
+	<div class="login_tit">
+		<h2>分享到微博</h2>
+		 <div class="title_r"><a href="<{:u('info/lolitabox',array('aid'=>1235))}>" target="_blank">转发分享轻松获得积分</a></div>
+	</div>
+	<div class="share_content">
+		<!---分享选择--->
+		<ul class="share_custom cfl">
+			<li>
+				<label for="sina_savestate">
+					<input type="checkbox"  id="shareto_sina"   name="shareto_sina"  class="shareto_checksinabox" <if condition="$bind['sina'] eq 1">checked="checked"</if>>
+					<b title="分享到新浪微博" class="i_sina">&nbsp;</b>新浪微博
+				</label>
+			</li>
+			<li>
+				<label for="qq_savestate">
+					<input type="checkbox" id="shareto_qq"    name="shareto_qq"  class="shareto_checkqqbox"  <if condition="$bind['qq'] eq 1">checked="checked"</if> >
+					<b title="分享到腾讯微博" class="i_qqweibo"></b>腾讯微博
+				</label>
+			</li>
+		</ul>
+		<!---内容--->		
+		<div class="share_entry">
+			<textarea class="input_detail"  id="shareto_textarea" readonly style="color:#ccc;"><{$return.content}></textarea>
+		</div>
+		<!---按钮--->		
+		<div class="share_smb">
+			<a href="javascript:void(0)" class="W_pin_b"  id="to_share">转发</a>
+			<a href="javascript:void(0)" class="W_pin_grey"  style="display:none" id="in_share" >转发中...</a>
+			<a href="javascript:void(0)" class="A_line2"  onclick="shareto_dialog.close()">取消</a>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="if_sina" id="if_sina" value="<{$bind['sina']}>"/>
+<input type="hidden" name="if_qq" id="if_qq" value="<{$bind['qq']}>"/>
+<input type="hidden" name="shareto_img" id="shareto_img" value="<{$return.img}>"/>
+<input type="hidden" name="shareto_shareid" id="shareto_shareid" value="<{$return.id}>"/>
+<input type="hidden" name="if_add" id="if_add" value="0" />
+<input type="hidden" name="shareto_numid" id="shareto_numid" value=""/>
+
+<script>
+function user_ifbind(){
+	$.ajax({
+		url:"<{:u('home/user_if_bind')}>",
+		type:"post",
+		dataType:"json",
+		async:false,
+		success:function(ret){
+			if(parseInt(ret.status)==1){
+					$("#if_sina").val(ret.info.sina);
+					$("#if_qq").val(ret.info.qq);
+			}
+		}
+	})
+}
+
+ $(function(){
+	var if_qq="<{$bind['qq']}>";
+	var if_sina="<{$bind['sina']}>";
+	if(if_qq!=1 && if_sina!=1){
+		$("#to_share").attr("class","W_pin_grey");	
+	}
+}) 
+
+$(".shareto_checksinabox").click(function(){
+	if(document.getElementById("shareto_sina").checked==false){
+		$("#if_sina").val(0);
+		if(document.getElementById("shareto_qq").checked==false){
+			$("#shareto_bt").addClass('disable');
+			$("#to_share").attr("class","W_pin_grey");	
+		}
+	}else{
+		user_ifbind();
+		if($("#if_sina").val()!=1){
+			if($("#if_sina").val()==0){
+				window.open("__APP__/user/sina_lock");
+			}else{
+				window.open("__APP__/user/sina_login");
+			}
+			document.getElementById("shareto_sina").checked=false;
+		}else{
+			$("#to_share").attr("class","W_pin_b");	
+		}
+	}
+})
+
+
+$(".shareto_checkqqbox").click(function(){
+	if(document.getElementById("shareto_qq").checked==false){
+		$("#if_qq").val(0);
+		if(document.getElementById("shareto_sina").checked==false){
+			$("#to_share").attr("class","W_pin_grey");	
+		}
+	}else{
+		user_ifbind();
+		if($("#if_qq").val()!=1){
+			if($("#if_qq").val()==0){
+				window.open("__APP__/user/qq_lock");
+			}else{
+				window.open("__APP__/user/qq_login");
+			}
+			document.getElementById("shareto_qq").checked=false;
+		}else{
+			$("#to_share").attr("class","W_pin_b");	
+		}
+	}
+})
+
+
+$("#to_share").click(function(){
+		if($.trim($("#shareto_textarea").val())==""){
+			alert("转发内容不能为空");
+			return false;
+		}
+		var type_sina=$("#if_sina").val();
+		var share_content=$("#shareto_textarea").val();
+		var shareid=$("#shareto_shareid").val();
+		var shareto_img=$("#shareto_img").val();
+		var type_qq=$("#if_qq").val();
+		var if_add=$("#if_add").val();
+		if(type_sina==0 && type_qq==0){
+			return false;
+		}
+		$("#to_share").hide();
+		$("#in_share").show();
+		$.ajax({
+			url:"<{:u('home/shareto_third')}>",	
+			type:"post",
+			dataType:"json",
+			data:{"type_sina":type_sina,"share_content":share_content,"shareid":shareid,"shareto_img":shareto_img,"type_qq":type_qq,"if_add":if_add},
+			success:function(ret){
+				$("#in_share").hide();
+				$("#to_share").show();
+				if(ret.status==1){
+					y_dialog("转发成功",3,function(){
+						shareto_dialog.close();
+					});
+				}else{
+					n_dialog("转发失败",2);
+				}
+			}
+		})
+})
+
+</script>

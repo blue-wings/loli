@@ -1,0 +1,58 @@
+		 <gt name="total"  value="0">
+				<div class="W_order_wrap">
+					<table class="order_tables" border="0" cellspacing="0" cellpadding="0" width="100%">
+						<tbody>
+						<tr height="46">                                                                                    
+							<th width="253">订单编号及名称</th>
+							<th width="64">收货人</th>
+							<th width="72">订单金额</th>
+							<th width="99">时间</th>
+							<th width="85">订单状态</th>
+							<th width="122">操作</th>
+							
+						</tr>
+						
+						
+					<volist name="list" id="vo">
+							<tr>
+								<td>
+								<p><{$vo[ordernmb]}></p>
+								<a href="<{:u('buy/show',array('boxid'=>$vo[boxid]))}>" target="_blank" class=""><p><{$vo[boxname]}><notempty name="vo[projectname]">+<{$vo[projectname]}></notempty></p></a>
+								</td>
+								<td><{$vo[linkman]}></td>
+								<td><{$vo[price]}>元</td>
+								<td><p><{$vo.addtime}></p></td>
+								<td>
+								<if condition="$vo.state gt 0">
+								<{$vo.status}>
+								<else />
+									<eq name="vo[ifavalid]" value="1">
+										<p>未付款</p>
+									<else />
+										<p class="g9">已失效</p>
+									</eq>
+								</if>
+								</td>
+								<td>
+									<p><a href="<{:u('home/order_detail',array('id'=>$vo[ordernmb]))}>">查看订单详情</a></p>
+									<if condition="$vo[state] eq 0 AND $vo[ifavalid] eq 1">
+									<a href="<{:u('buy/gopay',array('paytype'=>'repay','orderid' =>$vo['ordernmb']))}>"   target="_blank" class="W_pin_b">马上支付</a>
+									</if>
+									<if condition="$vo[state] eq 1 AND $vo[ifavalid] eq 1">
+										<p><a href="javascript:void(0)" class="W_pin_b" onclick="dialog_share('<{$vo.ordernmb}>',4)">晒盒</a><p>
+									</if>
+								</td>
+							</tr>
+					</volist>
+						</tbody>
+					</table>
+				</div>
+				
+	          <div id="page" class="W_pages"><{$page}></div>	
+	      <else/>
+	             <script>$(function(){
+					nodata("ajax_content","您还米有购买过萝莉盒。可以去<a href='<{:u("buy/index")}>' >挑选萝莉盒</a>看看最近推出的萝莉盒。","");
+				   })</script>
+	      </gt>		
+				
+				

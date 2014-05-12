@@ -1,0 +1,303 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="__PUBLIC__/js/colorbox/colorbox.css">
+<script src="__PUBLIC__/js/colorbox/jquery.colorbox-min.js"></script>
+<script>
+$(function(){
+		if("{$Think.get.contentlevel}"){
+			$("select[name='contentlevel']").val("{$Think.get.contentlevel}");
+		}
+		if("{$Think.get.stickies}"){
+			$("select[name='stickies']").val("{$Think.get.stickies}");
+		}			
+		if("{$Think.get.weibo}"){
+			$("select[name='weibo']").val("{$Think.get.weibo}");
+		}	
+  $(".inline").colorbox({inline:true, width:"50%"});
+})
+
+function con(){
+	if(confirm('请慎重选择是否转换?')){
+		return true;
+	}else{
+		return false;
+	}
+}
+</script>
+<div class="panel">
+<div align="left">
+<fieldset class="fieldset">
+<legend>日志查询条件</legend>
+<form name="myform" id="myform" action="__SELF__" method="GET">
+用户ID：<input id=userid name=userid type='text' value='{$Think.get.userid}'>  
+产品ID:<input id=productid name=productid type='text' value='{$Think.get.productid}'> 
+评测ID:<input id='evaluateid' name='evaluateid' type='text' value='{$Think.get.evaluateid}'>
+评测关键字:<input id='keywords' name='keywords' type='text' value='{$Think.get.keywords}'>
+<br>
+产品名：<input type="text"  name="pname"  value="{$Think.get.pname}">
+用户ID范围:<input id=userid_from name=userid_from type="text" value="{$Think.get.userid_from}"  size="10">-<input id="userid_to" name="userid_to" type="text" value="{$Think.get.userid_to}"  size="10">
+评测日期From:
+<input type="text" id="from" name="from" value="{$Think.get.from}"  size="15"/>
+<label for="to">to</label>
+<input type="text" id="to" name="to" value="{$Think.get.to}"  size="15"/>
+<br>
+
+产品品牌:<select id='brandcid' name='brandcid' type='text' value='{$Think.get.brandcid}'>
+<option value=''>--商品品牌--</option>
+<volist name='brand_list'  id='vo'>
+<option value="{$vo[id]}" <eq name="Think.get.brandcid" value="$vo.id">selected</eq>>|--{$vo[name]}</option>
+</volist>
+</select>
+
+内容级别:<select name="contentlevel" value="{$Think.get.contentlevel}">
+		<option value="" selected>全部</option><option value="5">精华</option><option value="1">普通</option></select>
+
+置顶状态:<select name="stickies" value="{$Think.get.stickies}">
+		<option  selected>全部</option><option value="1">置顶</option><option value="2">未置顶</option></select>
+
+是否同步到微博:
+<select name="weibo">
+<option value="" selected>全部</option>
+<option value='1'>同步</option>
+<option value='2'>未同步</option>
+</select>
+<br>
+<input name="usertype" type="radio"  style="border:0px;" <eq name="Think.get.usertype" value="100"> checked="checked" </eq> value="100">合作评测数据
+<input name="usertype" type="radio" style="border:0px;" <eq name="Think.get.usertype" value="10"> checked="checked" </eq> value="10">用户评测数据&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="{:U('Article/batchImgRemote2Local',array('table'=>'productsEvaluate'))}" onclick="return  con()">批量转换数据库结果</a>
+<br>
+<input type=submit name=search vlaue="search">
+</form>
+			</fieldset>
+		</div>
+	</div>
+<form name="listform" id="listform" action="__URL__/delEvaluate" method="post">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">评测列表</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            <td width="5%" height="26"><div align="center">选择</div></td>
+            <td width="5%" height="18"><div align="center">删除</div></td>
+            <td width="4%" height="18"><div align="center">ID</div></td>
+            <td width="4%" height="18"><div align="center">级别</div></td>
+            <td width="4%" height="18"><div align="center">置顶</div></td>
+            <td width="10%" height="18"><div align="center">标题</div></td>
+            <td width="25%" height="18"><div align="center">内容</div></td>
+			<td width="4%" height="18"><div align="center">回复数</div></td>
+            <td width="8%" height="18"><div align="center">日期</div></td>
+            <td width="6%" height="18"><div align="center">用户名</div></td>
+            <td width="4%" height="18"><div align="center">用户ID</div></td>
+            <td width="10%" height="18"><div align="center">产品名</div></td>
+			<td width="5%" height="18"><div align="center">微博</div></td>
+            <td width="7%" height="18"><div align="center">编辑</div></td>
+            
+          </tr>
+<volist name="list" id="evaluatelist" emtpy="这里一片空白" key="k">
+          <tr style="text-align:center">
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE1">
+              <input name="id[]" type="checkbox" class="STYLE2" value="{$evaluatelist.evaluateid}" />
+            </div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center"><span class="STYLE2"><img src="__PUBLIC__/images/010.gif" width="9" height="9" /> </span><span class="STYLE1">[</span><a onclick="return confirm('确认将此信息删除吗?')" href="__URL__/delEvaluate/id/{$evaluatelist.evaluateid}">删除</a><span class="STYLE1">]</span></div></td>
+            <td height="18" bgcolor="#FFFFFF" class="STYLE2">
+            	<div align="center"  class="STYLE2 STYLE1 evaluateid">
+            		<a href="/space/evaluate_detail/id/{$evaluatelist.userid}/eid/{$evaluatelist.evaluateid}.html" target="_blank"
+					>{$evaluatelist.evaluateid}</a>	
+            	</div>
+            </td>
+            <td height="18" bgcolor="#FFFFFF" class="STYLE2">
+            	<div align="center" class="STYLE2 STYLE1">
+            		<input type="hidden" value="{$evaluatelist[contentlevel]}" id="statuss_{$k}">
+            		<a href="#" id="keys_{$k}" onclick="levels('{$evaluatelist[evaluateid]}','{$k}','{$evaluatelist[productid]}')">
+            			<if condition="$evaluatelist.contentlevel eq 5"><span  style='color:red'>精华</span><else /><span  style='color:#06482A'>普通</span></if>
+            		</a>
+            	</div>
+            	</td>
+            <td height="18" bgcolor="#FFFFFF"><a href="#" id="key_{$k}" onclick="stickies('{$evaluatelist.evaluateid}','{$k}')"><if condition="$evaluatelist.toptime gt 0">置顶<else />未置顶</if></a></td>
+            <td height="18" bgcolor="#FFFFFF">
+            <div align="left" class="STYLE2 STYLE1">
+            	<a href="/space/evaluate_detail/id/{$evaluatelist.userid}/eid/{$evaluatelist.evaluateid}.html" target="_blank"
+					>{$evaluatelist.title}</a>	
+            </div></td>
+            <td height="18" bgcolor="#FFFFFF">
+            <div style="word-break: break-all; overflow:hidden;">
+{$evaluatelist.summary}<a class='inline' href="#content_{$evaluatelist.evaluateid}"><font color=red>查看</font></a>
+<div style='display:none'>
+	<div style='padding:10px; background:#fff;' id="content_{$evaluatelist.evaluateid}" >
+	{$evaluatelist.content}
+	</div>
+</div>     
+            </div><br>
+	            <volist name="evaluatelist.evaluate_img" id="evaluateimglist" emtpy="无图片">
+	            <a href="/data/userdata{$evaluateimglist.imgpath}" target="_blank"><img src="/data/userdata{$evaluateimglist.imgpath}" width=100 height=100 border=0></a>
+	            </volist>
+            </td>
+			 <td height="18" bgcolor="#FFFFFF">
+				<if condition="$evaluatelist[replynum] eq 0">
+					{$evaluatelist.replynum}
+				<else />
+					<a href="{:U('ProductsEvaluate/replylist',array('evaluateid'=>$evaluatelist[evaluateid]))}">
+						{$evaluatelist.replynum}
+					</a>
+				</if>
+			 </td>
+            <td height="18" bgcolor="#FFFFFF">{$evaluatelist.postdate}</td>
+            <td height="18" bgcolor="#FFFFFF">
+				<a href="{:U('User/userList',array('userid'=>$evaluatelist['userid']))}">{$evaluatelist.nickname}</a>
+			</td>
+            <td height="18" bgcolor="#FFFFFF" class="userid">
+				<a href="{:U('ProductsEvaluate/productEvaluateList',array('userid'=>$evaluatelist['userid']))}" >{$evaluatelist.userid}</a>
+			</td>
+            <td height="18" bgcolor="#FFFFFF">
+				<a href="{:U('ProductsEvaluate/productEvaluateList',array('productid'=>$evaluatelist['productid']))}">{$evaluatelist.pname}</a>
+			</td>
+			<td height="18" bgcolor="#FFFFFF"><if condition="$evaluatelist[if_sync_weibo] eq 0"><span  style='color:#06482A'>未同步<else /><span  style='color:red'>同步</if></span></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center"><img src="__PUBLIC__/images/037.gif" width="9" height="9" /><span class="STYLE1"> [</span>编辑<span class="STYLE1">]</span></div></td>
+            <td><input type="hidden" class="productid" value="{$evaluatelist.productid}"><input type="hidden" class="level" value="{$evaluatelist.contentlevel}"></td>
+          </tr>
+		</volist>
+
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr style="text-align:center">
+			<if condition="$list neq ''">
+            <td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+            <td width="75%" class="STYLE1"> <input type="submit" id="delSelected" value="删除所有选定评测信息"></td>
+          <else />
+			<td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">抱歉,没有找到您要查找的数据!</span></td>
+		  </if>
+		  </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</form>
+<script>
+function levels(evaluateid,key,productid){
+	var tip1="是否确认要将内容级别升级为精华？";
+	var tip2="是否确认要将内容级别变成普通？";
+	var value=$("#statuss_"+key).val();
+	
+	if(value=='1'){
+		if(confirm(tip1)){
+			sendsti(evaluateid,key,productid);
+		}
+			
+	}else if(value=='5'){
+		if(confirm(tip2)){
+			sendsti(evaluateid,key,productid);
+		}
+	}	
+}
+
+function sendsti(evaluateid,key,productid){
+		$.ajax({
+				url:"{:u('ProductsEvaluate/editcontentlevel')}",
+				type:"post",
+				dataType:"json",
+				data:"evaluateid="+evaluateid+"&productid="+productid+"&m="+Math.random(),
+				success: function(chkresult){
+						if(parseInt(chkresult.status)==1){					
+							var data=Number(chkresult.data);			
+							if(data==5){
+								$("#keys_"+key).html("<span  style='color:red'>精华</span>");
+							}else if(data==1){
+								$("#keys_"+key).html("<span  style='color:#06482A'>普通</span>");
+							}
+							$("#statuss_"+key).val(data);
+							
+						}
+					}
+			})		
+}	
+</script>
+
+
+
+	<script>
+	jQuery(function($){
+		$.datepicker.regional['zh-CN'] = {
+			closeText: '关闭',
+			prevText: '&#x3c;上月',
+			nextText: '下月&#x3e;',
+			currentText: '今天',
+			monthNames: ['一月','二月','三月','四月','五月','六月',
+			'七月','八月','九月','十月','十一月','十二月'],
+			monthNamesShort: ['一','二','三','四','五','六',
+			'七','八','九','十','十一','十二'],
+			dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+			dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+			dayNamesMin: ['日','一','二','三','四','五','六'],
+			weekHeader: '周',
+			dateFormat: 'yy-mm-dd',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: true,
+			yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+	});
+	$(function() {
+		$( "#from" ).datepicker({
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$( "#to" ).datepicker( "option", "minDate", selectedDate );
+			}
+		});
+		$( "#to" ).datepicker({
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$( "#from" ).datepicker( "option", "maxDate", selectedDate );
+			}
+		});
+	});
+	
+	function stickies(evaluateid,id){
+		$.ajax({
+				url:"{:u('ProductsEvaluate/stickies')}",
+				type:"post",
+				dataType:"json",
+				data:"evaluateid="+evaluateid+"&m="+Math.random(),
+				success: function(chkresult){
+						if(parseInt(chkresult.status)==1){
+							if(chkresult.data==0){
+								$("#key_"+id).text('未置顶');
+							}else{
+								$("#key_"+id).text('置顶');
+							}
+						}
+					}
+			})		
+		return false;
+	}
+	
+	
+	</script>
+<include file="Public:footer" />

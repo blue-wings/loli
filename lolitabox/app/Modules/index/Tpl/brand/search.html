@@ -1,0 +1,48 @@
+<include file="public:header.inc" />
+<!--公用---头部--end------->
+
+<!--分页--->
+<div class="fm1020 top_guide">
+	所在位置：<a href="/">网站首页</a> &gt; <a href="<{:u('brand/index')}>">品牌库</a> &gt; <span class="g9"> 品牌搜索结果页</span>
+</div>
+<!--品牌库--内容--end-------->
+<!----内容---->
+<div class="fm1020_b cfl">
+	<div class="wp1020 mb10"  id="ajax_content">
+		<include file="search_ajaxlist" />
+	</div>
+
+	
+	<!----其他产品推荐---->
+	<div class="wp1020">
+		<div class="hd">
+			<h3 class="i_tit l"><em class="t_brand">&nbsp;</em>其他品牌推荐</h3>
+			<a href="<{:u('brand/index')}>" class="i_more r mt15">&nbsp;</a>
+		</div>
+		<div class="main">
+			<div class="others_add_brand">
+			
+				<ul class="gl_list_module cfl">
+				  <volist name="return.interest_brand"  id="vo">
+					<li>
+						<p class="brand"><a href="<{$vo.brandurl}>" target="_blank"><img src="<{$vo.logo_url}>" width="165" height="165"></a></p>
+						<p class="name"><a href="<{$vo.brandurl}>" target="_blank"><{$vo.name_foreign}> <{$vo.name}></a></p>
+					</li>
+				 </volist>
+				</ul>
+			</div>
+		</div>
+		<div class="ft"></div>
+		
+	</div>
+
+
+	
+	
+</div>
+<!--品牌库--内容--end-------->
+
+
+
+<!--标准底---start--->
+<include file="public:footer.inc" />

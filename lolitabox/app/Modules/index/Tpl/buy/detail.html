@@ -1,0 +1,294 @@
+<include file="public:header.inc" />
+<style>
+	.tr_text{text-decoration:line-through;}						
+</style>	
+<div class="fm1020 top_guide">
+所在位置：<a href="/">网站首页</a> &gt; <in name="return[boxinfo][boxid]" value="109,128,133,134,135,136"><a href="<{:U('buy/tch')}>">订购贪吃盒</a><else/><a href="<{:U('buy/index')}>">订购美妆盒</a></in> &gt; <span class="g9">填写【<{$return[boxinfo][name]}>】订单信息</span>
+</div>
+<div class="fm1020_b">
+<div class="wp1020">
+	<include file="public:buy.tips" />
+	<div class="main">
+<div>
+	<div class="cfl">
+		<h4 class="l introduce_title">收货人信息</h4>
+		<p class="r mt15"><a href="<{:u('home/address')}>" target="_blank" class="A_line2">【管理收货地址】</a></p>
+	</div>
+<form name="formdetail"  id="formdetail"   method="post" action="<{:u('buy/confirm')}>" >					
+	<div class="gr_MyCen">
+		<include file="address.inc" />
+			<div class="boxs_zx_wrap">
+				<if condition="$return[if_try] eq 1">
+				<div class="cfl">
+					<h4 class=" introduce_title">商品清单</h4>
+				</div>					
+				<div class="box_zx_table mb16">
+					<table class="order_tables f14" cellpadding="0" cellspacing="0" border="0" width="980">
+						<tbody>
+							<tr height="27">
+							<th width="314">订购的产品</th>
+							<th width="118">价格（元）</th>
+							<th width="128">邮费（元）</th>
+							<th width="128">优惠券抵消（元）</th>
+							<th width="156">其他别的优惠（元）</th>
+							<th>应付总金额（元）</th>
+						</tr>
+						<tr>
+							<td><p class="l"><a href="javascript:void(0)" onclick="dialog_products('<{$return[product_info][pid]}>')"><img src="<{$return[product_info][pimg]}>" width="80" height="80"></a></p><p class="l fabric ml10"><a href="javascript:void(0)" onclick="dialog_products('<{$return[product_info][pid]}>')"><{$return[product_info][pname]}></a></p><p>试用装规格：<span class="rd"><{$return[product_info][norms]}></span></p></td>
+							<td>0</td>
+							<td>10</td>
+							<td><span class="rd">0</span></td>
+							<td>0</td>
+							<td><span class="rd totalprice"><{$return[boxinfo][now_price]}></span></td>
+							<input type="hidden" id="now_price" name="now_price" value="<{$return[boxinfo][now_price]}>" />
+						</tr>
+						</tbody>
+					</table>
+				</div>				
+			<else />	
+				<div class="cfl">
+					<h4 class=" introduce_title">商品详情</h4>
+				</div>	
+				<div class="box_zx_table mb16">
+				
+					<neq name="return.member_state" value="1">
+						<div class="bubble_tips" style="left:458px;top:-70px;">
+							<a href="<{:u('member/index')}>" target="_blank">支付<{$return[member_price]}>元成为特权会员，立即尊享特权会员价</a>
+						</div>			
+					</neq>
+								
+					<table class="order_tables f14" cellpadding="0" cellspacing="0" border="0" width="980">
+						<tbody>
+							<tr height="40" style="background-color:#FFFFFF">
+							<th width="244">订单名称</th>
+							<th width="130">普通会员价格（元）</th>
+							<th width="130">特权会员价格（元）</th>
+							<th width="80">邮费（元）</th>
+							<th width="115">优惠券抵扣（元）</th>
+							<th width="140">其他抵扣（元）</th>
+							<th>应付总金额（元）</th>
+						</tr>
+						<tr>
+							<td><p><img src="<{$return[boxinfo][pic]}>" width="100" height="100" alt="<{$return[boxinfo][name]}>">	</p>
+							<p><{$return[boxinfo][name]}><if condition="$return[boxinfo][projectinfo] neq ''"><br />+<{$return[boxinfo][projectinfo][projectname]}></if></p>
+							</td>
+							<td <eq name="return[member_state]" value="1">class="tr_text"</eq>><{$return[boxinfo][box_price]}></td>
+							<td <neq name="return[member_state]" value="1">class="tr_text"</neq>><{$return[boxinfo][member_price]}></td>
+							<td>0</td>
+							<td><span class="rd codeprice">0</span></td>
+							<td><eq name="return[boxinfo][if_solo]" value="1">20<else />0</eq></td>
+							<td><span class="rd totalprice"><{$return[boxinfo][now_price]}></span></td>
+							<input type="hidden" id="now_price" name="now_price" value="<{$return[boxinfo][now_price]}>" />
+						</tr>
+
+						<neq name="return.if_try" value="1">	
+						<!-- 礼品寄语 -->
+							<tr class="add_buy" style="background-color:#FFFFFF"><td colspan="7">
+							<div class="top_toggle_wrap cfl">
+								<a href="javascript:void(0)" class="content cfl" id="write_sendword" style="color:#000;text-decoration:none;">	
+									<i class="z_unfold mr5">&nbsp;</i>
+									每个萝莉盒都可以是送给TA的一份神秘温馨礼品，点击这里，写上你最想对TA说的话吧！
+								</a>
+							</div>
+							<div class="sendword_wrap" style="display:none; margin-top:10px;margin-bottom:20px;margin-left:25px;">
+								<textarea class="sendword_textarea" id="wordsend_text" name="wordsend_text">请写下您的赠言，小萝仆纯手工帮你抄写在精美的卡片上，转达你美好的祝福，字写的不好不要怪罪小萝仆哦。</textarea><br />(还可以输入<span id="sendword_num">200</span>字)
+							</div>
+							<style>
+							.sendword_textarea{width:360px; height:100px;margin:3px 0 0;border:1px solid #CCC;word-wrap:break-word;overflow-y:auto;overflow-x:hidden;padding:5px;color:#999;}
+							</style>
+							<script>
+								$('#write_sendword').click(function(){
+									$('.sendword_wrap').toggle();
+									$(this).find('.z_unfold').toggleClass('z_shrink')
+								})
+								$(function(){
+									var word_msg="请写下您的赠言，小萝仆纯手工帮你抄写在精美的卡片上，转达你美好的祝福，字写的不好不要怪罪小萝仆哦。";
+									$("#wordsend_text").focus(function(){
+										var sendword=$.trim($("#wordsend_text").val());
+										if(sendword==word_msg){
+											$("#wordsend_text").val("");
+										}
+									})
+									limit_word_num('wordsend_text','sendword_num',200);
+								})
+							</script>
+							</td></tr>	
+					</neq>
+
+					<if condition="$return[boxinfo][if_select] eq 1">
+					<!-- 随心选产品列表显示 -->
+					<tr class="add_buy" style="background-color:#f6f6f6"><td colspan="7"> <a href="<{:u('buy/zixuan',array('boxid'=>$return[boxinfo][boxid]))}>" class="A_line3">点击这里，重新修改已选产品清单</a></td></tr>	
+						<tr><td colspan="7">
+						<div class="box_fabric_wp mb10">
+							<div class="box_zx_fabric cfl" id="oldBoxList">
+								<div class="old_buy_wrap old_buy_wrap_static l rel" id="select_product_list"></div>
+							</div>
+						</div>
+						</td></tr>
+					</if>
+
+				<if condition="$return[boxinfo][projectlist] neq ''">
+				<!-- 增值方案列表 -->
+						<tr class="add_buy" style="background-color:#f6f6f6"><td colspan="7">享受私人订制，选择超值加价购（只允许选择一个哦！）</td></tr>	
+						<tr class="add_buy">
+							<td colspan="7" style="background-color:#FFFFFF">
+								<ul>
+								<volist name="return[boxinfo][projectlist]" id="vo">
+									<li><input type="checkbox" name="select_projectid" <if condition="$vo[id] eq $return[boxinfo][projectinfo][id]">checked="checked"</if> id="select_projectid_<{$vo[id]}>" onclick="choose_project('<{$vo[id]}>')"/>&nbsp;<b>加</b> <span>￥<{$vo[price]}> 元</span><br/><div style="padding:10px;"><{$vo[remark]}></div></li>
+									</volist>
+                                </ul>
+                                <input type="hidden" name="projectid" id="projectid" value="<{$return[boxinfo][projectinfo][id]}>" />
+							</td>
+						</tr>						
+						<script>
+						function choose_project(id){
+							var id_name="select_projectid_"+id;
+							var boxid="<{$return[boxid]}>";
+							if(document.getElementById(id_name).checked==false){
+								location.href="/buy/detail/boxid/"+boxid+".html";
+							}else{
+								location.href="/buy/detail/boxid/"+boxid+"/projectid/"+id+".html";
+							}
+						}
+						</script>							
+				</if>
+					
+					
+						</tbody>
+					</table>
+				</div>
+			</if>
+	</div>
+
+		<div class="gify_privilege cfl">
+		<div class="cfl">
+			<div class="zx_privilege mb16 l">
+				<if condition="$return[boxinfo][if_use_coupon] eq 1 && $return[if_try] neq 1">
+				<!--优惠劵--->
+					<div class="top_toggle_wrap cfl">
+						<a href="javascript:void(0)" class="content cfl" id="toggleContent">	
+							<i class="z_unfold mr5">&nbsp;</i>
+							<span class="toggle_tips">优惠券（使用优惠券购买萝莉盒后将不能获得积分）</span>
+						</a>
+					</div>
+					<script>
+					$('#toggleContent').click(function(){
+						$('.toggle_wrap').toggle();
+						$(this).find('.z_unfold').toggleClass('z_shrink')
+					})
+					</script>
+					<div class="toggle_wrap">
+						<div class="content">
+							<ul class="options">
+								<li>
+									<ul class="options_select" id="couponlist_div" style="display:none;">
+										<if condition="$return[couponlist] neq ''">
+											<volist name="return[couponlist]" id="vo">
+												<li onclick="to_coupontext('<{$vo[code]}>')">
+													<{$vo[price]}>元优惠劵（有效期至<{$vo[endtime]}>）
+												</li>
+											</volist>
+										</if>										
+										</ul>								
+								
+									<div class="title">输入您的优惠券号码：</div>
+									<div class="input">
+										<input type="text" class="W_input_ws" value="" id="couponcode" name="couponcode" />
+										<a href="javascript:void(0)" onclick="checkcoupon(this)"  class="W_pin_b">确定</a>
+										<a href="javascript:void(0)" onclick="cancel_coupon(this)" class="W_pin_grey"  id="cancelcoupon" style="display:none;">放弃使用优惠券</a>
+									</div>
+								</li>
+								<li class="cfl">
+									<div class="title"></div>
+									<div id="check_cou"></div>
+								</li>
+							</ul>
+						</div>
+					</div>		
+					
+	<script>
+	$(function(){
+		$("#couponcode").click(function(event){
+			if($("#couponcode").val()==""){
+				var couponlist="<{$return[couponlist]}>";
+				if(couponlist!=""){
+					$("#couponlist_div").show();
+				}
+			}
+		})
+	})
+	function to_coupontext(code){
+		$("#couponcode").val(code);
+		$("#couponlist_div").hide();
+	}
+	</script>			
+	</if>
+
+	<if condition="$return[giftcard_price] gt 0">
+		 <div class="top_toggle_wrap cfl" style="margin-left:5px;">
+			 <input type="checkbox" name="choose_giftcard" id="choose_giftcard" />
+			 <label for="choose_giftcard">
+			 <span class="toggle_tips" style="padding-left:10px;">礼品卡余额支付</span>
+			 </label>
+			 <span>（您当前礼品卡余额为 <b>￥<span class="giftcard_price"><{$return[giftcard_price]}></span></b>）</span>
+			 <a href="<{:u('home/giftcard')}>" target="_blank" class="A_line3 ml5">查看礼品卡</a>
+		  </div>
+	</if>
+								
+	<script>
+		$('#gifyContent').click(function(){
+			$('.gify_valid_wrap').toggle();
+			$(this).find('.z_unfold').toggleClass('z_shrink')
+		})
+		
+	</script>
+</div>
+		
+	<div class="r gify_pay_text">
+			<div class="p-text">
+				<p>优惠券抵消：<span class="rd">￥<span class="codeprice">0</span></span></p>
+				<p>礼品卡余额支付抵消：<span class="rd">￥<span class="cost_giftcardprice">0</span></span></p>
+				<p class="f14">实际应付总金额：<span class="rd">￥<span class="totalprice"><{$return[boxinfo][now_price]}></span></span></p>
+			</div>
+	</div>
+	
+</div>
+<include file="pay_bank.inc" />	
+
+<div class="r gify_pay_text">
+		<div class="p-info" style="display:none;">
+			<p><strong>寄送至：</strong><span class="final_address"></span></p>
+			<p><strong>收货人：</strong><span class="final_user"></span></p>
+			<p class="f18">实际应付总金额：<span class="rd">￥<span class="totalprice"><{$return[boxinfo][now_price]}></span></span></p>
+		</div>
+		
+		<div class="p-btn">
+			<input type="hidden" name="if_try" id="if_try" value="<{$return[if_try]}>" />
+			<input type="hidden" name="pro_info" id="pro_info" value="" />
+			<input type="hidden" name="total_num" id="total_num" value="" />								
+			<input type="hidden" id="try_id" value="<{$return[product_info][id]}>" />
+			<input type="hidden" id="try_num" value="" />
+			<input type="hidden" name="pid" value="<{$return[product_info][id]}>">	
+			<input type="hidden" id="boxid" name="boxid" value="<{$return[boxid]}>">	
+			<input type="hidden" id="if_select_box" value="<{$return[boxinfo][if_select]}>">	
+			<input type="hidden" id="couponprice" name="couponprice" value="0" />	
+			<input type="hidden" id="if_usegiftcard" name="if_usegiftcard" value="0" />
+			<input type="hidden" id="giftcard_price" name="giftcard_price" value="<{$return[giftcard_price]}>">
+			<input type="hidden" id="cost_giftcard_price" name="cost_giftcard_price" value="0" />
+			<input type="hidden" id="if_coupon" name="if_coupon" value="0" />
+			<input type="button" onclick="check_detail(2,this)" class="W_pin_b14 r" value="确认无误，提交订单" />
+		</div>
+</div>		
+		
+	<div class="hei1"></div>
+</div>
+</div>		
+</form>				
+					
+			</div>
+		</div>
+		<div class="ft"></div>
+	</div>	
+</div>
+<script src="public/js/buy.js"></script>
+<include file="public:footer.inc" />

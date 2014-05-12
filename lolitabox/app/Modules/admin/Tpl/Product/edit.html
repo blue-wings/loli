@@ -1,0 +1,105 @@
+<include file="Public:header" />
+<table width="100%" cellspacing="1" cellpadding="6" border="0" align="center" class="tborder">
+<tbody><tr>	<td class="tcat">修改产品</td></tr>
+<tr>
+	<td align="center" class="panelsurround">
+	<form action="__URL__/editproduct" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="pid" value="{$productinfo[pid]}">
+	<div class="panel">
+		<div align="left">
+			<fieldset class="fieldset">
+				<legend>修改</legend>
+				<table cellpadding="0" border="0" align="left">
+				<tbody>
+				<tr>
+					<td>产品标题（前台显示）:	<input type="text" size="30" name="pname" value="{$productinfo.pname}"> 产品名称（后台显示）:	<input type="text" size="30" name="product_alias" value="{$productinfo.product_alias}"></td>
+				</tr>
+				<tr>
+					<td>库存数量:	<input type="text" size="10" name="inventory" value="{$productinfo.inventory}"></td>
+				</tr>	
+				<tr>
+					<td>所属分类:	
+					<select name="pcid">
+					<volist name="clist" id="productcategory" key="k">
+						<option value="{$productcategory[pcid]}-{$productcategory[cid]}" <php>if($productinfo[firstcid]==$productcategory[pcid] && $productinfo[secondcid]==$productcategory[cid])  echo "selected";</php>>
+						      		<php>
+						      		for($i=0; $i<$productcategory[signnum]; $i++){
+						      			echo "|--";
+						      		}
+						      		</php>
+						{$productcategory[cname]}
+						</option>
+					</volist>
+					</select>【选择分类时请选择至二级分类】					
+					</td>
+				</tr>	
+				<tr>
+					<td>功效分类:	{$producteffectcids}
+						<ul id="bar">
+						<volist name="elist" id="effectcategory">
+						<li><input type="checkbox" name="effectcid[]" value="{$effectcategory[cid]}"<php>if(in_array($effectcategory[cid],$producteffectcidlist)) echo "checked";</php>>{$effectcategory[cname]}</li>
+						</volist>
+						</ul>
+						
+					</td>
+				</tr>
+				<tr>
+					<td>品牌分类:	
+						<select name="brandcid"> 
+						<volist name="blist" id="brandcategory">
+						<option value="{$brandcategory[cid]}" <php>if($productinfo[brandcid]==$brandcategory[cid]) echo "selected";</php>>{$brandcategory[cname]}</option>
+						</volist>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>产品图片:	<input type="file" name="pimg">【尺寸要求：320x480】</td>
+				</tr>
+				<tr>
+					<td><img src="/data/productimg/{$productinfo[pimg]}"></td>
+				</tr>
+				<tr>
+					<td>正装规格:	<input type="text" name="goodssize" value="{$productinfo[goodssize]}"></td>
+				</tr>		
+				<tr>
+					<td>正装价格:	<input type="text" name="goodsprice" value="{$productinfo[goodsprice]}"></td>
+				</tr>							
+				<tr>
+					<td>体验装规格:	<input type="text" name="trialsize" value="{$productinfo[trialsize]}"></td>
+				</tr>	
+				<tr>
+					<td>体验装价格:	<input type="text" name="trialprice" value="{$productinfo[trialprice]}"></td>
+				</tr>
+				<tr>
+					<td>主要成分:	<input type="text" name="maincomponent" value="{$productinfo[maincomponent]}"></td>
+				</tr>				
+				<tr>
+					<td>产品简介:<br/>	<textarea name="pintro" rows="10" cols="50">{$productinfo[pintro]}</textarea>	</td>
+				</tr>
+				<tr>
+					<td>心水标签:	<input type="text" name="taglist" size="50" value="{$productinfo[taglist]}">【标签之间请用半角逗号（“,”）分开】</td>
+				</tr>							
+				<tr>
+					<td>产品官方网址:	<input type="text" name="officialweburl" size="50" value="{$productinfo[officialweburl]}"></td>
+				</tr>
+				<tr>
+					<td>购买网址:	<br/><textarea id="buyurl" name="buyurl" rows="10" cols="50">{$productinfo[buyurl]}</textarea><br/>【一行一条网址，如：文字标题||http://www.taobao.com/buy.php?asdf】</td>
+				</tr>	
+				<tr>
+					<td>调查问卷ID：<input type="text" name="surveyid" value="{$productinfo[surveyid]}" /></td>
+				</tr>																			
+				</tbody>
+				</table>
+			</fieldset>
+			
+		</div>
+	</div>
+	<div style="margin-top:6px">
+		<input type="submit" class="button" value="提交表单" />
+	</div>
+	</form>
+	</td>
+</tr>
+</tbody></table>
+<include file="Public:footer" />

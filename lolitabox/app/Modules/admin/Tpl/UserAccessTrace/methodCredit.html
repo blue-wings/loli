@@ -1,0 +1,94 @@
+<include file="Public:header" />
+	<div class="panel">
+		<div align="left">			
+		  <fieldset class="fieldset">
+			<legend>查询条件</legend>
+			<form action="__ACTION__" method="post"  id="myform">
+			 控制器名：<input type="text" name="find_module" value="{$Think.request.find_module}"  >
+			 &nbsp;&nbsp; 方法名：<input type="text" name="find_action" value="{$Think.request.find_action}"  >
+			 <input type="hidden" name="type" value="find">
+			&nbsp;&nbsp;&nbsp; <input type="submit" value="查 询">&nbsp;&nbsp;<font color="red">此查询不支持模糊匹配</font>
+			</form>
+		 </fieldset>
+		</div>
+	</div>	
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">路径配置列表</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"><form action="__ACTION__" method="post" name="update_form"><input type="hidden"  name="type" value="update"><input type="submit"  value="更新配置文件" ></form></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <form action="__ACTION__"  method="post">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            <td width="5%" height="26"><div align="center" class="STYLE2 STYLE1">路径</div></td>
+            <td width="8%" height="18"><div align="center" class="STYLE2 STYLE1">配置名</div></td>
+           
+          </tr>
+          <volist name="class_method_list" id="vo"  key="k" emtpy="这里一片空白">
+                 <assign name="var" value="$key" />
+             <volist name="vo"  id="value" >
+          <tr>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$var} /{$key}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">
+            <input type="text" id="creditvalue_{$var}{$key}" value="{$value}" style="color:#444">
+            <input type="button" name="button"  value="修改"  onclick="editCredit('{$key}','{$var}')">
+            <script>
+               function editCredit(action,module)
+                {
+            	   $.ajax({
+            		   type:"post",
+            		   url:"__ACTION__",
+            		   dataType:"json",          		   
+            		   data:"type=edit&module="+module+"&action="+action+"&value="+$("#creditvalue_"+module+action).val(),
+            		   success:function(result){
+            			   if(result.status==1)
+            				   {
+            				   $.dialog({title:"1秒后关闭",content:result.info,time:1});
+            				   }
+            			   else
+            				   alert("修改失败");
+            		   }
+            	   })
+                }
+            </script>
+            </div></td>
+          </tr>
+             </volist>
+		</volist>
+
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+            <td width="75%" class="STYLE1"></td>
+          </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<include file="Public:footer" />

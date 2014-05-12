@@ -1,0 +1,29 @@
+   <if condition="$info.list neq ''">
+      <h2 class="domain_invite_tit">邀请记录</h2>
+
+		<table class="order_tables" border="0" cellspacing="0" cellpadding="0"
+			width="100%">
+			<tbody>
+				<tr height="46">
+					<th width="40">编号</th>
+					<th width="90">被邀者名称</th>
+					<th width="193">注册时间</th>
+					<th width="108">是否验证手机</th>
+
+				</tr>
+			<volist name="info.list" id="vo">
+			    <tr>
+				<td><{$key+1}></td>
+				<td><{$vo.nickname}></td>
+				<td><{$vo.addtime}></td>
+				<td><{$vo.state}></td>
+
+		     	</tr>
+	     	</volist>
+			</tbody>
+		</table>
+<div class="W_order_wrap">
+	<!---分页--->
+	<div class="W_pages" id="page"><{$page}></div>
+</div>
+</if>

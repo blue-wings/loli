@@ -1,0 +1,191 @@
+<include file="Public:header" />
+<include file='Public:upload' />
+<style>
+.formstyle{width:50%;float:left;}
+.productstyle{width:47%;float:left;color:#0080FF;background:#E0E0E0;TEXT-ALIGN: center;}
+.productstyle div{margin-left: auto;margin-right: auto;}
+</style>
+	<div class="panel">
+		<div align="left">
+			<fieldset class="fieldset">
+			<legend>添加/更新</legend>
+				<div  class="formstyle">
+                   <form action='__ACTION__'  method='post'>
+                     <input type='hidden'  name='id'  value="{$Think.request.id}">
+                      关联商品ID：<input type='text'  name='relation_id' value='{$info.relation_id}'><br><br>
+                      单品名称：<input type="text" name='name'  value="{$info.name}" size="50"><br><br>
+                      品牌名称：<input type='text'  name='brandname'>
+                               <select name='brandid' onchange="setBrandV(this.options[this.options.selectedIndex].text)">
+                                   <option value=''>不限</option>
+                                   <volist name='brandlist'  id='vo'>
+                                       <option value="{$vo.id}">{$vo.name}</option>
+                                   </volist>
+                               </select>
+                      <br><br>
+                      单品价格：<input type='text'  name='price'  value='{$info.price}'  size="10"><br><br>
+					  单品兑换周期:<input type="text" name="exchange_interval" value="{$info.exchange_interval}"  size="5">&nbsp;天<br/><br/>
+                      有效期：<input type='text'  name='validdate'  value='{$info.validdate}'><br><br>
+                      规格：<input type='text'  name='norms' value='{$info.norms}'><br><br>
+                      类别:<select name='category'>
+                               <option value=''>不限</option>
+                               <option value='正装'>正装</option>
+                               <option value='耗材'>耗材</option>
+                               <option value='试用装'>试用装</option>
+                          </select><br><br>
+                      分类：<select name='cid'>
+                          <volist name='clist'  id='vo'>
+                             <option value='{$vo.cid}-{$vo.pcid}'><if condition="$vo[pcid] neq 0">|-</if>|-&nbsp;{$vo.cname}</option>
+                          </volist>
+                        </select>
+                          <br><br>
+                      货架号：<input name='shelfinfo'  type='text'  value='{$info.shelfinfo}' ><br><br>
+                      重量：<input name='weight'  type='text'  value='{$info.weight}'  size="10">g<br><br>
+                      备注：<br><textarea name='remark'  rows='4'  cols='50'>{$info.remark}</textarea>
+                      <br><br>
+                      <input type='submit' name='submit' value='提交'>
+                   </form>
+				</div>
+				<div   class="productstyle">
+					产品ID:<span class="proid"></span><br><br>
+					产品名称：<span class="pname"></span><br><br>
+					正装规格：<span class="goodssize"></span><br><br>
+					正装价格：<span class="goodsprice"></span><br><br>
+					所属分类: <span class="pcid"></span><br><br>
+					功效分类: <span class="effectcid"></span><br><br>
+					<div>
+						<input type="hidden" value="" name="oid">	
+						<a href=""  target="_blank" class="href">修改产品信息</a>
+					</div><br><br>
+					 <div id='show_pic' style='width:400px;height:300px;border:1px solid #777;color:#777;font-size;24px;overflow:auto'>
+					 <img src="" id="pimg">
+					 </div>
+					</form>
+				</div>
+				<script>
+				
+					function setBrandV(txt){
+						$(":text[name='brandname']").val(txt);
+					}				
+				
+					$("a.href").click(function(){
+						var vvl = $(this).prev().val();
+						if(vvl){
+							 $(this).attr("href","/admin/Product/index/pid/"+vvl);
+						}else{
+							return false;
+						}
+					})	
+				
+				
+					$(":button[name='href']").click(function(){
+						var vvl = $(this).prev().val();
+						if(vvl){
+							location.href="/admin/Product/index/pid/"+vvl;
+						}
+					})	
+					
+					$(":text[name='relation_id']").keyup(function(){
+						showproinfo($(this).val().trim());
+					})	
+					
+					
+					if("{$info.relation_id}"){
+						showproinfo("{$info.relation_id}");
+					}
+					
+					function  showproinfo(vl){
+						if(vl){
+							$.post("__ACTION__",{reid:vl},function(rel){
+								if(rel.status){
+									var  info = rel.info;
+									$("span.proid").text(info.pid);
+									$("span.pname").text(info.pname);
+									$("span.goodssize").text(info.goodssize);
+									$("span.goodsprice").text(info.goodsprice);
+									$("span.pcid").text(info.type);
+									$("span.effectcid").text(info.effname);
+									$("#pimg").attr("src",info.pimg);
+									$(":hidden[name='oid']").val(info.pid);
+								}
+							})
+						}
+					}
+				</script>
+		    </fieldset>
+		   </div>
+	</div>
+<script>
+var a=($(document).height()-$(".panel").height())/2;
+$(".panel").css("margin-top",a);
+$("input[name='brandname']").keyup(callback);
+function callback(){
+	$.post(
+	"{:U('Inventory/searchBrand')}",
+	{type:"searchbrand",name:$(this).val()},
+	function(data)
+	{
+		$("select[name='brandid']").empty();
+		$("select[name='brandid']").append(" <option value=''>不限</option>");
+		$.each(data.data,function(i,n){
+			$("select[name='brandid']").append("<option value='"+n.id+"'>"+n.name+"</option>");
+		});
+	},
+	'json'
+	)
+}
+
+var brandid='{$info.brandid}';
+var cate='{$info.category}';
+var cid='{$info.secondcid}-{$info.firstcid}';
+if(brandid){
+	$("select[name='brandid']").val(brandid);
+}
+if(cate){
+	$("select[name='category']").val(cate);
+}
+$("select[name='cid']").val(cid);
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+$(function(){
+    $( "input[name='validdate']" ).datepicker({
+	   defaultDate: "-1w",
+	   changeMonth: true,
+	   numberOfMonths: 2
+   });
+ })
+ 
+ function checkform(){
+	if($(":text[name='pbname']").val() == ''){
+		alert('请选择品牌分类再提交');
+		return false;	
+	}else if($("select[name='pcid']").val().split('-')[0] == 0){
+		alert("请先选择二级分类再提交!");
+		return false;
+	}else if($(":checkbox[name='effectcid[]'][checked]").length == 0){
+		alert("请先选择功效再提交!");
+		return false;
+	}else{
+		return true;
+	}
+}
+</script>
+<include file="Public:footer" />

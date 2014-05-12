@@ -1,0 +1,73 @@
+<include file="Public:header" />
+<include file='Public:upload' />
+<script src="/public/js/uploadPicture.js"></script>
+<table width="100%" cellspacing="1" cellpadding="6" border="0" align="center" class="tborder">
+<tbody><tr>	<td class="tcat">分类管理-
+	<switch name="Think.request.ctype">
+	<case value="1">产品分类</case>
+	<case value="2">产品功效分类</case>
+	<case value="3">品牌分类</case>
+	<case value="4">盒子分类</case>
+	<case value="5">评测问题分类</case>
+	<case value="10">信息分类</case>
+	<case value="11">萝莉盒晒单分类</case>
+	<case value="12">神秘盒专辑分类</case>
+	</switch>
+	</td>
+</tr>
+<tr>
+	<td align="center" class="panelsurround">
+	<form action="__URL__/editcategory" method="post">
+	<div class="panel">
+		<div align="left">
+			<input type="hidden" name="ctype" value="{$categoryinfo.ctype}">
+			<input type="hidden" name="cid" value="{$categoryinfo.cid}">
+			<fieldset class="fieldset">
+				<legend>修改分类</legend>
+				<table cellpadding="0" border="0" align="left" width='500'>
+				<tbody>
+				<tr>
+					<td>上级分类:	
+					<select name="pcid">
+					<option value='0'>ROOT</option>
+					<volist name="clist" id="categorylist" key="k">
+						<option value="{$categorylist[cid]}" <php>if ($categorylist[cid]==$categoryinfo[pcid]) echo "selected";</php>>
+						      		<php>
+						      		for($i=0; $i<$categorylist[signnum]; $i++){
+						      			echo "|--";
+						      		}
+						      		</php>
+						{$categorylist[cname]}
+						</option>
+					</volist>
+					</select>					
+					</td>
+				</tr>			
+				<tr>
+					<td><span style="float:left;">分类名称:</span>&nbsp;<input type="text" size="20" name="cname" style="width:60%;height:25px;" value="{$categoryinfo.cname}"></td>
+				</tr>
+				<tr>
+					<td><span style="float:left;">排序号:</span>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="20" name="sortid" style="width:60%;height:25px;" value="{$categoryinfo.sortid}"></td>
+				</tr>
+				<tr>
+					<td><span style="float:left;">图片地址:</span>&nbsp;<input type="text" size="20" name=imgurl style="width:60%;height:25px;" value="{$categoryinfo.imgurl}">
+					<input type="button" id="uploadPicture1" value="上传图片" onclick="uploadPic('imgurl')"></td>
+				</tr>				
+				<tr>
+					<td><span style="float:left;">描述信息:</span>&nbsp;<textarea cols="20" rows="5" name=description style="width:60%">{$categoryinfo.description}</textarea></td>
+				</tr>
+				</tbody>
+				</table>
+			</fieldset>
+			
+		</div>
+	</div>
+	<div style="margin-top:6px">
+		<input type="submit" class="button" value="提交表单" />
+	</div>
+	</form>
+	</td>
+</tr>
+</tbody></table>
+
+<include file="Public:footer" />

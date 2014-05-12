@@ -1,0 +1,33 @@
+ <div class="hei_line"></div>
+	<gt name="num[2]" value="0">
+		<div class="send_title_tab">
+			<p>
+				<a href="javascript:void(0)" id="type_1" get_values="<{$Think.get.type|default=1}>">全部分享(<{$num[1]}>)</a>
+				<a href="javascript:void(0)" id="type_2">晒盒分享(<{$num[2]}>)</a>
+				<a href="javascript:void(0)" id="type_3">试用分享(<{$num[3]}>)</a>
+			</p>
+		</div>
+	</gt>
+  <script>
+$(function(){
+	ajax_replace("type","__SELF__");
+})
+</script>   		
+		<div class="share_boxs">
+			<div class="index_boxs_show">
+			<!---瀑布流--->
+			<div id="no_msg"></div>
+			<empty name="list">
+				<script>
+					$(function(){
+						nodata("no_msg","暂时还没有分享哦~");
+					})
+				</script>
+			<else />
+				<include file="home:share_waterfall" />
+			</empty>
+				<!----分栏---->
+			</div>
+			
+		</div>
+		<div class="hei1"></div>

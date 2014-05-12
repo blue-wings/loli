@@ -1,0 +1,168 @@
+<include file="Public:header" />
+<style>
+tr{
+	width:100%;
+	text-align:left;
+}
+td{
+	border:0;
+}
+.f_width{
+	display:block;
+	width:120px;
+	float:left;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+}
+input,select,textarea{
+	border-color:#008080;
+	width:200px;
+}
+.createmakt,.particular{
+	display:none;
+}
+.show{
+	display:none;
+}
+.ntitle{
+	font-size:16px;
+	color:#004040;
+}
+.left{
+	padding:10px  50px;
+}
+.fo{
+	font-size:14px;
+	color:#004040;
+}
+.createshop{
+	display:block;
+	font-size:16px;
+	color:#808080;
+}
+.wh{
+	width:90%;
+	border:0;
+	padding:20px 100px;
+}
+.crshop{
+	width:100px;
+}
+.red{
+	color:red;
+}
+td.left{
+	float:left;
+}
+td.tdwidth{
+	width:20%;
+	padding-left:50px;
+}
+.maxwidth{
+	width:90%;
+}
+.site{
+	display:block;
+	margin:10px 150px;
+	border:#91C351;
+}
+</style>
+<div class="createshop">
+<form action="__ACTION__" method="POST" onsubmit="return checkdata()" name='sit'>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="300" background="__PUBLIC__/images/tab_05.gif">
+        	<img src="__PUBLIC__/images/311.gif" width="16" height="16" />库存管理 > <span class="eid">创建入库单</span>
+        </td>
+        <td width="1000" background="__PUBLIC__/images/tab_05.gif" align="right"></td>
+  </tr>
+</table>
+<table border="1" class="wh" align="left">
+<tr>
+	<td class="tdwidth">入库单名称<span class="red">*</span></td>
+	<td class="left"><input type="text" value="{$info.title}" name="ordername"></td>
+<tr>
+<tr>
+	<td class="tdwidth">客户名称<span class="red">*</span></td>
+	<td class="left"><input type="text" value="{$info.customer}" name="clientname"></td>
+<tr>
+<tr>
+	<td class="tdwidth">预计到货时间<span class="red">*</span></td>
+	<td class="left"><input type="text" value="{$info.arrivaldate}" name="aogtime"></td>
+<tr>
+<tr>
+	<td class="tdwidth">所属区域<span class="red">*</span></td>
+	<td class="left">
+		<select name="province">
+			<option value="0">请选择区域</option>
+				<volist name="area" id="area">
+					<option value="{$area.title}">{$area.title}</option>
+				</volist>
+		</select>
+	</td>
+<tr>
+<tr>
+	<td class="tdwidth">入库备注</td>
+	<td class="left">
+		<textarea cols="20" rows="5" name="remark">{$info.description}</textarea>
+	</td>
+<tr>
+<tr>
+	<td colspan="2"><input type="submit" value="提交" name='smit' style="width:50px;margin-left:200px;"></td>
+</tr>
+</table>
+</form>
+</div>
+<script>	
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+$(function() {
+	if("{$info.id}"){
+		$("select[name='province'] >option[value='"+"{$info.area}"+"']").attr('selected','true')
+		$("form[name='sit']").append("<input type='hidden' value='"+"{$info.id}"+"' name='iid'>");
+	}
+	
+	$("input[name='aogtime']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$("input[name='aogtime']").datepicker( "option", "minDate", selectedDate );
+		}
+	})
+});
+
+function checkdata(){
+	var ordername=$(":text[name='ordername']").val();
+	var clientname=$(":text[name='clientname']").val();
+	var aogtime=$(":text[name='aogtime']").val();
+	var province=$("select[name='province']").val();
+	if(ordername =='' || clientname =='' || aogtime =='' || province ==0){
+		alert('请填写内容');
+		return false;
+	}else{
+		return true;
+	}
+}
+</script>
+<include file="Public:footer" />

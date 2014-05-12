@@ -1,0 +1,164 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="__PUBLIC__/js/colorbox/colorbox.css">
+<script src="__PUBLIC__/js/colorbox/jquery.colorbox-min.js"></script>
+<style>
+	#shl td{border: solid #C0C0C0 1px;}
+</style>
+<a href="#shl" class="inline"></a>
+<div class="panel">
+	<div align="left">			
+	  <fieldset class="fieldset">
+		<legend>查询条件</legend>
+		<form action="__ACTION__" method="get"  id="myform">
+			发信人ID:<input type="text" name="fid" value="{$Think.get.fid}"> &nbsp;&nbsp;
+			收信人ID:<input type="text" name="rid" value="{$Think.get.rid}"> &nbsp;&nbsp;
+			信息内容模糊匹配:<input type="text" name="cont" value="{$Think.get.cont}">&nbsp;&nbsp;<br/>
+			时间: 
+				<label for="from">From</label>
+					<input type="text" id="from" name="from" value="{$Think.get.from}">
+				<label for="to">to</label>
+					<input type="text" id="to" name="to" value="{$Think.get.to}"/>
+		<br><br>
+		<input type="button" name="resetpage" value="重置">
+		<input type="submit" name="srh" value="查 询">&nbsp;&nbsp;
+		</form>
+	 </fieldset>
+	</div>
+</div>	
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">活跃用户查询</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+		  <tr align="center"  background="__PUBLIC__/images/tab_14.gif">
+			<td width="4%" height="20">序号</td>
+			<td width="4%" height="20">私信ID</td>
+			<td width="8%" height="20">发件人</td>
+			<td width="8%" height="20">收件人</td>
+			<td width="60%" height="20">内容</td>
+			<td width="8%" height="20">修改</td>
+			<td width="10%" height="20">发件时间</td>
+		   </tr>			  
+		  	
+		   <volist name="mlist" id="list" key="k">
+		   <tr align="center" height="20" bgcolor="#FFFFFF">
+				<td>{$k}</td>
+				<td>{$list.id}</td>
+				<td>
+					<a href='{:U('User/userList',array('userid'=>$list['from_uid']))}' target='_blank'>{$list.fname}</a>
+				<td>
+				<a href='{:U('User/userList',array('userid'=>$list['to_uid']))}' target='_blank'>{$list.tname}</a>
+				</td>
+				<td>
+					{$list.content}
+				</td>
+				<td>
+					<a href="{:U('User/sendAllPersonmsg',array('editid'=>$list['id']))}">修改</a>
+				</td>
+				<td>
+					{$list.addtime|date="Y-m-d H:i:s",###}
+				</td>
+		   </tr>
+		   </volist>		
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr align="center">
+            <td  height="29" nowrap="nowrap">{$page}</td>
+          </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+
+<script>
+$(".inline").colorbox({inline:true,width:"70%"});
+	
+	function show(userid){
+		if(userid){
+			var start = "{$Think.get.from}";
+			var end   = "{$Think.get.to}";
+
+			$.post(
+				"__ACTION__",
+				{userid:userid,start:start,end:end},
+				function(reponse){
+					$("#shl tr:gt(0)").remove();
+					$(eval("("+reponse+")")).each(function(index,dom){
+						$(dom).each(function(i,info){
+							var str='<tr align="center"><td>'+(index+1)+'</td>';
+							str +='<td><font color="#0080FF">'+info.url+'</font></td>';
+							str +='<td><font color="red">'+info.count+'</font></td></tr>'
+							$("#shl").append(str);			
+						})
+					})
+					$("a.inline").click();
+				}
+			)
+		}
+	}
+	
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+		$( "#from" ).datepicker({
+			defaultDate: "-1w",
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$( "#to" ).datepicker( "option", "minDate", selectedDate );
+			}
+		});
+		$( "#to" ).datepicker({
+			defaultDate: "+1w",
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$( "#from" ).datepicker( "option", "maxDate", selectedDate );
+			}
+		});
+</script>
+<include file="Public:footer" />

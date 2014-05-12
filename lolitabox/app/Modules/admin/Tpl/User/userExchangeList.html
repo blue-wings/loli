@@ -1,0 +1,198 @@
+<include file="Public:header" />
+<style>
+table{white-space:normal; word-break:break-all;overflow:hidden}
+tr{
+	text-align:center;
+}
+</style>
+<link rel="stylesheet" href="/public/colorbox/colorbox.css">
+<script src="/public/colorbox/jquery.colorbox-min.js"></script>
+<link rel="stylesheet" href="/public/js/jquery_theme/smoothness/jquery.ui.all.css">
+<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+
+<form name="myform" id="myform" action="__SELF__" method="GET">
+邀请人邮箱：<input id='userid' name='email' type='text' value='{$Think.get.email}'>  
+邀请人昵称:<input id='nickname' name='nickname' type='text' value='{$Think.get.nickname}'>
+邀请人id:<input id='userid' name='userid' type='text' value='{$Think.get.userid}'><br/>
+按兑奖时间: 
+<label for="from">From</label>
+<input type="text" id="from" name="from" value="{$Think.get.from}"/>
+<label for="to">to</label>
+<input type="text" id="to" name="to" value="{$Think.get.to}"/>
+奖品类型查询:<select name="type" id="typ">
+				<option value="">全部</option>
+				<volist name="trophylist" id="trophy">
+					<option value="{$trophy.type}">
+					<switch name="trophy.type">
+					<case value="product">奖品</case>
+					<case value="box">LOLITABOX</case>
+					<default />{$trophy.type}
+					</switch>
+					</option>
+				</volist>
+				<option value="benefit">Benefit优惠券</option>
+			</select>
+<input type='submit' name='search'><input type='submit' name='export' value="导出excel表格">
+</form>
+
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" align="left" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />邀请记录管理</td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>  
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            <td width="5%" height="26">列表ID</td>
+            <td width="5%" height="26">用户ID</td>
+            <td width="10%" height="26">邀请人账号</td>
+			<td width="10%" height="26">邀请人昵称</td>
+          	<td width="10%" height="18">查看邀请记录</td>
+          	<td width="10%" height="18">兑奖时间</td>
+            <td width="10%" height="18">奖品</td>
+          </tr>
+          <volist name="list" id="list" emtpy="这里一片空白" key="k">	
+			<tr>
+				<td height="18" bgcolor="#FFFFFF">{$list.id}</td>
+				<td height="18" bgcolor="#FFFFFF">
+				<a href="{:U('User/userList',array('userid'=>$list['gid']))}">{$list.gid}</a>
+				</td>
+				<td height="18" bgcolor="#FFFFFF">{$list.usermail}</td>
+				<td height="18" bgcolor="#FFFFFF">
+					<a href="/space/{$list.gid}" target="_blank">{$list.nickname}</a>
+				</td>
+				<td height="18" bgcolor="#FFFFFF"><a href="#" onclick="return inviterecord('{$list.nickname}','{$list.usermail}','{$list.nickname}','{$list.gid}')">查看邀请记录</a></td>
+				<td height="18" bgcolor="#FFFFFF">{$list.cashtime}</td>
+				<td height="18" bgcolor="#FFFFFF">{$list.type}</td>
+			</tr>
+		  </volist>		  
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr style="text-align:center">
+          	<if condition="$list neq ''">            
+          		<td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+            	<td width="75%" class="STYLE1"></td>
+          	<else /><td>没有找到您搜索的数据!</td></if>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<script>
+(function(config){
+	config['extendDrag'] = false; // 注意，此配置参数只能在这里使用全局配置，在调用窗口的传参数使用无效
+	config['lock'] = true;
+	config['fixed'] = false;
+	config['okVal'] = 'Ok';
+	config['cancelVal'] = 'Cancel';
+})($.dialog.setting);
+
+
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+$(function() {
+	var	type="{$Think.get.type}";
+	if(type !=null){
+		$("#typ option[value='"+type+"']").attr('selected','true');
+	}
+
+	$( "#from" ).datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$( "#to" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$( "#to" ).datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$( "#from" ).datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+});
+function inviterecord(nickname,email,nickname,uid){
+	$.ajax({
+		url:"{:U('User/returnExchangeData')}",
+		type:"post",
+		dataType:"json",
+		data:"userid="+uid+'&n='+Math.random(),
+		success: function(chkresult){
+			if(parseInt(chkresult.status)==1){
+				var data=chkresult['info'];
+				var str='';
+				str='<table width="600" border="1">';
+				str+='<tr height="30"><td align="center" colspan="4">用户<b>  '+nickname+'</b>ID:'+uid+'  的邀请记录</td></tr>';
+				str+='<tr height="20" style="text-align:center;background:#F2F2F2"><td>邮箱注册状态</td><td>userid</td><td>被邀请人昵称</td><td>邀请注册时间</td></tr>';
+				var i=0;
+				for(i in data){
+					if(data[i].state ==2){
+						str+="<tr height='25' style='text-align:center'><td><img src='/admin/Public/images/status_1.gif'</td><td>"+data[i].userid+"</td><td>"+data[i].nickname+"</td><td>"+data[i].addtime+"</td></tr>";
+					}else{
+						str+="<tr height='25' style='text-align:center'><td><img src='/admin/Public/images/010.gif'</td><td>"+data[i].userid+"</td><td>"+data[i].nickname+"</td><td>"+data[i].addtime+"</td></tr>";
+					}
+
+				}
+				str+='</table>';
+				$.dialog({
+					title:"邀请记录",
+					content: str,
+					cancel: true,
+				})
+			}else{
+				$.dialog({
+					title:"邀请记录",
+					content:chkresult['info'],
+					cancel: true,
+				})
+			}
+		}
+	})
+}
+</script>
+<include file="Public:footer" />

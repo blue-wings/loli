@@ -1,0 +1,49 @@
+<include file="public:header.inc" />
+<style type="text/css">
+body { margin:0; color:#fff; padding:0;font-size:14px; line-height:18px; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif;}
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p{margin: 0; padding: 0; border: 0}
+a {color:#000; text-decoration:none;}
+a:hover {color: #000; text-decoration:underline} 
+font{font-size:14px}
+b{color:#fff}
+/*公有*/
+
+.Block01{width:880px; height:561px; margin:0 auto;margin-top:56px;}
+.Block01 .bg{height:561px;}
+.Block02{width:880px; height:436px; margin:0 auto;}
+.Block02 .bg{height:436px;}
+.Block03{width:880px; height:461px; margin:0 auto;}
+.Block03 .bg{height:461px;}
+.Block04{width:880px; height:481px; margin:0 auto;}
+.Block04 .bg{height:481px;}
+
+</style>
+</head>
+
+<body>
+<div class="Block01">
+	<div class="bg"><img src="public/special/20121214/bg_01.jpg" width="880" height="561" /></div>
+</div>
+<div class="Block02">
+	<div class="bg"><img src="public/special/20121214/bg_02.jpg" width="880" height="436" border="0" usemap="#Map" />
+      <map name="Map" id="Map">
+        <area shape="rect" coords="662,265,821,334" href="<{:U('buy/goods_select')}>" target="_blank" />
+      </map>
+	</div>
+</div>
+<div class="Block03">
+	<div class="bg"><img src="public/special/20121214/bg_03.jpg" width="880" height="461" border="0" usemap="#Map3" />
+      <map name="Map3" id="Map3"><area shape="rect" coords="611,190,877,456" href="<{:U('products/62897')}>" target="_blank" /><area shape="rect" coords="273,198,594,456" href="<{:U('products/62896')}>" target="_blank" />
+        <area shape="rect" coords="12,192,229,456" href="<{:U('products/27346')}>" target="_blank" />
+      </map>
+	</div>
+</div>
+<div class="Block04">
+	<div class="bg"><img src="public/special/20121214/bg_04.jpg" width="880" height="481" border="0" usemap="#Map2" />
+      <map name="Map2" id="Map2">
+        <area shape="rect" coords="355,11,511,66" href="<{:U('buy/goods_select')}>" target="_blank" />
+      </map>
+	</div>
+</div>
+<include file="public:footer.inc" />

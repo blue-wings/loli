@@ -1,0 +1,77 @@
+<include file="Public:header" />
+<link href="__PUBLIC__/css/table.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/common.css" type="text/css" rel="stylesheet"/>
+<div class="list-div">
+<table width="800" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th align="left" scope="col" class="sectitle"><eq name="level" value="1">应用</eq><eq name="level" value="2">模块</eq><eq name="level" value="3">操作</eq>列表<span style="font-weight:normal">[ 分组:&nbsp;<volist name="groupList" id="tag"><a href="__URL__/index/group_id/{$key}">{$tag}</a>&nbsp;</volist><a href="__URL__">所有</a> ] </span></th>
+  </tr>
+  <tr height="20px;">
+  <td>&nbsp;&nbsp;</td>
+  </tr>
+  <tr  align="left">
+    <td>
+    <input type="button" value="添加 <eq name="level" value="1">应用</eq><eq name="level" value="2">模块</eq><eq name="level" value="3">操作</eq>节点" onclick="window.location.href='__URL__/add/'"  name="addNode"/>
+        <form action="__URL__/index/" method="post">
+        	<input type="text" value=""  name="name"  size="20"/>
+            <input type="submit" value="查询" />
+        </form>
+    </td>
+  </tr>
+</table>
+</div>
+
+<div class="list-div">
+<table border="0" cellspacing="1" cellpadding="2" id="datatable">
+  <tr>
+    <th scope="col">编号</th>
+    <th scope="col">名称</th>
+    <th scope="col">显示名</th>
+    <th scope="col">分组</th>
+    <th scope="col">序号</th>
+    <th scope="col">状态</th>
+    <th scope="col">是否在菜单中显示</th>
+    <th scope="col">操作</th>
+  </tr>
+  
+  <volist name="list"  id="data">
+  <tr>
+    <td>{$data.id}</td>
+    <td><a href="__URL__/index/pid/{$data.id}">{$data.name}</a></td>
+    <td>{$data.title}</td>
+    <td>{$data.group_id|getNodeGroupName}</td>
+    <td>{$data.sort}</td>
+    <td>{$data.status|getStatus}</td>
+    <td>
+    <a href="__URL__/isShow/id/{$data.id}/type/{$data.type}/pid/{$data.pid}"><if condition="$data.type eq 0">是<else />否</if></a>
+	</td>
+    <td>
+    {$data.status|showStatus=###,$data['id']}
+     | <a href="__URL__/edit/id/{$data.id}">编辑</a>  | <a href="javascript:void(0);" onclick="return del({$data.id});">删除</a></td>
+  </tr>
+  </volist>
+  
+  <tr>
+ 	<td colspan="8" align="right">{$page}</td>
+  </tr>
+</table>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#datatable tr:gt(0)").hover(function() {
+		$(this).children("td").css({background:"#bcd4ec"});
+	}, function() {
+		$(this).children("td").css({background:"#F5F5F5"});
+	});
+})
+function del(id)
+{
+	if(confirm("你确定要删除吗？")){
+		window.location.href="__URL__/delete/id/"+id;
+		return true;
+	}else{
+		return false;
+	}
+}
+</script>
+<include file="Public:footer" />

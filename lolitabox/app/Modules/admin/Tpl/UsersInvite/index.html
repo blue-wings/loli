@@ -1,0 +1,158 @@
+<include file="Public:header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.DOMWindow.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#getCodebtn").click(function(){
+		var num = $("#getcode").val();
+		var needwidth = ($(document).width()-100-380)/2;
+		var needheight = ($(document).height()-500)/2;
+		if(num <=10){
+			$("#optCodeDiv").html("");
+			$("#num").val($("#getcode").val());
+			$.post('__URL__/createInviteCode/num/'+num+'/isajax/1',function(data){
+				var str="";
+				$.each(data,function(j,n){
+					str+="<span>"+n+"<input name='code"+j+"' type='hidden' value='"+n+"' />";
+				    str+="<input name='remark"+j+"' type='text' /></span><br />";			
+				});
+				$("#optCodeDiv").html(str);
+			},'json');
+			
+			$(this).openDOMWindow({ 
+				height:250, 
+				width:350, 
+				positionType:'absolute', 
+				positionTop:needheight, 
+				eventType:null, 
+				positionLeft:needwidth, 
+				windowSourceID:'#createCodediv',
+				windowPadding:10, 
+				draggable:1, 
+				windowBGColor:'#FFFFFF', 
+				borderColor:'#999999', 
+				overlayOpacity:70
+//				overlay:0
+			}); 	
+		}else{
+			location.href="__URL__/addCodeAndDown/num/"+num+"/isajax/0";
+		}
+	});
+	$("#closediv").closeDOMWindow({eventType:'click'});
+});
+</script>
+<div class="panel">
+	<div align="left">
+	<fieldset class="fieldset">
+		<legend>邀请码</legend>
+		请选择你需要申请的邀请码的数量：
+		<select name="getcode" id="getcode">
+		<for start="1" end="11">
+		<option value="{$i}">{$i}</option>
+		</for>
+		<option value="20">20</option>
+		<option value="50">50</option>
+		<option value="100">100</option>
+		<option value="200">200</option>
+		<option value="500">500</option>
+		</select>
+		<input type="button" id="getCodebtn" value="确定" />
+		<span style="color:red;">&nbsp;&nbsp;P.S.:当选择生成<=10个的时候,弹出框显示。>10个的直接下载。</span>
+		<legend>已有邀请码查询</legend>
+		<form name="selCodeForm" action="__ACTION__" method="post">
+		邀请码查询：<input id="code" name="code" type='text' value="{$Think.post.code}" />
+		<input type="submit" name="search" vlaue="search" />
+		</form>
+	</fieldset>
+	</div>
+</div>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">邀请码管理</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif" align="center">
+            <td width="8%" height="18">ID</td>
+            <td width="14%" height="18">邀请码名称</td>
+            <td width="10%" height="18">使用状态</td>
+            <td width="28%" height="18">备注</td>
+            <td width="20%" height="18">发放人</td>
+            <td width="20%" height="18">添加时间</td>
+            <td width="0%" height="18"></td>
+            <td width="0%" height="18"></td>
+            <td width="0%" height="26"></td>
+          </tr>
+          <volist name="list" id="vo" emtpy="还啥玩意没有呢！">
+          <tr align="center"  bgcolor="FFFFFF">
+            <td height="18">{$vo.id}</td>
+            <td height="18">{$vo.code}</td>
+            <td height="18">
+            <switch name="vo.status">
+			<case value="1">未使用</case>
+			<case value="2">已使用</case>
+			<default />无
+			</switch>
+            </td>
+            <td height="18"><empty name="vo.remark">暂无<else />{$vo.remark}</empty></td>
+            <td height="18"><volist name="vo.user" id="provo" key="k">{$provo.nickname}({$provo.account})</volist></td>
+             <td height="18">{$vo.addtime}</td>
+             <td height="18"></td>
+            <td height="18"></td>
+             <td height="18"></td>
+          </tr>
+		</volist>
+
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+            <td width="75%" valign="top" class="STYLE1"></td>
+          </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+
+
+<table width="300" border="0" cellspacing="0" cellpadding="0"  id="createCodediv" style="text-align:center;display:none; margin:20px;">
+  <tr>
+    <th colspan="2" bgcolor="#c0de98" scope="col">获取邀请码<a href="javascript:void(0);" id="closediv" style=" margin-right:0px;">关闭</a></th>
+  </tr>
+  <tr>
+    <td>邀请码</td>
+    <td>备注</td>
+  </tr>
+  <tr><td colspan="2">
+  <form action="__URL__/addCode/" method="POST" name="codeForm">
+  <div id="optCodeDiv"></div>
+  <div>
+  <input type="hidden" name="num" id="num" />
+  <input type="submit" value="确定" /></div>
+  </form>
+  </td>
+  </tr>
+</table>
+<include file="Public:footer" />

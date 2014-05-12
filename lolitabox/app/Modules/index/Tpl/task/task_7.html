@@ -1,0 +1,38 @@
+            <div class="domain_playboxs">
+								<dl class="domain_playboxs_dl">
+									<dt>任务描述：</dt>
+									<dd>认真如实参与下面的调查问卷，可有助我们为您提供更精准更适合您的美妆产品哦。每份问卷仅能参与1次。</dd>
+								</dl>
+								<dl class="domain_playboxs_dl">
+									<dt>任务奖励：</dt>
+									<dd>30积分/次</dd>
+								</dl>
+								
+								<!--调查问卷-->
+								<div class="domain_survey">
+									<h2 class="domain_invite_tit">如下是您可以参与的调查问卷</h2>
+									<table class="order_tables" border="0" cellspacing="0" cellpadding="0" width="100%">
+										<tbody>  
+											<tr height="46">                                                                                    
+												<th width="200">问卷名称</th>
+												<th width="110">结束时间</th>
+												<th width="70">任务奖励</th>
+												<th width="150">操作</th>
+												
+											</tr>
+											<volist name="info"  id="vo">
+											<tr>
+												<td><a href="<{:u('public/survey',array('id' => $vo['relationid'],'tid'=>$vo['id']))}>" target="_blank" class="A_line2"><{$vo.title}></a></td>
+												<td><{$vo.to|date="Y年m月d日",###}></td>
+												<td><{$vo.credit|default=30}>积分</td>
+												<td width="17%"> 	
+												      <a href="<{:u('public/survey',array('id' => $vo['relationid'],'tid'=>$vo['id']))}>" target="_blank" class="W_pin_b" >参与</a>
+														
+													  
+											    </td>
+											</tr>
+											</volist>
+										</tbody>
+									</table>	
+								</div>
+							</div>

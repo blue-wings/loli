@@ -1,0 +1,24 @@
+<table class="order_tables" border="0" cellspacing="0" cellpadding="0" width="100%">
+	<tbody>
+		<tr height="46">                                                                                    
+			<th>编号</th>
+			<th>被邀者名称</th>
+			<th>注册时间</th>
+			<th>是否验证手机</th>
+			<th>积分奖励</th>
+		</tr>
+		<volist name="info.list" id="vo" empty="没有任何要请记录">
+			<tr>
+				<td><{$key+1}></td>
+				<td><{$vo.nickname}></td>
+				<td><{$vo.addtime}></td>
+				<td>已验证</td>
+				<td>50</td>
+			</tr>
+		</volist>
+	</tbody>
+</table>	
+<div class="W_order_wrap">
+	<!---分页--->
+	<div class="W_pages" id="page"><{$page}></div>
+</div>

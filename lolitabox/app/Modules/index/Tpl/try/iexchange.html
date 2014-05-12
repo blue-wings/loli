@@ -1,0 +1,146 @@
+<include file="public:header.inc" />
+
+<!--积分兑换--内容--end-------->
+<div class="fm1020_c cfl" id="loliboxsChangeWrap">
+	<!---左侧--->
+	<div class="wp738 f738 l">
+		<include file="info.inc" />
+		
+		<div class="main">	
+			<i class="hei1"></i>
+			<div class="order_integral_order mt10">
+				<div class="integral_flow cfl">
+					<div class="flow_l l">
+						<b><p>积分试用</p><p>流程</p></b>				
+					</div>
+					<div class="flow_r l cfl">
+						<ul>
+							<li>
+								<h5>1注册会员</h5>
+								<p>轻松注册成为萝莉盒会员，并且经验值等级达到V3级“萝莉女孩”。</p>
+							</li>
+							<li>
+								<h5>2选择产品</h5>
+								<p>选择心仪产品加入兑换清单（每单最多5件）。</p>
+							</li>
+							<li>
+								<h5>3提交订单</h5>
+								<p>填写并核对信息，提交兑换订单。</p>
+							</li>
+							<li>
+								<h5>4支付订单</h5>
+								<p>支付积分完成兑换。</p>
+							</li>
+							<li>
+								<h5>5享受试用</h5>
+								<p>3至5天后收到试用产品，轻松享受试用时光。</p>
+							</li>
+							<li>
+								<h5>6获得奖励</h5>
+								<p>记得发表分享，被审核加精将获得更多奖励。</p>
+							</li>
+						</ul>
+					</div>
+				</div>			
+			
+				<div class="integral_rule cfl">
+					<div class="rule_l l">
+					<b>
+						<p>积分试用</p>
+						<p>规则</p>
+					</b>
+					</div>
+					<div class="rule_r l">
+						<ul style="list-style-type:disc; margin-left:5px;">
+						<li>特权会员或经验值等级达到V3级“萝莉女孩”的普通会员可参与积分试用<if condition="$return[userinfo] neq ''">（<a href="<{:u('home/level')}>" class="A_line3" target="_blank">我的等级</a>）；</if></li>
+						<li><font color="red">特权会员在积分兑换时自动享受标有“特权”的积分值</font>（<a href="<{:u('member/index')}>" target="_blank" class="A_line3">如何成为特权会员</a>）；</li>
+						<li>每笔试用订单需要额外支付300积分抵邮费，最多可5件产品，同一产品只能选择一件；</li>
+						<li>同一会员在24小时内的积分试用订单将被合并成一个快递发出，但作为邮费支付的300积分不能退还。</li>
+						</ul>
+					</div>
+				</div>				
+			
+				<p class="integral_sory">
+					<span>
+					积分范围：
+					<select onChange="score_list()" id="score_select">
+						<option id="score_1" value="1">全部</option>
+						<option id="score_2" value="2">0-100</option>
+						<option id="score_3" value="3">101-300</option>
+						<option id="score_4" value="4">301-500</option>
+						<option id="score_5" value="5">501-1200</option>
+						<option id="score_6" value="6">1201以上</option>
+						<option id="score_7" value="7">我能兑换</option>
+					</select>
+					</span>
+					<if condition="$return[userinfo] neq ''">
+						我的积分：<a class="A_line3" target="_balnk" href="<{:u('home/score')}>"><{$return[userinfo][score]}></a>
+					</if>
+				</p>
+					<div id="ajax_content"><include file="iexchange_ajaxlist" /></div>
+			</div>
+		</div>
+		<div class="ft"></div>
+	</div>
+	
+<script>
+var score="<{$score}>";
+if(score>0){
+	$("#score_select").val(score);
+}
+
+function score_list(){
+	var score=$("#score_select").val();
+	if(parseInt(score)==7){
+		if(!USER_ID){
+			dialog_login();
+			return false;
+		}
+	}
+	 select_ajax_replace("__ACTION__","score",score);
+} 
+</script>	
+	
+	<!---右侧---->
+
+			<include file="iexchange_select.inc" />
+	
+</div>
+<!--积分兑换--内容--end-------->
+<script src="public/js/iexchange.js"></script>
+<script src="public/js/jquery.cookie.js"></script>
+
+<script>
+function findDimensions(topPeak,wrapPeak,btnPeak){
+	var isIE6 = !-[1,] && !window.XMLHttpRequest;
+	var meg = $(wrapPeak);
+	var ids =$(topPeak);
+	var scrolltop_top =  ids.offset().top-33;
+	var scrolltop_left =  ids.offset().left ;
+	var footer_top = $(btnPeak).offset().top-(meg.height()-60);
+	
+
+	$(window).scroll(function(){
+		var H = $(this).scrollTop();
+		var fl_left = scrolltop_left+747+ "px";
+		 if( H >= scrolltop_top){
+			 if(isIE6){
+				meg.css({position: "absolute","top":H+"px","left":fl_left});
+			 }else if(H >= footer_top){
+				meg.css({position: "absolute","top":footer_top+"px"});
+			 }else{
+				meg.css({"position":"fixed","top":"0","left":fl_left});
+			}
+		}
+		else{
+			meg.css({"position":"static"});
+		}
+	});
+}
+	
+	findDimensions('#loliboxsChangeWrap','#changeInventoryMeg','.W_pages');
+	window.onresize=findDimensions;	
+	
+</script>
+
+<include file="public:footer.inc" />

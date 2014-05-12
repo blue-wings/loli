@@ -1,0 +1,22 @@
+ <div class="r i_search">
+				<input type="text" class="W_input_ws"  value="<{$Think.request.tag}>"   name="brandname" />
+				<input type="button" value="搜索" class="search_btn"  id="search_brand"/>
+</div>
+<script>
+ $("#search_brand").click(function(){
+	var $name=$.trim($("input[name='brandname']").val());
+	if($name){
+		$.ajax({
+			url:"<{:U('brand/search')}>",
+			data:{tag:$name},
+			type:"get",
+			success:function(data){
+				$("#ajax_content").html(data);
+			}
+		})
+		
+	}else{
+		n_dialog("搜索内容不能为空",2,null,this);
+	}
+ })
+</script>

@@ -1,0 +1,102 @@
+<include file="Public:header" />
+<script>
+$(function(){
+	$("input[name='addb']").bind('click',function(){
+		$(".showlist").hide('fast');
+		addbl();
+	})
+})
+
+function addbl(){
+	var str=null;
+	str='<form action="__ACTION__" method="POST" name="add">';
+	str+='<p>请输入用户ID:<input type="text" value="" name="addbuser"></p>';
+	str+='</form>';
+	$.dialog({
+				title:"邀请记录",
+				content:str,
+				cancel: function(){
+					this.reload();
+				},
+				ok: function(){
+					$("form[name='add']").submit();
+				}
+			})
+}
+
+</script>
+<div>
+<form action="__ACTION__" method="POST">
+<p style="color:#0080FF;font-size:16px">
+	请输入要查询的用户ID:<input type="text" value='' name="searth">
+	<input type="submit" value="确定">
+</p>
+</form>
+<div class="showlist">
+<form action="__ACTION__" method="POST">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <form name="orderlist" id="orderlist" >
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            <td width="3%" height="26"><div align="center" class="STYLE2 STYLE1">全选</div></td>
+            <td width="3%" height="26"><div align="center" class="STYLE2 STYLE1">用户ID</div></td>
+            <td width="10%" height="18"><div align="center" class="STYLE2 STYLE1">用户名</div></td>
+            <td width="8%" height="18"><div align="center" class="STYLE2 STYLE1">呢称</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2 STYLE1">邮件激活</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">订单数</div></td>  
+             <td width="3%" height="18"><div align="center" class="STYLE2">关注数</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">粉丝数</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">积分</div></td>          
+            <td width="5%" height="18"><div align="center" class="STYLE2">经验值</div></td> 
+			<td width="5%" height="18"><div align="center" class="STYLE2">评测数</div></td> 
+			<td width="5%" height="18"><div align="center" class="STYLE2">日志数</div></td> 
+            <td width="5%" height="18"><div align="center" class="STYLE2">美丽档案</div></td>
+            <td width="4%" height="18"><div align="center" class="STYLE2">达人会员级别</div></td>
+            <td width="8%" height="18"><div align="center" class="STYLE2">注册时间</div></td>
+          </tr>
+          <volist name="userlist" id="userlist" empty="暂时没有匹配的数据" key="k">
+          <tr height="30px">
+            <td bgcolor="#FFFFFF" height="18"><input type="checkbox" value="{$userlist.userid}"  id="listcheckbox" name="deluser['{$userlist.userid}']" ></td>
+            <td bgcolor="#FFFFFF" height="18">
+	            <div align="left" class="STYLE2 STYLE1">
+	            	<a href="{:U('User/userList',array('userid'=>$userlist[userid]))}">{$userlist[userid]}</a>
+	            </div>
+            </td>
+            <td bgcolor="#FFFFFF" height="18" class="STYLE2">
+            <div align="center" class="STYLE2 STYLE1">
+            {$userlist['usermail']}
+            </div></td>
+            <td bgcolor="#FFFFFF" height="18">
+            	<a href="/space/{$userlist[userid]}" target="_blank">{$userlist['nickname']}</a>
+            </td>
+            <td bgcolor="#FFFFFF" height="18" align="center">
+					<if condition="$userlist['state'] eq 2">
+						<img src='__PUBLIC__/images/status_1.gif' height='15' width='15'  id="status">
+					<else />
+						<img src='__PUBLIC__/images/status_0.gif' height='15' width='15'  id="status">
+					</if>
+			 <input type="hidden" value="{$userlist['state']}"  id='email_s_{$k}'>
+			</td>
+            <td bgcolor="#FFFFFF" height="18"><div align="center" > <if  condition="$userlist[order_num] neq '0'"><a href="{:u('BoxSend/orderList',array('userid'=>$userlist[userid]))}">{$userlist[order_num]}</a><else/>{$userlist[order_num]}</if></div></td>
+            <td bgcolor="#FFFFFF" height="18"><div align="center" ><a href="{:U('User/fansList',array('userid'=>$userlist[userid],'type'=>2))}">{$userlist['follow_num']}</a></div></td>
+            <td bgcolor="#FFFFFF" height="18"><div align="center" class="STYLE2 STYLE1"><a href="{:U('User/fansList',array('userid'=>$userlist[userid],'type'=>1))}">{$userlist[fans_num]}</a></div></td>
+            <td bgcolor="#FFFFFF" height="18"><div align="center" class="STYLE2 STYLE1"><a href="{:U('UserCredit/creditStat',array('userid'=>$userlist[userid],'credit_type'=>'1'))}">{$userlist[score]}</a></div></td>       
+            <td bgcolor="#FFFFFF" height="18"><div align="center" class="STYLE2 STYLE1"><a href="{:U('UserCredit/creditStat',array('userid'=>$userlist[userid],'credit_type'=>'2'))}">{$userlist[experience]}</a></div></td>
+            <td bgcolor="#FFFFFF" height="18"><div align="center" class="STYLE2 STYLE1"><a href="{:U('ProductsEvaluate/productEvaluateList',array('userid'=>$userlist[userid]))}">
+			{$userlist[evaluate_num]}</a></div></td>
+			<td bgcolor="#FFFFFF" height="18"><div align="center" class="STYLE2 STYLE1"><a href="{:U('UserBlog/blogList',array('userid'=>$userlist[userid]))}">
+			{$userlist[blog_num]}</a></div></td>
+            <td bgcolor="#FFFFFF" height="18" align="center"><a href="#" onclick="dialogmeseeage('{:u('User/useranswer',array('userid'=>$userlist[userid]))}','美丽档案')">查看</a></td>
+			<td bgcolor="#FFFFFF" height="18"> <input type="hidden" id="status_{$k}" value="{$userlist[if_super]}">  <div align="center" class="STYLE2 STYLE1"><if condition="$userlist[if_super] eq 0">普通<else />达人</if></div></td>
+            <td bgcolor="#FFFFFF" height="18" >{$userlist[addtime]}</td>
+          </tr>
+		</volist>
+		<tr><td colspan="18" align="center"><input type="button" value="添加黑名单" name="addb"><input type="submit" value="删除" name='del'>{$page}</td></tr>
+        </table>
+        </form>
+</div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,175 @@
+<include file="Public:header" />
+	<link rel="stylesheet" href="/public/js/jquery_theme/base/jquery.ui.all.css">
+	<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+	<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+	<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+<style>
+table{
+	font-size:12px;
+	margin:20px;
+}
+
+input,select{
+	border:solid #008080 1px;
+}
+
+.tawid{
+	height:25px;
+	border-collapse:collapse;
+	width:90%;
+}
+
+.tawid tr{height:28px;}
+.tawid td{ border:1px solid #666; border-collapse:collapse; text-align:center;}
+.tb1{width:800px}
+.valnull{font-weight:bolder;color:#FF8040;};
+.datalist{border:0;}
+</style>
+<script>
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+
+
+
+$(function(){
+	var sta="{$Think.get.status}";
+	var problem="{$Think.get.problem}";
+	var reason="{$Think.get.reason}";
+
+	if(sta){
+		$("select[name='status']").val(sta);
+	}
+
+	if(problem){
+		$("select[name='problem']").val(problem);
+	}
+	if(reason){
+		$("select[name='reason']").val(reason);
+	}
+})
+
+
+$(function() {
+	$( "#staorder" ).datepicker({
+		defaultDate: "-1w",
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$( "#to" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$( "#endorder" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$( "#from" ).datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+});
+</script>
+
+	<div align="left">
+		<fieldset class="fieldset"><legend>工单列表</legend>
+			<form action="{:U('BoxSend/checkorder')}" method="GET" id="myform">
+				订单号码</td><td><input type="text" name="order" value="{$Think.get.order}">&nbsp;&nbsp;&nbsp;
+				联系人</td><td><input type="text" name="linkman" value="{$Think.get.linkman}">&nbsp;&nbsp;&nbsp;
+				手机号</td><td><input type="text" name="telephone" value="{$Think.get.telephone}">&nbsp;&nbsp;&nbsp;
+				邮箱</td><td><input type="text" name="email" value="{$Think.get.email}">&nbsp;&nbsp;&nbsp;
+				<br>
+				
+				<label for="staorder">工单创建时间</label></td><td colspan="2"><input type="text" id="staorder" name="staorder" value="{$Think.get.staorder}"/>&nbsp;&nbsp;&nbsp;<label for="endorder">到</label>&nbsp;&nbsp;&nbsp;<input type="text" id="endorder" name="endorder"  value="{$Think.get.endorder}">
+
+				工单状态:
+				<select name="status">
+					<option value="0">待处理工单</option>
+					<option value="1">已处理工单</option>
+					<option value="2" selected>全部工单</option>
+				</select>
+				&nbsp;&nbsp;&nbsp;
+				工单问题:
+				<select name="problem">
+					<option value="">全部</option>
+					<option value="支付问题">支付问题</option>
+					<option value="配货出错">配货出错</option>
+					<option value="快递原因丢失">快递原因丢失</option>
+					<option value="快递原因损坏">快递原因损坏</option>
+					<option value="修改收货信息">修改收货信息</option>
+					<option value="个人原因要求退换">个人原因要求退换</option>
+					<option value="其他">其他</option>
+				</select>
+				&nbsp;&nbsp;&nbsp;
+				处理结果:
+				<select name="reason">
+					<option value="">全部</option>
+					<option value="全额退款">全额退款</option>
+					<option value="补发礼盒">补发礼盒</option>
+					<option value="优惠券赔偿">优惠券赔偿</option>
+					<option value="经验值赔偿">经验值赔偿</option>
+					<option value="积分赔偿">积分赔偿</option>
+					<option value="产品赔偿">产品赔偿</option>
+					<option value="报销运费">报销运费</option>
+					<option value="电话致歉">电话致歉</option>
+					<option value="其他">其他</option>					
+				</select>
+				<br/><br/>
+				<input type="button" name="resetpage" value="重置">
+				<input type="submit" value="查询"  name="tijiao" style="padding-left:10px;padding-right:10px;"><br/><br/>
+				<input type="submit" value="导出" name="export" style="padding-left:10px;padding-right:10px;">				
+			</form>
+		</fieldset>			
+	</div>
+
+<table cellpadding="0" cellspacing="0" class="tawid">
+	<tr bgcolor="#f5f5f5">
+		<td width="3%">序号</td>
+		<td width="13%">订单号</td>
+		<td width="13%">邮箱</td>
+		<td width="4%">联系人</td>
+		<td width="7%">手机号码</td>
+		<td width="10%">盒子信息</td>
+		<td width="8%">工单创建日期</td>
+		<td width="6%">状态</td>
+		<td width="5%">处理人</td>
+		<td colspan="2" width="10%">操作</td>
+	</tr>
+	<volist name="data" id="work" key="k">
+	<tr>
+		<td>{$k}</td>
+		<td>{$work.order}</td>
+		<td>{$work.email}</td>
+		<td>{$work.linkman}</td><td>{$work.telephone}</td>
+		<td>{$work.boxin}</td><td>{$work.orderdate|date="Y-m-d",###}</td>
+		<td><if condition="$work.status eq 0">未处理<else />已处理</if></td>
+		<td><if condition="$work.lastpeople neq null">{$work.lastpeople}<else/>{$work.cpeople}</if></td>
+		<td><a href="{:U('BoxSend/workorder',array('number'=>$work['order']))}" class="edit">管理</a>/
+			<a href="{:U('BoxSend/checkorder',array('del'=>$work['order']))}" style="color:#FF0000">删除</a>
+		</td>
+	</tr>
+</volist>
+<if condition="$data neq ''">
+<tr><td colspan="10" class="datalist">{$show}</td></tr>
+<else />
+<tr><td colspan="11" class="valnull">抱歉,没有查询到您搜索的信息,请检查!</td></tr>
+</if>
+</table>             
+<include file="Public:footer" /> 

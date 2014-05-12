@@ -1,0 +1,119 @@
+			<div class="send_title_tab">
+				<p><a href="javascript:void(0)"  get_values="<{$Think.get.option}>"  id="option_1">收到的评论(<{$datanum['replynum_r']}>) </a><a href="javascript:void(0)"  id="option_2">发出的评论(<{$datanum['replynum_s']}>)</a></p>
+			</div>
+			<!----内容--->
+			<div class="WB_feed"  id="nodata_contail">
+			<gt name="total"  value="0">
+				<!--日志4---->
+				<div class="WB_feed_type">
+					<div class="WB_feed_datail cfl S_line1">
+						<div class="WB_detail">
+							<div class="WB_media_reply">
+								<div class="comment_lists">
+									<!---回复1--->
+								<volist name="list"  id="vo">
+								<eq name="Think.get.option"  value="2">
+								    <dl class="comment_list S_line1">
+										<dt><a href="<{$vo.to_spaceurl}>" target="_blank"><img src="<{$vo.userface}>" width="45" height="45"></a></dt>
+										<dd><{$vo.content}></dd>
+										<dd>评论 <a href="<{$vo[to_spaceurl]}>" target="_blank" class="WB_info bind_hover_card" bm_type="1" bm_id="<{$vo[to_uid]}>" ><{$vo.nickname}></a> <if condition="$vo.type eq 1">的分享<else />的评论</if>：“<a href="<{$vo.to_url}>" target="_blank"><{$vo.to_content}></a>“</dd>
+										<dd class="WB_func">
+											<div class="WB_handle">
+												<a href="javascript:void(0)"  class="rd"  onclick="del_comment('<{$vo.id}>')">删除</a>
+											</div>
+											<div class="WB_from">
+												<span class="WB_time"><{$vo[posttime]|date='Y-m-d H:i',###}> </span>
+											</div>
+										</dd>    
+										<dd class="clear"></dd>
+									</dl>
+								<else/>
+								     <dl class="comment_list S_line1">
+										<dt><a href="<{$vo.spaceurl}>" target="_blank"><img src="<{$vo.userface}>" width="45" height="45"></a></dt>
+										<dd><{$vo.content}></dd>
+										<dd><if condition="$vo.type eq 1">
+												评论我的分享： 
+											<else />
+												回复我的评论： 
+											</if>
+											“<a href="<{$vo.to_url}>" target="_blank"><{$vo.to_content}></a>”</dd>
+										<dd class="WB_func">
+											<div class="WB_handle">
+												<a href="javascript:void(0)"  class="rd"  onclick="open_receivecomment_reply('<{$vo.nickname}>','<{$vo[shareid]}>','<{$vo[id]}>','<{$vo[userid]}>',this)">回复</a>
+											</div>
+											<div class="WB_from">
+												<span class="WB_time"><{$vo[posttime]|date='Y-m-d H:i',###}> </span>
+											</div>
+										</dd>    
+										<neq name="Think.get.option"  value="2">
+							   <dd  style="display:none"  class="comment_reply">
+								<div class="W_input cfl">
+									<div>
+										<textarea class="W_input_text" id="text_<{$i}>"></textarea>
+									</div>
+								</div>
+								<div class="action cfl">
+									<a href="javascript:void(0)" class="i_face" index="<{$i}>">&nbsp;</a>
+
+									<p class="btn">
+										<a href="javascript:void(0)" onclick="reply_receivecomment('text_<{$i}>',this)" class="W_pin_b">评论</a>
+									</p>
+				<input type="hidden" name="shareid" id="shareid" value="0" />
+				<input type="hidden" name="to_commentid" id="to_commentid" value="0" />
+				<input type="hidden" name="to_userid" id="to_userid" value="0" />
+				<input type="hidden" name="to_nick" id="to_nick" value="" />											
+								</div>
+							   </dd>
+							</neq>
+										<dd class="clear"></dd>
+									</dl>
+								</eq>
+								  </volist>
+								</div>
+
+										<div class="W_order_wrap">
+											<div class="W_pages" id="page"><{$page}></div>
+										</div>
+
+
+
+							</div>
+						</div>
+				</div>
+				</div>
+				
+				<else/>
+				    <script>
+				          $(function(){
+				        	  if('<{$Think.get.option}>'==2){
+									var title="您还米有发出过任何评论。"
+									var content="可以去<a href='<{:U('loli/index')}>' class='WB_info'>萝莉俱乐部</a>中看看有哪些精彩内容可以评论哦~"
+								}else{
+									var title="您还米有收到过任何评论。";
+									var content="";
+								}
+				         	nodata("nodata_contail",title,content);
+				          })
+				     </script>
+		      </gt>
+			</div>
+			<script>
+			 $(function(){
+					ajax_replace("option","__ACTION__");
+			 })
+			</script>
+			<script src="/public/js/comment.js"></script>
+			<script src="/public/js/lolitaboxFace.js"></script>
+		    <script>
+		    $(function(){
+		    	$(".i_face").each(function(i){
+		    		var id=$(this).attr("index");
+		    		var id_name="text_"+id;
+		    		 $(this).qqFace({
+		    			 	assign:""+id_name+"", //给那个控件赋值
+		    			 	path:'public/lolitabox/smilies/'	//表情存放的路径
+					 });
+		    	})
+		    })
+	</script>
+			

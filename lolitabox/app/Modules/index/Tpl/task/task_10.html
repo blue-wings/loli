@@ -1,0 +1,70 @@
+<div class="domain_playboxs">
+	<dl class="domain_playboxs_dl">
+		<dt>任务描述：</dt>
+		<dd>每成功邀请1位好友注册（邀请的好友需验证手机哦），就能获得<b> <{$info[credit]}> </b>积分奖励，邀请越多奖励越多，完全无时间以及次数限制哦！</dd>
+		<dd><b>请不要进行虚假邀请注册，萝莉盒会对邀请注册进行人工核实，并保留扣除积分、经验及进一步处理的权利。</b></dd>
+	</dl>
+<div>	
+<p class="domain_playboxs_title">方式1：</p>	
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" data="{'url':'<{$return[inviteurl]}>'}">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more">更多</span>
+</div>
+</div>
+<script type="text/javascript">
+var  sharejs =document.getElementById("bdshell_js");
+var bds_config = {
+		'bdText':'萝莉盒，就是化妆品试用！根据你不同的爱好，不同的需求，为你量身定制不同的试用计划，让你率先、优雅而又经济地体验到各大奢侈品牌最新上市的产品，寻找到你不知道但特别想要的一切，同时通过亲身试用，轻松找到最适合自己的产品！',
+		'bdPic':'http://www.lolitabox.com/public/images/weibo.jpg'
+	} 
+if(!sharejs){
+	$(".domain_playboxs_title").append("<script type=\"text/javascript\" id=\"bdshell_js\" src=\"http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion="+Math.ceil(new Date()/3600000)+"\"><\/script>");
+}else{
+	sharejs.src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+}
+</script>	
+<br/><br/>	
+	<p class="domain_playboxs_title">方式2：</p>
+	<!--邀请好友-->
+	<div class="domain_invite">
+		<div class="Invited_friend_W cfl">
+			<div class="friend_ico"></div>
+			<div class="friend_con">
+				<p class="f_text">这是您的专用邀请链接，请通过QQ或其他聊天工具发送给好友，分享到：</p>
+				<p class="f_text">
+					<input type="text" value="<{$return[inviteurl]}>" id="userurl"> <a href="javascript:void(0)"
+						class="W_pin_b14" onclick="oCopy(userurl)">复制</a>
+				</p>
+			</div>
+		</div>
+        <div id="ajax_content">
+            	<include file="task_10_ajaxlist" />
+        </div>
+		
+	</div>
+</div>
+<script>
+function oCopy(obj){ 
+	obj.select(); 
+	if(isIE()){
+		js=obj.createTextRange(); 
+		js.execCommand("Copy") 
+	}else{
+		alert("您的浏览器暂时不支持此功能，请手动复制！");
+		}
+} 
+
+function isIE(number) 
+{ 
+    if(typeof(number)!=number) 
+    { 
+        return document.all; 
+    }     
+} 
+
+</script>

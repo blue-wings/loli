@@ -1,0 +1,233 @@
+<include file="Public:header" />
+<include file='Public:upload' />
+<link rel="stylesheet" href="__PUBLIC__/js/colorbox/colorbox.css">
+<script src="__PUBLIC__/js/colorbox/jquery.colorbox-min.js"></script>
+<table width="100%" cellspacing="1" cellpadding="6" border="0" align="center" class="tborder">
+<tbody><tr>	<td class="tcat">创建产品</td></tr>
+<tr>
+	<td align="center" class="panelsurround">
+	<form  id='product_form' action="__URL__/addproduct" method="post" enctype="multipart/form-data"
+	onsubmit="return checkform()">
+	<input type="hidden" name="pid" value="{$productinfo[pid]}">
+	<div class="panel">
+		<div align="left">
+			<fieldset class="fieldset">
+			<legend>添加</legend>
+					
+			<div style='width:50%;float:left'>
+			   产品标题(前台):<input type="text" size="30" name="pname" value="{$productinfo.pname}">  </br> </br> 
+			   产品别名(亮点描述):<input type="text" name="product_alias" value="{$productinfo.product_alias}" size="50"></br> </br> 
+			   子产品列表:	<input type="text" size="30" name="productlist" value="{$productinfo.productlist}"><br><font color="red"> 以英文逗号分隔，如1,2,3,4</font></br> </br> 
+			  <!-- 精彩分享ID列表:<input type="text" size="30" name="sharelist" value="{$productinfo.sharelist}"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<font color="red"> 以英文逗号分隔，如1,2,3,4</font></br> </br>   --> 
+			   正装规格:	<input type="text" name="goodssize"  value="{$productinfo.goodssize}"><br><br>
+			   正装价格:	<input type="text" name="goodsprice" value='{$productinfo.goodsprice}'><br><br>
+			   主要成分:	<input type="text" name="maincomponent" value='{$productinfo.maincomponent}'><br><br>
+			   体验装规格:	<input type="text" name="trialsize"  value='{$productinfo.trialsize}'><br><br>
+			   体验装价格:	<input type="text" name="trialprice" value='{$productinfo.trialprice}'><br><br>
+			  <!-- 调查问卷ID：<input type="text" name="surveyid"  value='{$productinfo.surveyid}'/><br><br> --> 
+			  <!--  心水标签:	<input type="text" name="taglist" size="30"  value='{$productinfo.taglist}'><br><br> --> 
+			  适用肤质：<volist name="skin_list" id="skin"><input type="checkbox" name="for_skin[]" value="{$skin}"  <php>if(in_array($skin,$skin_list_selected)) echo " checked";</php>>{$skin} </volist>
+			  <br><br>
+			  适用发质：<volist name="hair_list" id="hair"><input type="checkbox" name="for_hair[]" value="{$hair}" <php>if(in_array($hair,$hair_list_selected)) echo " checked";</php> >{$hair} </volist>
+			  <br><br>
+			  适用人群：<volist name="people_list" id="people"><input type="checkbox" name="for_people[]" value="{$people}" <php>if(in_array($people,$people_list_selected)) echo " checked";</php>>{$people} </volist>
+			  <br><br>
+			   产品官方网址:	<input type="text" name="officialweburl" size="40" value="{$productinfo[officialweburl]}"><br><br>
+			   广告图片URL:	<input type="text" name="ad_url" size="40" value="{$productinfo[ad_url]}"><br><br>
+				<span style="float:left;">广告图片地址:</span>&nbsp;
+				<input type="text" size="30" name='ad_pic' value="{$productinfo.ad_pic}">
+				<input type="button" id="uploadPicture1" value="上传图片" onclick="uploadPic('ad_pic')"><br>
+				<a href="#showadpic" class="record">显示图片</a>
+				<div style="display:none">
+						<img src="{$productinfo.ad_pic}" height="300" width="300" id="showadpic">
+				</div>
+			   <br/><br/>
+			   产品简介:<br/>	
+			   <textarea name="pintro" id="info" style="width:500px;height:300px;visibility:hidden;">{$productinfo.pintro}</textarea>
+			   <br><br>
+			   <font color=red>使用说明</font>:<br/>
+			   <textarea name="readme" id="instructions" style="width:500px;height:300px;visibility:hidden;">{$productinfo.readme}</textarea>
+			    <br><br>
+			</div>
+			<div style='width:50%;float:left'>
+			产品分享试用观点:<br><textarea name='try_viewpoint'  rows='4'  cols='50'>{$productinfo.try_viewpoint}</textarea><br/>(一行一个观点！用回车换行。)
+			<br/><br/>
+			   销售标签:<input type="text" size="30" name="sale_tag" value="{$productinfo.sale_tag}"> 
+			   <br/>
+			   <span style="padding-left:70px;"><font color="red"> 多个用英文逗号分隔</font></span>
+			   <br/><br/>
+			   推荐属性标签:
+				<select name="commend_tag">
+					<option value="0">全不选</option>
+					<option value="1">最新</option>
+					<option value="2">推荐</option>
+					<option value="3">最热</option>
+					<option value="4">折扣</option>
+					<option value="5">正装</option>
+				</select>
+			   <br/><br/>
+			   品牌分类:	
+			   <input type="text" value='{$Think.get.pbname}' name="pbname"  onkeyup="tips(this.value,'blist')">
+			   <input type="hidden" value='{$productinfo.brandcid}'  name="brandcid">
+				<select name="blist" onchange="setBrandV(this.value,this.options[this.options.selectedIndex].text)">
+						<volist name="blist" id="brandcategory">
+						
+						<option value="{$brandcategory[cid]}"   <php>if($productinfo[brandcid]==$brandcategory[cid]) echo "selected";</php>>{$brandcategory[cname]}</option>
+						</volist>
+						</select><br><br>
+			   所属分类:	
+					<select name="pcid">
+					<volist name="clist" id="productcategory" key="k">
+						<option value="{$productcategory[pcid]}-{$productcategory[cid]}" <php>if($productinfo[firstcid]==$productcategory[pcid] && $productinfo[secondcid]==$productcategory[cid])  echo "selected";</php>>
+						      		<php>
+						      		for($i=0; $i<$productcategory[signnum]; $i++){
+						      			echo "|--";
+						      		}
+						      		</php>
+						{$productcategory[cname]}
+						</option>
+					</volist>
+					</select>【<font color="red">选择分类时请选择至二级分类</font>】<br><br>
+			   功效分类:	
+						<ul id="bar">
+						<volist name="elist" id="effectcategory">
+						  <li><input type="checkbox" name="effectcid[]" value="{$effectcategory[cid]}" <php>if(in_array($effectcategory[cid],$producteffectcidlist)) echo "checked";</php>>{$effectcategory[cname]}
+						  </li>
+						</volist>
+						</ul>
+			   <div style='clear:both;padding-top:75px;height:340px;margin-left:50px;'> 
+			      产品图片:	<input type='text' name="pimg"  value='{$productinfo.pimg}'><input type="button" id="uploadPicture1" value="上传图片" onclick="uploadPic('pimg')">
+			 <div id='show_pic' style='width:400px;height:300px;border:1px solid #777;color:#777;font-size;24px;overflow:auto'><eq name='productinfo.pimg'  value=''>图片预览区域<else/><img src="{$productinfo[pimg]}"></eq></div>
+			   </div>
+			   
+			   <div style="margin-left:50px;">
+			   		产品排序：<input type="text" name="sort_num" value="{$productinfo[sort_num]}"/>
+			   </div>
+			   <br /><br />
+                <div style="padding-top:0px;float:left;margin-left:200px;">
+					<input type="submit" class="button" value="提交表单" />
+				</div>
+   </div>
+    
+	</form>
+			</fieldset>
+	</div>
+<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-min.js"></script>
+<script>
+//提交检查表单
+function checkform(){
+	if($(":text[name='pbname']").val() == ''){
+		alert('请选择品牌分类再提交');
+		return false;	
+	}else if($("select[name='pcid']").val().split('-')[0] == 0){
+		alert("请先选择二级分类再提交!");
+		return false;
+	}else if($(":checkbox[name='effectcid[]'][checked]").length == 0){
+		alert("请先选择功效再提交!");
+		return false;
+	}else if($(":checkbox[name='for_people[]'][checked]").length==0){
+		alert("请先选择适用人群再提交!");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+//编辑器
+KE.show({
+	id : 'info',
+	imageUploadJson : '__PUBLIC__/kindeditor/php/upload_json.php',
+	fileManagerJson : '__PUBLIC__/kindeditor/php/file_manager_json.php',
+	allowFileManager : true,
+	afterCreate : function(id) {
+		KE.event.ctrl(document, 13, function() {
+			KE.util.setData(id);
+			document.forms['myform'].submit();
+		});
+		KE.event.ctrl(KE.g[id].iframeDoc, 13, function() {
+			KE.util.setData(id);
+			document.forms['myform'].submit();
+		});
+	}
+});
+
+KE.show({
+	id : 'instructions',
+	imageUploadJson : '__PUBLIC__/kindeditor/php/upload_json.php',
+	fileManagerJson : '__PUBLIC__/kindeditor/php/file_manager_json.php',
+	allowFileManager : true,
+	afterCreate : function(id) {
+		KE.event.ctrl(document, 13, function() {
+			KE.util.setData(id);
+			document.forms['myform'].submit();
+		});
+		KE.event.ctrl(KE.g[id].iframeDoc, 13, function() {
+			KE.util.setData(id);
+			document.forms['myform'].submit();
+		});
+	}
+});
+
+var commend_tag = "{$productinfo.commend_tag}";
+if(commend_tag){
+	$("select[name='commend_tag'] option[value='"+commend_tag+"']").attr("selected",true);
+}
+
+var pid="{$Think.request.pid}";
+var url="__URL__/editproduct";
+var search1='';
+$(function(){
+	var bcid="{$productinfo['brandcid']}";
+	if(bcid){
+		var selev=$("select[name='blist']").val();
+		var bname=$("select[name='blist']>option[value='"+selev+"']").text();
+		$("input[name='pbname']").val(bname);
+	}
+})
+
+if(pid){
+	$("#product_form").attr("action",url);
+}
+$(function(){
+	var status="{$productinfo['status']}";
+	if(status==0){
+		$("#status").attr('src','/admin/Public/images/010.gif');
+	}else{
+		$("#status").attr('src','/admin/Public/images/status_1.gif');
+	}
+})
+
+
+function tips(v,name){
+	if(v != search1){
+		$.ajax({
+			url:"{:U('Shop/index')}",
+			type:"post",
+			dataType:"json",
+			data:"brandname="+v+'&n='+Math.random(),
+			success: function(chkresult){
+				if(parseInt(chkresult.status)==1){
+					var data=chkresult.data;
+					$("select[name='"+name+"']").empty();
+					var i=0;
+					$("select[name='"+name+"']").prepend("<option>请选择品牌</option>");
+					for(i in data){
+						$("select[name='"+name+"']").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
+					}
+				}
+			}
+		})
+	}
+}
+function setBrandV(val,txt){
+	$("input[name='brandcid']").val(val);
+	$("input[name='pbname']").val(txt);
+}
+
+$("input[name='pimg']").blur(function(){
+var img=$(this).val();
+if(img)$("#show_pic").html("<img src='"+img+"'>");
+});
+$(".record").colorbox({inline:true,height:"70%",width:"30%"});
+</script>
+<include file="Public:footer" />

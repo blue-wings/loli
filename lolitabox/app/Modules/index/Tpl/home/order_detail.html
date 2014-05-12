@@ -1,0 +1,25 @@
+<include file="public:header.inc" />
+<!--分页--start-->
+<div class="fm1020 top_guide">
+<if condition="$return[if_try] eq 1 OR $return[if_exchange] eq 1">
+所在位置：<a href="/">网站首页</a>&gt;<a href="<{:u('home/index')}>">个人主页</a>&gt;<a href="<{:u('home/tryorder')}>">试用订单</a>&gt;<gt name="return[orderinfo][state]" value="0"><a href="<{:u('home/tryorder')}>">已支付订单</a><else /><a href="<{:u('home/tryorder',array('type'=>2))}>">未支付订单</a></gt>&gt;<span class="g9">订单详情</span>
+<else />
+所在位置：<a href="/">网站首页</a>&gt;<a href="<{:u('home/index')}>">个人主页</a>&gt;<gt name="return[orderinfo][state]" value="0"><a href="<{:u('home/boxorder')}>">已支付订单</a><else /><a href="<{:u('home/boxorder',array('type'=>2))}>">未支付订单</a></gt>&gt;<span class="g9">订单详情</span>
+</if>
+</div>
+<!--分页--end-->
+
+<!--个人中心--内容--start-------->
+<div class="fm1020_b cfl">
+	<include file="left.inc" />
+	<include file="$tps" />
+		<div class="main My_details_wrap">
+				<include file="order_detail.inc" />
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+
+<!--个人中心--内容--end-------->
+
+<include file="public:footer.inc" />

@@ -1,0 +1,336 @@
+<include file="Public:header" />
+<style>
+.p30{
+	padding:3% 20% 2% 20%;
+	width:100%;
+	height:200px;
+}
+.p10{
+	clear: both;
+	padding:1% 20%;
+	width:100%;
+}
+.p101{
+	clear: both;
+	padding:0% 20% 2% 20%;
+	width:100%;
+	display:none;
+}
+.flt2{
+	float:left;
+	padding-top:5px;
+	font-size:14px;
+	color:#333333;
+	height:60px;
+	width:60px;
+}
+
+.flg2{
+	height:60px;
+	float:left;
+	margin-left:20px;
+	width:50%;
+}
+.flg3{
+	height:60px;
+	float:left;
+	margin-left:20px;
+	width:50%;
+}
+tr{
+	height:25px;
+}
+input{
+	border:1;
+}
+.w50{
+	width:50px;
+}
+.w30{
+	width:30%;
+}
+.w70{
+	width:70%;
+}
+.lef{
+	height:30px;
+	width:2%;
+	float:left;
+	background:url(__PUBLIC__/images/tab_03.gif);
+}
+.midd{
+	height:30px;
+	width:95%;
+	float:left;
+	background:url(__PUBLIC__/images/tab_05.gif);
+}
+.rig{
+	height:30px;
+	width:2%;
+	float:left;
+	background:url(__PUBLIC__/images/tab_07.gif);	
+}
+.f1{
+	padding:10px 0px 0px 8px;
+	width:15%;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.f2{
+	padding:10px 0px 0px 30px;
+	width:25%;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.f3{
+	padding:10px 0px 0px 30px;
+	width:15%;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.f4{
+	padding:10px 0px 0px 50px;
+	width:8%;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.addsize{
+	margin-right:20px;
+}
+.total,.red{
+	color:red;
+}
+.pnamevalue{
+	color:green;
+}
+</style>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />出库管理>创建虚拟出库单</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right"></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<div class="p30">
+	<div class="flg">
+		<form action="__ACTION__" method="POST" name="frm" onsubmit="return checkform()">
+		<table width="40%" cellpadding="0" cellspacing="0" style="padding:5px;" id="tab">
+			<tr>
+				<td class="w30">出库单名称:</td>
+				<td class="w70" colspan="3"><input type="text" name="outname" value=""></td>
+			</tr>
+			<tr>
+				<td class="w30">出库备注:</td>
+				<td><textarea cols="30" colspan="3" rows="5" style="margin-top:20px;" name="remark"  id="remark"></textarea></td>
+			</tr>	
+			<tr>
+				<td class="w30">预计出库时间:</td>
+				<td class="w70" colspan="3"><input type="text" name="outtime" value=""></td>
+			</tr>											
+		</table><br><br>
+		出库信息：
+		<table width="75%" cellpadding="0" cellspacing="0" style="padding:10px 5px;" border="0" id="tab1">
+            <tr>
+                <td width="8%">出库单品ID</td>
+                <td width="20%">产品名称</td>
+                <td width="10%">剩余总量</td>
+                <td width="7%">出库数</td>
+                <td width="10%"></td>
+            </tr>
+			<tr>
+				<td style="width:10%"><p><input type="text" name="pid[]" value="" size="10"></p></td>
+				<td class="pnamevalue"  style="width:15%"></td>
+				<td class="surplustotal" style="width:10%"><span class="total">0</span></td>
+				<td style="width:15%"  class="quantity"><p><input type="text" name="quantity[]" value="1" size="10"></p></td>
+				<td><a href="javascript:void(0)" onclick="addvirtuallist(this)"  title="自动调取该产品ID下面的子产品列表">添加入库信息</a>/<a href="javascript:void(0)" onclick="bindListener(this)" name="rmlink">删除</a></td>
+			</tr>
+		   </table>
+		   <input type="button" name='addtext' value="增加" class='addsize'>
+		   <br><br>
+		入库信息：
+		<table width="75%" cellpadding="0" cellspacing="0" style="padding:10px 5px;" border="0" id="tab2">
+            <tr>
+                <td width="18%" >产品ID</td>
+                 <td width="20%" >产品名称</td>
+                <td width="10%"  >产品数量</td>
+            </tr>
+		   </table>
+			<input type="button"  onclick="addchild('','','')" value="增加">	
+		    <input type='submit' name='sub' value=' 提 交 '>
+	</form>
+	</div>
+</div>
+<script type="text/javascript">
+
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+
+
+$(function(){
+	$(":button[name='addtext']").bind('click',function(){
+		var str='';
+		str+='<tr><td style="width:10%"><p><input type="text" name="pid[]" value="" size="10"></p></td>';
+		str+='<td class="pnamevalue"  style="width:18%"></td>';
+		str+='<td class="surplustotal" style="width:10%"><span class="total">0</span></td>';
+		str+='<td style="width:10%" class="quantity"><p><input type="text" name="quantity[]" value="1" size="10"></p></td>';
+		str+='<td><a href="javascript:void(0)" title="自动调取该产品ID下面的子产品列表">添加入库信息</a>/<a href="javascript:void(0)" onclick="bindListener(this)" name="rmlink">删除</a></td></tr>';
+		$("#tab1").append(str);	
+	});
+	
+	
+	$(":text[name='pid[]']").live('keyup',function(){
+		var th=$(this);
+		$.ajax({
+			url:"{:U('Inventory/getProductsData')}",
+			type:"post",
+			dataType:"json",
+			data:"pid="+th.val()+'&n='+Math.random(),
+			success: function(chkresult){
+				if(chkresult != null){
+					if(chkresult.status == 1){
+						var top=th.parent().parent();
+						top.siblings(".pnamevalue").text(chkresult.data);
+						top.siblings(".surplustotal").children('.total').text(chkresult.info);
+					}
+				}
+			}
+		})
+	});
+	
+	$(":text[name='quantity[]']").live('keyup',function(){
+		var top=$(this).parent().parent();
+		var total=top.siblings(".surplustotal").children('.total').text();
+		top.next(".chuku").children('.chukushu').html($(this).val()*$(":text[name='pakagenum']").val());
+
+		if(parseInt($(this).val()) > parseInt(total)){
+			$(this).val('0');
+		}
+	})
+	
+	$(":text[name='outtime']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$(":text[name='outtime']").datepicker( "option", "minDate", selectedDate );
+		}
+	})
+	
+	$(":text[name='pakagenum']").keyup(function(){
+		if(!$(this).val().match(/^\d+$/)){
+			alert("请输入正整数");
+			$(this).val("");
+			return false;
+		}
+	})
+})
+
+
+//删除 tab1下面的删除则连子产品列表一起删除,否则只删除本身
+function bindListener(obj){
+	var tablepar = $(obj).closest("table");
+	if(tablepar.attr("id") == 'tab1'){
+		var parval = tablepar.find(":text[name='pid[]']").val();
+		if(gvar[parval]){
+			for(var i=0;i<gvar[parval].length;i++){
+				$(":text[name='cpid[]'][value='"+gvar[parval][i]+"']").closest("tr").remove();
+			}
+		}
+	}else{
+		$(obj).closest("tr").remove();
+	}
+}
+
+//检查表单内容
+function checkform(){
+	var text=$(":text");
+	var flag=0;
+	if(!$("#remark").val()){
+		alert("出库备注必填");
+		$("#remark").focus();
+		return false;
+	}
+	$.each(text,function(i,n){
+		if(!n.value){
+			n.focus();
+			flag=1;
+			alert("表单不能为空");
+			return false;
+		}
+	})
+	if(flag===0)
+		return true;
+	return false
+}
+
+
+var gvar = new Array;
+
+
+function addvirtuallist(obj){
+	var parentobj = $(obj).closest("tr");
+	var productid = parentobj.find(":text[name='pid[]']").val();
+	var pronum = parentobj.find(":text[name='quantity[]']").val();
+	
+	gvar[productid] = new Array();
+	
+ 	$.ajax({
+		url:"__URL__/searchProductChildrenList",
+		type:"post",
+		dataType:"json",
+		async:false,
+		data:"productid="+productid,
+		success:function(reponse){
+			if(reponse.status==1){
+				var childrenlist =reponse.data; 	
+				for(var i in childrenlist){
+					if($(":text[name='cpid[]'][value='"+childrenlist[i].pid+"']").closest("tr").html() == null){
+						addchild(childrenlist[i].pid,childrenlist[i].pname,pronum);
+						gvar[productid].push(childrenlist[i].pid);
+					}
+				}
+			}else{
+				alert("该产品没有子产品");
+			}
+		}
+	})
+}
+
+//添加子产品列表
+function addchild(cpid,cname,num){
+	var str="<tr>";
+	str+='<td style="width:5%"><p><input type="text" name="cpid[]" value="'+cpid+'" size="10"></p></td>';
+	str+='<td class="pnamevalue"  style="width:20%">'+cname+'</td>';
+	str+='<td style="width:10%"><input type="text" value="'+num+'" name="pakagenum[]" ></td>';
+	str+='<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="bindListener(this)" name="rmlink">删除</a></td></tr>';
+	$("#tab2").append(str);
+}
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理项列表</title>
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.STYLE2 {color: #43860c; font-size: 12px; }
+
+a:link {font-size:12px; text-decoration:none; color:#43860c;}
+a:visited {font-size:12px; text-decoration:none; color:#43860c;}
+a:hover{font-size:12px; text-decoration:none; color:#FF0000;}
+
+#leftcolumn {
+  background-color: white;
+  clear: left;
+  float: left;
+  margin-right: 5px;
+  width: 168px;
+}
+#leftcolumn .titlebar {
+    background-color: #e0e0e0;
+    border-bottom: 1px solid #7B9BC4;
+    color: gray;
+    padding: 2px 2px 2px 10px;
+}
+
+.ddmarkermenu {
+  list-style-type: none;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.ddmarkermenu li {
+  padding-bottom: 2px;
+}
+
+.ddmarkermenu {
+  list-style-type: none;
+}
+
+.ddmarkermenu li a {
+  border-bottom: 1px solid #DADADA;
+  display: block;
+  padding: 2px 0 2px 10px;
+  text-decoration: none;
+}
+-->
+</style>
+<base target="MainFrame">
+</head>
+
+<body>
+<table width="177" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed">
+      <tr>
+        <td height="26" background="__PUBLIC__/images/main_21.gif">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td  style="line-height:4px; background:url(__PUBLIC__/images/main_38.gif)">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>
+
+<div id="leftcolumn">
+<foreach name="menu" item="vo" key='key'>
+<div style="margin-top: 12px" class="titlebar">{$vo.title}</div>
+<ul class="ddmarkermenu">
+<foreach name="vo.action" item="prevo" key='k'>
+<li><a href="__GROUP__/{$vo.name}/{$prevo.name}">{$prevo.title}</a></li>
+</foreach>
+</ul>
+</foreach>
+
+<if condition="$_SESSION['account'] eq 'admin'">
+<div style="margin-top: 12px" class="titlebar">权限管理</div>
+<ul class="ddmarkermenu">
+<li><a href="__GROUP__/ThinkAdmin/index">后台用户</a></li>
+<li><a href="__GROUP__/ThinkNode/index">节点管理</a></li>
+<li><a href="__GROUP__/ThinkRole/index">角色管理</a></li>
+<li><a href="__GROUP__/ThinkSimplelog/index">日志管理</a></li>
+</ul>
+</if>
+		</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</body>
+</html>

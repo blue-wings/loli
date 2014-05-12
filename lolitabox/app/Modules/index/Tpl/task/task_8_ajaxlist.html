@@ -1,0 +1,59 @@
+<table class="order_tables" border="0" cellspacing="0" cellpadding="0"
+	width="100%">
+	<tbody>
+		<tr height="46">
+			<th width="130">订单编号</th>
+			<th width="114">萝莉盒名称</th>
+			<th width="90">晒盒状态</th>
+			<th width="70">任务奖励</th>
+			<th width="120">操作</th>
+		</tr>
+			<volist name="info.list"  id="vo">
+												<tr>
+													<td><a href="<{$vo.ordernmb|getOrderDetailUrl=###}>" target="_blank"><{$vo.ordernmb}></a></td>
+													<td><{$vo.boxname}></td>
+													<td>	
+													 <switch name="vo.status"> 
+													  <case value="2" ><a href="<{$vo.shareid|getShareUrl=###}>"  target="_blank">已加精</a></case>
+							                    	  <case value="3"><a href="<{$vo.shareid|getShareUrl=###}>"  target="_blank">已分享、未加精</a></case>                           
+							                    	  <default />未分享
+							                    	</switch></td>
+													<td>50积分</td>
+													<td>
+											<eq name="vo.ifaward"  value="1"><a href="javascript:void(0)"   class="W_pin_b"  onclick="award('<{$vo.ordernmb}>')"><span>领取积分</span></a>
+											<else/>
+											
+											  	<a href="javascript:void(0)"  title="晒盒" class="W_pin_b" onclick="dialog_share('<{$vo.ordernmb}>',4)" id="share_<{$i}>">
+														<span>晒盒</span>
+											     </a>
+											
+											</eq>
+												 
+												</tr>
+							</volist>
+	</tbody>
+</table>
+<div class="W_order_wrap">
+		<div class="W_pages" id="page"><{$page}></div>
+</div>
+<script>
+   function award(orderid){
+	   $.ajax({
+		   url:"<{:U('task/show_box_award')}>",
+		   type:"post",
+		   data:"orderid="+orderid,
+		   dataType:"json",
+		   success:function(data){
+			    if(data.status==1){
+  		    		y_dialog(data.info,2);
+  		    		setTimeout(function(){
+  		    			location.href=location.href;
+  		    		},2000);
+  		    	}else{
+  		    		n_dialog(data.info,2);
+  		    	}
+		   }
+	   })
+   }
+</script>
+			

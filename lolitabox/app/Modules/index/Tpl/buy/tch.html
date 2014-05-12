@@ -1,0 +1,142 @@
+<include file="public:header.inc" />
+<div class="fm1020_c">
+    <div class="fm1024 cfl">
+		<div class="wp1020_2 mb16">
+			<div class="hd"></div>
+			<div class="main main_pad0">
+                 <div class="greedy_box_top">
+                 	<div class="greedy_box_top_title"></div>
+                 	<ul class="greedy_box_top_tips">
+                 		<li>1、每月贪吃盒包含8-12种产品；</li>
+                        <li>2、每月15日派送，免除快递费用；</li>
+                        <li>3、每月10日前（包括10日）订购的贪吃盒，将在15日统一派送；</li>
+                        <li>4、每月10日之后订购的贪吃盒，将在下个月15日统一派送；</li>
+                         <li>温馨提示：特权会员选择立即订购将自动尊享“特权会员价”。<br/><a href="<{:U("special/xszn")}>" target="_blank">什么是特权会员？</a> <a href="<{:U("member/index")}>" target="_blank">如何成为特权会员？</a></li>
+                 	</ul>
+                 	<ul class="greedy_box_top_con">
+                 		<li class="greedy_box_month">
+                 			<p class="greedy_box_main">一次订购1个贪吃盒</p>
+                 			<p class="greedy_box_price"><span class="price_red">特权会员价￥49 元</span><span class="price_orange">普通会员价￥69 元</span></p>
+                 			<p class="greedy_box_btn"><a href="<{:u('buy/detail',array('boxid'=>133))}>" target="_blank">立即订购</a></p>
+                 		</li>
+                 		<li class="greedy_box_quarter">
+                 			<p class="greedy_box_main">一次订购3个贪吃盒，连续3个月，每月定期收到一个贪吃盒。选择季度订购，每月仅45元。</p>
+                 			<p class="greedy_box_price"><span class="price_red">特权会员价￥135元</span><span class="price_orange">普通会员价￥183 元</span></p>
+                 			<p class="greedy_box_btn"><a href="<{:u('buy/detail',array('boxid'=>134))}>" target="_blank">立即订购</a></p>
+                 		</li>
+                 		<li class="greedy_box_hyear">
+                 			<p class="greedy_box_main">一次订购6个贪吃盒，连续6个月，每月定期收到一个贪吃盒。选择半年订购，每月仅42元。</p>
+                 			<p class="greedy_box_price"><span class="price_red">特权会员价￥252 元</span><span class="price_orange">普通会员价￥324 元</span></p>
+                 			<p class="greedy_box_btn"><a href="<{:u('buy/detail',array('boxid'=>135))}>" target="_blank">立即订购</a></p>
+                 		</li>
+                 		<li class="greedy_box_year">
+                 			<p class="greedy_box_main">一次订购12个贪吃盒，连续12个月，每月定期收到一个贪吃盒。选择全年订购，每月仅39元。</p>
+                 			<p class="greedy_box_price"><span class="price_red">特权会员价￥468元</span><span class="price_orange">普通会员价￥588 元</span></p>
+                 			<p class="greedy_box_btn"><a href="<{:u('buy/detail',array('boxid'=>136))}>" target="_blank">立即订购</a></p>
+                 		</li>
+                 	</ul>
+                 </div>
+            </div>
+		</div>
+	</div>
+<a name="show"></a>
+<notempty name="historylist">
+	<div class="fm1024 cfl more_title_list">
+		<div class="wp1020_2">
+			<div class="hd">
+				<div class="tit_hd_tab l">
+					<span class="tit_hd_con select"><a href="<{:U("buy/tch")}>#show">往期揭秘</a></span>
+					<span class="tit_hd_con hd_ft"><a href="<{:U("buy/tch",array("type"=>"share"))}>#show">晒盒分享</a></span>
+			    </div>
+			</div>
+			<div class="main">
+				<div class="old_the_secret cfl">
+					<div class="old_the_secret_con">
+		                <div id="secretMenu">
+						<volist name="historylist"  id="datalist">
+							<div class="old_the_secret_month_con cfl">
+								<div class="old_the_secret_month">
+									<div class="the_secret_month_title cfl" >
+										<h3 class="l">
+											<span class="t_shrinknfold t_unfold"></span><{$datalist["title"]}>
+										</h3>
+									</div>
+									<div class="the_secret_month_main cfl">
+										<a href="javascript:;" class="aleft shipLeft"></a>
+										<div class="the_secret_month_con"  id="mainId">
+											<ul class="cfl lidag">
+												<volist name="datalist.imglist" id="imglist">
+												<li>
+													<p class="image">
+														<img src="<{$imglist[img]}>" width='200' height='200' alt="<{$imglist['title']}>">
+													</p>
+													<p class="image_con"><{$imglist['title']}></p>
+												</li>
+												</volist>
+											</ul>
+										</div>
+										<a href="javascript:;" class="aright shipRig"></a>
+									</div>
+								</div>
+							</div>
+						</volist>
+	                   </div>
+						<script src="public/js/sliderAdd.js" type="text/javascript"></script>
+						<script>
+						$(function(){
+								$(".the_secret_month_main").xslider({
+									unitdisplayed:4,
+									movelength:4,
+									maxlength:920,
+									unitlen:230,
+									dir:"H",
+									autoscroll:null
+								});
+							});
+						</script>
+                    </div>
+				</div>
+        </div>
+		<div class="ft"></div>
+    </div>
+</div>
+</notempty>
+<notempty name="list">
+
+<!--晒盒分享 start  -->
+	<div class="fm1024 cfl more_title_list">
+		<div class="wp1020_2">
+			<div class="hd">
+				<div class="tit_hd_tab l">
+					<span class="tit_hd_con"><a href="<{:U("buy/tch")}>#show">往期揭秘</a></span>
+					<span class="tit_hd_con hd_ft select"><a href="<{:U("buy/tch",array("type"=>"share"))}>#show">晒盒分享</a></span>
+			    </div>
+			</div>
+			<div class="main">
+			<!-- 
+					<style>
+					.my_send_title{padding:8px 10px; margin:0px 0 15px; line-height:22px; background-color:#FEFFCF; border:solid 1px #f9eace; border-radius:3px; }
+					.my_send_title .title{font-size:14px; padding:6px 0;}
+					.my_send_title a{color:#e7308c; padding-right:10px;}
+					</style>
+					<div class="my_send_title">
+					<span class="title">晒贪吃盒，赢取萝莉主题盒！</span><br/>
+					•活动规则：收到贪吃盒后，在下个月5日之前拍照上传图片，说说你的最爱，以及对贪吃盒的点评。<br/>•活动奖品：下月萝莉主题盒一个。<br/>•中奖公布方式：每月8日于萝莉盒官网公布。
+				</div>	  		
+			 -->
+				<div class="box_case_sharing cfl">
+					<div class="index_boxs_show zt_index_boxs_show" style="margin-left:15px;">
+						<include file="home:share_waterfall" />
+					</div>
+				</div>
+			</div>
+			<div class="ft"></div>
+		</div>
+	</div> 
+<!--晒盒分享 end -->
+</notempty>
+</div>
+</div>
+
+
+<include file="public:footer.inc" />

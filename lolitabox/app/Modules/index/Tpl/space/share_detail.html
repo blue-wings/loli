@@ -1,0 +1,302 @@
+<include file="public:header.inc" />
+<!--公用---头部--end------->
+
+<!--他人个人中心首页--内容--end-------->
+<div class="fm1020_c">
+	<!-----头部-内容------>
+	<include file="space:top.inc" />
+	
+	<div class="cfl">
+		<!--他的分享----->
+		<div class="wp738 f738 l">
+						<div class="hd">
+							<div class="tit_hd_tab l">
+								<span class="tit_hd_con select" ><a href="<{:u($return['url'],array('ac'=>1))}>">TA的分享(<{$return.u_info.blog_num}>)</a></span>
+								<span class="tit_hd_con" ><a href="<{:u($return['url'],array('ac'=>2))}>">TA赞的分享(<{$return.agree_num}>)</a></span> 
+								 <span class="tit_hd_con" id="ac_3"><a href="<{:u($return['url'],array('ac'=>3))}>">TA踩的分享(<{$return.tread_num}>)</a></span> 
+								 <span class="tit_hd_con hd_ft " ><a href="<{:u($return['url'],array('ac'=>4))}>">TA试用的产品(<{$return.pro_num}>)</a></span>
+							</div>
+						</div>
+			<div class="main min_h1400 "   id="ajax_content">
+					<div class="others_content">
+						<div class="WB_feed">
+							<!--日志4---->
+							<div class="WB_feed_type">
+								<div class="WB_feed_datail cfl S_line1">
+									<div class="WB_detail">
+						<empty name="return.shareinfo.details">
+						  <notempty name="return.shareinfo.img_big">
+								<div class="chePicMin tc">
+									<img src="<{$return.shareinfo.img_big}>">
+								</div>
+							</notempty>
+							<div class="WB_text" ><br/>
+								<{$return.shareinfo.content_all}>
+						   </div>
+						 <else/>
+						 
+						 	<eq name="return.shareinfo.no_detail_img" value="1">
+							 	<div class="chePicMin tc">
+									<img src="<{$return.shareinfo.img_big}>" />
+								</div>
+						 	</eq>
+						 							 
+						      <volist name="return.shareinfo.details" id="vo">
+						    <div class="chePicMin tc">
+								<img src="public/images/modbg_v5.jpg"  data-original="<{$vo.img}>" style="max-width:500px">
+							</div>
+							<div class="WB_text" ><br/>
+								<{$vo.content}>
+						   </div>
+						      </volist>
+						  </empty>
+
+						   <eq name="return[shareinfo][pick_status]" value="1">
+								<div class="share_great">
+		                             <i class="share_g">
+		                           		 <img src="public/images/face/leer.gif"  width="70" height="70" />
+		                             </i>
+		                             <div class="share_great_con">这篇分享很精彩，已经获得&nbsp;<strong class="rd">10</strong>&nbsp;积分的奖励。&nbsp;&nbsp;&nbsp;&nbsp;<a href="<{:u('info/lolitabox',array('aid'=>1235))}>" target="_blank"><如何获得更多积分></a></div>
+		                      </div>						   
+						   </eq>
+										<div class="WB_func" style="margin-top:20px;">
+											<div class="WB_handle">
+												<!-- 	<a href="javascript:void(0)" target="_blank">编辑(8)</a> -->
+												<a href="javascript:void(0)" class="praise"
+													onclick="agree_share('<{$return.shareinfo.id}>',this)"><em
+													class="pbl_praise">&nbsp;</em>赞(<{$return.shareinfo.agreenum}>)</a>
+												<a href="javascript:void(0)" class="step"
+													onclick="tread_share('<{$return.shareinfo.id}>',this)"><em
+													class="pbl_step">&nbsp;</em>踩(<{$return.shareinfo.treadnum}>)</a>
+												<a href="javascript:void(0)" class="review"
+													onclick="$('#text_reply').focus()"><em
+													class="pbl_review">&nbsp;</em>评论(<{$return.shareinfo.commentnum}>)</a>
+												<a href="javascript:void(0)" class="forwarding"  onclick="dialog_shareto('<{$return.shareinfo.id}>')"><em
+													class="pbl_forwarding">&nbsp;</em>转发(<{$return.shareinfo.outnum}>)</a>
+
+											</div>
+											<div class="WB_from">
+												<span class="WB_time"><{$return.shareinfo.posttime|date="Y-m-d H:i",###}> </span>
+											</div>
+										</div>
+
+										<div class="WB_media_reply">
+
+											<div class="W_input cfl">
+												<div>
+													<textarea class="W_input_text reply_text" id="text_reply" style="height:60px;"></textarea>
+												</div>
+											</div>
+
+											<div class="action cfl">
+												<!-- a href="javascript:void(0)" class="i_face">&nbsp;</a-->
+												<p class="btn">
+													<a href="javascript:void(0)"  onclick="reply_receivecomment()" class="W_pin_b">评论</a>
+												</p>
+											</div>
+											
+											<input type="hidden" name="shareid" id="shareid" value="<{$return.shareinfo.id}>" />
+											<input type="hidden" name="to_commentid" id="to_commentid" value="0" />
+											<input type="hidden" name="to_userid" id="to_userid" value="<{$return.shareinfo.userid}>" />
+											<input type="hidden" name="to_nick" id="to_nick" value="<{$return.shareinfo.nickname}>" />
+											
+											<div class="comment_lists" id="ajax_content_comment">
+												<include file="home:comment_list" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<div class="ft"></div>
+		</div>
+	
+		<!---右侧-->
+		<div class="wp275 f275 r">
+		<!-- 分享关联产品 START -->
+		
+		<notempty name="return[boxinfo]">
+			<div class="others_help mb16">
+				<div class="hd">
+					<h3 class="r_tit l f14">您可能感兴趣的萝莉盒试用</h3>
+					<a href="<{:u('buy/index')}>"  target="_blank" class="i_more r mt15">&nbsp;</a>
+				</div>
+				<div class="main">
+					<ul class="buy_boxs cfl">
+						<li>
+							<p class="box_img"><a href="<{$return[boxinfo][boxurl]}>" target="_blank"><img src="<{$return[boxinfo][pic]}>" width="235" height="235"></a></p>
+							<h4 class="box_name thd"><a href="<{$return[boxinfo][boxurl]}>" target="_blank"><{$return[boxinfo][name]}></a></h4>
+							<div class="box_btn">
+								<div class="<{$return[boxinfo][btn]}>">
+									<p class="buy_price l">￥<{$return[boxinfo][box_price]}>元</p><p class="r"><a href="<{$return[boxinfo][boxurl]}>" target="_blank" class="buy_btn_href">立即订购</a></p>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="ft"></div>
+			</div>	
+		</notempty>
+		
+		
+		<notempty name="return.sourceinfo">
+			<div class="others_help mb16">
+				<div class="hd">
+					<h3 class="r_tit l f14">您可能感兴趣的产品试用</h3>
+					<a href="<{:u('try/index')}>" class="i_more r mt15" target="_blank">&nbsp;</a>
+				</div>
+				<div class="main">
+					<dl>
+						<dt>
+							<a href="<{$return.sourceinfo.producturl}>" target="_blank"><img src="<{$return.sourceinfo.pimg}>" width="235" height="235" alt="<{$vo.pname}>"></a>
+						</dt>
+						<dd>
+<style>
+.psize{font-size:13px;}						
+</style>						
+						<p style="font-size:16px;overflow:hidden;height:40px;white-space:nowrap;line-height:40px;text-overflow:ellipsis;">
+							<a href="<{$return.sourceinfo.producturl}>" target="_blank" class="A_line2"><{$return.sourceinfo.pname}></a></p>
+							<if condition="$return[sourceinfo][effect][1] neq ''">
+							  <p class="psize">功效：<{$return[sourceinfo][effect][1]}></p>
+							 </if>
+							<p style="margin-top:5px;" class="psize">分享数：<span class="rd"><{$return.sourceinfo.evaluatenum}></span></p>
+							<br />
+						</dd>
+					</dl>
+				</div>
+				<div class="cont275_gray">试用方式</div>
+				<div class="main">
+					<!---调用方式--->
+					<div class="others_help_cont btmbd">
+						<h4>方式一：订购萝莉盒试用</h4>
+						<notempty name="return.sale_list.1">
+						    <volist name="return.sale_list.1.list"  id="vo">
+						    <p><a href="<{$vo.url}>" target="_blank" class="A_line3"><{$vo.name}></a></p>
+						    </volist>
+						<else/>
+						   <p><a href="javascript:void(0)" class="W_pin_grey">暂不提供</a></p>
+						</notempty>
+					</div>
+					<div class="others_help_cont btmbd cfl">
+						<div class="l">
+							<h4>方式二：付邮试用</h4>
+						<notempty name="return.sale_list.2">
+						
+					<if condition="$return[sale_list][2][num] eq 1">
+						<p><a href="javascript:void(0)" class="W_pin_b" onclick="check_try('<{$return['sale_list'][2]['list'][0]['id']}>',2,this)">付邮领取</a></p>
+						<p>邮费：<span class="rd">￥10</span></p>
+					<else />
+							<p><a href="javascript:void(0)" class="W_pin_b" id="show_paydiv" rel="share_paypostage">付邮试用</a></p>
+							<ul id="share_paypostage" class="cfl details_main_tips" style="display:none;">
+								<foreach name="return['sale_list'][2]['list']" item="ivo">
+										<li>
+											<dl class="details_main_tips_dl">
+												<dt class="l">
+													<p>试用装规格：<{$ivo[norms]}></p>
+													<p>邮费：10元</p>
+												</dt>
+												<dd>
+													<a href="javascript:void(0)" class="W_pin_b" onclick="check_try('<{$ivo[id]}>',2,this)">我要试用</a>
+												</dd>
+											</dl>	
+										</li>
+									</foreach>	
+							</ul>	
+					</if>					
+						<else/>
+						 <p><a href="javascript:void(0)" class="W_pin_grey">暂不提供</a></p>
+						</notempty>
+						</div>
+					</div>
+					<div class="others_help_cont btmbd cfl">
+						<div class="l">
+							<h4>方式三：积分试用</h4>
+						<notempty name="return.sale_list.3">
+						<if condition="$return[sale_list][3][num] eq 1">
+								<p><a href="javascript:void(0)" class="W_pin_b" onclick="check_score('<{$return.sale_list.3.list.0.id}>',this)">积分兑换</a></p>
+								<p>积分：<span class="rd"><{$return['sale_list'][3]['list'][0]['score']}></span></p>				
+						<else />
+						 		<p><a href="javascript:void(0)"  id="show_scoremsg" rel="share_score" class="W_pin_b">积分兑换</a>
+					 </p>
+								<ul id="share_score" class="cfl details_main_tips" style="display:none;">
+									<foreach name="return['sale_list'][3]['list']" item="ivo">
+											<li>
+												<dl class="details_main_tips_dl">
+													<dt class="l">
+														<p>试用装规格：<{$ivo[norms]}></p>
+														<p>需要积分：<{$ivo[score]}></p>
+													</dt>
+													<dd>
+														<a href="javascript:void(0)" class="W_pin_b" onclick="check_score('<{$ivo[id]}>',this)">我要试用</a>
+													</dd>
+												</dl>	
+											</li>
+										</foreach>	
+								</ul>					
+						</if>
+						
+						<else/>
+					    <p><a href="javascript:void(0)" class="W_pin_grey">暂不提供</a></p>
+						</notempty>
+						</div>
+					</div>
+				</div>
+				<div class="ft275_gray">
+					<p>所有试用产品均为品牌直供，</p>
+					<p>100%保证正品</p>
+				</div>
+			</div>
+		</notempty>
+		<!-- 分享关联产品 END -->
+		
+		<!-- 谁赞、踩、转发了这条分享 -->
+			<div class="mb10">
+				<div class="hd">
+				     <div class="tit_hd_tab l">
+				                <span class="tit_hd_con"   id="action_0"   get_values="0"><a href="javascript:void(0)">全部</a></span>
+								<span class="tit_hd_con"   id="action_2"><a href="javascript:void(0)">谁在赞</a></span>
+								<span class="tit_hd_con hd_ft"   id="action_1"><a href="javascript:void(0)">谁在踩</a></span> 
+					</div>
+				</div>
+				<div class="main">
+					<i class="hei1"></i>
+					<div class="ranking_state_scroll" id="stateWrap">
+						<ul class="ranking_list" id="copyState">
+					     	 <include file="space:share_action" />
+						</ul>
+						<ul class="ranking_list" id="pasteState"></ul>
+					</div>
+					<i class="hei1"></i>
+				</div>
+				<div class="ft"></div>
+			</div>
+		
+		</div>
+	</div>
+
+</div>
+<script src="/public/js/share.js"></script>
+<script src="/public/js/comment.js"></script>
+<script src="/public/js/lolitaboxFace.js"></script>
+ <script>
+ $(function(){
+		    	$(".i_face").qqFace({
+					assign:"text_reply", //给那个控件赋值
+					path:'public/lolitabox/smilies/'	//表情存放的路径
+				});
+		    	
+		    	comment_reply();
+		    	ajax_replace("action","<{:u('space/share_action',array('id'=>$_GET['id']))}>",'',false,'copyState')
+		    	//ajax_replace("ac","<{$return.url}>");
+ })
+ 
+ $(function(){
+	 $("#show_scoremsg").powerFloat();
+	$("#show_paydiv").powerFloat();
+ })
+	</script>
+<!--标准底---start--->
+<include file="public:footer.inc" />
+

@@ -1,0 +1,510 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="__PUBLIC__/js/colorbox/colorbox.css">
+<script src="__PUBLIC__/js/colorbox/jquery.colorbox-min.js"></script>
+<script type="text/javascript">
+function previewImage(file,id)
+{
+	var img=document.getElementById("img_"+id);
+	if (file.files && file.files[0])
+	{
+		var reader = new FileReader();
+		reader.onload = function(evt){img.src = evt.target.result;}
+		reader.readAsDataURL(file.files[0]);
+	}
+	else
+	{
+		file.select();
+		var src = document.selection.createRange().text;
+		var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="'+src+'\"';
+		$("#"+id).html("<div id=divhead"+id+"></div>");
+		$("#divhead"+id).attr("style",sFilter);
+		$("#divhead"+id).css("width","200px");
+		$("#divhead"+id).css("height","200px");
+	}
+}
+function showPic(id){
+	var ev=window.event;
+	var img=$("#img_"+id);
+	if(!img.attr("src"))   return false;
+	//$("#show_pic").css("left",ev.pageX-70);
+	//$("#show_pic").css("top",ev.pageY-100);
+	//$("#show_pic").html("<img src='"+img.attr("src")+"'>");
+	//$("#show_pic").css("display",'block');
+}
+function hidePic(){
+	$("#show_pic").css("display",'none');
+}
+</script>
+<div style="position: absolute; left: 100px; top: 30px; display: none" id="Operating_div">
+	<div class="panel" style="width: 1000px;">
+		<div align="left">
+			<fieldset class="fieldset">
+				<legend>编辑/增加品牌</legend>
+				<form action="__URL__/addBrand" method="post" id="Operating_form"
+					onsubmit="check_form()" enctype="multipart/form-data">
+					<input type="hidden" name="type" id="type" value="add"> <input
+						type="hidden" name="ac" value="save"><br> <input
+						type="hidden" name="id" value="{$brandinfo.id}">
+					<div style="float: left">
+						中文名:<input type="text" name="name" value="{$brandinfo.name}"><br><br> 
+						英文名:<input type="text" name="name_foreign" value="{$brandinfo.name_foreign}"><br><br>
+						首字母:<input type="text" name="firstchar" value="{$brandinfo.firstchar}"><br><br>
+						创办人：<input type="text" name="founders"
+							value="{$brandinfo.founders}"><br> <br> 创办时间;<input
+							type="text" name="found_time" value="{$brandinfo.found_time}"><br>
+						<br> 官方网址:<input type="text" name="website_url" 	value="{$brandinfo.website_url}"><br><br>
+						<input type="hidden" value='{$brandinfo.status}' id='sval'>						
+						空间ID：<input type="text" name="pic_url"	value="{$brandinfo.space_id_rel}"><br> <br>
+						区域分类:<select name="areac">
+							<option value="">--请选择--</option>
+							<option value="1">欧美</option>
+							<option value="2">日韩</option>
+							<option value="3">国产</option>
+							<option value="9">其它</option>
+						</select>
+						<br> <br>
+						品牌微博名称:<input type="text" name="weibo_account" value="{$brandinfo.weibo_account}"><br><br>
+						品牌等级:<select name="grade">
+						<option value="">--请选择--</option>
+							<option value="A1">A1</option>
+							<option value="A2">A2</option>
+							<option value="B1">B1</option>
+							<option value="B2">B2</option>
+							<option value="C">C</option>
+						</select><br><br>
+						<!-- 
+						 明星产品:<input type='text' name='product_list'
+							value='{$brandinfo.product_list}'><input type='button' id='select_productid' value='筛选'><br>
+						<span style='color: red'>&nbsp;&nbsp; &nbsp;以英文逗号分隔</span><br>
+						 -->
+
+						<br> 品牌介绍:<br>
+						<textarea name="description" rows="10" cols="50">{$brandinfo.description}</textarea>
+						<br> <br>
+					</div>
+					<div style="float: left; margin-left: 80px">
+						品牌logo:<input type="file" name="logo_url" value=""
+							onchange="previewImage(this,'logo_url')"><br>
+						<div id='logo_url'	style='width: 250px; height: 250px; border: 1px solid #999; overflow: hidden' 	onmousemove='showPic(this.id)' onmouseout='hidePic(this)'>
+							<img src="{$brandinfo.logo_url}" id="img_logo_url" alt="品牌logo">
+						</div>
+						<br>
+						<br>
+						<!--  宣传图片:<input type="file" name="pic_url" value="" onchange="previewImage(this,'pic_url')"><br>
+						<div id="pic_url"
+							style='width: 300px; height: 200px; border: 1px solid #999; overflow: hidden'
+							onmousemove='showPic(this.id)' onmouseout='hidePic()'>
+							<img src="{$brandinfo.pic_url}" id="img_pic_url" alt="宣传图片">
+						</div> -->
+					</div>
+					<br>
+					<div style="clear: both">
+						<input type="submit" name="submit" style="padding: 5px"
+							value="提 交">&nbsp;&nbsp;&nbsp; <input type="reset"
+							value="取 消" style="padding: 5px">
+					</div>
+					<div
+						style='border: 1px solid #999; padding: 4px; display: none; position: absolute; z-index: 3'
+						id='show_pic'></div>
+				</form>
+			</fieldset>
+		</div>
+	</div>
+</div>
+<script>
+$(function() {
+	var type = "{$type}";
+	if (type == 'add') {
+		$("#Operating_div").css("display", "block");
+	}
+	if (type == 'edit') {
+		var i="{$brandinfo.category_id_rel}";
+		$("#Operating_div select[name='category_id_rel']").val(i);
+		$("#type").val("edit");
+		$("#Operating_form").attr("action","__URL__/editBrand");
+		$("#Operating_div").css("display", "block");
+	}
+})
+
+//检查提交表单
+function check_form()  {
+	if(!$("#Operating_div input:text:first-child").val())
+	return false;
+	return true;
+}
+
+//改变品牌加V状态
+function channelv(obj,bid){
+
+	var node = $(obj).next("input:hidden"),					
+	val = node.val()==0?1:0;
+	
+	$.post("__URL__/changevStatus",{brandid:bid,status:val},function(reponse){
+		if(reponse.status == 1){
+			$(obj).html("<img src='__PUBLIC__/images/status_"+reponse.data+".gif'>");
+			node.val(reponse.data);						
+		}else{
+			alert("修改失败,请检查错误!");
+		}
+	})
+}
+
+var area="{$brandinfo.area}";
+var grade="{$brandinfo.grade}";
+if(area){
+	$("select[name='areac']").val(area);
+	$("select[name='grade']").val(grade);
+}
+</script>
+<eq name="type" value="show">
+<div class="panel">
+	<div align="left">
+		<fieldset class="fieldset">
+			<legend>查询条件</legend>
+			<form action="__ACTION__" method="GET" id="myform">
+				品牌ID:<input type="text" name="pid" value="{$Think.get.pid}">
+				中文名:<input type="text" name="name" value="{$Think.request.name}">&nbsp;&nbsp;&nbsp;&nbsp;
+				英文名:<input type="text" name="name_foreign" value="{$Think.request.name_foreign}">&nbsp;&nbsp;&nbsp;&nbsp;
+				是否加V:<select name="channelv">
+						<option value="">全部</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
+					   </select>	
+				<br/>
+				区域分类:<select name="area">
+					<option value="">全部</option>
+					<option value="1">欧美</option>
+					<option value="2">日韩</option>
+					<option value="3">国产</option>
+					<option value="9">其它</option>
+					</select>&nbsp;&nbsp;&nbsp; 
+					推荐状态：<select name="recommend" >
+							<option value="">全部</option>
+							<option value="1">已推荐</option>
+							<option value="0">未推荐</option>
+							</select>
+					品牌等级：<select name="grade">
+					     	<option value="">全部</option>
+							<option value="A1">A1</option>
+							<option value="A2">A2</option>
+							<option value="B1">B1</option>
+							<option value="B2">B2</option>
+							<option value="C">C</option>
+						</select>
+					&nbsp;&nbsp; 开放状态：
+					<input type='radio' name="status" value='0' <eq name="Think.request.status" value='0'>checked</eq>>关闭&nbsp;
+				    <input type='radio' name="status" value='1'<eq name="Think.request.status" value='1'>checked</eq>>开放&nbsp;
+				<br/>
+				<input type="button" name="resetpage" value="重置">
+				<input type="submit"  value="提交">
+			</form>
+		</fieldset>
+	</div>
+</div>
+<table width="100%" border="0" align="center" cellpadding="0"
+	cellspacing="0">
+	<tr>
+		<td height="30"><table width="100%" border="0" cellspacing="0"
+				cellpadding="0">
+				<tr>
+					<td width="15" height="30"><img	src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+					<td width="1101" background="__PUBLIC__/images/tab_05.gif"><img
+						src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span
+						class="STYLE4">产品品牌列表</span></td>
+					<td width="281" background="__PUBLIC__/images/tab_05.gif"><table
+							border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><a
+									href="{:u('Product/addBrand')}"
+									style="border: 1px solid #999; display: block; padding: 5px; color: red; background: #eee">增加品牌</a>
+								</td>
+								<td>
+									 <input type="button" name="selectAll" value="全选/全不选" />
+								</td>
+								<td>
+									 <input type="button" name="add_fans"  id="add_fans" value="加粉" />
+								</td>
+							</tr>
+						</table></td>
+					<td width="14"><img src="__PUBLIC__/images/tab_07.gif"
+						width="14" height="30" /></td>
+				</tr>
+			</table></td>
+	</tr>
+	<tr>
+		<td><table width="100%" border="0" cellspacing="0"
+				cellpadding="0" id="list_table">
+				<tr>
+					<td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+					<td bgcolor="#f3ffe3"><table width="99%" border="0"
+							align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98"
+							id='list_table'>
+							<tr background="__PUBLIC__/images/tab_14.gif" align="center" id="awarp">
+								<td width="3%" height="18">选项</td>
+								<td width="4%" height="18">品牌ID</td>
+								<td width="4%" height="18">产品</td>
+								<td width="8%" height="18">图片logo</td>
+								<td width="8%" height="18">品牌中文名</td>
+								<td width="8%" height="18">品牌英文名</td>
+								<!-- <td width="6%" height="18">明星产品</td> -->
+								<td width="5%" height="18">区域</td>
+								<td width="6%" height="18">创办信息</td>
+								<td width="3%" height="18">微博账号</td>
+								<td width="5%" height="18">品牌等级</td>
+								<td width="3%" height="18">推荐</td>
+								<td width="3%" height="18">粉丝数</td>
+								<td width="3%" height="18">状态</td>
+								<td width="3%" height="18">加V</td>
+								<td width="5%" height="18">操作</td>
+							</tr>
+							<volist name="list" id="vo" emtpy="还没有统计数据" key='k'>
+							<tr align="center" bgcolor="FFFFFF">
+							    <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE1">
+              <input name="checkbox" type="checkbox" class="STYLE2" value="{$vo.id}"/>
+            </div></td>
+							    <td height="25"><a href='/brand/{$vo.id}.html' target='_blank'">{$vo.id}</a></td>
+							    <td height="25"><a href="__URL__/index/bid/{$vo.id}">查看</a></td>
+								<td height="25"><img src="{$vo.logo_url}"  width='108	height='108'></td>
+								<td height="25"><a href="#" onclick="dialogmeseeage('{:U('Product/index',array('brandcid'=>$vo[id]))}','品牌信息')">{$vo.name}</a></td>
+								<td height="25">{$vo.name_foreign}</td>
+								<!-- <td height="25">{$vo.product_list}</td> -->
+								<td height="25"><eq name="vo.area" value="1">欧美</eq> <eq
+										name="vo.area" value="2">日韩</eq> <eq name="vo.area" value="3">国产</eq>
+									<eq name="vo.area" value="9">其他</eq></td>
+								<td width="15%" height="25">{$vo.founders}{$vo.found_time}</td>
+								<td width="10%" height="25">{$vo.weibo_account}</td>
+								<td height="5">{$vo.grade}</td>
+								<td height="25">
+								 <input type="hidden"  id="isc_{$k}" value="{$vo.iscommend}">
+								<a href="javascript:void(0)" onclick="changeiscommed('{$vo.id}','{$k}',this.id)"  id="commend_{$k}"> 
+							    	{$vo.iscommend}
+								</a></td>
+								<td>
+									{$vo.fans_num}
+								</td>
+								<td width="5%" height="25">
+								<span onclick="changeBrandStatus('{$vo.id}','{$k}')" id='img_{$k}'>
+								<if condition="$vo.status eq 1">
+									<img src='__PUBLIC__/images/status_1.gif' height='15' width='15'  id="status" style="cursor: pointer">
+								<else />
+									<img src='__PUBLIC__/images/status_0.gif' height='15' width='15'  id="status" style="cursor: pointer">
+								</if>
+								</span>
+								<input type="hidden" value='{$vo.status}' id='val_{$k}'>
+								</td>
+								<td height="25">
+									<a href="javascript:void(0)" onclick="channelv(this,'{$vo.id}')"><img src='__PUBLIC__/images/status_{$vo.if_super}.gif'></a>
+									<input type="hidden" value="{$vo.if_super}">
+								</td>
+								<td height="25">
+								<a href="#" onclick="dialogmeseeage('{:U('Product/editBrand',array('id'=>$vo[id]))}','管理品牌信息')">编辑</a>
+								<!-- 	| <a
+									href="{:U('Product/delBrand',array('id'=>$vo[id]))}">删除</a> -->
+								</td>
+							</tr>
+							</volist>						
+						</table></td>		
+					<td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+				</tr>
+			</table></td>
+	</tr>
+	<tr>
+		<td height="29"><table width="100%" border="0" cellspacing="0"
+				cellpadding="0">
+				<tr>
+					<td width="15" height="29"><img
+						src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+					<td background="__PUBLIC__/images/tab_21.gif"><table
+							width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td width="25%" height="29" nowrap="nowrap"><span
+									class="STYLE1">{$page}</span></td>
+								<td width="75%" valign="top" class="STYLE1"></td>
+							</tr>
+						</table></td>
+					<td width="14"><img src="__PUBLIC__/images/tab_22.gif"
+						width="14" height="29" /></td>
+				</tr>
+			</table></td>
+	</tr>
+</table>
+</eq>
+<script>
+
+var order="{$Think.request.order}";
+$("select[name='order']").val(order);
+
+var commendindex="{$Think.request.commendindex}";
+$("select[name='commendindex']").val(commendindex);
+
+var brtype="{$brandinfo.brandtype}"?"{$brandinfo.brandtype}":"{$Think.get.brandtype}";
+
+if(brtype){
+	$("select[name='brandtype']").val(brtype);
+}
+
+$(function(){
+	$("select[name='area']").val("{$Think.get.area}");
+	$("select[name='recommend']").val("{$Think.get.recommend}");
+})
+
+
+//筛选
+$("#select_productid").click(function(){
+	var product_list=$("input[name='product_list']").val()?$("input[name='product_list']").val():0;
+	var api=$.dialog({
+		title : "筛选产品",
+		content : "url:__URL__/selectStarProduct/product_list/"+product_list+"/brandid/"+$("input[name='id']").val(),
+		width : '1000px' ,
+		height: '400px' ,
+		init : function(){
+			this.content.document.getElementById("calculateresult").innerHTML=$("input[name='product_list']").val();
+		},
+		ok : function(){
+			$("input[name='product_list']").val(''+this.content.document.getElementById("calculateresult").innerHTML+'');
+			this.close();
+		}
+	});
+})
+
+function changeBrandStatus(bid,key){
+	var v=$("#val_"+key);
+
+	$.ajax({
+		url:"{:U('Product/changeBrandStatus')}",
+		type:"post",
+		dataType:"json",
+		data:"brandid="+bid+'&status='+v.val(),
+		success: function(chkresult){
+			if(parseInt(chkresult.status)==1){
+
+				if(v.val()==0){
+					$("#img_"+key+">img").attr('src','__PUBLIC__/images/status_1.gif');
+					v.val('1');
+				}else{
+					$("#img_"+key+">img").attr('src','__PUBLIC__/images/status_0.gif');
+					v.val('0');
+				}
+			}else{
+				alert(chkresult.info);
+			}
+		}
+	})
+}
+
+$(":button[name='selectAll']").toggle(
+		function(){
+			$(":checkbox[name='checkbox']").attr("checked",true);
+		},
+		function(){
+			$(":checkbox[name='checkbox']").attr("checked",false);
+		}
+);
+
+function get_product_list(){
+	var list=$(":checkbox[name='checkbox']:checked");
+	var string="";
+	for(var i=0;i<list.length;i++){
+		string+=$(":checkbox[name='checkbox']:checked:eq("+i+")").val()+",";
+	}
+	return string;
+}	
+
+$("#add_fans").click(function(){
+	var pid_list=get_product_list();
+	if(pid_list==''){
+		alert("请选择产品");
+		return false;
+	}
+	$("#userid_list").val(pid_list);
+	$("#add_fans").dialog({
+		title:"批量加粉",
+		content:$("#userinfo_div").html()
+	})
+})
+
+
+var channelvv="{$Think.get.channelv}";
+if(channelvv){
+	$("select[name='channelv']").val(channelvv);
+}	
+
+
+function changeiscommed(bid,key,obj){
+	var status = $("#isc_"+key).val();	
+	$("#colorbox_id").val(bid);
+	$("#colorbox_obj").val(obj);
+	$("#colorbox_isremmend").val(status);
+	$("#"+obj).colorbox({
+		href:"#change_remmend",
+		inline:true
+	})
+}
+
+</script>
+
+<div style="display:none">
+<div id="change_remmend" >
+ <input type="hidden"  id="colorbox_obj"  value="">
+ <input type="hidden"  id="colorbox_id"  value="">
+ <input type="text"  id="colorbox_isremmend"  value="">
+ <input type="button"  id="tijiao"  value="保存"><br>
+ <span style="color:red;font-size:12px">请填入0-9的数字,0代表不推荐，1-9代表推荐</span>
+ </div>
+ <script>
+	
+ $("#tijiao").click(function(){
+ 	var bid = $("#colorbox_id").val();
+ 	var status = $("#colorbox_isremmend").val();
+ 	var obj=$("#colorbox_obj").val();
+ 	$.post("__ACTION__",{brandid:bid,status:status,action:"changeiscomme"},function(reponse){
+ 		alert(reponse.info);
+ 		if(reponse.status >0){
+ 			$.colorbox.close();
+ 			$("#"+obj).html(status);
+ 		}
+ 		    
+ 	}) 
+ })
+ 
+
+ </script>
+ </div> 
+
+
+<div id="userinfo_div" style="display: none">
+	<form action="__URL__/addFans" method="post" name="add_fans_form"  id="add_fans_form">
+	    <input type="hidden"  name="type"  value="3" id="type">
+		<input type="hidden"  name="userid_list" value="" id="userid_list">
+		粉丝数量：<input name="add_fansnum" type="text" value="0" id="add_fansnum"><br>
+		<input type="submit"  id="addfans_submit" value="添加粉丝">
+	</form>
+	<script>
+	     $("#addfans_submit").click(function(){
+	    	 if($("#add_fansnum").val() <=0){
+	    		 $("#add_fansnum").focus();
+	    		 return false;
+	    	 }
+	    	 var api=$.dialog.tips('正在处理，请稍候...',600);
+	    	 $.ajax({
+	    		 type:"post",
+	    		 url:"__URL__/addFans",
+	    		 data:$("#add_fans_form").serialize(),
+	    		 dataType:"json",
+	    		 success:function(data){
+	    			 api.close();
+	    			 $.dialog.tips(data.info);
+	    			 setTimeout("api_addfans.close();",3000);
+	    		 }
+	    	 })
+	    	 return false;
+	     })
+		 
+pregpattern({
+	"id":"品牌ID",
+	"product_num":"产品数",
+	"fans_num":"粉丝数"
+}); 		 
+	</script>
+</div>
+<include file="Public:footer" />

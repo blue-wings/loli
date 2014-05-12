@@ -1,0 +1,51 @@
+﻿.header_txt { width:290px; height:50px; position:absolute; z-index:99999; top:117px; right:256px;}
+#header_zt { width:942px; height:147px; padding:0px 20px 0px 10px; margin:0 auto; clear:both; background:url(header_bg.jpg) no-repeat 0px 0px;}
+#header_zt #logo { width:310px; height:147px; padding-left:185px; padding-top:12px;}
+#header_zt .rADbar { width:580px; height:80px; float:right; padding-top:25px;} #header_zt .rADbar img { width:580px; height:80px;}
+#focusBox { width:972px; height:360px; margin:0 auto; clear:both; overflow:hidden; position:relative;}
+#focusBox img { width:972px; height:360px;}
+.numBar { width:221px; height:41px; position:absolute; bottom:0px; right:78px; z-index:90;}
+.numBar a { display:inline-block; width:44px; height:41px;}
+.numBar a:hover{text-decoration: none;}
+.numBar a.num1 { background:url(num_1.png) no-repeat 0px 0px;_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="num_1.png" ,sizingMethod="crop"); }
+.numBar a.num2 { background:url(num_2.png) no-repeat 0px 0px;_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="num_2.png" ,sizingMethod="crop"); }
+.numBar a.num3 { background:url(num_3.png) no-repeat 0px 0px;_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="num_3.png" ,sizingMethod="crop"); }
+.numBar a.num4 { background:url(num_4.png) no-repeat 0px 0px;_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="num_4.png" ,sizingMethod="crop"); }
+.numBar a.num5 { background:url(num_5.png) no-repeat 0px 0px;_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="num_5.png" ,sizingMethod="crop"); }
+.numBar a.num1:hover,.numBar a.numOn1 { background:url(num_on1.png) no-repeat 0px 0px;_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="num_on1.png" ,sizingMethod="crop"); }
+.numBar a.num2:hover,.numBar a.numOn2 { background:url(num_on2.png) no-repeat 0px 0px;_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="num_on2.png" ,sizingMethod="crop"); }
+.numBar a.num3:hover,.numBar a.numOn3 { background:url(num_on3.png) no-repeat 0px 0px;_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="num_on3.png" ,sizingMethod="crop"); }
+.numBar a.num4:hover,.numBar a.numOn4 { background:url(num_on4.png) no-repeat 0px 0px;_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="num_on4.png" ,sizingMethod="crop"); }
+.numBar a.num5:hover,.numBar a.numOn5 { background:url(num_on5.png) no-repeat 0px 0px;_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="num_on5.png" ,sizingMethod="crop"); }
+
+
+.main { width:972px; margin:0 auto; clear:both; background:url(main_bg.gif) repeat-y 0px 0px;}
+.mainBG { width:972px; margin:0 auto; clear:both; padding-bottom:55px;/* background:url(main_endbg.gif) top center no-repeat ;*/}
+.mainL { width:186px; float:left;}
+.mainR { width:762px; float:right; padding-bottom:10px;}
+
+
+#okgirlreg{}
+.okgirlreg_wrap{display: block; overflow: hidden; padding: 6px 0;}
+.okgirlreg_wrap dt{width: 80px; float: left; font-size: 16px; line-height: 26px;}
+.okgirlreg_wrap dd{width: 635px; float: left;}
+.okgirlreg_wrap .text{width: 180px; height: 24px; border: 1px solid #eeeeed}
+.okgirlreg_wrap .ranks{font-size: 16px; color: #e71f19; padding-left: 8px; line-height: 26px; font-family: '宋体';}
+.okgirlreg_list02{}
+.okgirlreg_list02 dl{float: left; }
+.okgirlreg_list02 dd{width: 290px;}
+.okgirlreg_wrap .rig{width: 100px;}
+.okgirlreg_list03 input {height: 24px;border: 1px solid #eeeeed; }
+.okgirlreg_wrap .uploading{height: 24px;}
+.okgirlreg_list03 .years{width: 80px;}
+.okgirlreg_list03 .times{width: 50px;}
+.okgirlreg_list03 span{padding: 0 4px; font-size: 16px;} 
+.okgirlreg_wrap .zt_text{font-size: 16px; line-height: 26px; padding-left: 5px;}
+.okgirlreg_wrap .uploading{width: 390px; margin-right: 8px;}
+.okgirlreg_wrap .uploading_wrap{padding-bottom: 8px;}
+.okgirlreg_wrap textarea{width: 590px; height: 108px; border: 1px solid #eeeeed;}
+.okgirlreg_wrap .p-site{width: 100px;}
+.okgirlreg_btns{padding: 12px 0 10px;}
+.rogirlreg_tips{padding:8px 0 40px 208px; line-height:20px;}
+.rogirlreg_copyright{color: #999; text-align: right; padding-right: 48px;}
+

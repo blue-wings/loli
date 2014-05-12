@@ -1,0 +1,155 @@
+<script src="public/js/address.js"></script>
+<script type="text/javascript" src="public/area/jquery.cityselect.js"></script>
+
+<div id="addresslist"></div>
+
+<ul class="orderForm cfl" id="add_newaddress" <neq name="return[addresscount]" value="0">style="display:none;"</neq> >
+ <li>
+	<div class="leftTitle">收货人姓名：</div>
+	<div class="login_input left">
+	  <input class="W_input_ws" type="text" name="linkman" id="linkman">
+	</div>
+  </li>
+  <li>
+	<div class="leftTitle"><span class="r">手机号码：</span>
+	</div>
+	<div class="login_input left">
+	  <input class="W_input_ws" type="text" id="telphone" name="telphone" maxlength="11" >
+	</div>
+  </li>
+  <li>
+	<div class="leftTitle">省市区：</div>
+   	<div class="user_select_wrap cfl"   id="myarea">
+			<select id="s1" class="prov" name="province"></select>
+			<select id="s2" class="city" name="city"  disabled="disabled" >
+				<option  value=''>请选择</option>
+			</select>
+			<select id="s3" class="dist" name="district" disabled="disabled">
+				<option value=''>请选择</option>
+			</select>
+	</div>	
+  </li>
+  
+  <li>
+	<div class="leftTitle">街道地址：</div>
+	<div class="login_input left">
+	  <input class="W_input_ws" type="text" id="address" name="address">
+	</div>
+  </li>
+  <li>
+	<div class="leftTitle">邮政编码：</div>
+	<div class="login_input left">
+	  <input class="W_input_ws" type="text" maxlength="6" id="postcode" name="postcode">
+	</div>
+  </li>
+     <input type="hidden"  id="address_type"  value="" />
+    <input type="hidden"  id="address_id"  value="" />
+<li>
+	<div class="leftTitle">　</div>
+	<input type="button" class="W_pin_bl14" value="保存并使用该地址" onclick="checkForm()">
+ </li>
+</ul>
+<script>
+
+//显示用户收货地址列表信息
+$(function(){
+	load_address(1);
+})
+
+$("#add_new").html("创建新地址");
+
+	
+ $("#linkman").blur(function(){
+		linkman=$("#linkman").val();
+		if(linkman==''){
+			notice("linkman",0,"联系人不能为空");
+		}else{
+			notice("linkman",1,'');
+		}
+	})
+	
+//验证手机号码
+$("#telphone").blur(function(){
+	telphone=$("#telphone").val();
+	var reg_2=/^1[3|4|5|8][0-9]\d{8}$/;
+	if(telphone==''){
+		notice("telphone",0,"手机号码不能为空");
+	}else if(!(reg_2.test(telphone))){
+		notice("telphone",0,"手机号码格式不正确");
+	}else{
+	    notice("telphone",1,"");
+	}
+})
+
+$("#address").blur(function(){
+	address=$("#address").val();
+	if(address==''){
+		notice("address",0,"街道地址不能为空");
+	}else{
+		notice("address",1,"");
+	}
+})
+
+
+ //验证邮政编码：
+$("#postcode").blur(function(){
+	postcode=$("#postcode").val();
+	var reg_5=/^[0-9]{6}$/;
+	if(postcode==''){
+		notice("postcode",0,"邮政编码不能为空");
+	}
+	else if(!(reg_5.test(postcode))){
+		notice("postcode",0,"邮政编码格式不正确");
+	}
+	else{
+		notice("postcode",1,"");
+	}
+})
+ 
+ set_area('北京市','北京市','东城区');
+ 
+//创建新的收货地址信息
+ function add_new(value){
+ 	  $("#add_new").html("创建新地址");
+ 	  if(value==0){
+ 		  $("#add_newaddress").show();
+ 		   $(".edit_show").show();
+ 		    $(".mima_tips_ico").hide();
+ 		    $(".mima_tips_title").html("");
+ 			$("#address_type").val('');
+ 		    $("#linkman").val('');
+ 			$("#telphone").val('');
+ 			$("#address").val('');
+ 			$("#postcode").val('');
+ 			$("#s1").empty();
+ 			$("#s2").empty();
+ 			$("#s3").empty();
+ 			$(".addres").val(value);
+ 			set_area('','','');
+ 	  }else{
+ 		  $("#add_newaddress").hide();
+ 		  $(".edit_show").hide();
+ 	  }
+ }  
+
+</script>
+
+<div class="tc_zcMain" style="position:absolute; left:50%; top:50%; margin:-70px 0 0 -152px; z-index:666;display:none" id="dis">
+	<div class="tc_zcTop"></div>
+	<div class="tc_zcCont" style="height:100px;">
+    	<div class="tc_zcIco">
+        	<div  id="style"></div>  
+            <p id="content"></p>
+        </div>
+	</div>
+	<div class="tc_zcBtm"></div>
+</div>
+
+<div style="display: none"  id="notice_tips">
+	<div class="tips">
+		<div class="notice">
+			<!--正确- ico_eryes-->
+			<span class="W_ico20 ico_error"></span>
+		</div>
+	</div>
+</div>

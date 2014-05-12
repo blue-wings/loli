@@ -1,0 +1,138 @@
+<script src="/public/js/validform.js"></script>
+<link rel="stylesheet" type="text/css" href="public/css/validform.css"/>
+<script>
+$(function(){
+	//注册表单验证
+	$(".inform").Validform({
+		tiptype:2,
+		ajaxPost:false,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+	var initval = $("img[width='155'][height='155']").attr("alt");
+	$("span.S_txt1").text(initval);
+	$(":text[name='nickname']").val(initval);
+})
+
+</script>
+<script>
+var status;
+if( window.top.location.pathname.split('/')[1] == 'home'){
+	status = 1;
+}else{
+	if(parseInt("<{$Think.cookie.blognum}>") > 0){
+		var obj = $(":text[name='nickname']");
+		obj.val("<{$Think.cookie.nickname}>");
+		obj.attr("disabled","disabled");
+		obj.closest("li").find("div.Validform_checktip").addClass("Validform_right").text("");
+	}
+}
+
+$("#register_sub").click(function(){
+	$.post($("form[name='fmk']").attr("action"),$("form[name='fmk']").serialize(),function(reponse){
+		if(reponse.status){
+			if(status ==1){
+				location.href="<{:U('home/index')}>";
+			}else{
+				y_dialog("完善信息成功!~",2);
+				setTimeout(function(){location.href="<{:U('home/task',array('id'=>2))}>";},2000);
+			}
+		}else{
+			n_dialog("完善信息不成功!~",2);
+		}
+	})
+	return false;
+})
+</script>
+<style>
+.otherLand_register{}
+.otherLand_register li {position:relative;}
+.otherLand_register li .inp{float:left; margin-left:5px;}
+.otherLand_register li .Validform_wrong , .otherLand_register li .tips{ width:158px;}
+.otherLand_register li .tips{position:absolute; left:310px; top:10px;}
+.otherLand_register .info_submit{padding-left:140px;}
+
+</style>
+<div class="gl_tc_W620 tc_pop tc_otherLand_wrap">
+	<!---标题------->
+	<div class="login_tit">
+		<h2>第三方登录完善信息</h2>
+	</div>
+	<!-----内容--------->
+	<div class="content">
+		<ul class="title_list">
+			<li>亲爱的  <span class="rd"><{$Think.cookie.nickname}></span> ，</li>
+			<li>只需要填写简单的信息，就可以同时拥有萝莉盒账号了哦~</li>
+		</ul>
+		<form action="<{:U('user/thirdPerfectInformation')}>" method="POST" name="fmk" class="inform">
+		<ul class="register">
+			<li class="cfl">
+				<div class="title">注册邮箱：</div>
+				<div class="text"   style="width:auto">
+					<input type="text"  class="W_input_ws"  value="用于登录和找回密码"    name="usermail"
+						onfocus="if(this.value==defaultValue) {this.value=''}"  
+						onblur="if(!value) {value=defaultValue;}"
+						tip="有效邮箱激活后可获得20积分"  
+						errormsg="邮箱地址输入不正确" 
+						nullmsg="请您输入邮箱地址"
+						datatype="e"
+						ajaxurl="<{:U("user/allow_username")}>"
+					/>
+				</div>
+				<div class="tips"  style="float:left;width:180px;padding_left:5px">
+					<div class="Validform_checktip" >有效邮箱激活后可获得20积分</div>
+			    </div>
+				
+			</li>
+			<li class="cfl">
+				<div class="title">昵称：</div>
+				<div class="text"  style="width:auto">
+					<input type="text" value="起个洋气点的！" name="nickname"  class="W_input_ws"
+						onfocus="if(this.value==defaultValue) {this.value=''}"  
+						onblur="if(!value) {value=defaultValue;}"
+						errormsg="格式：2-10个字符（可包含汉字、数字、字母及下划线）"  
+						nullmsg="请您输入昵称"  
+						datatype="s2-10"   ajaxurl="<{:U('user/allow_nickname')}>" />
+				</div>
+				<div class="tips"  style="float:left;width:180px;padding_left:5px">
+						<div class="Validform_checktip">2-10个字符（可包含汉字、数字、字母及下划线）</div>
+				</div>
+			</li>
+			<li class="cfl">
+				<div class="title">登录密码：</div>
+				<div class="text" style="width:auto">
+					<input type="password"  name="password1"  class="W_input_ws"
+							errormsg="密码范围在6~16位之间,不能使用空格！" 
+							nullmsg="请您输入密码" 
+							datatype="*6-16">
+				</div>
+				<div class="tips"   style="float:left;width:180px;padding_left:5px">
+						<div class="Validform_checktip">6-16个字符，包含字母、数字，字母区分大小写</div>
+				</div>
+			</li>
+			<li class="cfl">
+				<div class="title">确认密码：</div>
+				<div class="text" style="width:auto">
+					<input type="password" class="W_input_ws" errormsg="您两次输入的账号密码不一致！" nullmsg="请再输入一次密码(两次输入密码需一致)" recheck="password1" datatype="*"  value="" />
+				</div>
+					<div class="tips"  style="float:left;width:180px;padding_left:5px">
+						<div class="Validform_checktip"></div>
+					</div>
+			</li>
+			<li class="cfl">
+				<div class="title">　</div>
+				<div class="text">
+				    <input type="submit" value="马上完善" name="sub"  id="register_sub" class="W_pin_b14"/>
+				</div>
+			</li>
+		
+		</ul>
+		</form>
+	</div>
+</div>
+

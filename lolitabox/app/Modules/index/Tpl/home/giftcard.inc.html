@@ -1,0 +1,73 @@
+
+
+<div class="W_order_wrap">
+	<div class="gift_from">
+		<h3>礼品卡充值</h3>					
+		<dl class="gift_from_dl cfl">
+			<dt>请输入您的礼品卡卡号：</dt>						
+			<dd><div class="l"><input type="text" name="card_id" id="card_id" maxlength="8" value=""  autocomplete="off" /></div></dd>
+			<dt>请输入您的礼品卡密码：</dt>
+			<dd><div class="l"><input type="password" name="card_pwd" id="card_pwd" maxlength="6" value="" autocomplete="off" /></div></dd>
+			<dt>&nbsp;</dt>
+			<dd><a href="javascript:void(0)" onclick="check_giftcard(this)" class="W_pin_b">确定</a></dd>
+		</dl>	
+	</div>
+</div>
+
+<div style="display: none"  id="notice_tips">
+	<div class="tips">
+		<div class="notice">
+			<!--正确- ico_eryes-->
+			<span class="W_ico20 ico_error"></span>
+		</div>
+	</div>
+</div>
+
+<script>
+
+$("#card_id").blur(function(){
+	var card_id=$("#card_id").val();
+	if(card_id==''){
+		notice("card_id",0,"请输入礼品卡卡号");
+	}else{
+		notice("card_id",1,"");
+	}
+})
+
+$("#card_pwd").blur(function(){
+	var pwd=$("#card_pwd").val();
+	if(pwd==''){
+		notice("card_pwd",0,"请输入礼品卡密码");
+	}else{
+		notice("card_pwd",1,"");
+	}
+})
+
+function check_giftcard(obj){
+	var cid=$("#card_id").val();
+	var pwd=$("#card_pwd").val();
+	if(cid==""){
+		notice("card_id",0,"请输入礼品卡卡号");return false;
+	}
+	if(pwd==""){
+		notice("card_pwd",0,"请输入礼品卡密码");return false;
+	}
+	$.ajax({
+		url:"<{:u('home/activate_giftcard')}>",
+		type:"post",
+		dataType:"json",
+		data:{cid:cid,pwd:pwd},
+		success:function(ret){
+			if(parseInt(ret.status)==0){
+				id_dialog(ret.info,obj,2);
+			}else{
+				var msg="<p>恭喜您，礼品卡已成功激活，</p><p>礼品卡金额为￥"+ret.data+"</p>";
+				id_dialog(msg,obj,1,function(){
+					location.reload();
+				});
+			}
+		}
+	})
+}
+
+</script>

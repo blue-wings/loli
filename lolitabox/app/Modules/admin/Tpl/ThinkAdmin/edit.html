@@ -1,0 +1,75 @@
+<include file="Public:header" />
+<link href="__PUBLIC__/css/table.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/common.css" type="text/css" rel="stylesheet"/>
+<div id="main" class="main" >
+<script language="JavaScript">
+function checkreset(){
+	var pwd=$("#resetPwd").val();
+	if(pwd==""){
+		alert("密码不能为空");
+		return false;
+	}
+	return true;	
+}
+
+function check()
+{
+	var account = $("#account").val();
+	if(account==""){
+		alert("账号不能为空");
+		return false;
+	}
+	return true;	
+}
+</script>
+<div>
+<div class="list-div">
+<table cellpadding=3 cellspacing=3 id="datatable" style="width:50%;">
+<tr><th colspan="2" scope="col" align="left">编辑帐号 [ <a href="__URL__">返回列表</a> ]</th></tr>
+<form action="__URL__/resetPwd/" name="formreset" method="post" onsubmit="return checkreset();">
+<tr>
+	<td class="tRight">重置密码：</td>
+	<td class="tLeft" >
+    <input type="hidden" name="id" value="{$vo.id}" >
+    <input type="text" name="password" id="resetPwd">
+     <INPUT type="submit" value="重置密码">
+     </td>
+</tr>
+</form>
+<tr>
+	<td class="tRight" colspan="2"><hr></td>
+</tr>
+<form method="post" id="form1" action="__URL__/update/" onsubmit="return check();">
+<tr>
+	<td class="tRight" >用户名：</td>
+	<td class="tLeft" ><input type="text" name="account" value="{$vo.account}" id="account"></td>
+</tr>
+<tr>
+	<td class="tRight" >昵称：</td>
+	<td class="tLeft" ><input type="text" class="medium bLeft" name="nickname" value="{$vo.nickname}"></td>
+</tr>
+
+<tr>
+	<td class="tRight">状态：</td>
+	<td class="tLeft"><SELECT class="small bLeft"  name="status">
+	<option <eq name="vo.status" value="1" >selected</eq> value="1">启用</option>
+	<option <eq name="vo.status" value="0" >selected</eq> value="0">禁用</option>
+	</SELECT></td>
+</tr>
+<tr>
+	<td class="tRight tTop">备  注：</td>
+	<td class="tLeft"><TEXTAREA class="large bLeft"  name="remark" rows="5" cols="57">{$vo.remark}</textarea></td>
+</tr>
+<tr>
+	<td></td>
+	<td class="center"><input type="hidden" name="id" value="{$vo.id}" >
+	<input type="submit" value="保 存">
+	<input type="reset" value="重 置" >
+	</td>
+</tr>
+</form>
+</table>
+</div>
+</div>
+</div>
+<include file="Public:footer" />

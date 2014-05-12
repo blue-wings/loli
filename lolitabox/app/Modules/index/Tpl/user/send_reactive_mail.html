@@ -1,0 +1,52 @@
+<include file="public:header.inc" />
+
+<i class="page_top"></i>
+<div class="mb16">
+<div class="fm1024">
+	<div class="wp1020">
+		<div class="hd_t"></div>
+		<div class="main">
+			<!--激活失败--内容--start-->
+				<div class="login_bound_con">
+					<div class="login_fail">
+					
+					<if condition="$return.error eq ''">
+						<div class="title">
+							<h1><b class="W_ico45"></b>激活邮件发送成功</h1>
+							<p class="fail_speak">							
+							您可以到  <span class="S_txt1"><{$return.usermail}></span>  去查收邮件，并根据邮件中的提示，在24小时内完成激活哦~ </p>
+						</div>
+						<div class="fail_text">
+							<if condition="$return['mailtype']['mail_all'] neq ''">		
+								<p class="btn">
+									<a href="<{$return.mailtype.mail_all}>" class="W_btn btn_a30">
+										<span>去邮箱验证</span>
+									</a>
+								</p>
+							</if>
+						</div>					
+					<else />
+							<div class="title">
+							<h1><b class="W_ico45 icon_no_45"></b>激活邮件发送失败！</h1>
+							<p class="fail_speak">							
+							请您确认您的邮箱：<span class="S_txt1"><{$return.usermail}></span>是否正确</p>
+						</div>
+						<div class="fail_text">
+							<dl class="login_state_dl" style="margin-left:80px;">
+							<dd>请您确认您的邮箱：<span class="S_txt1"><{$return.usermail}></span>是否正确</dd>
+							<dd>如有疑问，请您发送邮件至：<a href="mailto:service@lolitabox.com" target="_blank" class="A_line3">service@lolitabox.com</a></dd>
+							<dd>或电话联系我们的客服：4006-263-362（工作日9:30-18:30）</dd>
+							</dl>
+						</div>						
+					</if>
+						
+					</div>
+				</div>
+			<!--激活失败--内容--end-->
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+</div>
+
+<include file="public:footer_simple.inc" />

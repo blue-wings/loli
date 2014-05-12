@@ -1,0 +1,143 @@
+<include file="Public:header" />
+<div class="panel">
+		<div align="left">			
+			<fieldset class="fieldset">
+			<legend>查询条件</legend>
+			<form action="__ACTION__"  method="post" id="myform">
+			     用户ID:<input type="text" name="userid" value="{$Think.request.userid}">&nbsp;&nbsp;&nbsp;&nbsp;
+			     商品ID:<input type="text" name="pid" value="{$Think.request.pid}">
+			     时 &nbsp;间：从<input type="text" id="starttime" name="starttime"
+					value="{$Think.request.starttime}">到<input type="text"
+					id="endtime" name="endtime" value="{$Think.request.endtime}">
+			     <input type="submit"  name="submit" value="提交">
+			</form>
+		<script>
+		jQuery(function($){
+			$.datepicker.regional['zh-CN'] = {
+				closeText: '关闭',
+				prevText: '&#x3c;上月',
+				nextText: '下月&#x3e;',
+				currentText: '今天',
+				monthNames: ['一月','二月','三月','四月','五月','六月',
+				'七月','八月','九月','十月','十一月','十二月'],
+				monthNamesShort: ['一','二','三','四','五','六',
+				'七','八','九','十','十一','十二'],
+				dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+				dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+				dayNamesMin: ['日','一','二','三','四','五','六'],
+				weekHeader: '周',
+				dateFormat: 'yy-mm-dd',
+				firstDay: 1,
+				isRTL: false,
+				showMonthAfterYear: true,
+				yearSuffix: '年'};
+				$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+		});
+		$(function() {
+			$( "#starttime" ).datepicker({
+				defaultDate: "-1w",
+				changeMonth: true,
+				numberOfMonths: 3,
+				onSelect: function( selectedDate ) {
+					$( "#endtime" ).datepicker( "option", "minDate", selectedDate );
+				}
+			});
+			$( "#endtime" ).datepicker({
+				defaultDate: "+1w",
+				changeMonth: true,
+				numberOfMonths: 3,
+				onSelect: function( selectedDate ) {
+					$( "#starttime" ).datepicker( "option", "maxDate", selectedDate );
+				}
+			});
+
+		});
+
+		function lookup_detail(key)
+		{
+			var content=$("#survey_detail"+String(parseInt(key)-2)).html() || '空';
+			$("#list_table tr:eq("+key+")").css("background",'#ddd');
+			$.dialog({title:"调查问卷答案",content:content,close:function(){
+				$("#list_table tr:eq("+key+")").css("background",'');
+			}});
+		}
+
+	 </script>
+		    </fieldset>			
+		</div>
+</div>
+<table width="100%" border="0" align="center" cellpadding="0"
+	cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0"
+				cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img
+						src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img
+						src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span
+						class="STYLE4">问卷调查列表</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table
+							border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif"
+						width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+   <tr>
+    <td><table width="100%" border="0" cellspacing="0"
+				cellpadding="0" id="list_table">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3"><table width="99%" border="0"
+							align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98" id='list_table'>
+          <tr background="__PUBLIC__/images/tab_14.gif" align="center">
+              <td width="5%" height="18">商品ID</td>
+               <td width="15%" height="18">商品名称</td>
+              <td width="5%" height="18">用户ID</td>
+              <td width="5%" height="18">用户昵称</td>
+              <td width="5%" height="18">详情</td>
+              <td width="15%" height="18">时间</td>   
+          </tr>	
+		<volist name="list" id="vo" emtpy="还没有统计数据">
+          <tr align="center" bgcolor="FFFFFF">
+              <td width="5%" height="25"><a href="#" onclick="dialogmeseeage('/products/{$vo[pid]}','商品信息')" target="_blank" >{$vo.pid}</a></td>
+              <td width="15%" height="25">{$vo.productinfo.pname}</td>
+              <td width="5%" height="25"><a href="#" target="_blank" onclick="dialogmeseeage('{:u('User/userlist',array('userid'=> $vo[userid] ))}','用户信息')">{$vo.userid}</a></td>
+              <td width="5%" height="25">{$vo.userinfo.nickname}</td>
+              <td width="5%" height="25" onclick="lookup_detail('{$key+2}')"><span style="cursor:default">详情</span></td>
+              <td width="15%" height="25">{$vo.addtime|date="Y-m-d H:i:s",###}</td>
+              <div id="survey_detail{$key}"  style="display:none">
+                  {$vo.result|trim}
+              </div>
+          </tr>
+		</volist>
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0"
+				cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img
+						src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table
+							width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="25%" height="29" nowrap="nowrap"><span
+									class="STYLE1">{$page}</span></td>
+            <td width="75%" valign="top" class="STYLE1"></td>
+          </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif"
+						width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  </table>
+<include file="Public:footer" />

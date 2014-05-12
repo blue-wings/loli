@@ -1,0 +1,226 @@
+<include file="Public:header" />
+<style>
+.crea{
+	display:none;
+}
+.csd{
+	padding:20px 150px;
+}
+.red{
+	color:red;
+}
+input,select,textarea{
+	border-color:#008080;
+}
+.ftr{
+	width:20%;
+	padding-right:20px;
+}
+.trheight{
+	height:40px;
+}
+.clearbored{
+	border:0;
+}
+.ti{
+	width:80px;
+	margin-left:200px;
+}
+.inwidth{
+	width:50px;
+	text-align:center;
+}
+tr{
+	align:center;
+}
+
+input .addsize{
+	width:50px;
+	height:20px;
+}
+.tips{
+	margin:0;
+	padding:0;
+	border:solid red 1px;
+}
+td.cals{
+	color:#804040;
+	font-size:14px;
+}
+.backg{
+	background-color:#FFF;
+	border:0;
+}
+div.d1{
+	width:300px;
+	height:300px;
+	margin:50px 30%;
+}
+</style>
+<div class="list">
+<form action="__ACTION__" method="POST" name='relation'>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" align="left" background="__PUBLIC__/images/tab_05.gif">
+		  <img src="__PUBLIC__/images/311.gif" width="16" height="16" />&nbsp;<span style="color:red">{$name}</span>的增值方案
+		</td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>
+ 	<div style="padding-left:4px;width:70%;float:left;">
+	    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	      <tr>
+	        <td bgcolor="#f3ffe3">
+	        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98" id='tab'>
+	          <tr background="__PUBLIC__/images/tab_14.gif" align="center">
+	            <td width="30%" height="26">产品id</td>
+	          	<td width="60%" height="18">产品名称</td>
+	          	<td  height="18">/</td>
+	          </tr>
+	          <if condition="$info['list'] neq null">
+	          <volist name="info['list']" id="p">
+	           <tr align="center" class="first">
+				 <td height="18" bgcolor="#FFFFFF"><input type="text" name="itemid[]" value="{$p.pid}"></td>
+				 <td height="18" bgcolor="#FFFFFF" class="pnamevalue">{$p.name}</td>
+				 <td height="18" bgcolor="#FFFFFF"><a href="#" class="delete" onclick="delindex(this);return false;">删除</a></td>
+			   </tr>
+	          </volist>
+	          </if>
+				<tr>
+					<td colspan="3"><div style="text-align:right"><input type="button" name="chooseadd" value="加入"></div></td>
+				</tr>
+	        </table></td>
+	      </tr>
+	    </table>
+	 </div>   
+    
+	<div style="padding-left:50px;width:20%;float:left;">
+		<dl>
+			请输入名称:<input type="text" name='pname' value="{$info.projectname}">
+		</dl>
+		<dl>
+			请输入价格:<input type="text" name='price' value="{$info.price}">
+		</dl>			
+		<dl>
+			<span style="float:left">请输入描述:</span><textarea cols="21" rows="5" name="remark">{$info.remark}</textarea>
+		</dl>
+		<dl>
+			<p align="center">状态:
+				<input type="radio" name="state" value="0">无效
+				<input type="radio" name="state" value="1" checked>有效
+			</p>
+		</dl>
+		<dl>
+			<p align="center"><input type="submit" value="提交"></p>
+		</dl>
+	</div>
+	    </td>
+	  </tr>
+	  </table>
+	</div>
+</form>
+<script>
+if("{$info.status}"){
+	$(":radio[name='state'][value='{$info.status}']").attr("checked",true);
+}
+
+$("form[name='relation']").bind('submit',function(){
+
+	var name = $(":text[name='pname']").val();
+	var price= $(":text[name='price']").val();
+	var remark=$(":input[name='remark']").val();
+
+	if(name == '' || price == '' || remark == ''){
+		alert('表单不能为空');
+		return false;
+	}
+
+	if(isNaN(price)){
+		alert('价格输入的不是一个数字!');
+		return false;
+	}
+
+	var total=0;
+
+	$("td.pnamevalue").each(function(i){
+		if(($(this).text()=='') ||  ($(this).text()=='没找到此单品,请重新输入')){
+			total+=1;
+		}
+	})
+
+	if(total > 0 ){
+		alert('请检查错误再提交!');
+		return false;
+	}
+
+	if("{$info.id}"){
+		$("form[name='relation']").append("<input type='hidden' name='action' value='edit'><input type='hidden' name='id' value='{$info.id}'>");
+	}else{
+		$("form[name='relation']").append("<input type='hidden' name='action' value='add'>");
+	}
+})
+
+//点击加入按钮
+$(":button[name='chooseadd']").bind('click',function(){
+	var $str ='<tr align="center" class="first">';
+	$str+='<td height="18" bgcolor="#FFFFFF"><input type="text" name="itemid[]"></td>';
+	$str+='<td height="18" bgcolor="#FFFFFF" class="pnamevalue"></td>';
+	$str+='<td height="18" bgcolor="#FFFFFF"><a href="#" class="delete" onclick="delindex(this);return false;">删除</a></td></tr>';
+	$("#tab tr:last").before($str);
+})
+
+
+//删除单品
+function delindex(obj){
+
+	var domm = $(obj).parent().parent();
+	var value =domm.find(":text[name='itemid[]']").val();
+
+	if(value == ''){
+		domm.remove();
+	}else if(confirm('确定删除么?')){
+		$.ajax({
+			url:"__ACTION__",
+			type:"post",
+			dataType:"json",
+			data:"action=delete&projectid={$info.id}&pid="+value+'&n='+Math.random(),
+			success: function(chkresult){
+				if(chkresult != null){
+					domm.remove();
+				}
+			}
+		})
+	}
+}
+
+//AJAX查找产品名称
+$(":text[name='itemid[]']").live('keyup',function(event){
+
+	var th=$(this);
+
+	$.ajax({
+		url:"{:U('Box/getProductsData')}",
+		type:"post",
+		dataType:"json",
+		data:"pid="+th.val()+'&n='+Math.random(),
+		success: function(chkresult){
+			if(chkresult != null){
+				th.parent().siblings(".pnamevalue").text(chkresult.data);
+			}else{
+				th.parent().siblings(".pnamevalue").html('没找到此单品,请重新输入');
+			}
+		}
+	})
+
+	event.stopPropagation();
+})
+</script>
+<include file="Public:footer" />

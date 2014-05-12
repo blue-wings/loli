@@ -1,0 +1,156 @@
+<include file="public:header.inc" />
+<style type="text/css">
+body {text-align: left; background:#000; color:#ccc; font-size:13px; line-height:24px; margin:0;  padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif;}
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p{margin: 0; padding: 0; border: 0}
+a {color:#fff; text-decoration:none;}
+h1,h2,h3,h4,h5,h6,h7{margin:0; padding:0;}
+a{text-decoration:none;}
+a:hover {text-decoration:underline} 
+/*公有*/
+.Block01{width:1000px; height:504px; margin:0 auto; position:relative;margin-top:56px;}
+.Block01 .bg{height:504px; overflow:hidden;}
+.Block02{width:1000px; height:574px; margin:0 auto; position:relative; background:url(public/special/20130305/bg_02.gif) no-repeat;}
+.Block02 .img01{ position:absolute; left: 81px; top: 79px; width: 341px; height: 328px;}
+.Block02 .img02{ position:absolute; width: 330px; height: 376px; left: 517px; top: 193px;}
+.Block02 .tt1{ position:absolute; left: 463px; top: 96px; width: 437px; height: 80px;}
+.Block02 .tt2{ position:absolute; left: 100px; top: 432px; width: 347px; height: 104px;}
+.Block02 .tt3{ position:absolute; left: 47px; top: 16px; font-size: 30px; color: #ffd27f; line-height: 45px; width: 505px; height: 48px;}
+.Block02 .tt3 span ,.Block03 .tt5 span,.Block04 .tt4 span{font-size:40px; padding-left:10px;}
+
+
+.Block03{ width:1000px; height:772px; margin:0 auto; position:relative; background:url(public/special/20130305/bg_03.gif) no-repeat; font-size: 14px; color: #fff; text-align: center;}
+.Block03 .img01{ position:absolute; left: 33px; top: 172px; width: 438px; height: 274px;}
+.Block03 .img02{ position:absolute; left: 506px; top: 176px; width: 473px; height: 263px;}
+.Block03 .img03{ position:absolute; left: 542px; top: 510px; width: 424px; height: 256px;}
+.Block03 .img04{ position:absolute; left: 51px; top: 516px; width: 401px; height: 251px;}
+.Block03 .tt1{ position:absolute; left: 66px; top: 118px; width: 376px; height: 26px;}
+.Block03 .tt2{ position:absolute; left: 563px; top: 115px; width: 376px; height: 27px;}
+.Block03 .tt3{ position:absolute; left: 67px; top: 468px; width: 376px;}
+.Block03 .tt4{ position:absolute; left: 564px; top: 466px; width: 377px; height: 26px;}
+.Block03 .tt5{ position:absolute; font-size: 30px; color: #ffd27f; line-height: 45px; left: 40px; top: 33px; width: 526px; height: 46px;}
+
+.Block04{width:1000px; height:591px; margin:0 auto; position:relative; background:url(public/special/20130305/bg_04.gif) no-repeat;}
+.Block04 .img01{ position:absolute; left: 27px; top: 192px;}
+.Block04 .img02{ position:absolute; left: 305px; top: 385px;}
+.Block04 .img03{ position:absolute; left: 481px; top: 219px; width: 495px; height: 323px;}
+.Block04 .tt1{ position:absolute; left: 481px; top: 100px; font-size: 16px; width: 511px; height: 76px;}
+.Block04 .tt1 span{color:#fff; font-size:18px;}
+.Block04 .tt2{ line-height: 30px; font-size:14px; color: #fff; position:absolute; left: 209px; top: 215px; width: 231px; height: 116px;}
+.Block04 .tt3 p,.Block04 .tt2 p{font-size:18px; color:#ffd27f; text-align:center;}
+.Block04 .tt3{ position:absolute; left: 57px; top: 400px; line-height: 30px; font-size:14px; color: #fff; width: 223px; height: 119px;}
+.Block04 .tt4{ font-size: 30px; color: #ffd27f; line-height: 45px; position:absolute; left: 36px; top: 20px; width: 525px; height: 48px;}
+.Block04 .tt5{ position:absolute; left: 203px; top: 108px; font-size: 30px; line-height: 35px; color: #fff; width: 126px; height: 36px;}
+
+.Block05{ width:1000px; height:492px; margin:0 auto; position:relative; background:url(public/special/20130305/bg_05.gif) no-repeat; line-height: 20px;}
+.Block05 .img01{ position:absolute; left: 44px; top: 50px;}
+.Block05 .img02{ position:absolute; left: 272px; top: 50px;}
+.Block05 .img03{ position:absolute; left: 501px; top: 49px;}
+.Block05 .img04{ position:absolute; left: 729px; top: 49px;}
+.Block05 .tt1{ position:absolute; left: 742px; top: 15px; text-align: center; color: #fff; font-size: 14px; width: 196px; height: 25px;}
+.Block05 .tt2{ position:absolute; left: 283px; top: 15px; font-size: 14px; color: #fff; width: 200px; height: 24px; text-align: center;}
+.Block05 .tt3{ position:absolute; left: 512px; top: 15px; color: #fff; font-size: 14px; width: 199px; height: 25px; text-align: center;}
+.Block05 .tt4{ position:absolute; left: 56px; top: 14px; color: #fff; text-align: center; font-size: 14px; width: 198px; height: 26px;}
+.Block05 .tt5{ position:absolute; left: 55px; top: 317px; width: 199px; height: 105px;}
+.Block05 .tt6{ position:absolute; left: 284px; top: 319px; width: 196px; height: 105px;}
+.Block05 .tt7{ position:absolute; left: 513px; top: 317px; width: 195px; height: 98px;}
+.Block05 .tt8{ position:absolute; left: 746px; top: 318px; width: 184px; height: 108px;}
+
+.Block06{ width:1000px; height:514px; margin:0 auto; position:relative; background:url(public/special/20130305/bg_06.gif) no-repeat; font-size: 14px; line-height: 24px; color: #fff;}
+.Block06 .img01{ position:absolute; left: 217px; top: 73px;}
+.Block06 .img02{ position:absolute; left: 847px; top: 72px;}
+.Block06 .img03{ position:absolute; left: 342px; top: 171px;}
+.Block06 .img04{ position:absolute; left: 866px; top: 300px;}.Block06 .img05{ position:absolute; left: 74px; top: 293px;}
+
+.Block06 .tt1{ position:absolute; width: 257px; height: 95px; left: 61px; top: 184px;}
+.Block06 .tt2{ position:absolute; left: 72px; top: 404px; width: 243px; height: 101px;}
+.Block06 .tt3{ position:absolute; left: 686px; top: 182px; width: 268px; height: 80px;}
+.Block06 .tt4{ position:absolute; left: 699px; top: 413px; width: 269px; height: 76px;}
+.Block06 .tt5{ position:absolute; font-size:18px; color:#ffd27f; left: 60px; top: 151px;}
+.Block06 .tt6{ position:absolute; font-size:18px; color:#ffd27f; height: 29px; left: 180px; top: 366px;}
+.Block06 .tt7{ position:absolute; font-size:18px; color:#ffd27f; left: 686px; top: 150px;}
+.Block06 .tt8{ position:absolute; font-size:18px; color:#ffd27f; left: 700px; top: 377px;}
+.Block06 .tt9{ font-size:48px; color:#ffd27f; line-height:50px; position:absolute; left: 403px; top: 83px; width: 207px; height: 53px;}
+.STYLE2 {font-size: 14px}
+</style>
+</head>
+
+<body>
+<div class="Block01">
+	<div class="bg"><img src="public/special/20130305/bg_01.jpg" width="1000" height="504" /></div>
+</div>
+<div class="Block02">
+	<div class="img01"><a href="<{:U('brand/33')}>" target="_blank"><img src="public/special/20130305/img_01.jpg" width="337" height="325" border="0" /></a></div>
+	<div class="img02"><a href="<{:U('brand/33')}>" target="_blank"><img src="public/special/20130305/img_02.jpg" width="328" height="374" border="0" /></a></div>
+    <div class="tt1">TSUBAKI丝蓓绮属于资生堂集团，是日本顶级的洗发护发品牌。TSUBAKI丝蓓绮于2007年9月正式进入中国。日本杂志介绍，TSUBAKI是目前排名第一的洗发水。</div>
+    <div class="tt2">TSUBAKI丝蓓绮洗护发产品不仅特别加入了从天然山茶油中精萃的高纯度山茶精油，同时还复合了两种美发成份，凝结山茶花、滨梨、石榴、南高梅、黄桃精华，形成花果蜜般的超凡芬芳。</div>
+  <div class="tt3">资生堂顶级护发<span>丝蓓绮创建史</span></div>
+</div>
+<div class="Block03">
+	<div class="img01"><a href="<{:U('brand/33')}>" target="_blank"><img src="public/special/20130305/img_03.jpg" width="434" height="270" border="0" /></a></div>
+	<div class="img02"><a href="<{:U('brand/33')}>" target="_blank"><img src="public/special/20130305/img_04.jpg" width="469" height="260" border="0" /></a></div>
+	<div class="img03"><a href="<{:U('brand/33')}>" target="_blank"><img src="public/special/20130305/img_05.jpg" width="422" height="255" border="0" /></a></div>
+<div class="img04"><a href="<{:U('brand/33')}>" target="_blank"><img src="public/special/20130305/img_06.jpg" width="400" height="249" border="0" /></a></div>
+<div class="tt1">【<strong>奢耀柔艳系列</strong>】令秀发从发芯深处散发出柔顺光艳</div>
+    <div class="tt2">【<strong>奢耀修护系列</strong> 】有效修护受损发丝，内外兼修，丝滑炫泽</div>
+    <div class="tt3">【<strong>奢耀焕活系列</strong>】SPA护理 改善头皮至理想状态</div>
+    <div class="tt4">【<strong>奢华舒润系列</strong>】融合多种天然精油 带来光艳秀发</div>
+    <div class="tt5">
+      <div align="left">至上之美<span>丝蓓绮明星系列</span></div>
+    </div>
+</div>
+<div class="Block04">
+<div class="img01"><a href="<{:U('brand/33')}>" target="_blank"><img src="public/special/20130305/img_07.jpg" width="154" height="153" border="0" /></a></div>
+	<div class="img02"><a href="<{:U('brand/33')}>" target="_blank"><img src="public/special/20130305/img_08.jpg" width="154" height="151" border="0" /></a></div>
+	<div class="img03"><a href="<{:U('products/131')}>" target="_blank"><img src="public/special/20130305/img_09.jpg" width="493" height="321" border="0" /></a></div>
+<div class="tt1">
+  <p><span>奢耀柔艳洗发露</span>—激发魅力的潜能，秀发从发芯深处散发柔顺光艳。</p>
+  <p>●内部充盈滋润，由发芯透出顺滑光艳；<br />
+    ● 高纯度自然山茶花精油 + 艳泽修护珍珠蛋白配方；<br />
+    ● 珍珠蛋白渗透直达发芯内部，盈润滋养，光艳秀发从&quot;芯&quot;开始。<br />
+    <br />
+  </p>
+</div>
+    <div class="tt2"><p>高纯度山茶花精油</p>
+    山茶花精油在发丝表面形成保护膜，整理发丝表面赋予耀人光泽。</div>
+    <div class="tt3"><p>艳泽修护珍珠蛋白</p>
+    水分和保湿因子相互作用，堵塞流出通道，持久保水凝润。</div>
+  <div class="tt4">唯你绽放<span>丝蓓绮明星产品</span></div>
+  <div class="tt5">王牌成分</div>
+</div>
+<div class="Block05">
+	<div class="img01"><a href="<{:U('products/135')}>" target="_blank"><img src="public/special/20130305/img_10.jpg" width="219" height="265" border="0" /></a></div>
+	<div class="img02"><a href="<{:U('products/134')}>" target="_blank"><img src="public/special/20130305/img_11.jpg" width="219" height="265" border="0" /></a></div>
+	<div class="img03"><a href="<{:U('products/132')}>" target="_blank"><img src="public/special/20130305/img_12.jpg" width="218" height="265" border="0" /></a></div>
+	<div class="img04"><a href="<{:U('products/40942')}>" target="_blank"><img src="public/special/20130305/img_13.jpg" width="218" height="265" border="0" /></a></div>
+<div class="tt1">奢华净爽清洁露</div>
+    <div class="tt2">奢耀焕活护发素</div>
+    <div class="tt3">奢耀柔艳护发素</div>
+  <div class="tt4">奢耀修护洗发露</div>
+    <div class="tt5">针对硬水水质的影响，采用全新洗净成分，使泡沫快速生成，并持久保持，带来充盈的泡沫质感及滋润效果。</div>
+    <div class="tt6">全新洗净成分，有效清洁头皮，抑制头屑、头痒和油脂的产生。混合多种精油的自然芳香，舒缓身心。</div>
+    <div class="tt7">艳泽修护珍珠蛋白成分渗透直达发芯内部，使水分和保湿因子相互作用，持久保水，为秀发提供充盈滋养。</div>
+    <div class="tt8">天然精油洁净成分，有效去除头皮上沉积的老化皮脂及整发造型品，使油脂分泌过多的头皮调理至清爽状态。</div>
+</div>
+<div class="Block06">
+<div class="img01"><a href="<{:U('space/226')}>" target="_blank"><img src="public/special/20130305/img_14.jpg" width="98" height="95" border="0" /></a></div>
+	<div class="img02"><a href="<{:U('space/21437')}>" target="_blank"><img src="public/special/20130305/img_15.jpg" width="98" height="97" border="0"/></a></div>
+  <div class="img03"><a href="<{:U('products/62953')}>" target="_blank"><img src="public/special/20130305/img_16.jpg" width="327" height="320" border="0" /></a></div>
+<div class="img04"><a href="<{:U('space/199')}>" target="_blank"><img src="public/special/20130305/img_17.jpg" width="98" height="96" border="0"/></a></div>
+<div class="img05"><a href="<{:U('space/22504')}>" target="_blank"><img src="public/special/20130305/img_18.jpg" width="98" height="97" border="0"/></a></div>
+<div class="tt1">发乳的香味非常持久，在用热水的时候不会像有的产品遇热会有不好闻的化学味，从挤出准备用到头发干透后，房间都有余香。</div>
+    <div class="tt2">我属于中长发，需要取两个一元硬币大小的量来进行清洗，泡沫轻盈，让我觉得清洁度很高，洗过之后头发的清爽度可达到百分之九十五以上。</div>
+    <div class="tt3">泡沫挺细的，味道不大，淡淡的，最主要还是洗完很顺，又不会像某些洗发水一样，要么洗了很干必须上护发素，要么洗了很油第二天就粘乎乎的。是干性头发，染过拉过，洗完很是舒服啊。</div>
+    <div class="tt4">每次取少量就可以打出来很多泡泡，头发不是很长的话，洗一遍就觉得很干净哦。芬芳花果优雅香带来前所未有的甜美感受。有时候，不用护发素，都觉得头发超柔顺呢。</div>
+<div class="tt5">达人：使劲欣赏LB</div>
+    <div class="tt6">达人：买手萌小姐</div>
+    <div class="tt7">达人：<span class="STYLE2">kamyloveyuan</span></div>
+    <div class="tt8">达人：vivienrose</div>
+  <div class="tt9">达人点评</div>
+</div>
+<script>
+$(function(){
+	$('body').css('background','#000');
+})
+</script>
+<include file="public:footer.inc" />

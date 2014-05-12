@@ -1,0 +1,332 @@
+<include file="Public:header" />
+<include file="Public:upload" />
+	<link rel="stylesheet" href="/public/js/jquery_theme/smoothness/jquery.ui.all.css">
+	<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+	<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+	<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+<table width="100%" cellspacing="1" cellpadding="6" border="0" align="center" class="tborder">
+
+<tr>
+	<td align="center" class="panelsurround">
+	<form name="myform" id="myform" action="__URL__/edit" method="post" onsubmit="return checkform()">
+	<input type="hidden" name="boxid" value="{$boxinfo.boxid}">
+	<div class="panel">
+		<div align="left">
+			<fieldset class="fieldset">
+				<legend>编辑盒子</legend>
+				<table cellpadding="0" border="0" align="left">
+				<tbody>
+				<tr>
+					<td>	
+					</td>
+				</tr>			
+				<tr>
+					<td>&nbsp;&nbsp;&nbsp;盒子名称:	<input type="text" size="20" name="boxname" value="{$boxinfo.name}">  推荐标签:
+					<select name="tagname">
+						<option value="0">无</option>
+						<option value="3">预售</option>
+						<option value="4">售罄</option>
+						<option value="2">推荐</option>
+						<option value="1">最新</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>
+				<fieldset class="fieldset">
+				<legend>盒子类别:</legend>
+					<volist name="feeproductlist" id="feeproductlist" emtpy="这里一片空白">
+					<input type="radio" name="boxcat"   value="{$feeproductlist.id}">{$feeproductlist.name}<br>
+					</volist>
+					<input type="radio" name="boxcat" value="16">积分兑换盒
+				</fieldset>
+				
+				<fieldset class="fieldset">
+				<legend>盒子常规属性设置</legend>
+				<table>
+			<tr>
+					<td>是否仅新会员购买:
+					<input type="radio" name="only_newuser" value="0" checked>不是
+					&nbsp;&nbsp;
+					<input type="radio" name="only_newuser" value="1" >是
+					</td>
+				</tr>
+				<tr>
+					<td>是否可以重复购买:
+					&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="if_repeat" value="0">不可以
+					&nbsp;&nbsp;
+					<input type="radio" name="if_repeat" value="1">可以
+					</td>
+				</tr>
+				<!-- 
+				<tr height='25'>
+					<td>是否推荐
+					<input type="radio" name="icontype" value="0" checked>空&nbsp;&nbsp;
+					<input type="radio" name="icontype" value="1">new&nbsp;&nbsp;
+					<input type="radio" name="icontype" value="2">hot
+					</td>
+				</tr>
+				<tr height='25'>
+					<td>是否显示倒计时
+					<input type="radio" name="ifshowtime" value="0" checked>不显示
+					<input type="radio" name="ifshowtime" value="1">显示
+					</td>
+				</tr>
+				 -->			
+				<tr height='25'>
+					<td>是否允许使用优惠券：
+					<input type="radio" name="use_coupon" value="0">不可以使用优惠券
+					&nbsp;&nbsp;
+					<input type="radio" name="use_coupon" value="1">可以使用优惠券
+					</td>
+				</tr>
+				<tr height='25'>
+					<td>设置赠送优惠券金额：<input type="text" name="give_coupon" value='{$boxinfo.if_give_coupon}'>（不填写则为不赠送）<br>
+					设置赠送优惠券有效期：<input type="text" name="coupon_date" value='{$boxinfo.coupon_valid_date}'>
+					</td>
+				</tr>
+				<tr>
+					<td>是否限制只有特权会员才可以购买:
+					<input type="radio" name="if_member_buy" value="0" >不限制&nbsp;&nbsp;<input type="radio" name="if_member_buy" value="1" >只允许特权会员购买
+					</td>
+				</tr>
+
+
+				<tr height='25'>
+					<td>
+						盒子购买后是否赠送特权会员：<select name="if_give_member">
+						<option value="0" <eq name="boxinfo.if_give_member" value="0">selected</eq>>不赠送</option>
+						<option value="1" <eq name="boxinfo.if_give_member" value="1">selected</eq>>1个月</option>
+						<option value="6" <eq name="boxinfo.if_give_member" value="6">selected</eq>>6个月</option>
+						<option value="12" <eq name="boxinfo.if_give_member" value="12">selected</eq>>12个月</option>
+						</select>
+					</td>
+				</tr>
+
+				<tr>
+					<td>是否隐藏（不在前台显示）:
+					<input type="radio" name="if_hidden_box" value="0" >不隐藏
+					&nbsp;&nbsp;<input type="radio" name="if_hidden_box" value="1" >隐藏
+					</td>
+				</tr>					
+				</table>
+				</fieldset>
+					</td>
+				</tr>
+				<tr>
+					<td>盒子数量:	<input type="text" size="20" name="quantity" value="{$boxinfo.quantity}"></td>
+				</tr>
+				<tr>
+					<td>盒子价格:	<input type="text" size="20" name="box_price" value="{$boxinfo.box_price}"></td>
+				</tr>
+				<tr>
+					<td>特权会员价格:	<input type="text" size="20" name="member_price" value="{$boxinfo.member_price}"></td>
+				</tr>					
+				<tr>
+					<td>订单开始日期:	<input type="text" size="20" id="startdate" name="startdate" value="{$boxinfo.starttime}"></td>
+				</tr>
+				<tr>
+					<td>订单截止日期:	<input type="text" size="20" id="enddate" name="enddate" value="{$boxinfo.endtime}"></td>
+				</tr>
+				<tr>
+					<td>订单发送日期:	<input type="text" size="20" id="sendbox" name="sendbox" value="{$boxinfo.box_senddate}"></td>
+				</tr>				
+				<tr>
+					<td>图片地址:	<input type="text" size="50" id="pic" name="pic" value="{$boxinfo.pic}">
+					  
+					        <input type="button" id="uploadPicture1" value="上传图片" onclick="uploadPic('pic')">[235x235]
+					</td>
+				</tr>
+				
+				<tr>
+				    <td>
+				    <if condition="$boxinfo['pic'] neq ''">
+					    <div style="width:300px;height:200px;overflow:auto;border:1px solid #777"><img src='{$boxinfo.pic}' id="show_pic"></div>
+					</if>
+				    </td>
+				    <script>
+				    $("#pic").blur(function(){
+				    	$("#show_pic").attr("src",$("#pic").val());
+				    })
+				    </script>
+				</tr>
+				<tr>
+					<td>图片地址(大):	<input type="text" size="50" id="pic_big" name="pic_big" value="{$boxinfo.pic_big}">
+					        <input type="button" id="uploadPicture2" value="上传图片" onclick="uploadPic('pic_big')">[580x310]
+					</td>
+				</tr>
+				<tr>
+				    <td>
+				    <if condition="$boxinfo['pic_big'] neq ''">
+					    <div><img src='{$boxinfo.pic_big}' ></div>
+					</if>
+				    </td>
+				    <script>
+				    $("#pic").blur(function(){
+				    	$("#show_pic").attr("src",$("#pic").val());
+				    })
+				    </script>
+				</tr>
+	
+				
+				<tr >
+					<td>盒子推荐理由描述: 	<br/>
+					<textarea id="boxcost" style="width:600px;height:200px;visibility:hidden;"  name="boxcost">{$boxinfo.boxcost|default="用于个人中心介绍显示"}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					盒子描述: 	<br/>
+					<textarea style="width:600px;height:200px;visibility:hidden;" id="box_intro" name="box_intro">{$boxinfo.box_intro}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					盒子发送信息备注: 	<br/>
+					<textarea  style="width:600px;height:200px;visibility:hidden;" id="box_remark" name="box_remark">{$boxinfo.box_remark}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>盒子关联专题:	<input type="text" size="50" name="special_url" value="{$boxinfo.special_url}"></td>
+				</tr>
+				</tbody>
+				</table>
+			</fieldset>	
+		</div>
+	</div>
+	<div style="margin-top:6px">
+		<input type="submit" class="button" value="提交表单" />
+	</div>
+	</form>
+	</td>
+</tr>
+</tbody></table>
+<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-min.js"></script>
+	<script>
+	KE.show({
+		id : 'boxcost',
+		imageUploadJson : '__PUBLIC__/kindeditor/php/upload_json.php',
+		fileManagerJson : '__PUBLIC__/kindeditor/php/file_manager_json.php',
+		allowFileManager : true,
+		afterCreate : function(id) {
+			KE.event.ctrl(document, 13, function() {
+				KE.util.setData(id);
+				document.forms['myform'].submit();
+			});
+			KE.event.ctrl(KE.g[id].iframeDoc, 13, function() {
+				KE.util.setData(id);
+				document.forms['myform'].submit();
+			});
+		}
+	});
+	
+	KE.show({
+		id : 'box_intro',
+		imageUploadJson : '__PUBLIC__/kindeditor/php/upload_json.php',
+		fileManagerJson : '__PUBLIC__/kindeditor/php/file_manager_json.php',
+		allowFileManager : true,
+		afterCreate : function(id) {
+			KE.event.ctrl(document, 13, function() {
+				KE.util.setData(id);
+				document.forms['myform'].submit();
+			});
+			KE.event.ctrl(KE.g[id].iframeDoc, 13, function() {
+				KE.util.setData(id);
+				document.forms['myform'].submit();
+			});
+		}
+	});
+
+	KE.show({
+		id : 'box_remark',
+		imageUploadJson : '__PUBLIC__/kindeditor/php/upload_json.php',
+		fileManagerJson : '__PUBLIC__/kindeditor/php/file_manager_json.php',
+		allowFileManager : true,
+		afterCreate : function(id) {
+			KE.event.ctrl(document, 13, function() {
+				KE.util.setData(id);
+				document.forms['myform'].submit();
+			});
+			KE.event.ctrl(KE.g[id].iframeDoc, 13, function() {
+				KE.util.setData(id);
+				document.forms['myform'].submit();
+			});
+		}
+	});
+	
+	jQuery(function($){
+		$.datepicker.regional['zh-CN'] = {
+			closeText: '关闭',
+			prevText: '&#x3c;上月',
+			nextText: '下月&#x3e;',
+			currentText: '今天',
+			monthNames: ['一月','二月','三月','四月','五月','六月',
+			'七月','八月','九月','十月','十一月','十二月'],
+			monthNamesShort: ['一','二','三','四','五','六',
+			'七','八','九','十','十一','十二'],
+			dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+			dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+			dayNamesMin: ['日','一','二','三','四','五','六'],
+			weekHeader: '周',
+			dateFormat: 'yy-mm-dd',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: true,
+			yearSuffix: '年'};
+			$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+	});
+	$(function() {
+		$("input[name='use_coupon'][value='"+"{$boxinfo.if_use_coupon}"+"']").attr('checked','true');
+		$(":radio[name='only_newuser'][value='"+"{$boxinfo.only_newuser}"+"']").attr('checked',true);
+
+		$(":radio[name='if_repeat'][value='"+"{$boxinfo.if_repeat}"+"']").attr('checked',true);
+		$(":radio[name='icontype'][value='"+"{$boxinfo.icontype}"+"']").attr('checked',true);
+		$(":radio[name='ifshowtime'][value='"+"{$boxinfo.ifshowtime}"+"']").attr('checked',true);
+		$(":radio[name='boxcat'][value='"+"{$boxinfo.category}"+"']").attr('checked',true);
+		$(":radio[name='if_member_buy'][value='"+"{$boxinfo.only_member}"+"']").attr('checked',true);
+		$(":radio[name='if_hidden_box'][value='"+"{$boxinfo.if_hidden}"+"']").attr('checked',true);
+		
+		$("select[name='tagname']").val("{$boxinfo.name_modifier}");
+		
+		$( "#startdate").datepicker({
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$( "#startdate" ).datepicker( "option", "minDate", selectedDate );
+			}
+		});
+		$( "#enddate").datepicker({
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$( "#enddate" ).datepicker( "option", "maxDate", selectedDate );
+			}
+		});
+		$( "#sendbox").datepicker({
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$( "#sendbox" ).datepicker( "option", "minDate", selectedDate );
+			}
+		});
+		$( "#sendbox").datepicker({
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$( "#sendbox" ).datepicker( "option", "maxDate", selectedDate );
+			}
+		});
+		$("input[name='coupon_date']").datepicker({
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$("input[name='coupon_date']").datepicker( "option", "minDate", selectedDate );
+			}
+		});
+	});
+	function checkform(){
+		if($(":input[name='boxcost']").val()==''){
+			alert('盒子推荐理由描述: !');return false;
+		}
+	}
+	</script>
+<include file="Public:footer" />

@@ -1,0 +1,87 @@
+<include file="Public:header" />
+<import type='Css' file="Css.table" />
+<script type="text/javascript">
+  function checkUpdForm()
+  {
+  	var oldpassword = $("#oldpassword").val();
+  	var password = $("#password").val();
+  	var repassword = $("#repassword").val();
+  	if(oldpassword == "" || password == "" || repassword == ""){
+		alert("所有密码框都不能为空！");  		
+		return false;
+  	}
+  	if(oldpassword.length < 5 || password.length < 5 || repassword.length <5){
+  		alert("密码不能小于5位数。");  		
+		return false;
+  	}
+  	if(password != repassword){
+  		alert("两次密码不一致，重新输入。");
+  		return false;
+  	}
+  	return true;
+  }
+</script>
+<div id="main">
+<!--    <form method="POST"  id="form1"  action="__URL__/change/">
+      <table cellpadding=3 cellspacing=3>
+        </tr>
+        <tr class="row" >
+          <Th colspan="2" class="tCenter space"> 修改用户资料</th>
+        </tr>
+        <tr>
+          <td >昵称：</td>
+          <td><input type="text" name="nickname" value="{$vo.nickname}"></td>
+        </tr>
+        <tr>
+          <td>Email：</td>
+          <td class="tLeft"><input type="text" name="email" value="{$vo.email}" /></td>
+        </tr>
+        <tr>
+          <td>备  注：</td>
+          <td><TEXTAREA  name="remark" rows="5" cols="30">{$vo.remark}</textarea></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="center"><input type="hidden" name="id" id="id" value="{$vo.id}">
+            <input type="submit" value="保 存" >
+            <input type="reset"  value="重置" /></td>
+        </tr>
+      </table>
+    </form>-->
+    <div class="list-div">
+    <form action="__URL__/changePwd/" method="post" name="updForm" onsubmit="return checkUpdForm();">
+      <table cellpadding=0 cellspacing=0 style="width:30%;margin-top:100px;" align="center">
+        <tr>
+          <td height="5" colspan="2"></td>
+        </tr>
+        <tr class="row" align="left">
+          <Th colspan="2"> 修改密码</th>
+        </tr>
+        <tr>
+          <td height="5" colspan="2"></td>
+        </tr>
+        <tr class="row" >
+          <td>旧密码：</td>
+          <td><input type="password" name="oldpassword" id="oldpassword"></td>
+        </tr>
+        <tr class="row" >
+          <td>新密码：</td>
+          <td><input type="password"  name="password" id="password"></td>
+        </tr>
+        <tr class="row" >
+          <td>确认新密码：</td>
+          <td><input type="password"  name="repassword" id="repassword"></td>
+        </tr>
+        <tr class="row" >
+          <td class="tCenter" align="justify" colspan="2">
+          <input  type="submit"  value="确 认" alt="确认" />
+          <input  type="button"  value="取 消" alt="取消" onclick="history.go(-1);"/></td>
+        </tr>
+        <tr>
+          <td height="5" colspan="2" class="bottomTd" ></td>
+        </tr>
+      </table>
+    </form>
+</div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,25 @@
+		
+		
+		<div class="wp738 mb16">
+			<div class="hd_y">
+				<h3 class="i_tit l"><em class="t_tips_h">&nbsp;</em>温馨提醒：</h3>
+			</div>
+			<div class="main">
+				<div class="My_personal_tips">
+					<ul class="cfl">
+						<li><a href="<{:u('home/boxorder',array('type'=>2))}>">待支付萝莉盒订单<span class="rd">（<{$tips[ordernum]}>）</span></a></li>
+						<li><a href="<{:u('home/tryorder',array('state'=>2))}>">待支付试用订单<span class="rd">（<{$tips[trynum]}>）</span></a></li>
+						<li><a href="<{:u('try_products',array('type'=>2))}>">待分享的试用产品<span class="rd">（<{$tips[sharenum]}>）</span></a></li>
+						<li><a href="<{:u('home/msg')}>">待查看的私信<span class="rd">（<{$tips[msgnum]}>）</span></a></li>
+					</ul>
+		
+		<eq name="return.if_finished" value="0">			
+			<div style="background-color:rgb(255, 253, 250);border:solid 2px #f9eace;border-radius:3px;line-height:22px;padding:15px;margin-top:25px;">
+			尊敬的萝莉女王，为了享受小萝莉提供的个性化服务，大家都在忙着完善自己的《萝莉档案》<br />
+		现在完善萝莉档案信息，最多可以获得30+积分哦！现在就去看看吧~~~<a href="<{:u('home/vote')}>" target="_blank"><span class="rd">完善萝莉档案</span></a>
+			</div>	
+		</eq>		
+				</div>
+			</div>
+			<div class="ft"></div>
+		</div>

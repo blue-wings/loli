@@ -1,0 +1,102 @@
+<include file="Public:header" />
+<link href="__PUBLIC__/css/table.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/common.css" type="text/css" rel="stylesheet"/>
+<div id="main" class="main" >
+  <div class="content" >
+    <div id="result" class="result none"></div>
+    <div class="list-div">
+    <form method="post" id="form1" action="__URL__/setAction/">
+      <table cellpadding="0" cellspacing="0" border="0" id="datatable"  align='left'>
+       <tr>
+          <th scope="col" colspan="3" align="left">操作授权 [ <a href="__URL__">返 回</a>] </th>
+        </tr>
+        <tr>
+        	<td colspan="3"></td>
+        </tr>
+        <tr>
+          <td height="5" colspan="3"><a href="__URL__/app/groupId/{$Think.get.groupId}">应用授权</a> | <a href="__URL__/module/groupId/{$Think.get.groupId}">模块授权</a> | 操作授权 </td>
+        </tr>
+        <tr  align="left" style=" background-color:#CCC;">
+          <td>当前组：  
+           <select name="groupId" id="groupId" onChange="location.href = '__URL__/action/groupId/'+this.options[this.selectedIndex].value;">
+           <option value="">选择组</option>
+			<foreach name="groupList" item="vo">
+          	<option value="{$key}" <php>if($selectGroupId==$key)echo "selected";</php> >{$vo}</option>
+            </foreach>
+          </select>
+          </td>
+        </tr>
+        <tr  align="left" style=" background-color:#CCC;">
+          <td>当前应用：  
+           <select name="appId" id="appId" onChange="location.href = '__URL__/action/groupId/'+$('#groupId').val()+'/appId/'+this.options[this.selectedIndex].value;">
+           <option value="">选择应用</option>
+			<foreach name="appList" item='vo'>
+          	<option value="{$key}" <php>if($selectAppId==$key)echo "selected";</php> >{$vo}</option>
+            </foreach>
+          </select>
+          </td>
+        </tr>
+        <tr  align="left" style=" background-color:#CCC;">
+          <td>当前模块：  
+           <select name="moduleId" id="moduleId" onChange="location.href = '__URL__/action/groupId/'+$('#groupId').val()+'/appId/'+$('#appId').val()+'/moduleId/'+this.options[this.selectedIndex].value;">
+           <option value="">选择模块</option>
+			<foreach name="moduleList" item='vo'>
+          	<option value="{$key}" <php>if($selectModuleId==$key)echo "selected";</php> >{$vo}</option>
+            </foreach>
+          </select><br>
+
+          </td>
+        </tr>
+        <tr>
+          <td>
+			<ul style="padding:2px; margin-top:5px;list-style:none;">
+			    <assign name="flag" value="1" />
+				<volist name="actionList"  id="vo">
+					 <li style="display:inline;">
+		  	 		 <if condition="$key eq 0"><span style='font-weight:bolder;font-size:15px;color:#777'>菜单：</span></if>
+					 <if condition='$vo[type] eq 1 and $flag eq 1'><php>$flag=2;echo "<hr><span style='font-weight:bolder;font-size:15px;color:#777'>操作：</span>";</php> </if>
+					<input type="checkbox" name="groupActionId[]" value="{$vo['id']}" <php> if(in_array($vo['id'],$groupActionList)) { echo "checked"; }</php> ><span 
+					<if condition="$vo[type] eq 0">style='color:red'</if>
+					>{$vo['title']}</span>
+					</li>
+				</volist>
+			</ul>
+          </td>
+        </tr>
+        <tr align="left" style=" background-color:#CCC;">
+          <td><input type="radio"  name='select' id="allSelect" value="全选">全选
+            &nbsp;
+            <input type="radio"  name='select' id="InverSelect" value="反选">反选
+            &nbsp;
+            <input type="submit" value="保存">
+            &nbsp;
+			<input type="hidden" name="module" value="ThinkNode">
+		</td>
+		<script>
+		   $("#allSelect").click(function(){
+			   $(":checkbox[name='groupActionId[]']").attr("checked",true);  
+		   });
+		   $("#InverSelect").click(function(){
+			   var b=$(":checkbox[name='groupActionId[]']");  
+			   var n=b.length;
+			   for(var i=0;i<n;i++){
+				   var obj=$(":checkbox[name='groupActionId[]']").eq(i);
+				   if(obj.attr("checked"))
+					   obj.attr("checked",false);
+				   else
+					   obj.attr("checked",true);
+			   }
+		   })
+		</script>
+        </tr>
+        <tr>
+          <td height="5" class="bottomTd" ></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  </div>
+</div>
+<include file="Public:footer" />
+
+

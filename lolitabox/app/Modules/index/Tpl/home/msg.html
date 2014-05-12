@@ -1,0 +1,45 @@
+<include file="public:header.inc" />
+<!--公用---头部--end------->
+
+<!--个人中心--内容--start-------->
+<div class="fm1020_c cfl">
+	<!--左侧导航--->
+	<include file="left.inc" />
+	
+	<!--右侧-内容-->
+	<div class="f738 r wp738">
+		<!--分享详情页内容-->
+		<div class="hd">
+			<div class="tit_hd_tab l">
+				<span class="tit_hd_con"   id="type_1"   get_values="<{$Think.get.type}>"><a href="javascript:void())">收到的消息(<{$datanum['rmsgnum']}>)</a></span>
+				<span class="tit_hd_con hd_ft"   id="type_2"><a href="javascript:void())">发出的消息(<{$datanum['smsgnum']}>)</a></span>
+				<span class="tit_hd_con hd_ft"   id="type_3"><a href="javascript:void())">萝莉通知(<{$datanum['lmsgnum']}>)</a></span>
+			</div>
+		
+		</div>
+		<div class="main My_details_wrap">
+			<!----内容--->
+			<div class="WB_feed">
+				<!--日志4---->
+				<div class="WB_feed_type">
+					<div class="WB_feed_datail cfl S_line1">
+						<div class="WB_detail">
+							<div class="WB_media_reply"  id="ajax_content">
+								<include file="msg_ajaxlist" />
+							</div>
+						</div>
+					
+				</div>
+				</div>
+			</div>
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+<script>
+$(function(){
+	ajax_replace("type","__ACTION__");
+})
+</script>
+<!--标准底---start--->
+<include file="public:footer.inc" />

@@ -1,0 +1,93 @@
+<include file="Public:header" />
+<script language="javascript" type="text/javascript"> 
+function checkForm()
+{
+	var name=$("#name").val();
+	var price=$("#price").val();
+	var type=$("#type").val();
+//	var pic=$("#pic").val();
+	
+	if(name=="" || type==""  || pic==""){
+		alert("名称或价格或类型不能为空!");
+		return false;
+	}
+	if(price <= 0 || "/^[1-9]\d*$/".exec(price)){
+		alert("价格必须大于0并且必须为正整数。");
+		return false;
+	}
+	return true;
+}
+</script> 	
+<table width="50%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+          <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">
+            <if condition="$id eq ''">添加盒子类型
+              <else />
+              编辑盒子类型--{$vo.name}</if>
+            </span></td>
+          <td width="281" background="__PUBLIC__/images/tab_05.gif"></td>
+          <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td><form action="__URL__/OptFee/" method="post" onsubmit="return checkForm();">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+            <td bgcolor="#f3ffe3"><table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#c0de98">
+                <tr align="center">
+                  <td align="right" bgcolor="#FFFFFF"> 名称：</td>
+                  <td align="left" bgcolor="#FFFFFF"><input type="text" name="name" id="name" value="{$vo.name}"  size="30"/></td>
+                </tr>
+                <tr align="center">
+                  <td align="right" bgcolor="#FFFFFF">价格：</td>
+                  <td align="left" bgcolor="#FFFFFF"><input name="price" type="text" id="price" value="{$vo.price}" size="30" /></td>
+                </tr>
+                <tr align="center">
+                  <td align="right" bgcolor="#FFFFFF">类型：</td>
+                  <td align="left" bgcolor="#FFFFFF"><input name="type" type="text" id="type" value="{$vo.type}" size="30" /></td>
+                </tr>
+                <tr align="center">
+                  <td align="right" bgcolor="#FFFFFF">图片地址：</td>
+                  <td align="left" bgcolor="#FFFFFF"><input name="pic" type="text" id="pic" value="{$vo.pic}" size="30" /></td>
+                </tr>
+                <tr align="center">
+                  <td align="right" bgcolor="#FFFFFF">积分：</td>
+                  <td align="left" bgcolor="#FFFFFF"><input name="score" type="text" id="score" value="{$vo.score}" size="30" /></td>
+                </tr>
+                <tr align="center">
+                  <td align="right" bgcolor="#FFFFFF">备注：</td>
+                  <td align="left" bgcolor="#FFFFFF"><input name="description" type="text" id="description" value="{$vo.description}" size="30" /></td>
+                </tr>
+                <tr>
+                  <td height="26" colspan="2" align="center" background="__PUBLIC__/images/tab_21.gif" bgcolor="#FFFFFF">
+                    <input type="hidden" value="{$id}" name="id"/>
+                    <input type="hidden" value="1" name="isshow" />
+                  <input type="submit" name="button" id="button" value="提交" /></td>
+                </tr>
+            </table></td>
+            <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+          </tr>
+        </table>
+      </form></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+          <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+                <td width="75%" valign="top" class="STYLE1"></td>
+              </tr>
+            </table></td>
+          <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<include file="Public:footer" />

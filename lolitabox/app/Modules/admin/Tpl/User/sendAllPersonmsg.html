@@ -1,0 +1,91 @@
+<include file="Public:header" />
+<style>
+  div.texts{padding-left:200px;color:#0080FF;padding-top:10px;}
+</style>
+<if condition="$data eq ''">
+<P>
+	<a href="{:U('UserAccessTrace/UserPrivateLetter')}" style="padding-left:200px;font-size:16px;">私信列表</a>
+</P>
+</if>
+<div class="texts">群发内容:</div>	
+<center>
+  <form action="__URL__/sendAllPersonmsg" method="POST" id="sendPersonalMess_form">
+	<input type="hidden"  name="ac"  value="sendPersonalMess" />
+	<br><textarea name="content" id="content" style="width:600px;height:300px;visibility:hidden;">{$data.content}</textarea><br>
+	<input type="submit" value="提交" style="padding:5px  15px;">
+  </form>
+</center>
+
+<if condition="$data eq ''">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />系统广播私信最新5条记录</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif" align="center">
+			<td width="5%" height="18">修改私信</td>	
+           	<td width="5%" height="26">ID</td>
+            <td width="8%" height="18">发信人</td>
+            <td width="8%" height="18">收信人</td>  
+            <td width="*" height="18">内容</td>
+          </tr>
+          <volist name="slist" id="vo"  key="k">
+          <tr height="24px" bgcolor="#FFFFFF" align="center">
+			 <td><a href="__ACTION__/editid/{$vo.dit}">修改</a></td>
+          	 <td>{$vo.id}</td>
+			 <td>
+			 <a href="{:U('User/userlist',array('userid'=>$vo['from_uid']))}">{$vo.from_uid}</a><br/>
+			 (萝莉盒官网)</td>
+			 <td>全体</td>
+			 <td>{$vo.content}</td>
+          </tr>
+		</volist>
+        </table>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</if>
+
+<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript">
+
+if("{$data}"){
+	$(":hidden[name='ac']").remove();
+	$("#sendPersonalMess_form").append("<input type='hidden' name='id' value='{$data.id}'>");
+	$("div.texts").text("修改群发内容");
+}
+
+
+KE.show({
+	id : 'content',
+	imageUploadJson : '__PUBLIC__/kindeditor/php/upload_json.php',
+	fileManagerJson : '__PUBLIC__/kindeditor/php/file_manager_json.php',
+	allowFileManager : true,
+	afterCreate : function(id) {
+		KE.event.ctrl(document, 13, function() {
+			KE.util.setData(id);
+			document.forms['myform'].submit();
+		});
+		KE.event.ctrl(KE.g[id].iframeDoc, 13, function(){
+			KE.util.setData(id);
+			document.forms['myform'].submit();
+		});
+	}
+});
+</script>

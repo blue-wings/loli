@@ -1,0 +1,295 @@
+<include file="public:header.inc" />
+<script>
+$(function(){
+	$("body").css("background","#fff1f4");
+})
+</script>
+<style type="text/css">
+body { text-align:center; background:#fff1f4; margin:0 auto; padding:0; font-family:'微软雅黑', arial, 'YaHei', '黑体', Tahoma, Helvetica, arial, sans-serif; color:#333;}
+body > div { text-align:center; margin-right:auto; margin-left:auto}
+div, form, img, ul, ol, li, p { margin: 0; padding: 0; border: 0}
+h1, h2, h3, h4, h5, h6 { margin:0; padding:0; font-size:12px; font-family:'微软雅黑', arial, 'YaHei', '黑体', Tahoma, Helvetica, arial, sans-serif; font-weight:normal;}
+ul, li, ol { list-style:none;}
+.mainBox .blue { color:#73d7f8;}
+.f14 { font-size:14px;}
+.hei1 { height:0px; overflow:hidden; clear:both; width:100%;}
+.box-hide { display:block; overflow:hidden;}
+.a_red { color:#e15392; text-decoration:none;}
+.a_red:hover { color:#e15392; text-decoration:underline;}
+.bannerBox { height:425px; background-color:#fff1f4;}
+.mainBox { width:999px; margin:-32px auto 0; position:relative;}
+.mainBox .top_Box {
+	height:509px;
+	background:url(public/special/20130105_1/Nav_banner1.png);
+	_background:none;
+_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='public/special/20130105_1/Nav_banner1.png'); 	margin-bottom:10px;
+	padding-top: 0;
+	padding-right: 20px;
+	padding-bottom: 0;
+	
+	
+	padding-left: 20px;
+}
+.mainBox .top_Box .slogan { height:92px; background:url(public/special/20130105_1/top_banner.gif) center no-repeat; padding:18px 96px 0 98px; text-align:left; color:#fff; font-size:14px; line-height:24px;}
+.mainBox .cont_list {  margin-bottom:15px; _margin-bottom:10px;}
+.mainBox .cont_list .left_focus { width:440px; float:left; text-align:left;}
+.mainBox .cont_list .left_focus .imges { width:440px; height:325px; position:relative;}
+.mainBox .cont_list .left_focus .imges .abs { width:85px; height:85px; background:url(public/special/20130105_1/new_Tips.png); _background:none;
+_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='public/special/20130105_1/new_Tips.png'); position:absolute; left: 359px; top: -22px;}
+.mainBox .cont_list h4 { font-size:22px; color:#ed67a6; height:40px; line-height:40px;}
+.mainBox .cont_list .right_fabric { float:left; margin-left:70px;}
+.mainBox .cont_list .right_fabric .list { margin:15px auto 0; text-align:left;}
+.mainBox .cont_list .right_fabric .list li { font-size:14px; line-height:30px; color:#dc3583;}
+.mainBox .cont_list .right_fabric .list li a { color:#dc3583; text-decoration:none;}
+.mainBox .cont_list .right_fabric .list li a:hover { color:#dc3583; text-decoration:underline;}
+.mainBox .top_Box .special { clear:both;}
+.mainBox .top_Box .special li { float:left; margin-right:7px;}
+.mainBox .top_Box .special .li { margin:0;}
+.mainBox .NavBox { background:url(public/special/20130105_1/NavBox_con.gif) center bottom no-repeat; margin-bottom:10px; padding-bottom:18px;}
+.mainBox .NavBox .topTitle { height:89px; background:url(public/special/20130105_1/NavBox.jpg) no-repeat; font-size:32px; color:#dc3583; padding-top:25px;}
+.mainBox .NavBox .slogan { width:861px; height:77px; margin:0 auto; color:#fff; text-align:left; background:url(public/special/20130105_1/NavBox_tie.gif) no-repeat; font-size:14px; line-height:24px; padding:5px 26px 0; margin-bottom:20px;}
+.mainBox .NavBox .navList01 { margin:0 12px;}
+.mainBox .NavBox .navList01 li { width:300px; height:410px; background:url(public/special/20130105_1/NavBox_con01.gif) no-repeat; margin-right:7px; padding:10px; float:left;}
+.mainBox .NavBox .navList01 .public/special/20130105_1 { width:300px; height:300px; margin-bottom:10px;}
+.mainBox .NavBox .navList01 .text { font-size:12px; line-height:20px; color:#fff; font-family:"宋体"; text-align:left; margin:0 5px;}
+.mainBox .NavBox .navList01 .li { margin-right:0;}
+.mainBox .NavBox .navList02 { margin:0 12px;}
+.mainBox .NavBox .left_focus { float:left; padding:10px; width:646px; height:437px; background:url(public/special/20130105_1/NavBox_con02.gif) no-repeat;}
+.mainBox .NavBox .left_focus .focus { float:left; width:250px;}
+.mainBox .NavBox .left_focus .focus .text { width:230px; margin:12px auto 0; font-size:12px; line-height:20px; font-family:"宋体"; color:#fff;}
+.mainBox .NavBox .left_focus .list li { margin:0 0 10px 10px; width:185px; height:210px; float:left;}
+.mainBox .NavBox .right_cont { text-align:left; margin-left:10px; float:left; width:295px; font-family:"宋体"; font-size:12px; line-height:20px; color:#dc3583;}
+.mainBox .NavBox .right_cont .title { margin-bottom:5px;}
+.mainBox .NavBox .right_cont .cont .imges { padding:5px; background:#ed67a6; float:left; margin:0 10px 10px 0}
+.mainBox .NavBox .right_cont .foot_img { padding:5px; background:#ed67a6; margin-top:10px;}
+.mainBox .foot_title { padding:10px; font-size:16px; line-height:24px; text-align:left;}
+.mainBox .foot_title span { padding:2px 4px; background:#ed67a6; color:#fff;}
+.bgs { font-size:12px; line-height:18px; margin-top:56px;}
+.bgz { background:url(public/special/20130105_1/Con_bg.gif) repeat-x;}
+.STYLE1 {color: #FF0000}
+.bgs strong{font-size:14px; padding:3px 0; display:block;}
+</style>
+<div class="bgs">
+  <div class="bannerBox"><img src="public/special/20130105_1/focus_top.jpg" width="995" height="425" /></div>
+  <div class="bgz">
+    <div class="mainBox">
+      <div class="top_Box">
+        <div class="slogan"> 导语： 告别圣诞、元旦，接踵而来的还有年会派对、春节聚会。 每个mm都想成为party宴会的女王，可是你真的准备好了么？只要肌肤出现一些例如爆痘掉皮等小问题，就会让精致的派对妆容黯然失色。小编这就教大家4招改善肤质各种问题，获得细滑亮白容易上妆的完美肌肤，变身闪耀的派对女王！</div>
+        <div class="cont_list box-hide">
+          <div class="left_focus">
+            <h4>12月萝莉盒の<strong style="display:inline;">浓情圣诞盒</strong></h4>
+            <div class="imges"> <a target="_blank"  href="<{:u('share/box')}>"><img src="public/special/20130105_1/t0.jpg" width="440" height="325" border="0" /></a>
+              <div class="abs"></div>
+            </div>
+          </div>
+          <div class="right_fabric">
+            <h4>12月Lolitabox<strong style="display:inline">最受欢迎</strong>&nbsp;<span class="f14">试用产品：</span></h4>
+            <ul class="list"><li>
+              <p><a target="_blank"  href="<{:u('products/62887')}>">菲诗小铺米水亮颜泡沫洁面膏  </a>      </p>
+            </li>
+              <li><a target="_blank"  href="<{:u('products/62888')}>">菲诗小铺黑莓黑头修护鼻膜（水洗型）</a></li>
+              <li><a target="_blank"  href="<{:u('products/62889')}>">菲诗小铺清颜温和均衡柔肤乳</a></li>
+              <li><a target="_blank"  href="<{:u('products/62890')}>">菲诗小铺清颜温和均衡柔肤水</a></li>
+              <li><a target="_blank"  href="<{:u('products/61334')}>">悠莱URARA纯白之光精华液</a></li>
+              <li><a target="_blank"  href="<{:u('products/62894')}>">悠莱透润焕白特护防晒乳</a></li>
+              <li><a target="_blank"  href="<{:u('products/154')}>">艾曦媤滋养身体乳 </a></li>
+              <li><a target="_blank"  href="<{:u('products/153')}>">艾曦媤水润修护霜</a></li>
+              <li><a target="_blank"  href="<{:u('products/155')}>">艾曦媤滋润润唇膏（蓝莓味）</a></li>
+              <li><a target="_blank"  href="<{:u('products/90')}>">LAB SERIES朗仕男用多功能洁面乳</a>   <a target="_blank"  href="<{:u('products/141')}>">男用瞬透保湿凝胶</a></li>
+              <li><a target="_blank"  href="<{:u('products/126')}>">苇芝润颜芦荟精华啫喱</a></li>
+            </ul>
+          </div>
+        </div>
+       
+      </div>
+      <div class="NavBox">
+        <div class="topTitle">派对妆最佳FOLLOW典范</div>
+        <div class="slogan">
+          <p>还未选定你的派对妆style？！Don’t worry！娱乐圈里每一位女星都依靠自己的精致妆容闪亮各个场所，各种不同风格的魅力妆容尽绽放，上演一场场炫目美妆盛宴。现在，就跟随小编带你一同“窥探”2012年最具影响力3位女星的最佳妆容，让你轻松找对Party Style！</p>
+        </div>
+        <ul class="navList01 box-hide">
+          <li>
+            <div class="public/special/20130105_1">
+              <div align="left"><a target="_blank"  href="<{:u('space/blog_detail',array('blogid'=>1587,'id'=>2375))}>"><img src="public/special/20130105_1/t1.jpg" width="300" height="300" border="0" /></a></div>
+            </div>
+            <p align="center"><strong>范冰冰 中国风妆容</strong></p>
+            <div align="left" class="text">2012年最火的女星当属范冰冰。她的美早已受到国内外各方的一致肯定，而她的妆容更是“中国风”十足：精致的眉形，上扬的眼妆、描绘清晰的樱桃红唇都使她成为了焦点。</div>
+            <p align="left" class="text">&nbsp;</p>
+          </li>
+          <li>
+            <div class="public/special/20130105_1">
+              <div align="left"><a target="_blank"  href="<{:u('space/blog_detail',array('blogid'=>1587,'id'=>2375))}>"><img src="public/special/20130105_1/t2.jpg" width="300" height="300" border="0" /></a></div>
+            </div>
+            <p align="center"><strong>周迅 精灵女人妆容</strong>
+            </p>
+            <div align="left" class="text">2012年周迅在时尚界的地位越发的稳定和扎实。周迅的妆容整体突出眼部，重视眼线的使用和深色眼影的小范围晕染。纤长上翘的睫毛更是将眼睛双倍放大，精灵般的女人可爱和小性感兼备。</div>
+            <p align="left" class="text">&nbsp;</p>
+          </li>
+          <li class="li">
+            <div class="public/special/20130105_1">
+              <div align="left"><a target="_blank"  href="<{:u('space/blog_detail',array('blogid'=>1587,'id'=>2375))}>"><img src="public/special/20130105_1/t3.jpg" width="300" height="300" border="0" /></a></div>
+            </div>
+            <p align="center"><strong>Angela baby 甜美嫩妆</strong></p>
+            <div align="left" class="text">不论新生嫩模们靠何种方法搏出位，依旧无人能够撼动 baby嫩模界一姐的地位。嫩模突出的就是个“嫩”字，电眼娃娃般的大眼睛，甜美的粉色唇膏都是baby的杀手锏，没有人能拒绝一个可爱又性感的小女人。</div>
+            <p align="left" class="text">&nbsp;</p>
+          </li>
+        </ul>
+        <div class="hei1"></div>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle">第一招：锁水拒绝干燥掉皮</div>
+        <div class="slogan"> 干燥的冬季光是为肌肤补充水分还远远不够，如果没有使用锁水保湿功能的产品，肌肤一样会变干掉皮。其实皮肤表面有一层油脂对皮肤起着天然保护作用，但是冬天很冷，油脂分泌会减少，所以需要使用有一定油脂含量的产品，在肌肤表面形成一个保护层，让水分不容易被蒸发，维持肌肤含水量。 </div>
+        <div class="navList02 box-hide">
+          <div class="left_focus">
+            <div class="focus"> <a target="_blank"  href="<{:u('products/153')}>"><img src="public/special/20130105_1/t4.jpg" width="250" height="300" border="0" /></a>
+              <p align="center"><strong>艾曦媤水润修护霜</strong></p>
+              <div align="left" class="text">
+                <p>能让肌肤紧致富有弹性，温和滋养肌肤；充分补充肌肤水分和养分，给予肌肤完美持久的水润呵护；提升润泽度，令肌肤水嫩舒畅。</p>
+              </div>
+            </div>
+            <ul class="list">
+              <li><a target="_blank"  href="<{:u('products/153')}>"><img src="public/special/20130105_1/t5.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/153')}>"><img src="public/special/20130105_1/t6.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/153')}>"><img src="public/special/20130105_1/t9.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/153')}>"><img src="public/special/20130105_1/t7.jpg" width="185" height="210" border="0" /></a></li>
+            </ul>
+          </div>
+          <div class="right_cont">
+            <p class="title">编辑有话要说：</p>
+            <div class="cont">
+              <div class="imges"><img src="public/special/20130105_1/B1.jpg" width="118" height="118" /></div>
+              <p>寒冷季节，肌肤同身体一样需要最体贴温暖的呵护。记得也给化妆柜补充滋润又营养的优质面霜，给冬日肌肤最妥帖的养护，如果觉得最近肌肤状态不好，那么可以多用些面霜，作为特殊的睡眠面膜，或者直接将面霜当成按摩霜来使用搭配特殊的手法，面霜真是一物多用的哦。每天洗完脸，就是按摩的最好时机。当然了，精致的女人除了对面部肌肤精心呵护外，唇部也不会遗忘哦。使用有效滋润并长效锁住水分的润唇膏，让双唇纯然美丽，为妆容加分。</p>
+            </div>
+            <div class="foot_img"> <a target="_blank"  href="<{:u('products/155')}>"><img src="public/special/20130105_1/t8.jpg" width="285" height="170" border="0" /></a> </div>
+          </div>
+        </div>
+        <div class="hei1"></div>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle">第二招：细致毛孔 让上妆更服帖</div>
+        <div class="slogan">收缩、细致毛孔是相当高难度的保养话题，改善毛孔粗大问题需要长时间的坚持。趁着派对来临还有一段时间，如果你天生毛孔条件比较差一点，那可要付出多一点的力气来照顾皮肤哦，尽量保持肌肤不干、不油、不敏感、不老化，并选择有效产品让毛孔细致，肤质柔滑，也让届时的妆容更加的服帖。</div>
+        <div class="navList02 box-hide">
+          <div class="left_focus">
+            <div class="focus"> <a target="_blank"  href="<{:u('products/62889')}>"><img src="public/special/20130105_1/t10.jpg" width="250" height="300" border="0" /></a>
+              <p> <strong>菲诗小铺清颜温和均衡柔肤两件套</strong></p>
+              <div align="left" class="text">
+                <p>含马齿苋提取物、互生叶白千层叶油、果皮提取物等成分，并精选优质互生叶白千层叶油，帮助缓解肌肤疲惫等问题；收细毛孔，令肌肤清爽平滑。</p>
+              </div>
+            </div>
+            <ul class="list">
+              <li><a target="_blank"  href="<{:u('products/62889')}>"><img src="public/special/20130105_1/t12.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/62890')}>"><img src="public/special/20130105_1/t11.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/62889')}>"><img src="public/special/20130105_1/t15-.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/62889')}>"><img src="public/special/20130105_1/t13.jpg" width="185" height="210" border="0" /></a></li>
+            </ul>
+          </div>
+          <div class="right_cont">
+            <p class="title">编辑有话要说：</p>
+            <div class="cont">
+              <div class="imges"><img src="public/special/20130105_1/B2.jpg" width="118" height="118" /></div>
+              <p>日常生活中，还有一些小方法也能让毛孔服帖。如清晨冰镇毛孔，热胀冷缩的原理不但让毛孔立刻变小，还令肌肤表面的温度迅速降下来，出油的现象得到有效的抑制。而中午则让干渴的肌肤也畅饮绿茶，绿茶中的酸性成分，不但能有效杀菌，清爽的触感还能起到优秀的紧肤功效。 到了晚上可以用便宜的蔬果原料，自制有效的紧肤产品，不但能省钱还让你体验到DIY的乐趣与成就感！最后，别忘了使用专门针对鼻头和鼻翼的产品，清洁鼻部黑头及周围的老化角质，令肌肤干净舒畅。</p>
+            </div>
+            <div class="foot_img"> <a target="_blank"  href="<{:u('products/62888')}>"><img src="public/special/20130105_1/t14.jpg" width="285" height="170" border="0" /></a> </div>
+          </div>
+        </div>
+        <div class="hei1"></div>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle">第三招：淡化色斑 令肌肤白胜雪</div>
+        <div class="slogan"> 美白始终是爱美女性的一年四季都关注的话题，肤白胜雪更是她们毕生追求的终极美白目标。冬季是美白的最佳时节，这个时候阻碍美白的因素相对而言是最少的，对于色斑、色素等淡化改善也相对而言会有效的多。</div>
+        <div class="navList02 box-hide">
+          <div class="left_focus">
+            <div class="focus"> <a target="_blank"  href="<{:u('products/61334')}>"><img src="public/special/20130105_1/t15.jpg" width="250" height="300" border="0" /></a>
+              <p><strong>悠莱URARA纯白之光精华液</strong></p>
+              <div align="left" class="text">
+                <p>蕴含资生堂特别研发的美白有效4MSK成分，有效渗透入肌肤，缔造白皙透亮、澄净光润美肌，不仅有效作用于肌肤表层的已显现色斑，另色斑淡化，不再明显。</p>
+              </div>
+            </div>
+            <ul class="list">
+              <li><a target="_blank"  href="<{:u('products/61334')}>"><img src="public/special/20130105_1/t16.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/61334')}>"><img src="public/special/20130105_1/t17.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/61334')}>"><img src="public/special/20130105_1/t19.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/61334')}>"><img src="public/special/20130105_1/t18.jpg" width="185" height="210" border="0" /></a></li>
+            </ul>
+          </div>
+          <div class="right_cont">
+            <p class="title">编辑有话要说：</p>
+            <div class="cont">
+              <div class="imges"><img src="public/special/20130105_1/B3.jpg" width="118" height="118" /></div>
+              <p>即使天气寒冷的冬天，阳光中破坏肌肤的UVB仍如夏天艳阳高照时一样强烈。所以，防晒绝对不能忽视的哦。特别是冬季下雪后，地上的白雪能直接反射阳光，不但会晒黑肌肤，若阳光普照的话，甚至有晒伤的可能。因此应该使用一些防晒和保护性能稍强一点的防晒霜。美白是一个深层导入的过程，防晒则是对肌肤表层加以保护。如果一款产品既要美白又要防晒，取各自的最大功效不可能同时发挥好。先涂美白品，再涂防晒品，才是美白肌肤的基础。<br />
+              </p>
+            </div>
+            <div class="foot_img"> <a target="_blank"  href="<{:u('products/62894')}>"><img src="public/special/20130105_1/t20.jpg" width="285" height="170" border="0" /></a> </div>
+          </div>
+        </div>
+        <div class="hei1"></div>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle">第四招：护理无死角 美丽要全方位</div>
+        <div class="slogan">
+          <p>派对装束要美艳动人少不了露手露脚，甚至露背。所以，要在派对上惊艳全场，可别把肘部、膝盖、身体等这类部位的保养忽视哦，皱巴巴毫无光彩的话，再精致的妆容也会大打折扣。</p>
+        </div>
+        <div class="navList02 box-hide">
+          <div class="left_focus">
+            <div class="focus"> <a target="_blank"  href="<{:u('products/154')}>"><img src="public/special/20130105_1/t22.jpg" width="250" height="300" border="0" /></a>
+              <p align="center"><strong>艾曦媤滋养身体乳</strong></p>
+              <div align="left" class="text">
+                <p>能够立即解决肌肤干燥的问题，补充肌肤中流失的水分，肌肤细致柔软。浴后或需要时，涂抹全身同时也可做护手霜使用。</p>
+              </div>
+            </div>
+            <ul class="list">
+              <li><a target="_blank"  href="<{:u('products/154')}>"><img src="public/special/20130105_1/t24.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/154')}>"><img src="public/special/20130105_1/t21.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/154')}>"><img src="public/special/20130105_1/t23.jpg" width="185" height="210" border="0" /></a></li>
+              <li><a target="_blank"  href="<{:u('products/154')}>"><img src="public/special/20130105_1/t25.jpg" width="185" height="210" border="0" /></a></li>
+            </ul>
+          </div>
+          <div class="right_cont">
+            <p class="title">编辑有话要说：</p>
+            <div class="cont">
+              <div class="imges"><img src="public/special/20130105_1/B4.jpg" width="118" height="118" /></div>
+              <p>预防全身肌肤季节性干燥的关键在于保持皮肤清爽并维护皮肤滋润。这可通过沐浴清洁皮肤来实现，所以沐浴乳的选择至关重要。干性肌肤缺水，应选用滋润保湿止痒型的沐浴乳。油脂分泌多的油性肤质则选择清洁为主的沐浴产品为宜。对于敏感性肌肤的人来说，一定要选择明确 “敏感适用”的产品。其次也是最重要的选择标准就是高滋养度。判断沐浴产品能否真正滋润肌肤，一看成分在水洗条件下是滋润成分否能停留在皮肤；二看滋润成分能否渗透深层皮肤。</p>
+            </div>
+            <div class="foot_img"> <a target="_blank"  href="<{:u('products/62887')}>"><img src="public/special/20130105_1/t26.jpg" width="285" height="170" border="0" /></a> </div>
+          </div>
+        </div>
+        <div class="hei1"></div>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle">食欲冬季 美食让妆容更动人</div>
+        <div class="slogan">冬天是属于食欲的季节！有没有想过美食和美容双管齐下呢？当然可以，现在小编为大家归纳了三种美食，让你在最美的季节中做一个肌肤休整，同时也不耽误你的口腹之欲哦，马上奉上！</div>
+        <ul class="navList01 box-hide">
+          <li>
+            <div class="public/special/20130105_1">
+              <div align="left"><a target="_blank"  href="<{:u('space/blog_detail',array('blogid'=>1588,id=>'2375'))}>"><img src="public/special/20130105_1/t27.jpg" width="300" height="300" border="0" /></a></div>
+            </div>
+            <p align="center"><strong>白果薏米糖水 </strong> </p>
+            <div align="left" class="text">
+              <p align="left">电脑族可常吃白果，白果不仅适合补充身体水分，更有具有补肺润肺的作用。在冬季尤为合适。可以将白果、薏米、腐竹煮成腐竹白果薏米糖水，一周吃一两次。</p>
+            </div>
+            <p align="left" class="text">&nbsp;</p>
+          </li>
+          <li>
+            <div class="public/special/20130105_1">
+              <div align="left"><a target="_blank"  href="<{:u('space/blog_detail',array('blogid'=>1588,id=>'2375'))}>"><img src="public/special/20130105_1/t28.jpg" width="300" height="300" border="0" /></a></div>
+            </div>
+            <p align="center"><strong>南瓜子</strong><strong></strong></p>
+            <div align="left" class="text">临床研究表明，痤疮、青春豆患者血液中锌含量偏低，缺锌是痤疮、青春痘的主要病因。常摄取富含锌的食物是比较理想的食疗方案，南瓜子就是含锌食品的代表！</div>
+            <p align="left" class="text">&nbsp;</p>
+          </li>
+          <li class="li">
+            <div class="public/special/20130105_1">
+              <div align="left"><a target="_blank"  href="<{:u('space/blog_detail',array('blogid'=>1588,id=>'2375'))}>"><img src="public/special/20130105_1/t29.jpg" width="300" height="300" border="0" /></a></div>
+            </div>
+            <p align="center"><strong>猪皮炖黄豆</strong><strong> </strong></p>
+            <div align="left" class="text">猪皮含有极丰富的胶原蛋白质，有效地改善机体生理功能和皮肤组织细胞的储水功能，使细胞得到滋润，保持湿润状态，防止皮肤过早褶皱，延缓皮肤的衰老过程。</div>
+            <p align="left" class="text">&nbsp;</p>
+          </li>
+        </ul>
+        <div class="hei1"></div>
+      </div>
+      <div class="foot_title"> <span>小编寄语：</span>&nbsp;如果你对LOLITABOX有好的建议或个人独家Tips，小编随时欢迎Lolitagirls<a target="_blank"  href="http://e.weibo.com/lolitaboxcn" class="STYLE1">新浪微博</a>私信投稿！持续关注LOLITABOX也许下一秒幸运就会悄悄降临哦！每期盒子惊喜不断，保证让你尖叫不停！ </div>
+    </div>
+  </div>
+</div>
+<include file="public:footer.inc" />

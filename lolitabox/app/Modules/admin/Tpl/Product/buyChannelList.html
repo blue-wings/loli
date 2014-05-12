@@ -1,0 +1,75 @@
+<include file="Public:header" />
+<fieldset class="fieldset"><legend>试用申请列表</legend>
+	<form name="myform" id="myform" action="__SELF__" method="get">
+	购买网址查询：<input id='url' name='url' type='text' value='{$Think.get.url}'>  
+	购买渠道查询:<input id='channelname' name='channelname' type='text' value='{$Think.get.channelname}'>
+	产品ID查询:<input id='pid' name='pid' type='text' value='{$Think.get.pid}'>
+	产品名称查询:<input id='pname' name='pname' type='text' value='{$Think.get.pname}'>
+	<br/><br/>
+	<input type="button" name="resetpage" value="重置">
+	<input type='submit' name='search'>
+	</form>
+</fieldset>
+<style type="text/css">
+table{white-space:normal; word-break:break-all;overflow:hidden}
+</style>
+
+<form name="listform" id="listform" action="__URL__/delEvaluateReply" method="post">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">试用申请列表</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <table width="99%" border="0"  cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+          	<td width="5%" height="26"><div  class="STYLE2 STYLE1">序列</div></td>
+			<td width="5%" height="26"><div  class="STYLE2 STYLE1">产品ID</div></td>
+            <td width="20%" height="26"><div class="STYLE2 STYLE1">产品名称</div></td>
+            <td width="8%" height="18"><div  class="STYLE2 STYLE1">购买渠道名称</div></td>
+            <td width="32%" height="18"><div class="STYLE2 STYLE1">购买地址</div></td>
+            <td width="12%" height="18"><div class="STYLE2 STYLE1">预设点击数</div></td>
+            <td width="12%" height="18"><div class="STYLE2 STYLE1">真实点击数</div></td>
+            <td width="11%" height="18"><div class="STYLE2 STYLE1">差值</div></td>
+          </tr>
+          <volist name="list" id="clist" key="k">
+          <tr>
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2">{$k}</td>
+			<td height="25" bgcolor="#FFFFFF" class="STYLE2">{$clist.pid}</td>
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2">
+				<a href="#" onclick="dialogmeseeage('{:U('Product/index',array('pid'=>$clist['pid']))}','产品信息')">{$clist.pname}</a>
+			</td>
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2">{$clist.channelname}</td>
+            <td height="25" style="width:300px;" bgcolor="#FFFFFF">{$clist.url}</td>
+            <td height="25" bgcolor="#FFFFFF"><div style="word-break: break-all; overflow:hidden;">{$clist.basehit}</div></td>
+            <td height="25" bgcolor="#FFFFFF"><div style="word-break: break-all; overflow:hidden;">{$clist.realhit}</div></td>
+            <td height="25" bgcolor="#FFFFFF"><div style="word-break: break-all; overflow:hidden;">{$clist.difference}</div></td>
+          </tr>
+		</volist>
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+	<if condition="$list eq ''"><tr style="text-align:center"><td colspan="5">抱歉,没找到您查询的数据!</td></tr></if> 
+  <tr style="text-align:center"><td colspan="5">{$page}</td></tr>
+</table>
+</form>
+
+
+
+<include file="Public:footer" />

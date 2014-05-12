@@ -1,0 +1,181 @@
+<include file="public:header.inc" />
+<style type="text/css">
+body { text-align: center; margin:0; color:#000; padding:0; font-size:12px; line-height:18px; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif; background:#faf6f5; } 
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p{margin: 0; padding: 0; border: 0}
+a {color:#000; text-decoration:none;}
+a:hover {color: #000; text-decoration:underline} 
+font{font-size:14px}
+b{color:#fff}
+.zt{ text-align:left; color:#000;}
+.zt_all{ line-height:22px; font-size: 14px;}
+.zt span,.zt a,.zt a:hover{ color:#c80a1e;}
+.zt_all p{ text-indent:2em;}
+.zt_bgs1{ height:473px; background: url(public/special/20140121/bgs_01.jpg) center top no-repeat;}
+.zt1{width:1064px;height:473px; position:relative; margin:0 auto;}
+.zt1 .bg{ height:473px;}
+.zt1 .t1{position:absolute;color:#c80a1e;font-size:28px;left: 83px;top: 419px;line-height:50px;}
+.zt1 .t1 span{ font-size:50px;}
+.zt2{width:1064px;height:726px; position:relative; margin:0 auto;}
+.zt2 .t2,.zt2 .t3,.zt2 .t4{ color:#000;}
+.zt2 .bg{height:726px;}
+.zt2 .t1{position:absolute;font-size:24px;left: 42px;top: 12px;text-align:center;width: 664px;line-height:36px;}
+.zt2 .t1 p{ font-size:16px; color:#000;}
+.zt2 .t2{position:absolute;left: 58px;top: 219px;width: 276px;}
+.zt2 .t3{position:absolute;left: 399px;top: 219px;width: 282px;}
+.zt2 .t4{position:absolute;left: 52px;top: 471px;}
+.zt2 .t5{position:absolute;font-size:30px;left: 784px;top: 16px;line-height:30px; color:#000;}
+.zt2 .t6{position:absolute;color:#787777;left: 780px;top: 279px;}
+.zt2 .t7{position:absolute;left: 768px;top: 326px;}
+.zt2 .t7 span{ font-size:20px;}
+.zt2 .t8{position:absolute;left: 831px;top: 58px;}
+.zt2 .t9{position:absolute;left: 920px;top: 360px;}
+.zt2 .t10{position:absolute;color:#787777;left: 780px;top: 562px;}
+.zt2 .t11{position:absolute;left: 768px;top: 608px;width: 244px;}
+.zt2 .t12{position:absolute;left: 786px;top: 389px;}
+.zt2 .t13{position:absolute;left: 920px;top: 641px;height: 32px;}
+.zt3{width:1064px;height:662px; position:relative; margin:0 auto;}
+.zt3 .bg{height:662px;}
+.zt3 .t1{position:absolute;left: 421px;top: 10px;}
+.zt3 .t1 span,.zt4 .t1 span,.zt5 .t1 span{ font-size:24px; line-height:30px;}
+.zt3 .t2{position:absolute;line-height:27px;left: 114px;top: 83px;}
+.zt3 .t3{position:absolute;left: 764px;top: 62px;}
+.zt3 .t4{position:absolute;left: 764px;top: 103px;line-height:25px;vertical-align: top;}
+.zt3 .t5{position:absolute;left: 0px;top: 36px;}
+.zt3 .t6{position:absolute;left: 759px;top: 160px;}
+.zt3 .t7{position:absolute;left: 79px;top: 256px;}
+.zt3 .t8{position:absolute;left: 255px;top: 248px;width: 333px;}
+.zt3 .t9{position:absolute;left: 687px;top: 246px;}
+.zt3 .t10{position:absolute;left: 677px;top: 407px;width: 350px;}
+.zt3 .t11{position:absolute;left: 75px;top: 499px;}
+.zt3 .t12{position:absolute;left: 256px;top: 503px;width: 471px;}.zt4{width:1064px;height:357px; position:relative; margin:0 auto;}
+.zt4 .bg{height:357px;}
+.zt4 .t1{position:absolute;left: 421px;top: 10px;}
+.zt4 .t2{position:absolute;top: 46px;}
+.zt4 .t3{position:absolute;line-height:30px;left: 188px;top: 84px;}
+.zt4 .t4{position:absolute;line-height:26px;left: 726px;top: 75px;width: 220px;}
+.zt4 .t5{position:absolute;left: 726px;top: 144px;}
+.zt4 .t6{position:absolute;left: 129px;top: 195px;}
+.zt4 .t7{position:absolute;left: 302px;top: 207px;width: 583px;}.zt5{width:1064px;height:390px; position:relative; margin:0 auto;}
+.zt5 .bg{height:390px;}
+.zt5 .t1{position:absolute;left: 421px;top: 10px;}
+.zt5 .t2{position:absolute;left: 44px;top: 59px;width: 443px;}
+.zt5 .t3{position:absolute;left: 45px;top: 166px;}
+.zt5 .t4{position:absolute;left: 421px;top: 324px;}
+.zt5 .t5{position:absolute;left: 560px;top: 59px;width: 480px;}
+.zt5 .t6{position:absolute;left: 562px;top: 166px;}
+.zt5 .t7{position:absolute;left: 919px;top: 323px;}.zt6{width:1064px;height:151px; position:relative; margin:0 auto;}
+.zt6 .bg{height:151px;}
+.zt6 .t1{position:absolute;left: 191px;top: 15px;}
+.zt6 .t2{position:absolute;left: 132px;top: 63px;}
+.zt_all .zt3 a, .zt_all .zt4 a{ color:#000; font-size:16px; font-weight:bold;}
+</style>
+<div class="zt_all">
+<div class="zt_bgs1">
+<div class="zt zt1">
+<div class="bg"><img src="public/special/20140121/bg_01.jpg" width="1064" height="473"/></div>
+<div class="t1">70元为自己订购超值试用美妆盒，下单加<span>30</span>元即为男神献上试用礼盒</div>
+</div> 
+</div>
+
+<div class="zt zt2">
+<div class="bg"><img src="public/special/20140121/bg_02.jpg" width="1064" height="726"/></div>
+<div class="t1"><span>２月浪漫季，你准备好了吗？<br/>小萝仆为你献上俘获男神攻略：<span><br/>
+<p>工作中常强调要有计划，脱单行动也必须有个计划，这样才能让自己循序渐进地前进不至于迷失了方向。有针对性有目的性脱单！才不会成为一个空头计划。</p></div>
+<div class="t2">
+<strong>传统方案：</strong>借机请男神吃饭<br/>
+<strong>评&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：</strong>OUT、土、没劲、没创意<br/>
+<strong>赞同指数：</strong><br/>
+<strong>替代方案：</strong><a href="<{:u('buy/tch')}>" target="_blank"><span>送他贪吃盒</span></a><br/>
+<strong>替代理由：</strong>一方面呢看看男神是不是和你趣“味”相投，另一方面嘞，让你的男神在饿肚子时拈来温暖，随时记起你，12个月，12种主题，12种惊喜，这样的贴心礼物肿么能错过，俘获男神，先要俘获男神的胃。</div>
+<div class="t3">
+<strong>传统方案：</strong>送男神礼物—巧克力是首选<br/>
+<strong>评&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：</strong>安全，但缺乏新意，可能男神不会<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;记得你是谁<br/>
+<strong>赞同指数：</strong><br/>
+<strong>替代方案：</strong>让他体验男士化妆品的神秘<br/>
+<strong>替代理由：</strong>小萝仆猜你是第一个送男神魅力指数的女纸，让男神体验护肤品绝对能让男神感到你的心意和新意，对你印象极其深刻，平添好感嘞。</div>
+<div class="t4">
+<strong>推荐方案：</strong>让男神被你的魅力所俘获、让他主动约你、并送出你的精心礼物<br/>
+<strong>评&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：</strong>创造美丽且被男神不经意间发现，是明智之选<br/>
+<strong>赞同指数：</strong><br/>
+<strong>任务执行方法：</strong><br/>
+1、香氛代替浓妆绝对是smart之选，订购本月“美妆盒”武装自己吧~~<br/>
+2、不经意路过男神的座位，准备巧遇之前，约见之时一定准备好独特的、美美的自己，<br/>让他注意你！<br/>
+3、本月内和男神约会，送男神特别的礼物哦，无论是谁先主动<br/>
+<strong>温馨提示：小萝仆已经帮你精心挑选了任务1和3中的美妆盒，剧透一下下应该不会损失惊喜指数哇！</strong>
+</div>
+<div class="t5">当月美妆盒主打</div>
+<div class="t6">For girl</div>
+<div class="t7">内含8款产品，价值325元，特权会员<br/><span>仅需70元</span></div>
+<div class="t8"><a href="<{:u('buy/index')}>#boxs_2"><img src="public/special/20140121/im_02.png" width="138" height="263"/></a></div>
+<div class="t10">For boy</div>
+<div class="t11">只有购买Say Love美妆盒，才能加30元购买男士盒哦</div>
+<div class="t12"><a href="<{:u('buy/index')}>#boxs_2"><img src="public/special/20140121/im_03.png" width="187" height="213"/></a></div>
+<div class="t13"><a href="<{:u('buy/index')}>#boxs_2"><img src="public/special/20140121/im_01.png" width="90" height="33"/></a></div>
+<div class="t9"><a href="<{:u('buy/index')}>#boxs_2"><img src="public/special/20140121/im_01.png" width="90" height="33"/></a></div>
+</div> 
+<div class="zt zt3">
+<div class="bg"><img src="public/special/20140121/bg_03.jpg" width="1064" height="662"/></div>
+<div class="t1"><span>当月美妆盒 For girl</span></div>
+<div class="t2">
+体香、发香、手香……一个不能少，举手投足都是魅力体现，比浓妆艳抹高大上多了<br/>
+Say Love美妆盒共包含8款产品，价值350元，立即订购，特权会员仅需70元<br/>
+购买女款Say Love美妆盒，才有机会以30元的低价订购男款礼盒哦<br/>
+【Say Love美妆盒】内的更多惊喜，还需要等到你收到盒子的那一刻开启</div>
+<div class="t3">普通会员&nbsp;:&nbsp;<span>100 RMB</span></div>
+<div class="t4">特权会员&nbsp;:&nbsp;<span style=" font-size:25px; color:#fff;">70 RMB</span></div>
+<div class="t5"><img src="public/special/20140121/im_00.png" width="129" height="34"/></div>
+<div class="t6"><a href="<{:u('buy/index')}>#boxs_2"><img src="public/special/20140121/im_01.png" width="90" height="33"/></a></div>
+<div class="t7"><a href="<{:u('products/63068')}>" target="blank"><img src="public/special/20140121/im_04.jpg" width="143" height="164"/></a></div>
+<div class="t8">
+<a href="<{:u('products/63068')}>" target="blank">SeeByChloé蔻依俏女士香氛</a><br/>
+<strong>正装价格：</strong><span>￥550</span><br/>
+<strong>正装规格：</strong>30ml<br/>
+<strong>入选理由：</strong>这一款香水能刺激人的感官，充满时尚气息的女性鲜花香调持久而浪漫！在男神面前让你散发诱人气息！与生俱来的暖香与爱意感染你的嗅觉！如同甜美微笑，第一股佛手柑的晶莹香气搅动着感官，一场嗅觉感官的捉迷藏游戏带来了檀香与香草那令人着迷的香气。</div>
+<div class="t9"><a href="<{:u('products/62995')}>" target="blank"><img src="public/special/20140121/im_05.jpg" width="147" height="152"/ alt="巴黎卡诗滋养护理系列两件套"></a></div>
+<div class="t10"><a href="<{:u('products/62995')}>" target="blank">巴黎卡诗滋养护理系列两件套</a><br/>
+<strong>正装价格：</strong><span>￥640</span><br/>
+<strong>正装规格：</strong>250ml+200ml<br/>
+<strong>入选理由：</strong>没有柔顺的秀发，怎能展示女人特有的魅力。深度滋养从发根的每一根头发，待你长发及腰时，男神马上到来。</div>
+<div class="t11"><a href="<{:u('products/63089')}>" target="blank"><img src="public/special/20140121/im_06.jpg" width="156" height="144" alt="菲诗小铺可爱女孩苹果柔润护手霜"/></a></div>
+<div class="t12">
+<a href="<{:u('products/63089')}>" target="blank">菲诗小铺可爱女孩苹果柔润护手霜</a><br/>
+<strong>正装价格：</strong><span>￥55</span><br/>
+<strong>正装规格：</strong>50g<br/>
+<strong>入选理由：</strong>淡淡的苹果味道，质地盈润，吸收迅速，全方位保养手部娇嫩的肌肤，最重要的是使用之后一直保持滋润感和水润度。<br/>
+<span>注：此产品为正装套组体验哦~</span></div>
+</div> 
+
+<div class="zt zt4">
+<div class="bg"><img src="public/special/20140121/bg_04.jpg" width="1064" height="357"/></div>
+<div class="t1"><span>当月美妆盒 For boy</span></div>
+<div class="t2"><img src="public/special/20140121/im_00.png" width="129" height="34"/></div>
+<div class="t3">
+Say Love美妆盒（男款）共包含4款产品，价值108元<br/> 
+购买女款Say Love美妆盒，才有机会以30元的低价订购男款礼盒哦<br/> 
+更多男神护肤品，敬请收到盒子开启惊喜...</div>
+<div class="t4">只有购买Say Love美妆盒，才能加30元购买男士盒哦</div>
+<div class="t5"><a href="<{:u('buy/index')}>#boxs_2"><img src="public/special/20140121/im_01.png" width="90" height="33"/></a></div>
+<div class="t6"><a href="<{:u('products/62932')}>" target="blank"><img src="public/special/20140121/im_07.jpg" width="157" height="138" alt="欧珀莱AUPRES俊士护肤三件套"/></a></div>
+<div class="t7"><a href="<{:u('products/62932')}>" target="blank">欧珀莱AUPRES俊士护肤三件套</a><br/>
+<strong>正装价格：</strong><span>￥255</span><br/>
+<strong>正装规格：</strong>125g+150ml+100ml<br/>
+<strong>入选理由：</strong>通过细腻柔滑的泡沫清洁肌肤，迅速去除多余皮脂、汗渍和角质污垢，为肌肤补充大量水分，可以变焕出男神健康的肌肤。</div>
+</div> 
+
+<div class="zt zt5">
+<div class="bg"><img src="public/special/20140121/bg_05.jpg" width="1064" height="390"/></div>
+<div class="t1"><span>号外，号外，号外……</span></div>
+<div class="t2"><span>良心推荐1</span><br/>
+【萝莉盒】重磅推出随心选美妆盒，超过50款明星大牌产品，最高盒子产品搭配价值651元，仅需60元，搭配属于你自己的美妆解决方案，更有超值大牌加价购等你拿！</div>
+<div class="t3"><a href="<{:u('buy/index')}>#boxs_5"><img src="public/special/20140121/im_08.jpg" width="368" height="191"/></a></div>
+<div class="t4"><a href="<{:u('buy/index')}>#boxs_5"><img src="public/special/20140121/im_01.png" width="90" height="33"/></a></div>
+<div class="t5"><span>良心推荐2</span><br/>
+想要你的男神每个月都在想你，每次吃东西都想你，那么，送他年度贪吃盒，俘获他的胃。12个月份，12种主题，12种惊喜，酸甜苦辣、咸香鲜麻，让你的男神在饿肚子时拈来温暖。</div>
+<div class="t6"><a href="<{:u('buy/tch')}>"><img src="public/special/20140121/im_09.jpg" width="350" height="189"/></a></div>
+<div class="t7"><a href="<{:u('buy/tch')}>"><img src="public/special/20140121/im_01.png" width="90" height="33"/></a></div>
+</div> 
+
+
+</div>
+<include file="public:footer.inc" />

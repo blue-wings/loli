@@ -1,0 +1,254 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="/public/js/jquery_theme/base/jquery.ui.all.css">
+<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+<style>
+tr{
+	text-align:center;
+}
+.f_width{
+	display:block;
+	width:120px;
+	float:left;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+}
+input{
+	border-color:#008080;
+}
+.createmakt,.particular{
+	display:none;
+}
+.show{
+	display:none;
+}
+.ntitle{
+	font-size:16px;
+	color:#004040;
+}
+.left{
+	padding:10px  50px;
+}
+.fo{
+	font-size:14px;
+	color:#004040;
+}
+</style>
+<div class="panel">
+	<div align="left">
+		<fieldset class="fieldset"><legend>查询条件</legend>
+			<form name="myform" id="myform" action="__ACTION__" method="POST">
+				邮件名称：<input id=email name='emailname' type='text' value='{$Think.get.emailname}'>
+				<input type='submit' name='search' value=" 查 询">
+			</form>
+			<p class="cea"><input type="button" value="创建新营销邮件" name="cdata"></p>
+			<p class="ntitle">{$message['name']}</p>
+			<form action="__ACTION__" method="GET" name="dateform" onsubmit="return adddata()">
+				<div>选择时间:</div>
+				<p><input type="text" value="{$Think.get.from|default='起始时间'}" name="from">&nbsp;&nbsp;到&nbsp;&nbsp;<input type="text" value="{$Think.get.to|default='结束时间'}" name="to">&nbsp;&nbsp;<input type="submit" value="查询" name="date"></p>
+			</form>
+			<a href="__ACTION__" class="show">返回上级</a>
+		</fieldset>			
+	</div>
+</div>
+
+<div class="showcontents">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />EDM邮件营销 <input type="button" name="location" value="更新数据"></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+        {$page}
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+          	<td width="2%" height="26">序号</td>
+            <td width="15%" height="26"><div align="center" class="STYLE2 STYLE1" id="changename">邮件名称</div></td>
+	    	<td width="3%" height="26"><div align="center" class="STYLE2 STYLE1">展示数量</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2 STYLE1">唯一展示</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">点击数量</div></td>  
+             <td width="3%" height="18"><div align="center" class="STYLE2">唯一点击数量</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">点击率</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">唯一点击率</div></td>          
+            <td width="10%" height="18"><div align="center" class="STYLE2">上线时间</div></td>
+            <td width="5%" height="18"><div align="center" class="STYLE2">功能</div></td>           
+          </tr>
+          <volist name="list" id="edm"  key="k">
+          <tr height="30px">
+          	<td bgcolor="#FFFFFF" height="18">{$edm.edm_no}</td>
+             <td bgcolor="#FFFFFF" height="18">
+             	<a href="__ACTION__/id/{$edm.edm_no}">{$edm.name}</a>
+			 </td>
+             <td bgcolor="#FFFFFF" height="18">
+				{$edm.pv}
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18">{$edm.uv}</td>
+			 <td bgcolor="#FFFFFF" height="18">{$edm.click}</td>
+			 <td bgcolor="#FFFFFF" height="18">
+				{$edm.unique_click}
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18">{$edm.click_rate}<neq name="edm.click_rate" value="0.00">%</neq></td>
+			 <td bgcolor="#FFFFFF" height="18">
+				{$edm.unique_click_rate}<neq name="edm.unique_click_rate" value="0.00">%</neq>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18">{$edm.c_datetime}</td>
+			 <td bgcolor="#FFFFFF" height="18">
+			 	<a href="#" onclick="return edit('{$edm.name}','{$edm.tourl}','{$edm.edm_no}')">编辑</a>/
+			 	<a href="javascript:deldata('{$edm.edm_no}')">删除</a>		 
+			 </td>
+          </tr>
+		</volist>
+        </table>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+	<if condition="$list eq ''">
+	<td  colspan='9'><b>无数据</b></td>
+	<else />
+	<td  colspan='9'>{$page}</td>
+	</if>
+  </tr>
+</table>
+</div>
+<div class="createmakt">
+<form action="__ACTION__" method="POST">
+<p align="center">邮件名称:<input type="text" value="" name="martek"></p>
+<p align="center">目标网址:<input type="text" value="" name="tourl"><input type="hidden" name="action" value=""></p>
+<p align="center"><input type="submit" value="提交" name="sub"></p>
+</form>
+</div>
+<div class="particular">
+ <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            <td width="8%" height="26"><div align="center" class="STYLE2 STYLE1">日期</div></td>
+	    	<td width="5%" height="26"><div align="center" class="STYLE2 STYLE1">展示数量</div></td>
+            <td width="5%" height="18"><div align="center" class="STYLE2 STYLE1">唯一展示</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">点击数量</div></td>
+            <td width="8%" height="18"><div align="center" class="STYLE2">唯一点击数量</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">点击率</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">唯一点击率</div></td>            
+          </tr>
+          <if condition="$list">
+          <volist name="list" id="edm"  key="k">
+          <tr height="30px">
+             <td bgcolor="#FFFFFF" height="18">{$edm['etime']}</td>
+             <td bgcolor="#FFFFFF" height="18">{$edm.pv}</td>
+			 <td bgcolor="#FFFFFF" height="18">{$edm.uv}</td>
+			 <td bgcolor="#FFFFFF" height="18">{$edm.hits}</td>
+			 <td bgcolor="#FFFFFF" height="18">{$edm.unique_hits} </td>
+			 <td bgcolor="#FFFFFF" height="18"><php>echo round(($edm['hits'] / $edm['pv']),4)*100;</php>%</td>
+			 <td bgcolor="#FFFFFF" height="18"><php>echo round(($edm['unique_hits'] / $edm['uv']),4)*100;</php>%</td>
+          </tr>
+		</volist>
+		<else />
+			 <tr height="30px"><td colspan="7">无数据</td></tr>
+		</if>
+ </table>
+ {$edm.img}<br/>{$edm.email}      
+ <div class="left fo">图片地址(请将该代码放入HTML邮件模版中)</div>
+ <div class="left"><textarea rows="5" cols="50" style="border-color:#008040;overflow:hidden">{$message.img}</textarea></div>
+  <div class="left fo">邮件链接地址(请将模版页的链接改为此链接)</div>
+ <div class="left"><textarea rows="5" cols="50" style="border-color:#008040;overflow:hidden">{$message.email}</textarea></div>
+</div>
+	<script>
+	jQuery(function($){
+		$.datepicker.regional['zh-CN'] = {
+			closeText: '关闭',
+			prevText: '&#x3c;上月',
+			nextText: '下月&#x3e;',
+			currentText: '今天',
+			monthNames: ['一月','二月','三月','四月','五月','六月',
+			'七月','八月','九月','十月','十一月','十二月'],
+			monthNamesShort: ['一','二','三','四','五','六',
+			'七','八','九','十','十一','十二'],
+			dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+			dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+			dayNamesMin: ['日','一','二','三','四','五','六'],
+			weekHeader: '周',
+			dateFormat: 'yy-mm-dd',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: true,
+			yearSuffix: '年'};
+			$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+	});
+	$("input[name='from']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$("input[name='to']").datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$("input[name='to']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$("input[name='from']").datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+	function adddata(){
+		if("{$message['edm_no']}"){
+			var $str="<input type='hidden' value='"+"{$message['edm_no']}"+"' name='queryid'>";
+			$("form[name='dateform']").append($str);
+			return true;
+		}
+	}
+
+//删除数据
+function deldata(number){
+	if(confirm("确认删除么?")){
+		location.href="__ACTION__/action/delete/eid/"+number;
+	}
+}
+
+$(document).ready(function(){
+	
+	$("form[name='dateform']").hide();
+	
+	if("{$message.edm_no}"){
+		$("form[name='dateform']").show();
+		$("form[name='myform']").hide();
+		$(".particular").show();
+		$(".show").show();
+		$(".showcontents").hide();
+	}
+	
+	$(":button[name='cdata']").bind('click',function(){
+		$(".showcontents").hide();
+		$(".createmakt").show('slow');
+		$("input[name='martek']").focus();
+		$("input[name='action']").val('cdata');
+	})
+})
+
+function edit(name,url,id){
+	$(".showcontents").hide();
+	$(".createmakt").show('slow');
+	$("input[name='action']").val('save');
+	$("input[name='action']").after("<input type='hidden' name='eid' value='"+id+"'>");
+	$("input[name='tourl']").val(url);
+	$("input[name='martek']").val(name).focus();
+}
+
+$(":button[name='location']").click(function(){
+	location.href="__URL__/updateEDMData";
+})
+
+</script>
+<include file="Public:footer" />

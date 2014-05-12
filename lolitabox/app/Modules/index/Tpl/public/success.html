@@ -1,0 +1,36 @@
+<include file="public:header.inc" />
+<!--公用---头部--end------->
+<i class="page_top"></i>
+<script language="javascript" type="text/javascript">
+        var i = <{$waitSecond}>;
+         var intervalid;
+        intervalid = setInterval("fun()", 1000);
+        function fun() {
+            if (i == 0) {
+                window.location.href = "<{$jumpUrl}>";
+                clearInterval(intervalid);
+            }
+            document.getElementById("mes").innerHTML = i;
+            i--; 
+        } 
+    </script>
+<div class="mb16">
+<div class="fm1024">
+	<div class="wp1020">
+		<div class="hd_t"></div>
+		<div class="main">
+			<!--激活成功--内容--start-->
+				<div class="login_bound_con">
+					<div class="login_bound_succend">
+						<h1 class="bound_succeed_con"><b class="W_ico45 icon_yes_45"></b><{$message}> </h1>
+						<span id="mes" style="display:none;"><{$waitSecond}></span>
+					</div>
+				</div>
+			<!--激活成功--内容--end-->
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+</div>
+<!--标准底---start--->
+<include file="public:footer.inc" />

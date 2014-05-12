@@ -1,0 +1,126 @@
+<include file="Public:header2" />
+<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+						<div class="portlet box light-grey">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-globe"></i>萝莉礼品卡管理</div>
+								<div class="tools">
+								</div>
+							</div>
+							<div class="portlet-body">
+								<div class="clearfix">
+									<div class="btn-group">
+										<a href="#portlet-add-giftcard" data-toggle="modal" class="btn green" >
+										新增礼品卡<i class="icon-plus"></a></i>
+										</button>
+									</div>
+									<div class="btn-group pull-right">
+										<button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="icon-angle-down"></i>
+										</button>
+										<ul class="dropdown-menu pull-right">
+											<li><a href="#">Print</a></li>
+											<li><a href="#">Save as PDF</a></li>
+											<li><a href="#">Export to Excel</a></li>
+										</ul>
+									</div>
+								</div>
+								<table class="table table-striped table-bordered table-hover dataTable" id="sample_1" aria-describedby="sample_1_info">
+									<thead>
+										<tr role="row">
+										<th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="Username: activate to sort column ascending" style="width: 100px;">礼品卡卡号</th>
+										<th class="hidden-480 sorting_disabled" role="columnheader" rowspan="1" colspan="1" style="width: 100px;">密码</th>
+										<th class="hidden-480 sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 50px;">金额</th>
+										<th class="hidden-480 sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="Joined" style="width: 50px;">生成日期</th>
+										<th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="" style="width: 150px;">使用状态</th></tr>
+									</thead>
+								<tbody role="alert" aria-live="polite" aria-relevant="all">
+								
+								<volist name="list" id="cardlist" empty="还没有生成过礼品卡">
+								<tr class="gradeX odd">
+											<td><b>{$cardlist.card_id}</b></td>
+											<td class="center hidden-480">{$cardlist.card_pwd}</td>
+											<td class="center hidden-480">{$cardlist.price} 元</td>
+											<td class="center hidden-480">{$cardlist.add_datetime}</td>
+											<td class=" ">
+											<neq name="cardlist.userid" value="0">
+												<span class="label label-warning">已用</span>
+												用户ID:{$cardlist.userid}（{$cardlist.activate_datetime}）
+											<else/>
+												<span class="label label-success">未用</span>
+											</neq>
+											</td>
+								</tr>
+								</volist>							
+										</tbody></table><div class="row-fluid"><div class="span6"><div class="dataTables_info" id="sample_1_info"> {$page}</div></div></div></div>
+							</div>
+
+						</div>
+
+						<!-- END EXAMPLE TABLE PORTLET-->
+
+					</div>
+
+				</div>
+
+<!-- 礼品卡生成DIALOG START -->
+			<div id="portlet-add-giftcard" class="modal hide">
+				<div class="modal-header">
+					<button data-dismiss="modal" class="close" type="button"></button>
+					<h3>生成礼品卡</h3>
+				</div>
+				<div class="modal-body">
+
+					<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-reorder"></i>设置礼品卡生成参数</div>
+								<div class="tools">
+								</div>
+							</div>
+							<div class="portlet-body form">
+								<!-- BEGIN FORM-->
+								<form name="GiftcardCreateForm"  action="__URL__/createGiftcard"  method="POST" class="form-horizontal">
+									<div class="control-group">
+										<label class="control-label">礼品卡金额</label>
+										<div class="controls">
+											<input type="text" name="price" id="price"> 元
+											<span class="help-inline"></span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">礼品卡生成数量</label>
+										<div class="controls">
+											<input type="text"  name="amount" id="amount"> 张
+											<span class="help-inline"></span>
+										</div>	
+									</div>
+									<div class="control-group">
+										<label class="control-label">礼品卡有效期</label>
+										<div class="controls">
+											<input type="text" name="indate" id="indate">
+											<span class="help-inline">如：2014-05-30</span>
+										</div>	
+									</div>
+									<div class="control-group">
+										<label class="control-label">礼品卡备注信息</label>
+										<div class="controls">
+											<textarea name="remark"  id="remark" rows="3"></textarea>
+										</div>
+									</div>
+									<div class="form-actions">
+										<button id="giftcard_build" type="submit" class="btn blue">确认生成</button>
+										<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+									</div>
+								</form>
+								<!-- END FORM-->       
+							</div>
+						</div>
+
+						</div>
+					</div>
+		<!-- 礼品卡生成DIALOG END -->
+    
+
+
+
+<include file="Public:footer2" />

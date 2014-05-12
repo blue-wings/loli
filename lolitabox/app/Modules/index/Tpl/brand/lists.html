@@ -1,0 +1,52 @@
+<include file="public:header.inc" />
+
+<!--品牌库--内容--end-------->
+<!---搜索--->
+<div class="fm1020_c">
+	<div class="wp1020">
+		<div class="hd">
+			<h3 class="i_tit l"><em class="t_brand">&nbsp;</em>萝莉盒品牌大全</h3>
+			<div class="r i_search">
+			    <form action="<{:u('brand/search')}>"   method="get"  target="_blank">
+				<input type="text" class="W_input_ws"  name="tag" />
+				<input type="submit" value="搜索" class="search_btn" />
+				</form>
+			</div>
+		</div>
+		<div class="main">
+			<div class="brand_sort">
+				<div class="brand_sort_list">
+				<h4 class="l">按分类：</h4>
+				   <span><a id="area_0"  href="javascript:void(0)" get_values="<{$Think.get.area|default=0}>">全部</a></span>
+				   <span><a id="area_1" href="javascript:void(0)"  >欧美</a></span>
+				   <span><a id="area_2" href="javascript:void(0)">日韩</a></span>
+				   <span><a id="area_3" href="javascript:void(0)">国产</a></span>
+				   <span><a id="area_9" href="javascript:void(0)">其他</a></span>
+				</div>
+				<div class="brand_sort_list">
+				<h4 class="l">按字母：</h4>
+				<span><a id="firstchar_0" href="javascript:void(0)" get_values="<{$Think.get.firstchar|default=0}>">全部</a></span> 
+				<volist name="return.firstchar"  id="vo">
+				     <span><a href="javascript:void(0)"   id="firstchar_<{$vo}>" ><{$vo}></a></span>
+				</volist>
+			    </div>
+			 </div>
+			
+			<!---品牌list-->
+			
+			<div class="others_add_brand"   id="ajax_content">
+				<include file="list_ajaxlist" />
+			</div>			
+			
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+<script>
+$(function(){
+	ajax_replace("area","__ACTION__","firstchar");
+	ajax_replace("firstchar","__ACTION__","area");
+})
+</script>
+<!--标准底---start--->
+<include file="public:footer.inc" />

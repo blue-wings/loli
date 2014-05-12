@@ -1,0 +1,484 @@
+<include file="public:header.inc" />
+<script type="text/javascript" src="public/js/slider.js"></script> 
+<!--[if IE 6]>
+<script type="text/javascript" src="public/js/pngfix.js"></script> 
+<![endif]-->
+<style type="text/css">
+/*公有*/
+body{background:url(public/special/20130527/bgs.jpg) repeat;}
+.Block01{position:relative; width:1119px; height:497px; margin:0 auto; background:url(public/special/20130527/bg_01.jpg) no-repeat;}
+.Block01 .tt1{ position:absolute; font-size:18px; line-height:24px; left: 74px; top: 421px; color:#fff; width: 1013px; height: 55px;
+}
+
+.Block02{position:relative; width:1119px; height:757px; margin:0 auto; background:url(public/special/20130527/bg_02.jpg) no-repeat;}
+.Block02 .tt1{ position:absolute; left: 114px; font-size:14px; line-height:24px; top: 40px; color:#fff; width: 915px; height: 110px;
+}
+.Block02 .tt1 h2{font-size:18px; line-height:30px;}
+.Block02 .tt1 span{font-size:18px;}
+.Block02 .tt2{ position:absolute; font-size:30px; line-height:35px; left: 277px; top: 251px; width: 219px; height: 35px; }
+.Block02 .tt3{ position:absolute; overflow:hidden; left: 152px; top: 295px; width: 520px; height: 283px;}
+
+
+.Block02 .tt3 .listTitle{height:35px; line-height:35px;}
+.Block02 .tt3 .listWrap{position:relative; height:240px; overflow:hidden;}
+.Block02 .tt3 .listTitle li{float:left;}
+.Block02 .tt3 .listTitle .lTitle , .Block02 .tt3 .listTitle .nTitle ,.Block02 .tt3 .listTitle .bTitle{ color:#e13226; font-size:18px;}
+.Block02 .tt3 .lTitle{ text-align:center; width:60px; overflow:hidden}
+.Block02 .tt3 .nTitle{ text-align:center; width:85px; overflow:hidden}
+.Block02 .tt3 .bTitle{ text-align:center; width:100px; overflow:hidden}
+
+.Block02 .tt3 .listCont{ position:relative; margin-top:5px; display:block; overflow:hidden; zoom:1;}
+.Block02 .tt3 .listCont a{color:#333;}
+.Block02 .tt3 .listCont li{ height:48px; display:block; overflow:hidden; line-height:48px; width: 245px; float: left;}
+.Block02 .tt3 .listCont li p{float:left;}
+.Block02 .tt3 .listCont .lTitle{color:#e13226; font-size:18px;}
+.Block02 .tt3 .listCont .nTitle,.Block02 .tt3 .listCont .bTitle{font-size:14px;}
+.Block02 .tt6{ position:absolute; left: 274px; top: 587px; font-size: 18px;}
+.Block02 .gTop,.Block02 .gBtn{font-size:17px; color:#e40000; padding-left:8px; font-style:normal;}
+.Block02 .gBtn{color:#0066cc;}
+.Block02 .tt4{ position:absolute; font-size:24px; line-height:35px; left: 850px; top: 245px; width: 109px; height: 35px;}
+.Block02 .tt5{ position:absolute; left: 768px; font-size:14px; line-height:22px; top: 287px; width: 274px; height: 335px;}
+.Block02  .tt7{ position:absolute; left: 912px; top: 587px; width: 102px;}
+.Block02 .tt5 span{color:#e81f12;}
+.Block02 .tt5 a{color:#e81f12;}
+.Block03{
+	height:1260px;
+	width:1000px;
+	background:url(public/special/20130527/bg_04.jpg) repeat-y;
+	margin:25px auto 0;
+	position:relative
+}
+.Block03 .top_ban{width:1000px; height:158px; background:url(public/special/20130527/bg_03.jpg) no-repeat;}
+.Block03 .tt1{ position:absolute; left: 51px; top: 463px; width: 925px;}
+.Block03 .hosTit{font-size:24px; line-height:38px; height:38px; text-align:center; padding-bottom:8px;} 
+.Block03 .tt1 .hosBtn{padding:5px 0 0 135px;}
+.Block03 .tt2{
+	position:absolute;
+	left: 49px;
+	top: 1046px;
+}
+.Block03 .tt2 .hosBtn{padding:60px 16px 0;}
+.Block03 .tt2 .hosBtn .zt_btn{float:left; margin-right:23px;}
+.Block03 .tt2 .hosBtn .zt_btn_1{margin-right:0;}
+
+.zt_btn ,.zt_btn_on{width:106px; height:40px; display:block; background:url(public/special/20130527/btn.png) no-repeat; text-align:center; line-height:40px; font-size:14px; color:#fff;}
+.zt_btn:hover{text-decoration:none; background:url(public/special/20130527/btn1.png) no-repeat;}
+.zt_btn_on{ background:url(public/special/20130527/btn1_on.png) no-repeat;}
+.zt_btn_on:hover{text-decoration:none; background:url(public/special/20130527/btn1_on.png) no-repeat;}
+
+.Block03 .tt3{ position:absolute; width:838px; height:101px; background:url(public/special/20130527/bg_07.jpg) no-repeat; padding:12px 18px 0; left: 57px; top: 527px; font-size:14px;}
+.Block03  h2{height:58px; line-height:58px; font-size:24px;}
+.Block03 .tt4{ position:absolute; width:901px; height:61px; background:url(public/special/20130527/bg_13.png) no-repeat; left: 55px; top: 802px; }
+.Block03 .tt5{ position:absolute; z-index:3; left: 133px; top: 613px; width: 220px; height: 231px; }
+.Block03 .asp_i{padding-top:15px; font-size:14px;}
+.Block03 .asp_i .zt_btn1 ,.Block03 .asp_i .zt_btn1_on{float:left; margin-right:12px;}
+.zt_btn1,.zt_btn1_on{width:105px; height:27px; background:url(public/special/20130527/btn2.png) no-repeat; display:block; text-decoration:none; color:#333; line-height:27px; text-align:center;}
+.zt_btn1:hover{text-decoration:none;}
+.zt_btn1_on{background:url(public/special/20130527/btn3.png) no-repeat;}
+
+.Block03 .tt6{ position:absolute; z-index:3; left: 702px; top: 526px; width: 233px; height: 184px;}
+.Block03 .tt7{ position:absolute; z-index:3; left: 675px; top: 612px; width: 220px; height: 231px; }
+.Block03 .tt8{ position:absolute; width:901px; height:61px; background:url(public/special/20130527/bg_13.png) no-repeat; left: 61px; top: 376px;
+}
+.Block03 .tt9{ position:absolute; z-index:3; left: 133px; top: 899px; width: 220px; height: 231px; }
+.Block03 .tt10{ position:absolute; z-index:3; left: 403px; top: 898px; width: 220px; height: 231px; }.Block03 .tt11{ position:absolute; z-index:3; left: 661px; top: 896px; width: 231px; height: 54px; font-size: 18px; line-height: 24px; }.Block03 .tt12{ position:absolute; width:199px; height:142px; background:url(public/special/20130527/bg_14.png) no-repeat; padding:10px 13px 0 30px; left: 643px; top: 954px; font-size: 14px;}
+.Block03 .tt13{ position:absolute; left: 718px; top: 1094px; width: 109px; }
+.Block03 .tt14{ position:absolute; left: 57px; padding:20px 45px 0; top: 745px; width: 323px; background:url(public/special/20130527/bg_15.png) no-repeat; font-size:14px; height: 227px; line-height:18px;}
+.Block03 .pasT{ padding:25px 0 0 100px;}
+
+.Block03 .tt15{ position:absolute; left: 524px; padding:20px 45px 0; top: 745px; width: 331px; background:url(public/special/20130527/bg_15.png) no-repeat; font-size:14px; height: 222px; line-height:18px;}
+.Block03 .tt15 span{color:red;}
+.zt_btn2,.zt_btn2_on{width:90px; height:29px; font-size:14px; display:block; background:url(public/special/20130527/btn4.png) no-repeat; text-decoration:none; text-align:center; line-height:29px; color:#fff; padding-left:15px;}
+.zt_btn2:hover{text-decoration:none;}
+.zt_btn2_on{background:url(public/special/20130527/btn5.png) no-repeat;}
+.zt_btn2_on:hover{text-decoration:none;}
+
+.Block03 .tt16{ width:805px; height:251px; background:url(public/special/20130527/bg_08.jpg) no-repeat; position:absolute; font-size:14px; left: 63px; padding:20px 35px 0; top: 1035px;}
+.Block03 .tt16 dt{font-size:18px; color:#ff201e;}
+.Block03 .tt17{ position:absolute; width:901px; height:61px; background:url(public/special/20130527/bg_13.png) no-repeat; left: 50px; top: 1482px;}
+.Block03 .tt18{ position:absolute; left: 90px; z-index:3; top: 1352px; width: 807px; height: 149px;}
+.Block03 .tt18 .aleft,.Block03 .tt18 .aright{width:34px; height:33px; background:url(public/special/20130527/bg_11.png) no-repeat; display:block; float:left; margin-top:48px;}
+.Block03 .tt18 .aright{float:right; background:url(public/special/20130527/bg_12.png) no-repeat;}
+.Block03 .tt18 .f_cont{float:left; width:728px; height:145px; position: relative; overflow: hidden}
+
+.Block03 .tt18 .f_cont ul{ position: absolute; width: 20000px; top: 0px; left: 0px }
+.Block03 .tt18 li{ float:left; padding:0 18px; }
+.Block03 .tt19{ width:1118px; height:55px; position:absolute; background:url(public/special/20130527/bg_10.png) no-repeat; bottom:-1px; left: -60px;}
+.Block04{ height:700px; width:1000px; background:url(public/special/20130527/bg_04.jpg) repeat-y; margin:25px auto 25px; position:relative}
+.Block04 .hd_top{height:112px; background:url(public/special/20130527/bg_09.jpg) 1px 0 no-repeat;}
+.Block03 .tt20{ position:absolute; left: 484px; top: 339px; width: 89px;}
+.Block04 .tt1{ position:absolute; left: 72px; top: 126px; width: 864px; height: 493px;}
+.Block04 .tt1 a{color:#333;}
+.Block04 .tt1 li{width:170px; font-size:14px; float:left; border-right:2px dashed #e4bc96;padding:5px 0;}
+.Block04 .tt1 li.last{border:none;}
+.Block04 .tt1 .lsit li{}
+
+.Block04 .aTitle{height:36px; line-height:36px; font-size:18px; color:#e13226;}
+.Block04  .aList{width:65px; float:left; text-align:center; overflow:hidden;}
+.Block04  .aName{ width:105px; float:left; text-align:center; overflow:hidden; height: 24px; text-overflow:ellipsis; white-space: nowrap;}
+.Block04 .Clist{height:45px; line-height:45px;}
+.Block04 .tt2{width:1118px; height:55px; background:url(public/special/20130527/bg_10.png) no-repeat; position:absolute; bottom:0; left:-59px;}
+.Block04 .tt3{ background:#fff8d0; position:absolute; height:563px; width:6px; z-index:100; left: 930px; top: 76px;}
+.Block03 .tt28{ width:782px; height:214px; background:url(public/special/20130527/bg_11.jpg) no-repeat; position:absolute; left: 121px; top: 172px;}
+.Block03 .tt29{ width:260px; height:113px; background:url(public/special/20130527/bg_14.png) no-repeat; position:absolute; left: 589px; top: 196px; padding:23px 13px 0 20px; font-size:14px; line-height:22px; z-index:6666;}
+.Block03 .tt30{ font-size:12px; line-height:16px; position:absolute; left: 473px; top: 210px; width: 92px; height: 65px;}
+.Block03 .tt31{ position:absolute; left: 284px; top: 189px;}
+.Block03 .tt32{
+	position:absolute;
+	left: 164px;
+	top: 205px;
+	z-index:9999;
+	width: 85px;
+	height: 67px;
+	line-height: 16px;
+}
+.Block03 .tt33{ position:absolute; left: 292px; top: 340px; z-index:9999; width: 109px;}
+.Block03 .tt34{ position:absolute; left: 702px; top: 341px; z-index:9999; width: 64px;}
+.Block03 .ttss{width:174px; height:174px; background:url(public/special/20130527/bg_12.jpg) no-repeat; padding:16px 0 0 12px;}
+.Block03 .tt1 li{float:left; width:186px; margin:0 55px 12px 0}
+.Block03 .tt1 .content{padding:8px 0; text-align:center;}
+.Block03 .tt1 .content .name{height:18px; overflow:hidden; margin:6px 0 8px;}
+.Block03 .tt1 .content p{ text-align:center;}
+.Block03 .tt1 li.last{margin-right:0;}
+
+.Block03 .tt2{ position:absolute; width:901px; padding:6px; height:116px; background:url(public/special/20130527/bg_01.gif) no-repeat; line-height:23px;}
+.Block03 .tt2 .tit{
+	height:38px;
+	line-height:38px;
+	font-size:18px;
+	color:#ff201e;
+	padding-left: 10px;
+}
+.Block03 .tt2 .cont{
+	padding:0 12px;
+	font-size: 14px;
+}
+</style>
+<script>
+$(function(){
+	$('body').css('background','url(public/special/20130131/bgs.jpg)');
+})
+</script>
+<div class="Block01">
+	<div class="tt1">第六期达人积分风云榜如期启动啦，50个最IN萝莉盒等你来领！<br />
+快来发表分享，飙升你的积分榜，把精致的萝莉盒带回家吧！
+	</div>
+</div>
+<div class="Block02">
+	<div class="tt1">
+    	<h2>特别声明：</h2>
+        <p>1、会员赚取积分的所有行为我们均有记录，如被发现有会员使用刷分机器等恶意手段来赚取积分的，将<span>一律取消获奖资格</span>！</p>
+        <p>2、前五期所赚取的积分不滚动进入本期累计，所有参与会员都是从0开始哦。</p>
+        <p>3、本期起积分获得规则有所变化，具体请见以下活动规则说明。</p>
+    </div>
+    <div class="tt2">本期积分风云榜</div>
+    <div class="tt3" >
+    	<ul class="listTitle">
+        	<li class="lTitle">排名</li>
+        	<li class="nTitle">昵称</li>
+        	<li class="bTitle">本期积分</li>
+        	<li class="lTitle">排名</li>
+        	<li class="nTitle">昵称</li>
+        	<li class="bTitle">本期积分</li>
+        </ul>
+        <div class="listWrap" id="showScorll">
+ <if condition="$userscore_list neq ''">
+      <ul class="listCont" id="listCont">
+	        <volist name="userscore_list" id="vo" key="ekey"  offset="0" length="50">
+		          <li>
+		           	<p class="lTitle"><{$ekey}></p>
+		           	<p class="nTitle"><a href="<{$vo.spaceurl}>" target="_blank"><{$vo['nickname']}></a></p>
+		               <p class="bTitle"><{$vo['uscore']}> <if condition="$vo[sign] eq '-1'"><i class="gBtn">↓</i><else /><i class="gTop">↑</i></if></p>
+		           </li>
+	        </volist>
+      </ul>
+        <else />
+        	<div style="line-height:231px; text-align:center">稍微有点小抽抽，请您稍后再试~~</div>
+</if>   
+        
+        <ul class="listCont" id="listCont1"></ul>
+    	</div>
+    </div>
+   
+<div class="tt4">活动规则</div>
+
+  <div class="tt5">
+    １、活动时间：2013.6.3—2013.6.26<br />
+    ２、<span>必须绑定新浪微博后才能开启任务哦。</span><br />
+    ３、<span>发表的分享只有被审核收录后才能获<br />
+    　　得积分。（<a href="http://www.lolitabox.com/home/share_detail/id/60493.html" target="_blank">点击了解</a>）</span><br />
+    ４、活动期间总积分在500以上，且排名<br />
+    　　前50者于6月30日前点击以下按钮，<br />
+    　　即可使用500积分领取免费萝莉<br />
+    　　盒。<br />
+    ５、<span>对活动页面上的产品发表分享被收录<br />
+    　　的话，可获双倍积分，额外增加的积<br />
+    　　分将在6.26号12：00前统一发放；<br />
+    </span>
+    
+    ６、我们将在活动结束后5个工作日内按<br />　　照您填写的默认地址进行发货。<br />
+    　（<if condition="$return.userid eq ''"><a href="javascript:void(0)" onclick="return dialog_login(this.id);" id="happybox_login">设置默认地址</a><else /><a href="<{:u('home/myaddress')}>" target="_blank">设置默认地址</a></if>）
+    </div>
+    
+    <if condition="$takeinfo neq ''">
+       <div class="tt6">我目前的风云榜积分值为：<{$userscore}></div>
+    </if>
+ 		<div class="tt7">
+			<a class="zt_btn_on" <if condition="$button_color neq 0">style="display:none;"</if> id="can_change">领取萝莉盒</a>
+ 	   		<a href="javascript:void(0)" onclick="check_if_change_box(this.id)" class="zt_btn" <if condition="$button_color neq 1">style="display:none;"</if> id="cannot_change">领取萝莉盒</a>
+ 	   		<a class="zt_btn_on" <if condition="$button_color neq 2">style="display:none;"</if> id="have_change">已经领取过啦~</a>
+ 		
+ 		</div>
+    
+</div>
+<div class="Block03">
+ <div class="tt29">#LOLITABOX达人积分风云榜#我在LOLITABOX参加达人积分风云榜活动，进入风云榜前50名就能免费获得精致萝莉盒哦，你也快来参加吧~</div>
+  <div class="tt28"></div>
+  
+  
+   <div class="tt30">绑定微博后同时分享微博给好友即能再获得一个积分哦~</div>
+  <div class="tt31">
+    <if condition="$return.userid eq ''">
+  		<a href="javascript:void(0)" onclick="return dialog_login(this.id)" id="bound_sina_img"><img src="public/special/20130331/10.png" width="136" height="142" /></a>
+  	<elseif condition="$active_array[1] eq 1" />
+  		<img src="public/special/20130331/5.png" width="136" height="142" />
+  	<else />
+  		<a href="<{:u('home/myaccount')}>" target="_blank" ><img src="public/special/20130331/10.png" width="136" height="142" /></a>
+  	</if>
+  </div>
+  <div class="tt32">绑定微博后，才能参加活动哦~<br />  </div>
+  <div class="tt33">
+  	<if condition="$return.userid eq ''">
+  		<a href="javascript:void(0)" onclick="return dialog_login(this.id)" id="bound_sina" class="zt_btn">绑定新浪微博</a>
+  	<elseif condition="$active_array[1] gt 0" />
+  		<a class="zt_btn_on">已绑定</a>
+  	<else />
+  		<a href="<{:u('home/myaccount')}>" target="_blank" class="zt_btn">绑定新浪微博</a>
+  	</if>
+  </div> 
+    <div class="tt34"><a href="javascript:void(0)" onclick="check_share(this.id)" id="happybox_share" class="btn_a30 W_btn"><span>分享</span></a></div>
+    <div class="tt8"></div>
+    <div class="top_ban"></div>
+<div class="tt19"></div>
+    <div class="tt20">
+	    <if condition="$takeinfo eq ''">
+	    	    <a href="javascript:void(0)"  onclick="to_takepart(this.id)" class="btn_a30 W_btn" id="to_takepart"><span>点击报名</span></a>
+	    <else />
+	    	    <a class="zt_btn_on">已报名</a>
+	    </if>
+    </div>
+    
+    <div class="tt1">
+    	<ul>
+    	 <volist name="p_list" id="vo">
+    	 <if condition="$i%4 eq 0">
+    	 	<li class="last">
+    	 <else />
+    	 	<li>
+    	 </if>
+            	<div class="ttss"><a href="<{$vo[spaceurl]}>" target="_blank"><img src="<{$vo.pimg}>" width="160" height="160" /></a></div>
+        		<div class="content">
+                	<p class="name"><a href="<{$vo[spaceurl]}>" target="_blank" class="A_line2"><{$vo.pname}></a></p>
+                	<p>
+                	<if condition="$takeinfo neq ''">
+                		<a href="javascript:void(0)" onclick="post_share(this.id,'<{$vo[pname]}>')" class="btn_a30 W_btn" id="happybox_share<{$i}>"><span>发分享</span></a>
+                	<else />
+                		<a href="javascript:void(0)" onclick="alert('请您先点击报名按钮参加哦~');return false;" class="btn_a30 W_btn" id="happybox_share<{$i}>"><span>发分享</span></a>
+                	</if>
+                	
+                	</p>
+                </div>
+            </li>
+           </volist>
+        </ul>
+    </div>
+    
+    
+   
+ 
+    <div class="tt2">
+    	<p class="tit">说明：</p>
+        <div class="cont">
+        	<p>1、分享只有被审核收录后才能获得积分哦，我们会在您的分享发表后2个工作日内进行审核并发放积分；</p>
+            <p>2、图文并茂的分享被收录的机会更大哟；</p>
+            <p>3、同一款产品可进行多次分享，但分享内容不能相同。针对同一款产品的相同内容我们只会收录一次哦。</p>
+        </div>
+    </div>
+    
+</div>
+<div class="Block04">
+<div class="hd_top"></div>
+	<div class="tt1">
+    	<ul>
+        	<li>
+            	<div class="aTitle"><p class="aList">排名</p><p class="aName">昵称</p></div>
+            </li>
+        	<li>
+            	<div class="aTitle"><p class="aList">排名</p><p class="aName">昵称</p></div>
+            	
+            </li>
+        	<li>
+            	<div class="aTitle"><p class="aList">排名</p><p class="aName">昵称</p></div>
+            	
+            </li>
+        	<li>
+            	<div class="aTitle"><p class="aList">排名</p><p class="aName">昵称</p></div>
+            
+            </li>
+        	<li class="last">
+            	<div class="aTitle"><p class="aList">排名</p><p class="aName">昵称</p></div>
+            </li>
+    	</ul>
+        
+        <ul class="lsit">
+        <volist name="last_score_list" id="vo" key="ikey" offset="0" length="39">
+        	<li>
+	        	<p class="aList"><{$ikey}></p>
+	        	<p class="aName">
+		        	<a href="<{$vo.spaceurl}>" target="_blank">
+		        		<{$vo[nickname]}>
+		        	</a>
+	        	</p>
+        	</li>
+        </volist>
+        </ul>
+        
+    </div>
+<div class="tt2"></div>
+<div class="tt3"></div>
+</div>
+<div id="confirm_kuan"  style="display:none;">
+<div class="tc_dp tc_Points"  id="confirm_inner" style="display:none;">
+  <div class="abs" ><img src="public/images/zhuce_close.png"  id="close_div" /></div>
+  <div class="tc_dpTop"></div>
+  <div class="tc_dpCont convert">
+  <div class="add_giftinfo">
+  </div>
+  <p id="go_confirm" ></p>
+  </div>
+  <div class="tc_dpBtm">
+  </div>
+</div>
+</div>
+<script type="text/javascript" src="public/js/showResult.js"></script>
+<script type="text/javascript" src="public/js/slider.js"></script> 
+
+
+<script>
+var userid="<{$return.userid}>";
+$(function(){
+	var score_count="<{$userscore_count}>";
+	if(score_count>=12){
+	    scorllUnim("showScorll","listCont","listCont1");
+	}else{
+		$("#listCont1").remove();
+	}
+}) 
+
+	 $(function(){
+		$("#s1").xslider({
+			unitdisplayed:4,
+			movelength:1,
+			maxlength:728,
+			unitlen:180,
+			dir:"H",
+			autoscroll:1500
+		});
+	});
+	
+	function check_share(id){
+ 		var openinfo="<{$active_array[1]}>";
+  		if(USER_ID==""){
+ 			dialog_login(id);
+ 			return false;
+ 		}
+ 		if(openinfo==0){
+ 			if(confirm("您需要先绑定新浪微博，现在就去绑定？")){
+ 				var returnnowurl="<{$nowpage}>";
+ 				var url="__APP__/user/sina_lock?returnurl="+returnnowurl;
+ 				location.href=url;
+ 				return false;
+ 			}else{
+ 				return false;
+ 			}
+ 		}else if(openinfo==2){
+ 	 		var returnurl="<{$returnurl}>";
+ 	 		var url="__APP__/user/sina_login?returnurl="+returnurl;
+ 	 		location.href=url;
+ 		}else{
+ 			var sina_url="__APP__/activity/sinaweibo"
+ 			location.href=sina_url;
+ 		} 
+ 	}
+	
+    //报名
+    function to_takepart(id){
+   	 if(USER_ID==""){
+   		 dialog_login(id);
+   		 return false;
+   	 }
+   	 var if_weibo="<{$active_array[1]}>";
+   	 if(if_weibo!=1){
+   		select_div("<p>您需要首先绑定新浪微博，这样才能参加活动哦~</p>",0,false,"500px","100px");
+		return false;
+   	 }
+   	 var lottery_id="<{$lottery_id}>";
+   	 $.ajax({
+   		 url:"<{:u('activity/check_take_partin')}>",
+   		 data:"lottery_id="+lottery_id,
+   		 dataType:"json",
+   		 type:"post",
+   		 success:function(ret){
+   			 if(parseInt(ret.status)==1){
+						select_div("<p class='f16'>恭喜您，报名成功</p>",2,false,"500px","100px");
+						setTimeout("location.reload()",2000);
+   			 }else{
+   					select_div("<p>"+ret.info+"</p>",0,false,"500px","100px");
+					setTimeout("$.colorbox.close()",1000);
+   			 }
+   		 }
+   	 })
+    }
+    
+ 	function check_if_change_box(id){
+ 		if(USER_ID==""){
+			dialog_login(id);
+ 			return false;
+ 		}else{
+ 			var score="<{$userinfo['score']}>";
+ 			if(parseInt(score)<500){
+ 				select_div("<p class='f16'>您当前的积分为：<span style='font-size:18px;color:red'>"+score+"</span>积分</p><p>您目前的积分账户余额不足500，下一次活动要再接再厉哦~</p>",0,false,"500px");
+ 			}else{
+ 		 		select_div("<p class='f16'>您当前的积分为：<span style='font-size:18px;color:red'>"+score+"</span>积分</p><p>兑换萝莉盒将消耗500积分，您确定要兑换吗？</p><p><a href='javascript:void(0)' class='btn_a30 W_btn' id='sure_change'><span>确定</span></a>　<a href='javascript:void(0)' class='btn_a30 disable W_btn' id='cancle_change'><span>取消</span></a></p>",0,false,"500px");
+ 		 		
+				$("#cancle_change").click(function(){
+					$.colorbox.close();
+				})
+				$("#sure_change").click(function(){
+					 get_user_happybox();
+				})
+ 			}
+ 		}
+ 	}
+	
+ 	function get_user_happybox(){
+ 	   	 var lottery_id="<{$lottery_id}>";
+			$.ajax({
+				url:"<{:u('activity/get_happy_box')}>",
+				dataType:"json",
+				type:"post",
+				data:"lottery_id="+lottery_id,
+				success:function(ret){
+	 				if(parseInt(ret.status)==1){
+	 					$("#have_change").show();
+	 					$("#can_change").hide();
+	 					$("#cannot_change").hide();
+	 			 		select_div("<p class='f16'>恭喜您，兑换成功！</p><p>您可以进入个人中心设置默认收货地址，以便我们为您寄送奖品。</p><p><span style='text-align:center;color:red;'><a href=\"<{:u('home/myaddress')}>\" target='_blank' class='A_line3'>设置默认地址</a></span></p>",0,false,"500px");
+	 				}else{
+	 					select_div("<p class='f16'>"+ret.info+"</p>",0,false,"500px");
+	 				}
+				}
+			})
+ 	}
+ </script>
+<include file="public:footer.inc" />

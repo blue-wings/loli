@@ -1,0 +1,66 @@
+<include file="Public:header" />
+<link href="__PUBLIC__/css/table.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/common.css" type="text/css" rel="stylesheet"/>
+<div id="main" class="main" >
+  <div class="content" >
+    <div id="result" class="result none"></div>
+    
+    <div class="list-div">
+    <form method="post" id="form1" action="__URL__/setApp/">
+      <table cellpadding="0" cellspacing="0" border="0" id="datatable">
+       <tr>
+          <th scope="col" colspan="3" align="left">应用授权 [ <a href="__URL__">返 回</a> ]</th>
+        </tr>
+        <tr>
+        	<td colspan="3"></td>
+        </tr>
+        <tr>
+          <td height="5" colspan="3">应用授权 | <a href="__URL__/module/groupId/{$Think.get.groupId}">模块授权</a> | <a href="__URL__/action/groupId/{$Think.get.groupId}">操作授权</a></td>
+        </tr>
+        <tr  align="left" style=" background-color:#CCC;">
+          <td>当前组：  
+           <select name="groupId" id="groupId" onChange="location.href = '__ACTION__/groupId/'+this.options[this.selectedIndex].value;">
+           <option value="">选择组</option>
+			<foreach name="groupList" item="vo">
+          		<option value="{$key}">{$vo}</option>
+            </foreach>
+          </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+			<ul style="padding:2px; margin-top:2px;list-style:none;">
+				<foreach name="appList" item="vo">
+					 <li style="display:inline;">
+					<input type="checkbox" name="groupAppId[]" value="{$key}" <php> if(in_array($key,$groupAppList)) { echo "checked"; }</php> >{$vo}
+					</li>
+				</foreach>
+			</ul>
+          </td>
+        </tr>
+        <tr align="left" style=" background-color:#CCC;">
+          <td><input type="checkbox"  id="allSelect" value="全选">全选
+            &nbsp;
+            <input type="checkbox"  id="InverSelect" value="反选">反选
+            &nbsp;
+            <input type="submit" value="保存">
+            &nbsp;
+			<input type="hidden" name="module" value="ThinkNode">
+		</td>
+        </tr>
+        <tr>
+          <td height="5" class="bottomTd" ></td>
+        </tr>
+      </table>
+    </form>
+    </div>
+  </div>
+</div>
+<script>
+var groupId = "{$Think.get.groupId}";
+if(groupId){
+	$("select[name='groupId']").val(groupId);
+}
+</script>
+<include file="Public:footer" />
+

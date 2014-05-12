@@ -1,0 +1,296 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="__PUBLIC__/js/colorbox/colorbox.css">
+<script src="__PUBLIC__/js/colorbox/jquery.colorbox-min.js"></script>
+<style type="text/css">
+span.shownum{color:red;}
+#showl{list-style-type : none;}
+#showl > li{ float:left;line-height:30px;width:250px;}
+</style>
+<div class="panel"  >
+	<div align="left">
+		<fieldset class="fieldset">
+			<legend>查询条件</legend>
+			<form action="__ACTION__" method="get" id="myform">
+				单品名称:<input type="text" name="name" value="{$Think.request.name}">&nbsp;&nbsp;
+				单品ID:<input type="text" name="id" value="{$Think.request.id}">
+				品牌名称：<input type='text'  name='brandname'>
+                               <select name='brandid'>
+                                   <option value=''>不限</option>
+                                   <volist name='brandlist'  id='vo'>
+                                       <option value="{$vo.id}">{$vo.name}</option>
+                                   </volist>
+                               </select><br><br>
+
+                类别:<select name='category'>
+                               <option value=''>不限</option>
+                               <option value='正装'>正装</option>
+                               <option value='耗材'>耗材</option>
+                               <option value='试用装'>试用装</option>
+                          </select>&nbsp;&nbsp;
+                 分类：<select name='cid'>
+                          <option value="">不限</option>
+                          <volist name='clist'  id='vo'>
+                             <option value='{$vo.cid}-{$vo.pcid}' 
+                             ><if condition="$vo[pcid] neq 0">|-</if>|-&nbsp;{$vo.cname}</option>
+                          </volist>
+                        </select>                          
+                          <input type='submit'  value='查询' style="width:100px;">
+               <input name="export" value="导出查询内容" type="submit">
+			   <input type="button" onclick="selectPrice()" value="显示总价值">			   
+                 <span id="showL"></span>
+				</form>
+				
+				<div style="display:none">
+					<div id="showlist">	
+						查找:<input type="text" name='search' value="">
+						 <p>一共有<span class="shownum"><php>echo count($brandInventoryProductsNum);</php></span>个品牌</p>	
+							<ul id="showl">
+								<volist name="brandInventoryProductsNum" id="pnum">
+									<li>
+										<a href="javascript:void(0)" onclick="searchresult('{$pnum.id}')">{$pnum.name}({$pnum.countid})</a>
+									<li>
+								</volist>
+							</ul>
+					</div>		
+				</div>
+		</fieldset>
+	</div>
+</div>
+<table width="100%" border="0" align="center" cellpadding="0"
+	cellspacing="0">
+	<tr>
+		<td height="30"><table width="100%" border="0" cellspacing="0"
+				cellpadding="0">
+				<tr>
+					<td width="15" height="30"><img
+						src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+					<td width="1101" background="__PUBLIC__/images/tab_05.gif"><img
+						src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span
+						class="STYLE4">单品列表</span></td>
+					<td width="281" background="__PUBLIC__/images/tab_05.gif"><table
+							border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><input type='button'  id='add_product' onclick='addid()' value='添加单品' style='background:#bbd895; border-radius:5px; color:#4d7c0c; border-color:#4d7c0c;'>
+								<a href="#showlist" class="record">库存品牌试用目录</a>
+								</td>
+							</tr>
+						</table></td>
+					<td width="14"><img src="__PUBLIC__/images/tab_07.gif"
+						width="14" height="30" /></td>
+				</tr>
+			</table></td>
+	</tr>
+	<tr>
+		<td><table width="100%" border="0" cellspacing="0"
+				cellpadding="0" id="list_table">
+				<tr>
+					<td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+					<td bgcolor="#f3ffe3"><table width="99%" border="0"
+							align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98"
+							id='list_table'>
+							<tr background="__PUBLIC__/images/tab_14.gif" align="center" id="awarp">
+								<td width="5%" height="20">单品ID</td>
+								<td width="17%" height="20">单品名称</td>
+								<td width="10%" height="20">所属品牌</td>
+								<td width="5%" height="20">等级</td>
+								<td width="8%" height="10">规格</td>
+								<td width="5%" height="10">类别</td>
+								<td width="5%" height="10">预计出库数</td>
+								<td width="5%" height="10">理论库存量</td>
+								<td width="8%" height="10">实际库存量</td>
+								<!-- <td width="5%" height="10">兑换周期</td> -->
+								<td width="6%" height="10">价格</td>
+								<td width="8%" height="10">有效期</td>
+								<td width="6%" height="10">关联产品id</td>
+								<td width="20%" height="10">操作</td>
+							</tr>
+							<volist name="list" id="vo" emtpy="还没有统计数据" key='k'>
+							<tr align="center" bgcolor="FFFFFF">
+							    <td height="25">{$vo.id}</td>
+							    <td height="25">
+							    <a href="#" onclick="dialogmeseeage('{:U('Inventory/inOutInfo',array('pid'=>$vo[id]))}','{$vo.name}  出入库明细表')">{$vo.name}</a>
+							    </td>
+     						     <td >{$vo.brandname}</td>
+     						     <td >{$vo.brandgrade}</td>
+     						     <td >{$vo.norms}</td>
+     						      <td >{$vo.category}</td>
+     						      <td >
+     						      	<if condition="$vo['planOut'] gt 0">
+     						      		<a href="#" onclick="dialogmeseeage('{:U('Inventory/selectProcuctInOrder',array('pid'=>$vo[id]))}','预计出库数')">{$vo['planOut']}</a>
+     						      	<else/>
+     						      		{$vo['planOut']}
+     						      	</if>
+     						      	</td>
+     						     <td >{$vo[inventory_estimated]}</td>
+     						     <td >{$vo[inventory_real]}</td>
+     						   <!-- 
+								<td >
+									<eq name="vo.exchange_interval" value="0">无限制<else /><font color="red">{$vo.exchange_interval}</font>天</eq>
+								 </td>
+     						    -->  
+     						      <td >{$vo[price]}</td>
+     						     <td>{$vo[validdate]}</td>
+     						     <td ><a href="{:U("Product/index",array('pid'=>$vo[relation_id]))}">{$vo.relation_id}</td>
+     						    <td height="25"> <a href="javascript:void(0)" onclick="updateid('{$vo.id}')">编辑</a><if condition="$vo[inventory_in] elt 0"> |
+     						     <a href="javascript:void(0)"  onclick="deleteid('{$vo.id}')">删除</a></if></td>
+							</tr>
+							</volist>						
+						</table></td>
+					<td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+				</tr>
+			</table></td>
+	</tr>
+	<tr>
+		<td height="29"><table width="100%" border="0" cellspacing="0"
+				cellpadding="0">
+				<tr>
+					<td width="15" height="29"><img
+						src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+					<td background="__PUBLIC__/images/tab_21.gif"><table
+							width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td width="25%" height="29" nowrap="nowrap">
+								<if condition="$list neq NULL">
+									<span>{$page}</span>&nbsp;&nbsp; <span>查询总价值:{$total}元</span>
+								<else />
+									抱歉,没有找到符合条件的数据!~ 
+								</if>
+							</td>
+								<td width="75%" valign="top" class="STYLE1"></td>
+							</tr>
+						</table></td>
+					<td width="14"><img src="__PUBLIC__/images/tab_22.gif"
+						width="14" height="29" /></td>
+				</tr>
+			</table></td>
+	</tr>
+</table>
+ <script>
+ $(".record").colorbox({inline:true,height:"80%",width:"80%"});
+ 
+ function deleteid(id){
+	if(confirm("您确定删除吗？？？")){
+		$.post(
+		"__ACTION__",
+		{ac:'delete',id:id},
+		function(json){
+			if(json.status==1)  {
+				alert("删除成功");
+				window.location.href="__SELF__";
+			}else{
+				alert("删除失败");
+			}
+		},
+		'json'
+		)
+	}
+ }
+ function updateid(id){
+	$.dialog({
+		title:"编辑单品",
+		content:"url:__URL__/productCreate/id/"+id,
+		close:function(){
+			window.location.href='__SELF__';
+		}
+	}
+	).max();
+ }
+
+ function addid(){
+	$.dialog({
+		title:"增加库存单品",
+		content:"url:__URL__/productCreate",
+		close:function(){
+			window.location.href='__SELF__';
+		}
+	}
+	).max();
+ }
+ 
+ pregpattern({
+	"id":"单品ID",
+	"inventory_estimated":"理论库存量",
+	"inventory_real":"实际库存量",
+	"relation_id":"关联产品id",
+	"exchange_interval":"兑换周期"
+})
+
+function selectPrice(){
+	$.ajax({
+		url:"__ACTION__",
+		type:"post",
+		dataType:"json",
+		data:"selectP=All",
+		success: function(chkresult){
+			if(parseInt(chkresult.status)==1){
+				$("#showL").text("总价值:"+chkresult.data+"元").show();
+			}else{
+				alert(chkresult.info);
+			}
+		}
+	})
+}
+
+var brtype="{$Think.get.brandtype}";
+
+if(brtype){
+	$("select[name='brandtype']").val(brtype);
+}
+
+
+$("input[name='brandname']").keyup(callback);
+function callback(){
+	$.post(
+	"{:U("Inventory/searchBrand")}",
+	{name:$(this).val()},
+	function(data)
+	{
+		$("select[name='brandid']").empty();
+		if(data.data=="" || data.data==null ) {
+			$("select[name='brandid']").append(" <option value=''>无结果</option>");
+			return false;
+		}
+		if($("input[name='brandname']").val()=="")
+		$("select[name='brandid']").append(" <option value=''>不限</option>");
+		$.each(data.data,function(i,n){
+			$("select[name='brandid']").append("<option value='"+n.id+"'>"+n.name+"</option>");
+		});
+	},
+	'json'
+	)
+}
+
+var brandid='{$Think.request.brandid}';
+var cate='{$Think.request.category}';
+var order='{$Think.request.order}';
+var cid='{$Think.request.cid}';
+if(brandid){
+	$("select[name='brandid']").val(brandid);
+}
+if(cate){
+	$("select[name='category']").val(cate);
+}
+if(order){
+	$("select[name='order']").val(order);
+}
+if(cid){
+	$("select[name='cid']").val(cid);
+}
+$(function(){
+	$(":text[name='search']").keyup(function(){
+		var str = $(this).val();
+		$("#showl li a").each(function(i,dom){
+			if($(dom).text().indexOf(str) == -1){
+				$(this).parent().hide();	
+			}else{
+				$(this).parent().show();
+			}
+		})
+	})
+})
+function searchresult(pid){
+	$("select[name='brandid']").val(pid);
+	$("#myform").submit();
+}
+</script>
+<include file="Public:footer" />

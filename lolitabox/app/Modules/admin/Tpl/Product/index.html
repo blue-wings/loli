@@ -1,0 +1,410 @@
+<include file="Public:header" />
+
+<div class="panel">
+		<div align="left">
+			<fieldset class="fieldset">
+			<legend>查询条件</legend>
+<form name="productForm" action="__ACTION__" method="get" id="myform">
+产品名称：<input id="orderid" name="pname" type='text' value="{$Think.request.pname}" />  
+产品ID：<input id="pid" name="pid" type='text' value="{$Think.request.pid}"/>
+合作类型:<select name="cooperation">
+				<option value="">全部</option>
+				<option value="1">合作产品</option>
+				<option value="2">非合作产品</option>
+			</select>
+是否加V:<select name="channelv">
+		<option value="">全部</option>
+		<option value="1">是</option>
+		<option value="0">否</option>
+	   </select>			
+<br>
+搜索品牌:<input type="text" id="brandname" name="brandname" value="{$Think.request.brandname}" size="10">&nbsp;品牌列表:<select name="brandcid"  id="select_brandcid">
+         <option value=''>不限</option>
+         <volist name="brandlist" id="vo">
+          <option value="{$vo.id}" 
+             <eq name="Think.request.brandcid"  value="$vo[id]">selected</eq>
+          >{$vo.name}</option>
+          </volist>
+         </select>
+状态：<input type='radio' name="status" value='0' 
+          <eq name="Think.request.status" value='0'>checked</eq>
+           >关闭&nbsp;
+          <input type='radio' name="status" value='1'
+          <eq name="Think.request.status" value='1'>checked</eq>
+          >开放
+<br><br>
+<input type="submit" value="导出查询结果" name="outputexcel" />
+&nbsp;&nbsp;
+<input type="button" name="resetpage" value="重置">&nbsp;&nbsp;
+<input type="submit" name="search" value="提交" />
+</form>
+
+
+<script>
+var cooperation="{$Think.get.cooperation}";
+if(cooperation){
+	$("select[name='cooperation']").val(cooperation);
+}
+var channelvv="{$Think.get.channelv}";
+if(channelvv){
+	$("select[name='channelv']").val(channelvv);
+}
+
+$(function(){
+	var bid="{$Think.get.bid}";
+	if(bid){
+		$("select[name='brandcid']").val(bid);
+	}
+})
+
+
+$("#brandname").keyup(callback);
+function callback(){
+	$.post(
+	"{:U('Product/searchBrand')}",
+	{type:"searchbrand",name:$("#brandname").val()},
+	function(data)
+	{
+		$("#select_brandcid").empty();
+		if(data.data=="" || data.data==null ) {
+			$("#select_brandcid").append(" <option value=''>无结果</option>");
+			return false;
+		}
+		if($("#brandname").val()==""){
+			$("#select_brandcid").append(" <option value=''>不限</option>");
+		}
+		$.each(data.data,function(i,n){
+			$("#select_brandcid").append("<option value='"+n.id+"'>"+n.name+"</option>");
+		});
+	},
+	'json'
+	)
+}
+//改变产品加V状态
+function channelv(obj,pid){
+
+	var node = $(obj).next("input:hidden"),					
+	val = node.val()==0?1:0;
+
+	$.post("__URL__/changevStatus",{productid:pid,status:val},function(reponse){
+		if(reponse.status == 1){
+			$(obj).html("<img src='__PUBLIC__/images/status_"+reponse.data+".gif'>");
+			node.val(reponse.data);						
+		}else{
+			alert("修改失败,请检查错误!");
+		}
+	})
+} 	
+var api_filter;
+$("#filter").click(function(){
+	api_filter=$.dialog({
+		title:"排除重复产品",
+		content:'<form action="__URL__/filterRepeat" method="post" id="filter_form"  style="float:left">保留ID：<input type="text"  name="saveid" id="saveid"><br>删除ID：<br><select name="deleteid" size="10" multiple="multiple" id="deleteid"  style="width:300px"></select><input type="button" value="删除" onclick="delete_val()">	<br>筛选：<input type="text"  id="choice"  name="choice"  onkeyup="filter_products(this.value)"> <select id="selectid"  onchange="change_val(this.value)" style="max-width:150px" ><option value="">请选择</option> </select><br><input type="button"  value="提交" id="submit_filter" onclick="submit_filterp()"></form>',
+		width:"400px",
+		id:"filter_1111"
+});
+	return false;
+})
+
+	
+
+function  filter_products(a){
+		$.ajax({
+			url:"__URL__/filterRepeat/ac/select",
+			type:"post",
+			data:"tag="+a,
+			dataType:"json",
+			success:function(data){
+				if(data.status==1){
+					$("#selectid").html(data.data);
+				}
+			}
+		})
+}
+
+function change_val(val){
+	if(val){
+		$("#selectid>option[value='"+val+"']").clone().appendTo("#deleteid");
+	}
+}
+
+function delete_val(){
+	var val=$("#deleteid").val();
+	if(val){
+		$("#deleteid>option[value='"+val+"']").remove();
+	}
+}
+
+
+function submit_filterp(){
+	var saveid=$("#saveid").val();
+	var html = $("#deleteid").html();
+	if(!(saveid && html)){
+		return false;
+	}
+	var deleid = "";
+	$.each($("#deleteid option"),function(i,n){
+		deleid+=" "+n.value;
+	})
+	var api = $.dialog.tips('正在处理数据...请稍候',600);
+	$.ajax({
+		url:"__URL__/filterRepeat",
+		type:"post",
+		data:"saveid="+saveid+"&deleteid="+deleid,
+		dataType:"json",
+		success:function(data){
+			api.close();
+			alert(data.info);
+			if(data.status==1)
+		    	setTimeout("api_filter.close()",2000);
+		}
+	})
+}
+</script>
+</fieldset>
+		</div>
+	</div>
+<p align="right"><input type="button" value="排除重复产品" id="filter"  /></p>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1050" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">产品列表【暂时不支持全选删除，每页显示25条记录】</span></td>
+        <td width="330" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"><table width="87%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="STYLE1"></td>
+                    <td class="STYLE1"><div align="center"><input type="button" name="selectAll" value="全选/全不选" /></div></td>
+                  </tr>
+              </table></td>
+               <td width="60"><table width="87%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="STYLE1"></td>
+                    <td class="STYLE1"><div align="center"><input type="button" id="add_fans" value="加粉" /></div></td>
+                  </tr>
+              </table></td>
+               <td width="60"><table width="90%" border="0" cellpadding="0" cellspacing="0">
+                  <tr style="cursor: pointer" onclick='dat_change_status("close")'>
+                    <td class="STYLE1"><div align="center"><img src="__PUBLIC__/images/010.gif" width="12" height="12" /></div></td>
+                    <td class="STYLE1"><div align="center" style="cursor: pointer" >关闭</div></td>
+                  </tr>
+              </table></td>
+               <td width="60"><table width="90%" border="0" cellpadding="0" cellspacing="0">
+                  <tr style="cursor: pointer" onclick='dat_change_status("open")'>
+                    <td class="STYLE1"><div align="center"><img src="__PUBLIC__/images/status_1.gif" width="12" height="12" /></div></td>
+                    <td class="STYLE1"><div align="center" style="cursor: pointer" >打开</div></td>
+                  </tr style="cursor: pointer">
+                   </table></td>
+
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif" align="center" id="awarp">
+            <td width="3%" height="26">选择</td>
+            <td width="7%" height="18">ID</td>
+            <td width="14%" height="18">产品名称</td>
+            <td width="10%" height="18">分类</td>
+            <td width="10%" height="18">子类</td>
+            <td width="10%" height="18">品牌名称</td>
+            <td width="5%" height="18">容量</td>
+            <td width="5%" height="18">价格</td>
+            <td width="6%" height="18">图片管理</td>
+            <td width="5%" height="18">购买渠道</td>
+            <td width="5%" height="18">状态</td>
+            <td width="5%" height="18">粉丝数</td>
+            <td width="5%" height="18">加V</td>
+            <td width="7%" height="18">编辑</td>
+           <!-- <td width="7%" height="18"><div align="center" class="STYLE2">删除</div></td> --> 	   
+          </tr>
+          <volist name="list" id="productlist" emtpy="这里一片空白" key="k">
+          <tr>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE1">
+              <input name="checkbox" type="checkbox" class="STYLE2" value="{$productlist[pid]}"/>
+            </div></td>
+            <td height="18" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$productlist.pid}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="left" class="STYLE2 STYLE1">
+            <a href="/products/{$productlist.pid}" target="_blank">
+            {$productlist.pname}</a></div>
+            </td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$productlist.firstcname}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$productlist.secondcname}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$productlist.brandname}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" >{$productlist.goodssize}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" >{$productlist.goodsprice}</div></td>
+			<td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2">
+				<a href="javascript:void(0)" onclick="pic_dialog('{$productlist.pid}')">编辑</a></div>
+			</td>
+			<td align="center" height="18" bgcolor="#FFFFFF"><a href="#" onclick="dialogmeseeage('__URL__/channel/pid/{$productlist[pid]}','渠道管理')">管理</a></td>
+			 <td height="18" bgcolor="#FFFFFF" align="center">
+				<span onclick="changeProductStatus('{$productlist[pid]}','{$k}')" id='img_{$k}'>
+					<if condition="$productlist.status eq 1">
+					<img src='__PUBLIC__/images/status_1.gif' height='15' width='15'  id="status" style="cursor: pointer">
+					<else />
+					<img src='__PUBLIC__/images/status_0.gif' height='15' width='15'  id="status" style="cursor: pointer">
+					</if>
+					</span>
+				<input type="hidden" value='{$productlist.status}' id='val_{$k}'>
+			 </td>
+			 <td bgcolor="#FFFFFF" align="center">
+					{$productlist.fans_num}
+			 </td>
+			 <td height="18" bgcolor="#FFFFFF" align="center">
+				<a href="javascript:void(0)" onclick="channelv(this,'{$productlist.pid}')"><img src='__PUBLIC__/images/status_{$productlist.if_super}.gif'></a>
+				<input type="hidden" value="{$productlist.if_super}">
+			 </td>
+             <td height="18" bgcolor="#FFFFFF"><div align="center"><img src="__PUBLIC__/images/037.gif" width="9" height="9" /><span class="STYLE1"> [</span><a href="__URL__/edit/pid/{$productlist.pid}">编辑</a><span class="STYLE1">]</span></div></td>
+           <!--<td height="18" bgcolor="#FFFFFF"><div align="center"><span class="STYLE2"><img src="__PUBLIC__/images/010.gif" width="9" height="9" /> </span>  <span class="STYLE1">[</span><a onclick="return confirm('确认将此信息删除吗?')" href="__URL__/del/pid/{$productlist.pid}">删除</a><span class="STYLE1">]</span></div></td> -->
+          </tr>
+		</volist>
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+            <td width="75%" valign="top" class="STYLE1"></td>
+          </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<script>
+
+function pic_dialog(id){
+	$.dialog({
+		content:"url:__URL__/picManager/pid/"+id,
+		title:"产品图片管理",
+	}).max()
+}
+
+
+function changeProductStatus(pid,key){
+	var v=$("#val_"+key);
+	$.ajax({
+		url:"{:U('Product/changeProductStatus')}",
+		type:"post",
+		dataType:"json",
+		data:"pid="+pid+'&status='+v.val(),
+		success: function(chkresult){
+			if(parseInt(chkresult.status)==1){
+
+				if(v.val()==0){
+					$("#img_"+key+">img").attr('src','__PUBLIC__/images/status_1.gif');
+					v.val('1');
+				}else{
+					$("#img_"+key+">img").attr('src','__PUBLIC__/images/010.gif');
+					v.val('0');
+				}
+			}else{
+				alert(chkresult.info);
+			}
+		}
+	})
+}
+$(":button[name='selectAll']").toggle(
+function(){
+	$(":checkbox[name='checkbox']").attr("checked",true);
+},
+function(){
+	$(":checkbox[name='checkbox']").attr("checked",false);
+}
+);
+
+function get_product_list(){
+	var list=$(":checkbox[name='checkbox']:checked");
+	var string="";
+	for(var i=0;i<list.length;i++){
+		string+=$(":checkbox[name='checkbox']:checked:eq("+i+")").val()+",";
+	}
+	return string;
+}
+
+function dat_change_status(type){
+	var status=1;
+	if(type=='close')
+	status=0;
+	var pid_list=get_product_list();
+	if(pid_list==''){
+		alert("请选择产品");
+		return false;
+	}
+
+	$.ajax({
+		type:"post",
+		url:"{:U('Product/changeProductStatus')}",
+		dataType:"json",
+		data:"type=dat&prolist="+pid_list+"&status="+status,
+		success:function(data){
+			alert(data.info);
+			window.location.href="__SELF__";
+		}
+	})
+}
+
+$("#add_fans").click(function(){
+	var pid_list=get_product_list();
+	if(pid_list==''){
+		alert("请选择产品");
+		return false;
+	}
+	$("#userid_list").val(pid_list);
+	$("#add_fans").dialog({
+		title:"批量加粉",
+		content:$("#userinfo_div").html()
+	})
+})
+
+$("#addfans_submit").click(function(){
+ if($("#add_fansnum").val() <=0){
+	 $("#add_fansnum").focus();
+	 return false;
+ }
+ var api=$.dialog.tips('正在处理，请稍候...',600);
+ $.ajax({
+	 type:"post",
+	 url:"__URL__/addFans",
+	 data:$("#add_fans_form").serialize(),
+	 dataType:"json",
+	 success:function(data){
+		 api.close();
+		 $.dialog.tips(data.info);
+		 setTimeout("api_addfans.close();",3000);
+	 }
+ })
+ return false;
+})
+
+//order排序
+pregpattern({
+			"pid":"ID",
+			"goodsprice":"价格",
+			"fans_num":"粉丝数"
+			});
+</script>
+<div id="userinfo_div" style="display: none">
+	<form action="__URL__/addFans" method="post" name="add_fans_form"  id="add_fans_form">
+	    <input type="hidden"  name="type"  value="2" id="type">
+		<input type="hidden"  name="userid_list" value="" id="userid_list">
+		粉丝数量：<input name="add_fansnum" type="text" value="0" id="add_fansnum"><br>
+		<input type="submit"  id="addfans_submit" value="添加粉丝">
+	</form>
+</div>
+<include file="Public:footer" />

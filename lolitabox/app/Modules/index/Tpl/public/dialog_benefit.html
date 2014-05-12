@@ -1,0 +1,53 @@
+
+<iframe name="hidden_frame" id="hidden_frame" style="display:none" ></iframe>
+
+<div class="be_part_box cfl">
+	<p>请分别上传您眉毛稀疏、黯淡的照片和您打造丰盈、立体眉毛后的照片。（请使用jpg格式，大小为5M以内）</p>
+	<div class="part_example l">
+		<p>示例：</p>
+		<p><img src="public/images/part_example.jpg" width="165" height="112"></p>
+		<p class="part_example_bt"><span>稀疏眉</span><span>丰盈眉</span></p>
+	</div>
+	<div class="part_step r">
+		<div class="part_step1_main l">
+		<div class="part_step1">STEP1<p class="be_img_upload" style="border:0 none;"><img src=""  id="imgSharePicDialog1" style="max-width:90px;max-height:120px;" /></p></div>
+			<form id="imgform1" action="<{:u('home/UploadSharePic')}>" enctype="multipart/form-data"  target="hidden_frame" method="POST">  		
+		    <p><a class="img_upload" title="图片上传" href="javascript:void(0)"><input type="file" id="fileTuDialog1" name="file_tu" onchange="previewImage(1)"></a></p>
+			<input type="hidden" id="imgpathDialog1" name="imgpath" />
+		</form>			
+<input type="hidden" id="b_type" value="" />		
+<script>
+
+function previewImage(id)
+{
+	$("#b_type").val(id);
+	$("#imgform"+id).submit();
+}
+
+function imgload(img){
+ 	var id=$("#b_type").val();
+	$("#imgSharePicDialog"+id).attr("src",img);
+	$("#imgpathDialog"+id).val(img);
+	$("#fileTuDialog"+id).val(""); 
+}
+
+
+
+</script>		
+		
+		</div>
+		<p class="arrow_right l">&rarr;</p>
+		<div class="part_step2_main r">
+		    <div class="part_step2">STEP2<p class="be_img_upload"><img src=""  id="imgSharePicDialog2" style="max-width:90px;max-height:120px;" /></p></div>
+		   <form id="imgform2" action="<{:u('home/UploadSharePic')}>" enctype="multipart/form-data"  target="hidden_frame" method="POST">  		
+		    <p><a class="img_upload" title="图片上传" href="javascript:void(0)"><input type="file" id="fileTuDialog2" name="file_tu" onchange="previewImage(2)"></a></p>
+			<input type="hidden" id="imgpathDialog2" name="imgpath" />
+		</form>
+		    
+	    </div>
+	</div>
+	<input type="hidden" id="b_key" value="<{$return[b_key]}>" />
+	<div class="be_matters_attention l">
+		<span>注：提交即表示，您同意所上传内容允许被LOLITABOX免费传播使用。</span><a href="javascript:void(0)" onclick="to_join_benefit(this)"><em class="W_pin_b">提交</em></a>
+	</div>
+</div>

@@ -1,0 +1,19 @@
+<include file="public:header.inc" />
+<br /><br /><br /><br /><br />
+<!-- 哈哈 -->
+<form name="formdetail"  id="formdetail"   method="post" action="<{:u('member/gopay')}>" >	
+<div style="margin-left:300px;">
+会员类型：<{$info[m_type]}><br /><br />
+会员价格：<{$info[price]}><br /><br />
+支付方式：<{$info[pay_bank]}><br /><br />
+会员名称：<{$info[name]}><br /><br />
+<input type="submit" value="提交">
+<input type="hidden" name="ordernmb" id="ordernmb"  value="<{$info['ordernmb']}>"/>
+<input type="hidden" name="name" id="name"  value="<{$info['name']}>"/>
+<input type="hidden" name="pay_bank" id="pay_bank"  value="<{$info['pay_bank']}>"/>
+<input type="hidden" name="price" id="price"  value="<{$info['price']}>"/>
+
+</div>
+</form>
+<br /><br /><br /><br /><br />
+<include file="public:footer.inc" />

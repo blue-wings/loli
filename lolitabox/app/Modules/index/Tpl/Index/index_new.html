@@ -1,0 +1,191 @@
+﻿<include file="public:header.inc" />
+<style>
+#tipbox{ width:622px; height:596px;}
+#tipbox .tipbox_main{ z-index:1000;position: absolute; text-align:center;}
+#tipbox .tipbox_main_con{background: url(public/images/index_bg.png) center no-repeat; position:relative; z-index:10;height:421px;  padding-top:180px; }
+#tipbox .close ,#tipbox .a_close{position:absolute; width:70px; height:70px; right:-25px; top:95px;}
+#tipbox .close{ background:url(public/images/index_icon/index_bt_close.png) no-repeat; z-index:9;  }
+#tipbox .a_close{ z-index:99;}
+
+.step1{left:0px; top:0px; }
+.step1 .title,.step2 .title,.step3 .title{text-align:center;margin-bottom:40px;}
+
+.step_con{ width:622px; height: 210px; }
+.step_con ul {padding:0 50px; height:auto; float:left;}
+.step_con ul li{width:128px;  height:auto; float:left; margin:0px 1px;}
+.step_con ul li ol li ,#tipbox .step_ft ,.step_ft2,.step_con2{ display:inline-block;text-align:center; }
+.step_con2{ width:622px; height:100px; }
+#tipbox .step_ft {height:50px; margin-bottom:22px; display:block;}
+#tipbox .step_ft .step_ft1,.step2 .step_ft .step_ft1{ width:107px; display:inline-block; _display:inline; height:49px; background:url(public/images/index_icon/index_bt_bg.png) center no-repeat; text-align:center; line-height:49px; font-size:15px; color:#fff; font-weight:bold;}
+.step_ft a:hover{text-decoration:none;}
+.step2 .step_ft .step_ft0 ,.step3 .step_ft .step_ft0{ width:107px; display:inline-block; _display:inline; height:49px;text-align:center; line-height:49px; font-size:15px; color:#000; font-weight:bold;}
+
+
+.step2 .step_con{height:200px;}
+
+.step_ft2 a.select{background:url(public/images/index_bt_2.png) no-repeat;}
+.step_ft2_1 ,.step_ft2_2 , .step_ft2_3{width:14px; height:14px; display:inline-block; _display:inline; background:url(public/images/index_bt_1.png) no-repeat; margin-right:16px;}
+.step3{ padding-top:20px;}
+.step3 .close{ position:absolute; top:-82px; left:575px;}
+.step3 .step_con{height:140px;}
+.step3 .step_con2{margin-bottom:30px;}
+</style>
+
+<!---->
+<div class="fm1020_c">
+	<!--关于萝莉盒start-->
+	<div class="wp1020_2 mb16">
+		<div class="hd_t"></div>
+		<div class="main">
+			<div class="box_about cfl">
+				<div class="box_index l">
+					<dl class="beauty_box_index">
+	                   <dt>
+	                   <a href="<{$return[llmz][url]}>" target="_blank">
+	                   		<img src="<{$return[llmz][img]}>" width="382" height="488" alt="<{$return[llmz][title]}>"/>
+	                   </a>                  
+	                   </dt>
+	                   <dd class="first_dd_btn"><a href="/buy/index.html#boxs_1" target="_blank"><p>限量特购</p></a></dd>
+	                   <dd><a href="/buy/index.html#boxs_2" target="_blank"><p>当月订购</p></a></dd>
+	                   <dd><a href="<{:u('special/ndsy')}>" target="_blank"><p>全年订购</p></a></dd>
+					</dl>
+					
+					<dl class="chowhound_box_index">
+	                   <dt>
+	                   <a href="<{$return[lltc][url]}>" target="_blank"><img src="<{$return[lltc][img]}>" width="357" height="488" alt="<{$return[lltc][title]}>"/></a>                   	
+	                   	</dt>
+	                   <dd class="first_dd_btn"><a href="<{:u('buy/show',array('boxid'=>133))}>" target="_blank"><p>当月订购</p></a></dd>
+	                   <dd><a href="<{:u('buy/show',array('boxid'=>134))}>" target="_blank"><p>季度订购</p></a></dd>
+	                   <dd><a href="<{:u('buy/show',array('boxid'=>135))}>" target="_blank"><p>半年订购</p></a></dd>
+	                   <dd><a href="<{:u('buy/show',array('boxid'=>136))}>" target="_blank"><p>全年订购</p></a></dd>
+					</dl>
+				</div>
+				
+				<div class="f202 box_dynamic cfl r">
+					<div class="wp202">
+						<div class="hd_t">
+					        <h3 class="i_tit l"><em class="t_tips_h">&nbsp;</em>萝莉推荐</h3>
+					    </div>
+					    <div class="box_dynamic_first"><a href="<{$return[llzx][url]}>" target="_blank"><img src="<{$return[llzx][img]}>" width="200" height="250" alt="<{$return[llzx][title]}>" /></a></div>
+					</div>
+					<div class="box_what"><a href="<{:u('info/lolitabox',array('boxid'=>1147))}>" target="_blank"><img src="public/images/27.jpg" width="200" height="108"></a></div>
+					<div class="box_guide"><a href="<{:u('special/xszn')}>" target="_blank"><img src="public/images/28.jpg" width="200" height="108"></a></div>
+				</div>				
+				
+		    </div>
+		</div>
+		<div class="ft"></div>
+	</div>
+	<script type="text/javascript"> 
+           $('.box_index dd').mouseenter(function(){
+	           	$('.props').hide();
+	           	var index=$(this).index();
+	           	$(this).addClass("dd_hover");
+	           	$(this).parent().find(".props").eq(index-1).show();
+	           	$(this).parent().find('.props_wrap').stop(true,true).animate({height:"0px"},500);
+	           	$(this).parent().find('.props_wrap').stop(true,true).animate({height:"200px"},500);
+
+           })          
+           $('.box_index dd').mouseleave(function(){
+	           	$(this).parent().find('dd').removeClass("dd_hover");
+                $(this).parent().find('.props_wrap').mouseover(function(){
+                	$(this).show();
+                }).mouseleave(function(){
+                	$(this).animate({height:"0px"},500);
+                })
+           })
+           $('.box_index dl').mouseleave(function(){
+           	    $(this).find('.props_wrap').stop(true).animate({height:"0px"});
+           })
+	</script>
+    <!--关于萝莉盒end-->
+    <!--最新试用和特权专区以及积分中心start-->
+    <div class="wp1020_2 mb16 cfl product_classification">
+    	<div class="f480 wp480_2 the_latest_trial l">
+    		<div class="hd">
+    			<h3 class="i_tit l"><em class="t_arrows_btm">&nbsp;</em>新品试用</h3>
+				<a href="<{:u('brand/index')}>" target="_blank" class="i_more r mt15">&nbsp;</a>
+    		</div>
+    		<div class="main cfl">
+    		<volist name="return.products_list" id="vo">
+    			<dl>
+    				<dt><a href="<{$vo.producturl}>" target="_blank"><img src="<{$vo.pimg}>" width="138" height="138" alt="<{$vo.pname}>"/></a>
+    				<notempty name="vo.commend_tags_class">	<i class="<{$vo.commend_tags_class}>"></i></notempty>
+    			    </dt>
+    				<dd class="name"><a href="<{$vo.producturl}>" target="_blank"><{$vo.pname}></a></dd>
+    				<dd class="brand">
+    				<volist name="vo.sale_tags"    id="v">
+									<a href="javascript:void(0)" class="t_tips t_tips_0<{$i}>"><{$v}></a>
+					</volist>
+					</dd>
+    			</dl>
+    		</volist>
+    		</div>
+    		<div class="ft"></div>
+    	</div>
+    	<div class="f339 wp339_2 privilege_zone l">
+    		<div class="hd">
+    			<h3 class="i_tit l"><em class="t_brand">&nbsp;</em>特权专区</h3>
+				<a href="<{:u('special/member')}>" target="_blank"  class="i_more r mt15">&nbsp;</a>
+    		</div>
+    		<div class="main cfl">
+    			<dl>
+    				<dt><a href="<{:u('try/index',array('type'=>1))}>" target="_blank" ><img src="public/images/privilege_zone_1.jpg" width="138" height="138" alt=""/></a></dt>
+    				<dd>10元立即开启<br/>美妆试用之旅</dd>
+    			</dl>
+    			<dl>
+    				<dt><a href="<{:u('buy/index')}>#boxs_5" target="_blank" ><img src="public/images/privilege_zone_2.jpg" width="138" height="138" alt=""/></a></dt>
+    				<dd>萝莉，萝莉<br/>“盒”我心意</dd>
+    			</dl>
+    		</div>
+    		<div class="ft"></div>
+    	</div>
+    	<div class="integration_center cfl r">
+    		<a href="<{:u('try/iexchange')}>" target="_blank"><img src="public/images/integration_center.jpg"></a>
+    	</div>
+    </div>
+    <!--最新试用和特权专区以及积分中心end-->   
+    <!--首页-合作品牌-start-->
+	<div class="fm1024 mb16 cfl index_box_brand">
+		<div class="wp1020_2">
+			<div class="hd">
+				<h3 class="i_tit l"><em class="t_stars">&nbsp;</em>合作品牌</h3>
+				<a href="<{:u('brand/index',array('ac'=>2))}>" target="_blank" class="i_more r mt15">&nbsp;</a>
+			</div>
+			<div class="main">
+				<div class="brand_wrap cfl">
+					<div class="brand_ranking brand_ranking_2">
+						<ul class="brand_ranking_con">
+						<volist name="return.brand_list" id="vo">
+							<li><a href="<{$vo.brandurl}>" target="_blank"><img src="<{$vo.logo_url}>" width="100" height="100" alt="<{$vo.name}>" /></a></li>
+						</volist>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="ft"></div>
+		</div>
+	</div>
+    <!--首页-合作品牌-end-->
+    <!--特别关注start-->
+    <div class="wp1020_2 mb16 cfl special_attention">
+    	<div class="wp1020_2">
+    	    <div class="hd_t"></div>
+    	    <div class="main cfl">
+    	    	<ul class="special_attention_con">
+    	    	<volist name="return.ilist" id="vo">
+    	    		<li>
+	    	    		<a href="<{$vo.url}>" target="_blank">
+	    	    			<img src="<{$vo.img}>" width="235" height="235" alt="<{$vo.title}>"/>
+	    	    		</a>
+    	    		</li>
+    	    	</volist>
+    	    	</ul>
+    	    </div>
+    	    <div class="ft"></div>
+        </div>
+    </div>
+    <!--特别关注end-->
+</div>
+
+<include file="public:footer.inc" />

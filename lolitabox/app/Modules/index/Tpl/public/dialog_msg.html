@@ -1,0 +1,62 @@
+<div class="gl_tc_W450 tc_pop tc_private_wrap">
+	<!---标题------->
+	<div class="login_tit">
+		<h2>发私信</h2>
+	</div>
+	
+	<!--私信内容--->
+	<div class="tc_personal_fast">
+		<div class="personal_wrap cfl">
+			<div class="name">发私信给:</div>
+			<div class="iput"><input type="text" value="<{$Think.post.name}>" class="W_input_ws"  id="rep_msg"></div>
+			<div class="r_word">还可以输入<span id="words_num">300</span>字</div>
+		</div>
+		
+		<div class="personal_wrap cfl">
+			<div class="name">私信内容:</div>
+			<div class="iput"><textarea cols="300" class="W_textarea"  id="msg_text"></textarea></div>
+		</div>
+	    
+	    <input type="hidden" id="to_userid" value="<{$Think.post.to}>" />
+		
+		<div class="personal_wrap cfl">
+			<div class="r_word">
+				<a href="javascript:void(0)" onclick="write_msg()" class="W_pin_b14">发送</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+function write_msg(){
+	var to_userid=$("#to_userid").val();
+	var msg_content=$("#msg_text").val();
+	var to_nick=$("#rep_msg").val();
+	if($.trim(msg_content)==""){
+		$.dialog({content:"私信内容不能为空",time:3,icon:"error",lock:true,opacity:"0.2"});
+		return false;
+	}
+	if($.trim(to_nick)==""){
+		$.dialog({content:"接受对象不能为空",time:3,icon:"error",lock:true,opacity:"0.2"});
+		return false;
+	}
+	$.ajax({
+		url:"<{:u('home/write_user_msg')}>",
+		data:{"msg_content":msg_content,"to_nick":to_nick},
+		type:"post",
+		dataType:"json",
+		success:function(ret){
+			if(parseInt(ret.status)==1){
+				msg_dialog.close();
+				$.dialog({content:"发送成功",time:2,icon:"succeed",lock:true,opacity:"0.2"});
+				setTimeout("location.reload()",3000);
+			}else{
+				$.dialog({content:ret.info,time:3,icon:"error",lock:true,opacity:"0.2"});
+				return false;
+			}
+		}
+	})
+}
+$(function(){
+		limit_word_num('msg_text','words_num',300);
+})
+</script>

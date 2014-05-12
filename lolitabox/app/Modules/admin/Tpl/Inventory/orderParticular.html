@@ -1,0 +1,417 @@
+<include file="Public:header" />
+<style>
+.p30{
+	padding:1% 20% 2% 20%;
+	width:100%;
+	height:200px;
+}
+.p10{
+	clear: both;
+	padding:1% 20%;
+	width:100%;
+}
+.p101{
+	clear: both;
+	padding:0% 20% 2% 20%;
+	width:100%;
+	display:none;
+}
+.flt{
+	float:left;
+	padding-top:5px;
+	font-size:14px;
+	color:#333333;
+	height:210px;
+	width:60px;
+}
+.flt2{
+	float:left;
+	padding-top:5px;
+	font-size:14px;
+	color:#333333;
+	height:30px;
+	width:60px;
+}
+.flg{
+	float:left;
+	margin-left:20px;
+	border:#F5F5F5 1px solid;
+	width:50%;
+}
+.flg2{
+	height:30px;
+	float:left;
+	margin-left:20px;
+	border:#F5F5F5 1px solid;
+	width:50%;
+}
+.flg3{
+	height:60px;
+	float:left;
+	margin-left:20px;
+	width:60%;
+}
+tr{
+	height:25px;
+}
+input{
+	border:1;
+}
+.w50{
+	width:50px;
+}
+.lef{
+	height:30px;
+	width:2%;
+	float:left;
+	background:url(__PUBLIC__/images/tab_03.gif);
+}
+.midd{
+	height:30px;
+	width:95%;
+	float:left;
+	background:url(__PUBLIC__/images/tab_05.gif);
+}
+.rig{
+	height:30px;
+	width:2%;
+	float:left;
+	background:url(__PUBLIC__/images/tab_07.gif);	
+}
+.pnamevalue{
+	width:230px;
+}
+.f1{
+	padding:10px 0px 0px 0px;
+	width:15%;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.f2{
+	padding:10px 0px 0px 30px;
+	width:23%;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.f3{
+	padding:10px 0px 0px 30px;
+	width:13%;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.f4{
+	padding:10px 0px 0px 50px;
+	width:8%;
+	height:60%;
+	font-size:14px;
+	float:left;
+}
+.addsize{
+	margin-right:20px;
+}
+.writebreak{
+	width:300px;
+	word-break:break-all;
+}
+</style>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />入库管理>待确认入库单详情</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+        <if condition="$alonemessage['status'] eq 0">
+        	<span>此单已删除</span>
+        <elseif condition="$alonemessage['ifconfirm'] eq 0"/>
+        	<a href="{:U('Inventory/inOrderEntry',array('id'=>$alonemessage['id']))}">删除本单</a>
+         <elseif condition="$alonemessage['ifconfirm'] eq 1"/>
+         	<span>此单已确认入库</span>
+        </if>
+        <a href="{:U('Inventory/inOrderEntry')}">返回上级</a>
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<div class="p30">
+	<div class="flt">
+		<span>基本信息</span>
+	</div>
+	<div class="flg">
+		<table width="90%" cellpadding="0" cellspacing="0" style="padding:5px;">
+			<tr>
+				<td>入库单名称:</td>
+				<td colspan="2"><p class="writebreak">{$alonemessage.title}</p></td>
+			</tr>
+			<tr>
+				<td >客户名称:</td>
+				<td colspan="2"><p class="writebreak">{$alonemessage.customer}</p></td>
+			</tr>
+			<tr>
+				<td>预计到货时间:</td>
+				<td colspan="2">{$alonemessage.arrivaldate}</td>
+			</tr>
+			<tr>
+				<td>区域:</td>
+				<td colspan="2">{$alonemessage.area}</td>
+			</tr>	
+			<tr>
+				<td>备注:</td>
+				<td colspan="2"><p class="writebreak">{$alonemessage.description}</p></td>
+			</tr>
+			<tr>
+				<td>销售:</td>
+				<td colspan="2"><p class="writebreak">{$alonemessage.operator}</p></td>
+			</tr>																	
+		</table>
+	</div>
+</div>
+<div class="p10">
+	<div class="flt2">
+		<span>入库</span>
+	</div>
+	<div class="flg2">
+		<table width="50%" cellpadding="0" cellspacing="0" style="padding:5px;">
+			<tr>
+				<td colspan="3">
+					<if condition="$alonemessage.status eq 0"><span>此单已删除 </span>
+					<elseif condition="$alonemessage.ifconfirm eq 1"/><span>已入库&nbsp;{$alonemessage.confirmoperator}&nbsp;&nbsp;{$alonemessage.confirmdatetime}</span>
+					<else/>
+						<input type="button" value="确认入库" name="confrim" onclick="laidUp('{$alonemessage.id}')" style="margin:5px;">
+					</if>
+				</td>
+			</tr>													
+		</table>
+	</div>
+</div>
+
+
+<div class="p101">
+	<div class="flt2">
+		<span>入库信息</span>
+	</div>
+	<div class="flg3">
+		<form action="__ACTION__" method="POST" name='order' onsubmit="return checkform()">
+        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98" id='tab'>
+
+      <if condition="$alonemessage['ifconfirm'] eq 1">
+      <tr style="text-align:left;height:18" >
+      	<td colspan="5" height="30">
+      		<table width="100%">
+      			<tr align="center">
+      				<td width="15%">单品id</td>	
+      				<td width="33%">单品名称</td>	
+      				<td width="8%">数量</td>	
+      				<td width="15%">有效期</td>
+      				<td>货架号信息</td>
+      			</tr>     		
+      		</table>
+      	</td>
+      </tr>
+      	<volist name="alonemessage.list" id="list">
+      	<tr align="center">
+				<td height="18" bgcolor="#FFFFFF" width="15%">{$list.itemid}</td>
+				<td height="18" bgcolor="#FFFFFF" width="38%" class="pnamevalue">{$list.name}</td>
+				<td height="18" bgcolor="#FFFFFF" width="8%">{$list.quantity}</td>
+				<td height="18" bgcolor="#FFFFFF" width="15%" class="dtime">{$list.validdate}</td>
+				<td height="18" bgcolor="#FFFFFF">{$list.shelfinfo}</td>
+		</tr>
+      	</volist>
+      <else/>
+      <tr style="text-align:left;height:18" >
+      	<td colspan="5" height="30">
+      		<div class="lef"></div>
+      		<div class="midd"/>
+      			<div class="f1">单品id</div>
+      			<div class="f2">单品名称</div>
+      			<div class="f3">数量</div>    
+ 				<div class="f4">有效期</div>
+      		</div>
+      		<div class="rig" /></div>
+      	</td>
+      </tr>
+	  	<tr align="center">
+				<td height="18" bgcolor="#FFFFFF" width="10%"><input type="text" name="pid[]" value="" size="3" style="text-align:center"></td>
+				<td height="18" bgcolor="#FFFFFF" class="pnamevalue"></td>
+				<td height="18" bgcolor="#FFFFFF" width="10%"><input type="text" name="quantity[]" value="" size="3" style="text-align:center"></td>
+				<td height="18" bgcolor="#FFFFFF" class="dtime"><input type="text" name="maxtime[]" value=""></td>
+				<td height="18" bgcolor="#FFFFFF"><a href="#" name="rmlink">删除</a></td>
+		</tr>
+	  </if>
+    </table>
+     <if condition="$alonemessage['ifconfirm'] neq 1">
+    <input type="button" name='addtext' value="新增" class='addsize'><input type='submit' name='sub' value='确定' style="border:1px;">
+    </if>
+    </form>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	bindListener();
+});
+
+function checkform(){
+	
+	var pval=checkpid();
+	var qval=checkquantity();
+	var v=checkvalidate();
+
+	if(v==pval==qval==1){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+//检查单品数量
+function checkquantity(){
+	var s=t=0;
+	$(":text[name='quantity[]']").each(function(k){
+		var qval=$(this).val();
+
+		if(qval != '' && Number(qval)>0){
+			s+=1;
+		}
+		t=k;
+	})
+	
+	if(s != (t+1)){
+		alert('单品数量不能为空或不能小于0!');
+	}else{
+		return 1;
+	}
+}
+
+//检查单品ID
+function checkpid(){
+	var s=t=0;
+	$(":text[name='pid[]']").each(function(k){
+		var pval=$(this).val();
+		if(pval !=''){
+			s+=1;
+		}
+		t=k;
+	})
+	
+	if(s != (t+1)){
+		alert('单品ID不能为空!');
+	}else{
+		return 1;
+	}
+}
+//检查有效期
+function checkvalidate(){
+	var count=total=0;
+	$("td.dtime").each(function(i){
+		var validate=$(this).children(":text[name='maxtime[]']").val();
+		if(validate !=''){
+			count+=1;
+		}
+		total=i;
+	})
+
+	if(count != (total+1)){
+		alert('单品有效期不能为空!');
+	}else{
+		return 1;
+	}
+}
+
+
+$(function(){
+	var corm="{$alonemessage['ifconfirm']}";
+	if(corm==1){
+		$(".p101").show();
+	}
+	$(":button[name='addtext']").bind('click',addt);
+	$(":text[name='pid[]']").live('keyup',function(){
+		var th=$(this);
+		$.ajax({
+			url:"{:U('Inventory/getProductsData')}",
+			type:"post",
+			dataType:"json",
+			data:"pid="+th.val()+'&n='+Math.random(),
+			success: function(chkresult){
+				th.parent().siblings(".pnamevalue").text(chkresult.data);
+			}
+		})
+	})
+})
+
+function addt(){
+	var str='';
+	str+='<tr align="center">';
+	str+='<td height="18" bgcolor="#FFFFFF" width="10%"><input type="text" name="pid[]" value="" size="3" style="text-align:center"></td>';
+	str+='<td height="18" bgcolor="#FFFFFF" class="pnamevalue"></td>';
+	str+='<td height="18" bgcolor="#FFFFFF" width="10%"><input type="text" name="quantity[]" value="" size="3" style="text-align:center"></td>';
+	str+='<td height="18" bgcolor="#FFFFFF" class="dtime"><input type="text" name="maxtime[]" value=""></td>';
+	str+='<td height="18" bgcolor="#FFFFFF"><a href="#" name="rmlink">删除</a></td></tr>';
+	$("#tab").append(str);
+	bindListener();
+	starttime();
+}
+
+function bindListener(){
+	$("a[name=rmlink]").unbind().click(function(){
+		$(this).parent().parent().remove();
+	})
+}
+
+function laidUp(id){
+	$.ajax({
+		url:"{:u('Inventory/inInventory')}",
+		type:"post",
+		dataType:"json",
+		data:"id="+id+'&type=in&n='+Math.random(),
+		success: function(chkresult){
+			if(parseInt(chkresult.status)==1){
+				$(".p10").hide();
+				$(".p101").show();
+				$("form[name=order]").prepend("<input type='hidden' name='bid' value='"+id+"'>");
+				starttime();
+			}else{
+				alert("权限不足!");
+			}
+		}
+	})
+}
+
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+function starttime(){
+	$(".dtime > input").each(function(){
+		$(this).datepicker({
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$(":text[name=maxtime[]]").datepicker( "option",selectedDate );
+			}
+		})
+	})
+}
+</script>
+<include file="Public:footer" />

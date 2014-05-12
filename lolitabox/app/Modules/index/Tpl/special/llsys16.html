@@ -1,0 +1,364 @@
+<include file="public:header.inc" />
+ <!--[if IE 6]>
+<script src="js/pngfix.js" type="text/javascript"></script>
+<![endif]--> 
+<style type="text/css">
+body {text-align: left; font-size:12px; line-height:18px; color:#333; background:url(public/special/20130204_2/bgs.jpg) repeat; margin:0;  padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif;}
+body,html{width:100%;}
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p{margin: 0; padding: 0; border: 0}
+a {color:#fff; text-decoration:none;}
+h1,h2,h3,h4,h5,h6,h7{margin:0; padding:0;}
+a:hover {color: #fff; text-decoration:underline} 
+font{font-size:14px}
+.textRight{text-align:right;}
+b{color:#fff}
+/*公有*/
+.zt_glTitle{width:930px; margin:26px auto 0; position:relative; height:90px;}
+.zt_glTitle .left_title{ width:380px; height:85px; background:url(public/special/20130204_2/gl_title_bg.png) no-repeat; position:absolute; left: -35px; font-size:24px; color:#fff; line-height:55px; padding-left:24px;}
+.zt_glTitle .right_cont{width:550px; float:right; font-size:14px; line-height:20px;}
+
+.Block01{width:1000px; height:430px; margin:0 auto; background:#dddce0; margin-top:56px;}
+
+.Block02 ,.Block03 ,.Block04{width:984px; margin:10px auto 0; display:block; overflow:hidden; _zoom:1; border:8px solid #ccc; background:#fff;}
+.Block02 .tt1{width:840px; display:block; overflow:hidden; _zoom:1; margin:18px auto 0; position:relative; padding-top:62px;}
+.Block02 .tt1 .top_title{position:absolute; left:47px; top:0; background:url(public/special/20130204_2/block02_bg.png) no-repeat; width:754px; height:83px; line-height:83px; font-size:30px; color:#fff; font-weight:bold; text-align:center;}
+.Block02 .tt1 .left_img{width:410px; height:306px; float:left; border:1px solid #e4dddf;}
+.Block02 .tt1 .right_cont{width:358px; height:256px; float:right; background-color:#b50000; color:#fff; padding:26px;}
+.Block02 .tt1 .right_cont h1{height:45px; line-height:45px; font-weight:normal;}
+.Block02 .tt1 .right_cont li{font-size:18px; line-height:24px;}
+.Block02 .tt2{width:960px; height:140px; margin:30px auto;}
+.Block02 .tt2 li{width:303px; height:140px; margin-right:25px; background:#e3dcde; float:left; overflow:hidden;}
+.Block02 .tt2 li.last{margin-right:0;}
+
+.Block03 .tt1{margin:26px auto; width:945px; display:block; overflow:hidden; _zoom:1;}
+.Block03 .tt1 li{position:relative; margin-right:18px; float:left; height:410px; }
+.Block03 .tt1 li.last{margin-right:0;}
+.Block03 .tt1 li .speak{width:250px; height:143px; color:#fff; background:url(public/special/20130204_2/block03_bg.png) no-repeat; bottom:0; left:0; position:absolute; padding:10px 0 0 50px;}
+.Block03 .tt1 li .speak h4{height:35px; line-height:35px; text-align:center; font-size:14px;}
+.Block03 .tt1 li .speak p{width:210px; margin:0 auto;}
+
+.Block04 .tt1{ width:950px; margin:10px auto; display:block; overflow:hidden; _zoom:1;}
+.Block04 .tt1 .left_img{width:223px; background:url(public/special/20130204_2/block04_bg.png) no-repeat; float:left; padding-left:18px;}
+.Block04 .tt1 .left_img .top_title{height:146px; color:#fff; padding:0 8px;}
+.Block04 .tt1 .left_img .top_title h4{height:28px; font-size:14px; padding:13px 0 10px; text-align:center;}
+
+
+.Block04 .tt1 .right_wrap{width:695px; float:right;}
+.Block04 .tt1 .right_wrap ul{display:block; overflow:hidden; _zoom:1;}
+.Block04 .tt1 .right_wrap li{width:170px; float:left; margin-right:3px; _width:170px; _ margin-right:2px; _overflow:hidden;} 
+.Block04 .tt1 .right_wrap li .list_img{width:170px; height:180px; background:url(public/special/20130204_2/block04_bg2.gif) no-repeat; padding-top:5px; padding-left:5px;}
+.Block04 .tt1 .right_wrap li .list_cont{margin-top:3px; padding:6px 10px; background:#000; color:#fff; width:138px;}
+
+.Block04 .tt1 .right_wrap .nj_wrap{margin-top:3px; height:128px; background:#000; padding:14px;}
+.Block04 .tt1 .right_wrap .nj_wrap .left_img{width:122px; height:122px; float:left; background:url(public/special/20130204_2/block04_bg3.gif) no-repeat; padding:3px;}
+
+.Block04 .tt1 .right_wrap .nj_wrap .right_wrap{float:right; width:518px; color:#fff;}
+.Block04 .tt1 .nj_wrap .right_wrap h4{width:128px; height:26px; line-height:26px; text-align:center; background:#b50000; font-weight:normal; margin-bottom:20px;}
+
+.zt2_ft_bg{height:212px; margin-top:10px; position:fixed; bottom:0; width:100%; }
+.zt2_ft_bg .zt2_wrap{position:relative; width:100%;}
+.zt2_ft_bg .zt2_bg{position:absolute; left:0; top:0; background:#000; opacity: 0.9; filter:alpha(opacity=90); width:100%; height:212px; z-index:0}
+.zt2_ft_bg .zt2_ft{width:1000px; margin:0 auto; height:212px; position:relative; z-index:99;}
+
+.zt2_ft_bg .zt2_ft .zt2_title{width:930px; margin:0 auto; height:45px; line-height:45px;color:#989898;}
+.zt2_ft_bg .zt2_ft .zt2_title h2{float:left;  font-size:24px; }
+.zt2_ft_bg .zt2_ft .zt2_title .more{float:right; font-size:18px;}
+.zt2_ft_bg .zt2_ft .zt2_title .more a{color:#989898;}
+.zt2_ft_bg .zt2_ft .ft_wrap{height:160px;}
+.zt2_ft_bg .zt2_ft .shipLeft,.zt2_ft_bg .zt2_ft .shipRig {width:33px; height:65px; background:url(public/special/20130204_2/zt02_ft.gif) no-repeat; display:block; margin-top:30px; float:left;}
+.zt2_ft_bg .zt2_ft .shipRig{background-position:-33px 0; float:right;}
+.zt2_ft_bg .zt2_ft .imglist_w{width:925px; margin-left:4px; float:left; height:160px;  position: relative; overflow: hidden  }
+.zt2_ft_bg .zt2_ft .imglist{ position: absolute; width: 20000px; top: 0px; left: 0px }
+.zt2_ft_bg .zt2_ft .imglist li {width:165px; float:left; padding:0 10px;}
+.zt2_ft_bg .zt2_ft .imglist li .imgcont{height:125px; background:#e7e7e8;}
+.zt2_ft_bg .zt2_ft .imglist li .textcont{font-size:14px; text-align:center; height:35px; line-height:35px;}
+.zt2_ft_bg .zt2_ft .imglist li a{color:#fff;}
+</style>
+<!--专题头部-开始-->
+<div class="Block01">
+<img src="public/special/20130204_2/image_top.jpg" /></div>
+<!--专题头部-结束-->
+
+<!--第一板块-开始-->
+<div class="Block02">
+	<div class="tt1">
+    	<div class="top_title">1月Lolitabox最受欢迎产品 神秘揭晓</div>
+        <div class="left_img"><a href="<{:u('share/box')}>" target="_blank"><img src="public/special/20130204_2/Block02_img1.jpg" width="410" height="306" border="0" /></a></div>
+    	<div class="right_cont">
+        	<h1>试用产品：</h1>
+            <ul>
+            	<li><a href="<{:u('products/62895')}>" target="_blank">雙妹夜上海香水 </a><a href="<{:u('products/62920')}>" target="_blank"></a><a href="<{:u('products/15509')}>" target="_blank">贝佳斯活力亮采睛凝霜</a></li>
+                <li><a href="<{:u('products/62919')}>" target="_blank">Coach波碧花样女士香氛</a> <a href="<{:u('products/62920')}>" target="_blank">Coach经典淡香氛</a></li>
+                <li><a href="<{:u('products/37327')}>" target="_blank">欧舒丹蜡菊赋颜修护精华霜</a></li>
+                <li><a href="<{:u('products/9447')}>" target="_blank">欧舒丹乳木果丰凝润肤霜</a> </li>
+                <li><a href="<{:u('products/15509')}>" target="_blank"></a></li>
+                <li><a href="<{:u('products/62922')}>" target="_blank">蜂言蜜语蜜雨润白有机洁面乳 </a></li>
+                <li><a href="<{:u('products/62923')}>" target="_blank">蜂言蜜语美丽在望有机保湿乳液</a></li>
+                <li><a href="<{:u('products/62901')}>" target="_blank">肌醇悦妍营养精华液</a> <a href="<{:u('products/62902')}>" target="_blank">深层洁面洗颜膏 </a></li>
+                <li><a href="<{:u('products/62903')}>" target="_blank">肌醇悦妍营养脂质</a> <a href="<{:u('products/62900')}>" target="_blank">悦妍精华保湿液</a></li>
+                <li><a href="<{:u('products/62941')}>" target="_blank">苇芝植物精华修纹柔滑细致霜 &amp;</a> <a href="<{:u('products/62924')}>" target="_blank">蜜露</a></li>
+            </ul>
+        </div>
+    </div>
+    
+</div>
+<!--第一板块-结束-->
+
+<!--第二板块-开始-->
+<div class="Block03">
+	<!--公共标题-开始-->
+	<div class="zt_glTitle">
+    	<div class="left_title">温婉女人香 撩动人心</div>
+        <div class="right_cont">一年到头，Party的理由何止百个，然而都不如岁末来得气势汹汹。女人们似乎要把整整一年的放纵都塞到这几夜。想在Party上香艳异常，香水这个能瞬间改换风情的宝物你可不能不送自己！</div>
+    </div>
+    <!--公共标题-结束-->
+    <div class="tt1">
+    	<ul>
+    		<li><a href="<{:u('products/62895')}>" target="_blank"><img src="public/special/20130204_2/Block03_img1.jpg" width="300" height="298" border="0" /></a>
+                <div class="speak">
+                    <h4>雙妹夜上海香水</h4>
+                    <p>经典的红与黑，红是热烈，黑却典雅。一款融汇现代和复古的香水，迷人的初调+雅致的基调，重新演绎1930年代上海的风韵，呈现出如上海名媛般的优雅和高贵。</p>
+                </div>
+          </li>
+    		<li><a href="<{:u('products/62920')}>" target="_blank"><img src="public/special/20130204_2/Block03_img2.jpg" width="300" height="298" border="0" /></a>
+                <div class="speak">
+                    <h4>Coach经典淡香氛</h4>
+                    <p>活力四射的前调+丰郁芳香的中调+温柔婉约的后调。花香调淡香氛，经典且优雅，倾洒身上，即能塑造超越时空的精致优雅女性形象。</p>
+                </div>
+          </li>
+    		<li class="last"><a href="<{:u('products/62919')}>" target="_blank"><img src="public/special/20130204_2/Block03_img3.jpg" width="300" height="298" border="0" /></a>
+                <div class="speak">
+                    <h4>Coach波碧花样女士香氛</h4>
+                    <p>东方花香调温暖而撩人，摩登俏皮成为了这款香氛的核心。充满活力、生机勃勃，浪漫气息浓郁，专为娇柔、魅力非凡的时尚女性设计。</p>
+                </div>
+          </li>
+    	</ul>
+    </div>
+</div>
+<!--第二板块-结束-->
+
+<!--第三板块-开始-->
+<div class="Block04">
+	<!--公共标题-开始-->
+	<div class="zt_glTitle">
+    	<div class="left_title">洗迎新春 展现肌肤新活力</div>
+        <div class="right_cont">新春新气象，就连住的房子都要来个大清扫，干干净净迎接新一年。经过一整年的劳累，肌肤当然也要来一场深层清洁，将平时积累下来的废角质、彩妆残留物通通扫清光，让肌肤展现新活力来喜迎新春！</div>
+    </div>
+    <!--公共标题-结束-->
+    <div class="tt1">
+   	  <div class="left_img">
+        	<div class="top_title">
+            	<h4><a href="<{:u('products/62902')}>" target="_blank">肌醇悦妍深层洁面洗颜膏 100ml/118RMB</a></h4>
+                <p>能作用于毛孔深处，彻底清除导致毛孔堵塞和肤色暗沉的油垢和老化细胞，亲水分子结构，在清洁同时带走洗面乳本身的残留，达到真正深层清洁肌肤。</p>
+          </div>
+        <a href="<{:u('products/62902')}>" target="_blank"><img src="public/special/20130204_2/Block04_img1.jpg" width="223" height="267" border="0" /></a></div>
+    	<div class="right_wrap">
+        	<ul>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/62902')}>" target="_blank"><img src="public/special/20130204_2/Block04_img2.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">质地：乳白膏状质地，带有淡淡的香味。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/62902')}>" target="_blank"><img src="public/special/20130204_2/Block04_img02.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">泡沫：泡沫量不算很多，但比较细腻。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/62902')}>" target="_blank"><img src="public/special/20130204_2/Block04_img002.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">PH值：介于7-8之间，属于弱碱性。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/62902')}>" target="_blank"><img src="public/special/20130204_2/Block04_img0002.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">清洁力：手背上的各种彩妆颜色轻松被全部洗掉。</div>
+                </li>
+            </ul>
+            
+            <div class="nj_wrap">
+            	<div class="left_img"><img src="public/special/20130204_2/Block04_img3.jpg" width="122" height="122" border="0" /></div>
+            	<div class="right_wrap">
+                	<h4>编辑有妙招</h4>
+                	<p>用盐洗脸也能够有很好的清洁和去污垢的效果哦。将一小勺细盐混合3到5滴的水，用手指轻轻的将其搅拌均匀，再将其从额头自上而下在脸上轻轻按摩，几分钟后，直到脸上盐颗粒呈白粉末状，用温水洗净即可。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--第三板块-结束-->
+
+<!--第四板块-开始-->
+<div class="Block04">
+	<!--公共标题-开始-->
+	<div class="zt_glTitle">
+    	<div class="left_title">眼睛要放假 流转美眸最动人</div>
+        <div class="right_cont">繁忙的工作，不足的睡眠，你的眼部肌肉早已极度疲劳，从而导致眼部皮肤衰老，眼袋、黑眼圈和皱纹的滋生。整日目不暇接的你，趁着新春长假，一定要让自己的眼睛也休假几天，让流转美眸重现亮丽动人魅力。</div>
+    </div>
+    <!--公共标题-结束-->
+    <div class="tt1">
+   	  <div class="left_img">
+        	<div class="top_title">
+            	<h4><a href="<{:u('products/15509')}>" target="_blank">贝佳斯活力亮采睛凝霜 25g/480RMB</a></h4>
+                <p>一款必备的眼部精华，从根本上减淡不均匀的色素，重建脆弱的眼部肌肤，让双目更加紧致、亮丽。有效改善眼部细纹、眼周暗沉、眼周松弛与等眼周肌肤问题。</p>
+          </div>
+        <a href="<{:u('products/15509')}>" target="_blank"><img src="public/special/20130204_2/Block05_img1.jpg" width="223" height="267" border="0" /></a></div>
+    	<div class="right_wrap">
+        	<ul>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/15509')}>" target="_blank"><img src="public/special/20130204_2/Block05_img2.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">质地：白色的霜状质地，带细微的清香。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/15509')}>" target="_blank"><img src="public/special/20130204_2/Block05_img3.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">抚纹：虎口处测试，使用后虎口细纹平滑了很多。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/15509')}>" target="_blank"><img src="public/special/20130204_2/Block05_img4.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">燃烧测试：加热不即全部消失，说明添加物很少。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/15509')}>" target="_blank"><img src="public/special/20130204_2/Block05_img5.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">水份值：由28.9%上升至49.1%，保湿效果很好。</div>
+                </li>
+            </ul>
+            
+            <div class="nj_wrap">
+            	<div class="left_img"><img src="public/special/20130204_2/Block04_img3.jpg" width="122" height="122" border="0" /></div>
+            	<div class="right_wrap">
+                	<h4>编辑有妙招</h4>
+                	<p>美食能养肤，当然的也能护目哦。白醋鸭梨就能保肝明目。将鸭梨去皮切成片，每片鸭梨滴上一滴白醋后再吃，一天约吃10片即可。可医治肝火过旺，眼睛发涩、发干、肿胀、视物不清，就可以明显改善眼睛的酸涩和干燥。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--第四板块-结束-->
+
+
+<!--第五板块-开始-->
+<div class="Block04">
+	<!--公共标题-开始-->
+	<div class="zt_glTitle">
+    	<div class="left_title">细纹OUT Hold住肌肤年轻状态</div>
+        <div class="right_cont">过年又意味着增长一岁，年龄这东西无法逆长，但肌肤年轻状态却能控制。送肌肤一份细致皱纹，让青春逆长的厚礼可有效避免你大过年的，被别人瞧着你的细纹追着问这么大年纪为嘛木有男朋友的尴尬哦~</div>
+    </div>
+    <!--公共标题-结束-->
+    <div class="tt1">
+   	  <div class="left_img">
+        <div class="top_title">
+            <h4><a href="<{:u('products/62941')}>" target="_blank">苇芝植物精华修纹柔滑细致霜 50ml/720RMB</a></h4>
+            <p>一款细致不油腻的护理产品，重塑肌肤弹性，提升肌肤紧实度、水润度和滋养度，抚平细纹，抚退皱纹。 可与蜜露配合使用，加倍抗皱效果。</p>
+       </div>
+        
+        <a href="<{:u('products/62941')}>" target="_blank"><img src="public/special/20130204_2/Block07_img1.jpg" width="223" height="267" border="0" /></a></div>
+    	<div class="right_wrap">
+        	<ul>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/62941')}>" target="_blank"><img src="public/special/20130204_2/Block07_img2.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">质地：白色的霜状质地，莹润却也不油腻。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/62941')}>" target="_blank"><img src="public/special/20130204_2/Block07_img4.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">吸收度：很容易推开，可被肌肤快速吸收掉。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/62941')}>" target="_blank"><img src="public/special/20130204_2/Block07_img3.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">PH值：介于6-7之间，呈弱酸性，很适合肌肤。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/62941')}>" target="_blank"><img src="public/special/20130204_2/Block07_img5.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">上脸效果：涂匀后脸部肌肤非常亮白水润。</div>
+                </li>
+            </ul>
+            
+            <div class="nj_wrap">
+            	<div class="left_img"><img src="public/special/20130204_2/Block04_img3.jpg" width="122" height="122" border="0" /></div>
+            	<div class="right_wrap">
+                	<h4>编辑有妙招</h4>
+                	<p>日常的自我护理，能让护眼工作事半功倍。贵在持之以恒，日久定见成效。黎明起床，先将双手互相摩擦，待手搓热后以手掌熨贴双眼，反复3次以后，再以食、中指轻轻按压眼球，或按压眼球四周。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--第五板块-结束-->
+
+<!--第五板块-开始-->
+<div class="Block04">
+	<!--公共标题-开始-->
+	<div class="zt_glTitle">
+    	<div class="left_title">滋养身体肌肤 畅享温润暖春</div>
+        <div class="right_cont">冬春交替时节，不稳定的气候容易将肌肤内的水分夺走，让肌肤变得紧绷并缺少弹性。因此肌肤深层细腻呵护的功课一定要做足。除了脸部润泽是必修课，唇部、手、足部的局部护理更是不容忽视哦。</div>
+    </div>
+    <!--公共标题-结束-->
+    <div class="tt1">
+   	  <div class="left_img">
+        <div class="top_title">
+            <h4><a href="<{:u('products/9447')}>" target="_blank">欧舒丹乳木果丰凝润肤霜 200ml/370RMB</a></h4>
+            <p>为面部及身体肌肤而设的多用途乳霜，给肌肤带来保湿及舒缓功效。丰润的质地与温和天然的成分，为肌肤带来舒适细致的呵护，特别适合干性、极干性肌肤使用。</p>
+       </div>
+        
+        <a href="<{:u('products/9447')}>" target="_blank"><img src="public/special/20130204_2/Block08_img1.jpg" width="223" height="267" border="0" /></a></div>
+    	<div class="right_wrap">
+        	<ul>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/9447')}>" target="_blank"><img src="public/special/20130204_2/Block08_img2.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">质地：浓郁的霜状质地，蕴含乳木果油非常香。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/9447')}>" target="_blank"><img src="public/special/20130204_2/Block08_img3.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">延展性：比较容易推开，延展性不错。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/9447')}>" target="_blank"><img src="public/special/20130204_2/Block08_img4.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">吸收度：在手背推开后，比较快被肌肤吸收。</div>
+                </li>
+            	<li>
+                	<div class="list_img"><a href="<{:u('products/9447')}>" target="_blank"><img src="public/special/20130204_2/Block08_img5.jpg" width="150" height="176" border="0" /></a></div>
+                	<div class="list_cont">水份值：由49.6%上升至73.4%，保湿效果很好。</div>
+                </li>
+            </ul>
+            
+            <div class="nj_wrap">
+            	<div class="left_img"><img src="public/special/20130204_2/Block04_img3.jpg" width="122" height="122" border="0" /></div>
+            	<div class="right_wrap">
+                	<h4>编辑有妙招</h4>
+                	<p>在每天清晨起床或者临睡之前，平躺，先将手掌相互搓热，然后揉搓双方向天枢穴的位置，直至腹部感觉到热为止。此穴位可以将热量传递全身，促进全身经络疏通，在排毒、瘦小腹的同时，让身体肌肤变暖，整个人也会更性感哦。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--第五板块-结束-->
+
+<!--第六板块-开始-->
+<div class="Block03">
+	<!--公共标题-开始-->
+	<div class="zt_glTitle">
+    	<div class="left_title">2月护肤有重点</div>
+        <div class="right_cont">寒冬走到尾声，面对崭新的季节，我们也必须要开始新一季的护肤旅程，谁让初春总是寄托着肌肤光明的前景呢。在这喜气满满的2月份里，记牢以下护肤重点，可让肌肤展现最美状态哦，赶快学起来吧！</div>
+    </div>
+    <!--公共标题-结束-->
+    <div class="tt1">
+    	<ul>
+    		<li><a href="<{:u('space/blog_detail',array('blogid'=>1812,'id'=>2375))}>" target="_blank"><img src="public/special/20130204_2/Block06_img1.jpg" width="300" height="298" border="0" /></a>
+                <div class="speak">
+                    <h4>黄金美白季</h4>
+                    <p>2月，肌肤的黑色素还比较呆滞，美白也最出效果。如果尽早集中做好美白修复，那这份让人心动的白就会持续小半年哦。</p>
+                </div>
+          </li>
+    		<li><a href="<{:u('space/blog_detail',array('blogid'=>1812,'id'=>2375))}>" target="_blank"><img src="public/special/20130204_2/Block06_img2.jpg" width="300" height="298" border="0" /></a>
+                <div class="speak">
+                    <h4>多拍化妆水有好处</h4>
+                    <p>早春肌肤够活跃，当然也够饥渴，因为消耗大嘛，可加了高保湿品，也许会发现改善也只是那么一点儿。一位美容培训师曾告知，还不如买上几大盒化妆棉用好化妆水呢。</p>
+                </div>
+          </li>
+    		<li class="last"><a href="<{:u('space/blog_detail',array('blogid'=>1812,'id'=>2375))}>" target="_blank"><img src="public/special/20130204_2/Block06_img3.jpg" width="300" height="298" border="0" /></a>
+                <div class="speak">
+                    <h4>消退上火纹</h4>
+                    <p>早春体内的燥热会生发在唇上，反复涂抹润唇膏已无济于事时，不如来次5分钟快速敷唇。可撕掉一层拍过爽肤水的棉片，然后蘸点保湿精华，敷在嘴唇上5分钟。</p>
+                </div>
+          </li>
+    	</ul>
+    </div>
+</div>
+<!--第六板块-结束-->
+<include file="public:footer.inc" />

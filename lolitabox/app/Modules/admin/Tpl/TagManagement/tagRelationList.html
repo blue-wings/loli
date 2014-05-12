@@ -1,0 +1,58 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="/public/js/jquery_theme/smoothness/jquery.ui.all.css">
+<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+<style>
+table{
+	font-size:12px;
+	margin:20px;
+}
+
+input,select{
+	border:solid #808080 1px;
+}
+
+.tawid{
+	height:25px;
+	border-collapse:collapse;
+	width:90%;
+}
+
+.tawid tr{height:28px;}
+.tawid td{ border:1px solid #666; border-collapse:collapse; text-align:center;}
+.tb1{width:800px}
+.valnull{font-weight:bolder;color:#FF8040;};
+.datalist{border:0;}
+</style>
+<table cellpadding="0" cellspacing="0" class="tawid">
+    <tr><td colspan="10" class="datalist">{$tagname}</td></tr>
+	<tr bgcolor="#f5f5f5">
+		<td width="3%">序号</td>
+		<td width="8%">用户ID</td>
+		<td width="15%">标题</td>
+		<td width="8%">分类</td>
+	</tr>
+	<volist name="list" id="tlist" key="k">
+	<tr>
+		<td>{$k}</td>
+		<td><a href="{:U('User/userList',array('userid' => $tlist[userid]))}"  target="_blank">{$tlist.userid}</a></td>
+		<td><if condition="$tlist.relationtype eq 2"><a href="{:U('ProductsEvaluate/productEvaluateList',array('evaluateid' => $tlist['relationid']))}"  target="_blank"><else/><a href="{:U('UserBlog/blogList',array('blogid' => $tlist['relationid']))}" target="_blank"></if>{$tlist.title}</a></td>
+		<td>
+			<switch name="tlist.relationtype">
+				<case value="1">日志
+				</case>
+				<case value="2">评测
+				</case>
+			    <default />其他
+			</switch>
+		</td>
+	</tr>
+</volist>
+<if condition="$list neq '' and  $list neq null">
+<tr><td colspan="10" class="datalist">{$page}</td></tr>
+<else />
+<tr><td colspan="10" class="valnull">抱歉,没有查询到您搜索的信息,请检查!</td></tr>
+</if>
+</table>
+<include file="Public:footer" /> 

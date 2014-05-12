@@ -1,0 +1,173 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="/public/js/jquery_theme/smoothness/jquery.ui.all.css">
+<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+<script>
+	(function(config){
+		config['extendDrag'] = false; // 注意，此配置参数只能在这里使用全局配置，在调用窗口的传参数使用无效
+		config['lock'] = true;
+		config['fixed'] = true;
+		config['okVal'] = 'Ok';
+		config['cancelVal'] = 'Cancel';
+	})($.dialog.setting);
+</script>
+{/* 动作选项*/}
+
+
+<fieldset class="fieldset">
+	<legend>查询条件</legend>
+	<form name="myform" id="myform" action="__ACTION__" method="get">
+	状态:
+		<select name="status">
+		<option value="1" selected>有效</option>
+		<option value="0">无效</option>
+		<option value="2">全部</option>
+		</select>
+		<input style="border:0" type=submit name='search' value="查询">
+	</form>
+	<br/><br/>
+<input type="button" onclick="edit('','','','','','','')" value="增加">	
+</fieldset>
+<script>
+	if("{$Think.get.status}"){
+		$("select[name='status']").val("{$Think.get.status}");
+	}
+</script>
+<form name="listform" id="listform" action="__URL__/delEvaluateReply" method="post">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">用户积分配置表</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif" align="center">
+          	<td width="3%" height="26">序列</td>
+          	<td width="20%" height="26">行为动作标识</td>
+            <td width="22%" height="26">动作名称</td>
+            <td width="8%" height="18">积分值</td>
+            <td width="8%" height="18">经验值</td>
+            <td width="8%" height="18">当日积分值上限</td>
+            <td width="8%" height="18">当日经验值上限</td>
+            <td width="8%" height="18">是否限制只记录一次</td>
+            <td width="8%" height="18">编辑</td>
+            <td width="20%" height="18">状态</td>
+          </tr>
+          <volist name="list" id="userlist" key="k">
+	          <tr style="text-align:center">
+	            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$k}</div></td>
+	            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$userlist.action_id}</div></td>
+	            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1"><a href="{:U('UserCredit/creditStat',array('action_id'=>$userlist[action_id]))}">{$userlist.action_name}</div></td>
+	            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$userlist.score}</div></td>
+	            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$userlist.experience}</div></td>
+	            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$userlist.score_daylimit}</div></td>
+	            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$userlist.experience_daylimit}</div></td>
+	          	<td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1"><if condition="$userlist.is_unique eq '1'"><span style="color:#FF0000">是</span><else /><span style="color:#004000">否</span></if></div></td>
+	          	<td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1"><a href="#" onclick="edit('{$userlist[action_id]}','{$userlist[action_name]}','{$userlist[score]}','{$userlist[experience]}','{$userlist[score_daylimit]}','{$userlist[experience_daylimit]}','{$userlist[is_unique]}')">编辑</div></td>
+				<td height="25" bgcolor="#FFFFFF">
+					<eq name="userlist.status" value="1"><font color="red">有效</font><else/>无效</eq>
+				</td>
+	          </tr>
+		  </volist>
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+	<if condition="$list eq ''"><tr style="text-align:center"><td colspan="5">抱歉,没找到您查询的数据!</td></tr></if> 
+  <tr style="text-align:center"><td colspan="5">{$page}</td></tr>
+</table>
+</form>
+
+<script>
+$(function(){
+	var action ="{$Think.get.action_id}";
+	if(action!=''){
+		$("#action_id option[value='"+action+"']").attr("selected","selected");
+	}	
+})
+
+
+/*
+	编辑用户配置信息
+	id:				行为动作标识
+	name:			行为动作名称
+	score:			积分值
+	experience:		经验值
+	score_daylimit:	当日积分值上限
+	experience_daylimit:当日经验值上限
+	is_unique:		是否限制只记录一次
+*/
+	function edit(id,name,score,experience,score_daylimit,experience_daylimit,is_unique){
+		var  $str='';
+		$str='<form action="__ACTION__" id="ks" method="POST">';
+		if(id==''){
+			$str='行为动作标识:<input type="text" name="action_id" value="'+id+'"><br>';
+		}else{
+			$str='<input type="hidden" name="action_id" value="'+id+'"><br>';
+		}
+		
+		$str+='行为动作名称:<input type="text" name="action_name" value="'+name+'"><br>';
+		$str+='积分值:<input type="text" name="score" value="'+score+'"><br>';
+		$str+='经验值:<input type="text" name="experience" value="'+experience+'"><br>';
+		$str+='当日积分值上限:<input type="text" name="score_daylimit" value="'+score_daylimit+'"><br>';
+		$str+='当日经验值上限:<input type="text" name="experience_daylimit" value="'+experience_daylimit+'"><br>';
+		$str+="是否限制只记录一次:<select name='is_unique' value='"+is_unique+"'>";
+
+		if(is_unique==1){
+			$str+="<option value='1' selected>是</option> <option value='0'>否</option>";
+		}else{
+			$str+="<option value='0' selected>否</option><option value='1'>是</option>";
+		}
+		
+		$.dialog({
+				title:'修改用户积分经验配置表',
+				content: $str,
+				ok:function(){
+							var action_name=$("input[name='action_name']").val();
+							var score=$("input[name='score']").val();
+							var experience=$("input[name='experience']").val();
+							var score_daylimit=$("input[name='score_daylimit']").val();
+							var experience_daylimit=$("input[name='experience_daylimit']").val();
+							var is_unique=$("select[name='is_unique']").val();
+							if(id==undefined){
+								var id=$("input[name='action_id']").val();
+							}
+
+							$.ajax({
+								url:"{:U('UserCredit/editUserData')}",
+								type:"post",
+								dataType:"json",
+								data:"action_id="+id+"&action_name="+action_name+"&score="+score+"&experience="+experience+
+									"&score_daylimit="+score_daylimit+"&experience_daylimit="+experience_daylimit+"&is_unique="+is_unique+'&n='+Math.random(),
+								success: function(chkresult){
+										if(parseInt(chkresult.status)==1){
+											alert(chkresult.info);
+											location.reload();
+										}
+									}
+							})						
+							
+							
+					},
+					cancel: true 
+				});		
+		
+	}
+</script>
+<include file="Public:footer" />

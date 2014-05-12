@@ -1,0 +1,66 @@
+<include file="public:header.inc" />
+<div class="fm1020 top_guide">
+	所在位置：<a href="/">网站首页</a> > <span class="g9">关于我们</span></a>
+</div>
+<!--分页--end-->
+
+<!--个人中心--内容--start-------->
+<div class="fm1020_b cfl">
+	<!--左侧导航--->
+	<div class="f275 wp275 l">
+		<div class="hd_t"></div>
+		<div class="main ">
+			<!--导航--->
+			<div class="My_personal_nav">
+				<div class="menu">
+					<ul>
+						<li class="item0">
+							<h3 class="item_hd item_hd7"><a>关于我们</a></h3>
+							<div class="item_col">
+								<p class="item_col_list"><a href="<{:U('info/about',array('aid'=>6))}>">联系我们</a></p>
+								<p class="item_col_list"><a href="<{:U('info/about',array('aid'=>653))}>">加入我们</a></p>
+							</div>
+						</li>
+						
+						<li class="item7">
+							<h3 class="item_hd item_hd1"><a>网站声明</a></h3>
+							<div class="item_col">
+								<p class="item_col_list"><a href="<{:U('info/about',array('aid'=>8))}>">隐私声明</a></p>
+								<p class="item_col_list"><a href="<{:U('info/about',array('aid'=>10))}>">用户协议</a></p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+		<div class="ft"></div>
+	</div>
+	<!--右侧-内容-->
+	<div class="f738 r wp738">
+		<div class="hd">
+			<h2 class="tit_us">
+						<if condition="$article_info[abst] neq ''">
+							<{$article_info[abst]}>
+						<else />
+							<{$article_info[title]}>
+						</if>
+			</h2>
+		</div>
+		<div class="main My_details_wrap">
+			<div class="us_wrap">
+				<p class="text">
+				<{$article_info.info}>
+				
+				</p>
+			</div>
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+<script>
+var aid="<{$Think.get.aid}>";
+var url="/info/about/aid/"+aid+".html";
+$(".menu a[href*='"+url+"']").addClass("select");
+</script>
+<include file="public:footer.inc" />

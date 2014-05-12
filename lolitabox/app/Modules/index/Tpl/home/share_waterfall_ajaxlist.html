@@ -1,0 +1,36 @@
+<div class="index_boxs_show"  id='waterfall_contail' >
+	<!---瀑布流--->
+	     <gt name="total"  value="0">
+				<include file="home:share_waterfall" />
+				<!----分栏---->
+			<else/>
+				<script>$(function(){
+					if("<{$Think.MODULE_NAME}>" == "home"){
+						var title = "您还米有发表过分享，分享被收录后就能获得积分奖励哦"
+							var content = "赶紧<a href='<{:u('home/try_products')}>'>去您的试用产品列表</a>发表分享吧~"
+							if('<{$Think.get.ac}>'==1 ||  !'<{$Think.get.ac}>'){
+								if('<{$Think.get.type}>' == 2){
+									title="您还米有发表过晒盒分享，分享被收录后就能获得积分奖励哦"
+									content="赶紧<a href='<{:u('home/boxorder')}>'>查看您的萝莉盒订单</a>发表分享吧~"
+								}else if('<{$Think.get.type}>' == 3){
+									title="您还没有对产品发表过分享，分享被收录后就能获得积分奖励哦"
+									content="赶紧<a href='<{:u('home/try_products')}>'>去您的试用产品列表</a>发表分享吧~"
+								}
+							}else if('<{$Think.get.ac}>'==2){
+								title="您还米有赞过任何分享。";
+								content="可以<a href='<{:u('loli/index')}>'>去萝莉推荐</a>中看看有哪些精彩内容哦~";
+							}else if('<{$Think.get.ac}>'==3){
+								title="您还米有踩过任何分享。";
+								content="可以<a href='<{:u('loli/index')}>'>去萝莉推荐</a>中看看有哪些精彩内容哦~";
+							}
+					}
+					 if("<{$Think.MODULE_NAME}>" == "space"){
+					    	var title = "他还米有分享哦";
+					    	var content = "";
+					    }
+					
+					nodata("waterfall_contail",title,content);
+				   })</script>
+		</gt>
+			    </div>
+				<div class="hei1"></div>

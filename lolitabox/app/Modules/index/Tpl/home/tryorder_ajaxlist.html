@@ -1,0 +1,98 @@
+			  <gt name="total"  value="0">
+				<div class="W_order_wrap">
+					<table class="order_tables" border="0" cellspacing="0" cellpadding="0" width="100%">
+						<tbody>
+						<tr height="46">                                                                                    
+							<th>订单编号</th>
+							<th>订单类型
+							
+								<div class="post_order_hover"><span id="stat_val">全部</span>
+									<ul>
+										<li><a href="javascript:void(0)" class="stat" stat_id="1">全部</a></li>
+										<li><a href="javascript:void(0)" class="stat" stat_id="2">付邮试用</a></li>
+										<li><a href="javascript:void(0)" class="stat" stat_id="3">积分试用</a></li>
+									</ul>
+								</div> 
+							
+							</th>
+							<th>收货人</th>
+							<th>订单金额</th>
+							<th width="99">时间</th>
+							<th>订单状态</th>
+							<th>操作</th>
+						</tr>
+						
+					<if condition="$list neq ''">	
+						<volist name="list" id="vo">
+							<tr>
+								<td><{$vo[ordernmb]}></td>
+								<td><span class="rd"><{$vo[boxstate]}></span></td>
+								<td><{$vo[linkman]}></td>
+								<td><{$vo[price]}>元</td>
+								<td><{$vo[addtime]}></td>
+								<td>
+								
+								<if condition="$vo.state gt 0">
+									<{$vo[status]}>
+								<else />
+										<eq name="vo[ifavalid]" value="1">
+											<p>未付款</p>
+										<else />
+											已失效
+										</eq>
+								</if>
+								</td>
+								<td>
+									<p><a href="<{:u('home/order_detail',array('id'=>$vo[ordernmb]))}>">查看订单详情</a></p>
+									<if condition="$vo[state] eq 0 AND $vo[ifavalid] eq 1">
+										<a href="<{:u('buy/gopay',array('paytype'=>'repay','orderid' =>$vo['ordernmb']))}>" class="W_pin_b" target="_blank">马上支付</a>
+									</if>
+								</td>
+							</tr>
+						</volist>
+					</if>
+						</tbody>
+					</table>
+				</div>
+				<else/>
+				 <script>
+			$(function(){
+				var title="您还米有试用过产品。可以去 <a href=\"/try/index.html\" target=\"_blank\">我要试用</a>   看看最近推出的产品试用哦~";
+				nodata("ajax_content",title); 
+			})
+			   </script>		
+				</gt>
+		
+<script>
+var state="<{$state}>";
+var type="<{$type}>";
+if(type==3){
+	$("#stat_val").html("积分试用");
+}else if(type==2){
+	$("#stat_val").html("付邮试用");
+}else{
+	$("#stat_val").html("全部");
+}
+
+$(".stat").click(function(){
+	var type=$(this).attr("stat_id");
+	$.ajax({
+		url: "__SELF__",
+		dataType: "html",
+		type: "get",
+		cache: false,
+		async:true,
+		data:"type="+type+"&state="+state,
+		success: function(html){
+			$("#ajax_content").html(html);
+			return false;
+		}
+	});
+	return false;	
+})
+
+</script>		
+		
+		
+	<div class="W_pages" id="page"><{$page}></div>			
+				

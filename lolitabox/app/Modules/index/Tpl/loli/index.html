@@ -1,0 +1,82 @@
+<include file="public:header.inc" />
+
+<!--晒盒记--内容--end-------->
+<div class="fm1024_c wp1020">
+	<div class="hd_t"></div>
+	<div class="main">
+		<div class="share_boxs">
+			<div class="share_title cfl">
+				<p class="share_title_nav"><a href="<{:u('loli/index')}>" class="loveBox_h <eq name='ac' value='1'>select</eq>"><em class="i_loveBox">&nbsp;</em>精彩分享</a></p>
+				<p class="share_title_nav"><a href="<{:u('loli/index',array('ac'=>2))}>" class="loveBox_h <eq name='ac' value='2'>select</eq>"><em class="i_loveBox"  >&nbsp;</em>重磅策划</a></p>
+				<p class="share_title_nav"><a href="<{:u('loli/index',array('ac'=>3))}>" class="loveBox_h <eq name='ac' value='3'>select</eq>"><em class="i_loveBox"  >&nbsp;</em>达人订制</a></p>
+			</div>
+		</div>
+	</div>
+	<div class="ft"></div>
+</div>
+
+<div class="fm1024_c wp1020">
+	<div class="hd_t"></div>
+	<div class="main">
+		<div class="year_month">
+		<ul>
+		<volist name="loli_timelist[1]" id="vo">
+			<li id="aid_<{$vo[id]}>" get_values="<{$Think.get.aid|default=$aid}>" class="remove_click"><a href="javascript:void(0)"><{$vo[year]}>年<{$vo[mon]}>月</a></li>
+		</volist>
+		<if condition="$loli_timelist.2 neq ''">
+		    <li class="year_month_more">
+		    	<a href="javascript:void(0)"><span class="txt_val"><{$
+loli_timelist[2][0][year]}>年<{$loli_timelist.2.0.mon}>月</span><em class="lg_pull_on">&nbsp;</em></a>
+				<ul class="year_month_more_con" style="display:none;">
+				<volist name="loli_timelist[2]" id="vo">
+					<li id="aid_<{$vo[id]}>" class="aid_click" value_year="<{$vo[year]}>" value_mon="<{$vo[mon]}>"><a href="javascript:void(0)" class="a-pinks"><{$vo[year]}>年<{$vo[mon]}>月</a></li>
+				</volist>
+				</ul>
+			</li>
+		</if>
+		 </ul> 
+  <script>
+$(function(){
+	ajax_replace("aid","__SELF__");
+})
+
+$(".aid_click").click(function(){
+	var year=$(this).attr("value_year");
+	var mon=$(this).attr("value_mon");
+	var val=year+"年"+mon+"月";
+	$(".txt_val").html(val);
+	$(".year_month_more_con").hide();
+	$(".year_month_more").addClass("selected");
+})
+$(".remove_click").click(function(){
+	$(".year_month_more").removeClass("selected");
+})
+</script>           
+	</div>
+<div id="ajax_content">
+	<include file="$template" />
+</div>
+</div>
+	<div class="ft"></div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$('.year_month_more_con').hide();
+	$('.year_month_more').mouseover(function(){
+   	$('.year_month_more_con').show();
+   	$('.hei_line').css({'width':'855px'});
+   });	
+	$('.year_month_more').mouseleave(function(){
+    $('.year_month_more_con').hide();
+    $('.hei_line').css({'width':'972px'});
+});
+	if($.browser.msie && $.browser.version == 6.0){
+    var maxHeight = parseInt($('.year_month_more_con').css('max-height'));
+    if ($('.year_month_more_con').height() > 200){
+        $('.year_month_more_con').height(200);
+       }
+    } 
+});	
+</script>
+
+<include file="public:footer.inc" />

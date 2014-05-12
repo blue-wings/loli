@@ -1,0 +1,137 @@
+<neq name='Think.MODULE_NAME'  value="user" >
+<script src="/public/js/validform.js"></script>
+<link rel="stylesheet" type="text/css" href="public/css/validform.css"/>
+</neq>
+<div class="login_wrap tc_login">
+	<h2 class="tc_t_title">萝莉盒登录</h2>
+   <div class="W_reg_info cfl">
+	<div class="W_reg_form">
+		<h1>您也可以用以下方式登录</h1>
+		
+		
+		<div class="reg_shortcut">
+		    <a href="<{:U("user/sina_login")}>?returnurl=<{$return[thurl]}>" class="login_btn"><em class="i_sina">&nbsp;</em>登录</a>
+			<a href="<{:U("user/qq_login")}>?returnurl=<{$return[thurl]}>" class="login_btn"><em class="i_qq">&nbsp;</em>登录</a>
+		</div>
+		
+		<div class="reg_divide">或</div>
+		<!--div class="info_nowrap"  id="mailLogin"><a href="javascript:void(0)">邮箱登录</a></div-->
+<form name='login'  action="<{:U("user/login")}>" class="loginform">
+		<div class="info_wrap">
+			<div class="info_list cfl">
+				<div class="tit">登录账号：</div>
+				<div class="inp">
+					<input class="W_input_ws" name="usermail"   errormsg="邮箱地址输入不正确" nullmsg="请您输入邮箱地址"   datatype="e" />
+				</div>
+				<div class="tips">
+			     	<div class="Validform_checktip">请输入注册时邮箱地址</div>
+				</div>
+			</div>
+			
+			<div class="info_list cfl">
+				<div class="tit">登录密码：</div>
+				<div class="inp">
+					<input type="password" value="" class="W_input_ws" name="password" errormsg="6-16个字符，包含字母、数字，字母区分大小写" nullmsg="请您输入登录密码"  datatype="*6-16">
+				</div>
+				<div class="tips">
+				      <div class="Validform_checktip"></div>
+				</div>
+			</div>
+			
+			<div class="info_list cfl">
+				<div class="checked">
+					<label for="remember"><input type="checkbox" checked="checked" name="remember">
+					<span class="href">记住我</span>
+					</label>｜<span class="href"><a href="<{:U('user/forgetpwd')}>">忘记密码</a></span>
+				</div>
+			</div>
+			
+			<div class="info_submit cfl">
+				<div class="inp">
+	                <input type="submit"  class="W_Fixbtn W_fix_w84" value="登录" id="btn_login"/>				
+					<!-- <a href="#" class="W_Fixbtn W_fix_w84" style="background-position: 0px 0px;">
+					登录
+					</a> -->
+				</div>
+				<p class="info_submit_enroll"><a href="<{:U("user/reglogin")}>" class="A_line2">还米账号？马上注册&gt;&gt;</a></p>
+			</div>
+		</div>
+</form>
+	</div>
+	
+	<div class="W_reg_sidebar">
+			<div class="reg_sidebar_wrap">
+			
+				<h1>加入LOLITABOX萝莉盒的好处</h1>
+				<div class="reg_shortcut">
+					<p><strong>萝莉盒：</strong>只倡导全球最时尚的生活消费理念，</p>
+					<p><strong>先试用后购买，理性消费</strong>最流行！</p>
+				</div>
+				
+				<div class="reg_sidebar_Tips">
+					<dl>
+						<dt>海量美妆 尽情试用</dt>
+						<dd>
+							<p> 60多家包括国际大牌在内的美妆品牌入驻萝莉盒，提供海量美妆试用。
+							</p>
+						</dd>
+					</dl>
+					<dl>
+						<dt>订阅自己关注的美妆资讯</dt>
+						<dd>
+							关注你喜欢的品牌， 及时获得最新美妆资讯，走在潮流前端。
+						</dd>
+					</dl>
+					<dl>
+						<dt>爱晒盒 爱分享 积分送不停 </dt>
+						<dd>
+							积极晒盒、发分享，被收录就得积分，积分可以当钱花！
+						</dd>
+					</dl>
+					<dl>
+						<dt>会员回馈 惊喜多多</dt>
+						<dd>
+							不定期的品牌优惠和会员奖励，让你惊喜不断！
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+if(TRACK_URL.match("user/logout")){
+	TRACK_URL="<{:u('home/index')}>";
+}
+//登录表单验证
+$(".loginform").Validform({
+	tiptype:2,
+	ajaxPost:true,
+	callback:function(data){
+		if(data.status=="1"){
+			setTimeout(function(){
+				$.Hidemsg(); //公用方法关闭信息提示框;
+				window.location.href=TRACK_URL;
+			},2000);
+		}
+		else {
+			setTimeout(function(){
+				$.Hidemsg(); //公用方法关闭信息提示框;
+			},3000);
+		}
+		
+	}
+});
+ $('.W_fix_w84').hover(function(){
+	$(this).css({backgroundPosition:'0 -32px'})
+},function(){
+	$(this).css({backgroundPosition:'0 0'})
+})	
+
+$('.W_input_ws').focus(function(){
+	$(this).css({borderColor:'#e7308c'})
+})
+$('.W_input_ws').blur(function(){
+	$(this).css({borderColor:'#ebebec'})
+}) 
+</script>

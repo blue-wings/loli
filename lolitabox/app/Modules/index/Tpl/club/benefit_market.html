@@ -1,0 +1,89 @@
+<include file="public:header.inc" />
+<!--公用-头部-end-->
+<div class="be_content">
+	<div class="fm1020 wp1020 cfl">
+    <div class="hd_t"></div>
+		<div class="main main_b cfl">
+			<div class="fm1020 be_nav_con cfl">
+			<!-- BENEFIT CLUB COMMON NAV(start) -->
+			<include file="benefit_nav.inc" />
+	        <!-- BENEFIT CLUB COMMON NAV(end) -->
+		    </div>
+		    <div class="fm1020 cfl">
+		    	<div class="be_pro l">
+		    		<ul class="be_pro_images_m">
+		    			<li><a href="http://www.benefitcosmetics.com.cn/product/view/gimme-brow" target="_blank"><img src="public/images/45.jpg" width="496" height="366"></a></li>
+		    		</ul>
+		    		<ul class="be_pro_images_s">
+		    			<li class="active" data-frame="public/images/45.jpg"><img src="public/images/42.jpg"></li>
+		    			<li data-frame="public/images/46.jpg"><img src="public/images/43.jpg"></li>
+		    			<li data-frame="public/images/47.jpg"><img src="public/images/44.jpg"></li>
+		    		</ul>
+		    	</div>
+		    	<div class="be_pro_info l">
+		    		<div class="be_pro_info_top">
+		    			<p>gimme brow</p>
+		    			<p class="name">贝玲妃眉梦成真丰眉膏</p>
+		    			<p>“眉”来运转，见证丰盈奇迹</p>
+		    			<p>￥210</p>
+		    		</div>
+		    		<p class="hei_b">&nbsp;</p>
+		    		<p><em class="be_btn_3"><a href="http://www.benefitcosmetics.com.cn/product/view/gimme-brow" target="_blank">立即订购</a></em></p>
+		    		<div class="be_pro_info_bottom">
+		    			<dl>
+		    				<dt>我们为什么爱她</dt>
+		    				<dd>2014新年,伪妆专家benefit贝玲妃带来开年巨献——全新gimme brow眉梦成真丰眉膏。作为业界首推的塑型丰眉膏，它就是专门拯救“霉毛”的神奇魔术师。其含有的半透明高仿真微纤维填补空隙使眉毛瞬间丰盈立体；独家特制迷你锥型刷头可以帮助调整并固定眉型；含有维他命B5,药蜀葵萃取精华修护滋润你的眉部肌肤；轻盈防水膏体塑造持久立体眉型；拥有两种色号任你选择：浅色/中间色，中间色/深色。</dd>
+		    			</dl>
+		    			<dl>
+		    				<dt>如何使用</dt>
+		    				<dd>1、将特制迷你锥型刷头轻轻按压沿眉线上妆，快速填补眉毛空隙。</dd>
+                            <dd>2、以眉头至眉尾方向轻刷眉毛并重复以上动作，即刻打造丰盈美眉。</dd>
+		    			</dl>
+		    			<dl>
+		    				<dt>详情</dt>
+		    				<dd>3.0gNet wt0.1oz.</dd>
+		    			</dl>
+		    		</div>
+		    	</div>
+		    </div>
+		    <script type="text/javascript">
+                $(function(){
+                	var m = $('.be_pro_images_m');
+                	var s = $('.be_pro_images_s');
+                	s.find('li').mouseover(function(){
+                		s.find('li').removeClass('active');
+                		$(this).addClass('active');
+                	})
+                	s.find('li').mouseover(function(){
+                         var linkM =$(this).attr("data-frame");
+                         m.find('img').attr("src",linkM);
+                	})
+                })
+		    </script>
+		    <p class=" hei_b2">&nbsp;</p>
+		    <div class="fm1020 cfl">
+	            <div class="share_boxs be_share_boxs">
+	            	    <p class="name">看彩妆师怎么说...</p>
+						<div class="index_boxs_show be_index_boxs_show">
+							<include file="home:share_waterfall" />
+						</div>
+				</div>
+		    </div>
+	    </div>
+	</div>
+</div>
+<script>
+	$(document).ready(function(){
+		var $container = $('#container');	
+		$container.imagesLoaded(function(){
+			$container.masonry({
+				itemSelector: '#container > li',
+				columnWidth:15//每两列之间的间隙为5像素
+			});
+		});
+	})
+	$(function () {
+		$("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
+	});
+</script>
+<include file="public:footer.inc" />

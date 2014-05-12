@@ -1,0 +1,15 @@
+					
+					
+					<ul class="used_pro_main cfl">
+					<volist name="list" id="vo">
+						<li>
+							<dl>
+								<dt><a href="<{$vo.prourl}>" target="_blank"><img src="<{$vo.pimg}>" width="170" height="170" alt="<{$vo.pname}>" /></a></dt>
+							    <dd class="name"><a href="<{$vo.prourl}>" target="_blank"><{$vo.pname}></a></dd>
+							    <dd>正装规格：<{$vo.goodssize}></dd>
+							    <dd>正装价格：￥<{$vo.goodsprice}></dd>
+							</dl>
+						</li>
+					</volist>
+					</ul>
+					<div class="W_pages" id="page"><{$page}></div>

@@ -1,0 +1,230 @@
+<include file="public:header.inc" />
+<!--分页--start-->
+<div class="fm1020 top_guide">
+	所在位置：<a href="/">网站首页</a> > <a href="<{:u('home/index')}>">个人主页</a> > <span class="g9">修改头像</span></a>
+</div>
+
+
+
+
+
+<script src="/public/jcrop/jcrop.js"></script>
+<link rel="stylesheet" href="/public/jcrop/jcrop.css" type="text/css" />
+<style>
+.crop_preview{ width:155px; height:155px; overflow:hidden;}
+</style>
+<iframe name="hidden_frame" id=”hidden_frame” style="display:none" ></iframe>
+<!--个人中心--内容--start-------->
+<div class="fm1020_b cfl">
+	<!--左侧导航--->
+<include file="left.inc" />
+	<!--右侧-内容-->
+	<div class="f738 r wp738">
+		<!--分享详情页内容-->
+		<include file="info.inc" />
+
+		<div class="main My_details_wrap">
+			<div class="pl_content_orders">
+				<!----内容--->
+				<i class="hei1 mb16"></i>
+				
+				<!---上传头像--->
+				
+				<div class="Upload_picture_W">
+					<!---上传标题-start-->
+					<div class="Upload_cont_t cfl">
+						<div class="top_list rd">方式一：</div>
+						
+						 <form id="imgform" action="__URL__/preview_img" enctype="multipart/form-data"  target="hidden_frame" method="POST">  	
+					    	<div class='W_Fixbtn Upload_img'>
+					     	      <input name="userface" type="file"   onchange="previewImage()"/>
+					     	</div>
+						</form>
+						
+						<div class="content">
+							<p>选择一张喜欢的图片当做自己的头像吧</p>
+							<p>目前仅支持JPG格式的图片，文件小于5M（建议尺寸大于180*180）</p>
+						</div>
+					</div>
+					<!---上传标题-End-->
+					
+					<!--上传头像内容--start---->
+					<div class="Upload_img_con cfl S_line1">
+						<div class="focus_img S_line1" >
+							<img src="public/images/10.jpg"  id="xuwanting" >
+							<b class="alpha_img"></b>
+						</div>
+						<div class="head_preview ">
+						    
+							<div class="title">头像预览</div>
+							<div class="img crop_preview"  style="width:180px;height:180px"  id="preview_box">
+								<img src="public/images/10.jpg"  id="crop_preview" width="180" height="180">
+							</div>
+							<div class="btn">
+								<a href="javascript:void(0)"  onclick="save_userface()"  class="W_pin_b14">保存头像</a>
+							<form id="imginfo" >
+						      <input type="hidden"  id="imgpath" name="imgpath" value="" />
+						      <input type="hidden"  id="x" name="x" />
+                              <input type="hidden"  id="y" name="y" />
+                              <input type="hidden"  id="w" name="w" />
+                              <input type="hidden"  id="h" name="h" />
+						 
+						 </form>
+							</div>
+						</div>
+					</div>
+					
+					<!--上传头像内容--End---->
+					
+					
+					<!--系统默认头像--start---->
+					<div class="Upload_default">
+						<div class="U_title"><span class="rd">方式二：</span>小萝莉为您精心准备了一些图片，您也可以挑选一张作为头像哦~</div>
+						<ul class="default_list cfl">
+							<li class="face select">
+								<div class="select"></div>
+								<img src="/public/images/userface/1.jpg"  width="90px"   height="90px">
+							</li> 
+						    <for start="2" end="13" >
+                                 <li class="face"><img src="/public/images/userface/<{$i}>.jpg"  width="90px"   height="90px"></li>
+                            </for>
+						</ul>
+						 <script>
+						       $(".face").click(function(){
+						    	    if($(".face").find(".select")){
+						    	    	$(".face .select").remove();
+						    	    	$(".face").removeClass("select");
+						    	    }
+						    	    $(this).prepend("<div class='select'></div>");
+						    	    $(this).addClass("select");
+						    	                  $("#default_userface").val($(this).find("img").attr("src"));
+						    	                   
+						       })
+						</script>
+						
+						<div class="Upload_Save">
+							<a  href="javascript:void()"  onclick="save_default_userface()" class="W_pin_b14">保存头像</a>
+							<input type="hidden"  name="userface"   id="default_userface" value="/public/images/userface/1.jpg" />
+						</div>
+					
+					</div>
+					<!--系统默认头像--End---->
+				</div>
+				
+				<i class="hei1"></i>
+			</div>
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+<script>
+var jcrop_api = false;
+function cut_img(w,h) {
+	if(jcrop_api!==false){
+		$('#xuwanting').removeAttr("style");
+		jcrop_api.destroy();
+	}
+	var x = (w-200)/2;
+	var y = (h-200)/2;
+	var x1 = x+200;
+	var y1 = y+200;
+
+	$('#xuwanting').Jcrop({
+	        onChange: showPreview,
+	        onSelect: showPreview,
+	        boxWidth:w,
+	        boxHeight:h,
+	        minSize:[160,160],
+	        aspectRatio: 1,
+	        setSelect:[x,y,x1,y1] 
+	      },function(){
+	        var bounds = this.getBounds();
+	        boundx = bounds[0];
+	        boundy = bounds[1]; 
+	        jcrop_api = this;
+   });
+	 
+	
+	
+	function showPreview(coords){
+        if(parseInt(coords.w) > 0){
+            //计算预览区域图片缩放的比例，通过计算显示区域的宽度(与高度)与剪裁的宽度(与高度)之比得到
+            var rx = $("#preview_box").width() / coords.w; 
+             var ry = $("#preview_box").height() / coords.h;
+            //通过比例值控制图片的样式与显示
+             $("#crop_preview").css({
+                width:Math.round(rx * $("#xuwanting").width()) + "px",	//预览图片宽度为计算比例值与原图片宽度的乘积
+                height:Math.round(rx * $("#xuwanting").height()) + "px",  //预览图片高度为计算比例值与原图片高度的乘积
+                marginLeft:"-" + Math.round(rx * coords.x) + "px",
+                marginTop:"-" + Math.round(ry * coords.y) + "px"
+            });
+        }
+        $('#x').val(coords.x);
+        $('#y').val(coords.y);
+        $('#w').val(coords.w);
+        $('#h').val(coords.h);
+    }
+}
+
+function change_img(img,w,h){
+	$("#xuwanting").attr("src","/"+img);
+	$(".jcrop-holder img").attr("src","/"+img);
+	$("#crop_preview").attr("src","/"+img);
+	$("#imgpath").val(img);
+    $("#xuwanting").load(function(){
+    	cut_img(w,h);
+    }) 
+ }
+
+
+function previewImage()
+{
+	$("#xuwanting").attr("src","");
+	$("#imgform").submit();
+	//cut_img();
+}
+
+function save_userface(){
+	$.ajax({
+		type:"post",
+		url :"__URL__/save_userface",
+		data:$("#imginfo").serialize(),
+	    dataType:"json",
+	    success:function(data){
+	    	if(data.status==1){
+	    		y_dialog(data.info,3,function(){
+	    			location.reload();
+	    		})
+	    	}else{
+	    		n_dialog(data.info,3);
+	    	}
+	    }
+	})
+}
+
+function save_default_userface(){
+	var img=$("#default_userface").val();
+	img= img.replace("/public/images","public/images");
+	$.ajax({
+		type:"post",
+		url :"__URL__/save_userface",
+		data:"type=system&imgpath="+img+"&x=0&y=0&w=160&h=160",
+	    dataType:"json",
+	    success:function(data){
+	    	if(data.status==1){
+	    		y_dialog("恭喜您，修改成功",3,function(){
+	    			location.reload();
+	    		})
+	    	}else{
+	    		n_dialog("修改失败");
+	    	}
+	    }
+	})
+}
+
+
+function error_dialog(content){
+	n_dialog(content);
+}
+</script>
+<include file="public:footer.inc" />

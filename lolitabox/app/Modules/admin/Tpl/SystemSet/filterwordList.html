@@ -1,0 +1,150 @@
+<include file="Public:header" />
+
+<style>
+tr{
+	text-align:center;
+}
+.f_width{
+	display:block;
+	width:120px;
+	float:left;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+}
+input{
+	border-color:#008080;
+}
+.createmakt,.particular{
+	display:none;
+}
+.show{
+	display:none;
+}
+.ntitle{
+	font-size:16px;
+	color:#004040;
+}
+.left{
+	padding:10px  50px;
+}
+.fo{
+	font-size:14px;
+	color:#004040;
+}
+</style>
+<div class="panel">
+	<div align="left">
+		<fieldset class="fieldset"><legend>查询条件</legend>
+			<form name="myform" id="myform" action="__ACTION__" method="get">
+				敏感词：<input type="text"  name="words"  value="{$Think.request.words}">&nbsp;&nbsp;&nbsp;&nbsp;
+				状态：<select name='status'  id="query_status">
+			        	<option value="">不限</option>
+			        	<option value="0">无效</option>
+			         	<option value="1">有效</option>
+			    	</select>&nbsp;&nbsp;&nbsp;
+				<input type='submit' name='search' value=" 查 询 ">
+			<br><br>
+			</form>
+		</fieldset>			
+	</div>
+</div>
+<div class="showcontents">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />敏感词列表</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+       	<input type='button' id="create_filterword" value=" 更新敏感词库文件 ">&nbsp;&nbsp;&nbsp;	<input type='button' id="add" value=" 增 加 ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            	<td width="5%" height="26">ID</td>
+             <td width="10%%" height="18"><div align="center" class="STYLE2 STYLE1">敏感词</div></td>
+             <td width="10%%" height="18"><div align="center" class="STYLE2">替代词</div></td>  
+             <td width="10%" height="18"><div align="center" class="STYLE2">状态</div></td>
+            <td width="5%" height="18"><div align="center" class="STYLE2">操作</div></td>
+          </tr>
+          <volist name="list" id="vo"  key="k">
+          <tr height="24px" bgcolor="#FFFFFF" >
+          	 <td>{$vo.id}</td>
+			 <td>{$vo.words}</td>
+			 <td>{$vo.replacewords}</td>
+			 <td><img src="__PUBLIC__/images/status_{$vo.status}.gif"  onclick="traggle('{$vo.id}','{$vo.status}',this)"></td>
+			 <td><a onclick="edit('{$vo.id}')">编辑</a></td>
+          </tr>
+		</volist>
+        </table>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+	<if condition="$list eq ''  OR $list eq null">
+	<td  colspan='9'><b>无数据</b></td>
+	<else />
+	<td  colspan='9'>{$page}</td>
+	</if>
+  </tr>
+</table>
+</div>
+<script>
+    $("#query_status").val('{$Think.request.status}');
+    $("#add").dialog({
+    	title:"增加敏感词",
+    	content:"url:__URL__/filterwordOperating/ac/add",
+    	width:"500px",
+    })
+    
+    function edit(id){
+    	  $.dialog({
+    	    	title:"增加敏感词",
+    	    	content:"url:__URL__/filterwordOperating/ac/edit/id/"+id,
+    	    	width:"500px",
+    	    })
+    }
+    
+    function traggle(id,status,obj){
+    	$.ajax({
+    		type:"get",
+    		url:"__URL__/filterwordOperating/ac/del/id/"+id+"/status/"+status,
+    		dataType:"json",
+    		success:function(data){
+    			if(data.status==1){
+    				obj.src="__PUBLIC__/images/status_"+data.data+".gif";  
+    				obj.setAttribute("onclick","traggle("+id+","+data.data+",this)");
+    			}else{
+    				alert(data.info);
+    			}
+    		}
+    	})
+    }
+    
+    $("#create_filterword").click(function(){
+    	$.ajax({
+    		type:"post",
+    		url:"__URL__/createFilterwordFile",
+    		dataType:"json",
+    		success:function(data){
+    			if(data.status==1){
+    				alert("更新成功");
+    			}else{
+    				alert("更新失败");
+    			}
+    		}
+    	})
+    })
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,10 @@
+<script src="public/js/jquery.masonry.min.js" type="text/javascript"></script>
+<script>
+		var $container = $('#container');
+		$container.imagesLoaded(function(){
+			$container.masonry({
+				itemSelector: '#container > li',
+				columnWidth: 2 //每两列之间的间隙为5像素
+			});
+		});
+</script>

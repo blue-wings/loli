@@ -1,0 +1,517 @@
+<include file="public:header.inc" />
+<script src="public/js/showResult.js" type="text/javascript"></script>
+<style>
+body {text-align: left; font-size:14px; line-height:24px; color:#333; background:#ab020c; margin:0;  padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif;}
+body,html{width:100%;}
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p{margin: 0; padding: 0; border: 0}
+a {color:#e22879; text-decoration:none;}
+h1,h2,h3,h4,h5,h6,h7{margin:0; padding:0;}
+a:hover {color: #e22879; text-decoration:underline} 
+font{font-size:14px}
+.textRight{text-align:right;}
+b{color:#fff}
+.red{color:#e22879;}
+
+.Block01{width:1033px; height:544px; margin:0 auto; position:relative; text-align:left;}
+.Block01 .bg{height:544px; overflow:hidden;}
+.Block01 .tt1{position:absolute;}
+.Block02{ width:1033px; height:584px; margin:30px auto 0; position:relative; text-align:left;}
+.Block02 .bg{height:584px; overflow:hidden;}
+.Block02 .tt1{ position:absolute; left: 123px; top: 137px; font-size: 18px;}
+.Block02 .tt2{ position:absolute; left: 76px; top: 169px;}
+.Block02 .tt3{ position:absolute; left: 702px; top: 130px; font-size: 18px;}
+.Block02 .tt4{ position:absolute; left: 576px; top: 163px; height: 145px; overflow:hidden; width: 380px;}
+.Block02 .tt4 .user_name{width:90px;  height:24px; padding-right:6px; overflow:hidden; white-space: nowrap; -o-text-overflow: ellipsis; text-overflow: ellipsis; float:left;}
+
+.Block02 .tt4 ul{position:relative;}
+.Block02 .tt4 ul li{height:24px; overflow:hidden;}
+.Block02 .tt5{ position:absolute; width: 104px; height: 38px; left: 206px; top: 274px;}
+.Block02 .tt6,.Block02 .tt7,.Block02 .tt8,.Block02 .tt9{ width:144px; height:233px; position:absolute; cursor: url("../public/special/20130325/zt_sb.png"),pointer;}
+.Block02 .tt6{ left: 137px; top: 330px;}
+.Block02 .tt7{ left: 713px; top: 328px;}
+.Block02 .tt8{ left: 523px; top: 330px;}
+.Block02 .tt9{   left: 334px; top: 330px;}
+.Block03{width:1033px; height:636px; margin:0 auto; position:relative; text-align:left;}
+.Block03 .bg{height:636px; overflow:hidden;}
+.Block03 .tt1{ position:absolute; left: 327px; top: 13px; font-size: 17px; width: 535px; height: 28px;
+}
+.Block03 .tt2{ position:absolute; left: 628px; top: 55px; font-size: 18px;}
+.Block03 .tt3{ position:absolute; left: 579px; top: 88px; width: 404px; height: 197px;}
+.Block03 .tt4{ position:absolute; left: 679px; top: 291px; font-size: 18px;}
+.Block03 .tt5{ position:absolute; left: 584px; top: 322px; width: 396px; height: 47px;}
+.Block03 .tt5 a{color:#333;}
+.Block03 .tt6{ position:absolute; left: 586px; top: 391px; height: 92px;}
+.Block03 .tt7{ position:absolute; left: 722px; top: 392px;}
+.Block03 .tt8{ position:absolute; left: 857px; top: 392px;}
+.Block03 .tt9{ position:absolute; left: 586px; top: 504px;}
+.Block03 .tt10{ position:absolute; left: 722px; top: 504px;}
+.Block03 .tt11{ position:absolute; left: 856px; top: 504px;}
+.Block04{ width:1033px; height:821px; margin:30px auto 0; position:relative; text-align:left;}
+.Block04 .bg{height:412px; overflow:hidden;}
+.Block04 .bg1{height:409px; overflow:hidden;}
+.Block04 .tt1{ position:absolute; left: 256px; top: 155px; font-size: 18px; width: 98px; height: 27px;
+}
+.Block04 .tt2{ position:absolute; left: 87px; top: 199px; width: 427px; height: 156px;
+}
+.Block04 .tt3{ position:absolute; width:135px; height:45px; left: 695px; top: 339px;}
+.Block04 .tt11{ position:absolute; left: 409px; top: 423px; font-size: 18px; width: 279px; height: 27px;
+}
+.Block04 .tt21{ position:absolute; left: 263px; top: 462px; width: 522px; height: 47px;
+}
+.Block04 .tt21 a{color:#333;}
+.Block06{ width:1033px; height:799px; margin:30px auto 0; position:relative; text-align:left;}
+.Block06 .bg{height:450px; overflow:hidden;}
+.Block06 .tt1{ position:absolute; left: 185px; top: 139px; font-size: 18px; width: 170px; height: 26px;}
+.Block06 .tt2{ position:absolute; left: 78px; top: 169px; width: 382px; height: 266px;}
+.Block06 .tt3{ position:absolute; height:37px; width:99px; left: 699px; top: 148px;}
+.Block06 .tt4{ position:absolute; height:37px; width:133px; left: 682px; top: 388px;}
+.Block06 .tt5{ position:absolute; left: 521px; top: 212px;}
+.Block06 .tt6{ position:absolute; left: 666px; top: 212px;}
+.Block06 .tt7{ position:absolute; left: 813px; top: 212px;}
+.Block06 .bgs{height:349px; overflow:hidden;}
+.Block06 .tt11{ position:absolute; left: 411px; top: 486px; font-size: 18px; width: 171px; height: 26px;}
+.Block06 .tt21{ position:absolute; left: 122px; top: 521px; width: 749px; height: 52px;}
+.Block06 .tt31{ position:absolute; left: 123px; top: 628px;}
+.Block06 .tt41{ position:absolute; width:111px; height:36px; left: 329px; top: 581px;}
+.Block06 .tt51{ position:absolute; width:210px; height:36px; left: 470px; top: 582px;}
+.Block08{ width:1033px; height:511px; margin:30px auto 0; position:relative; text-align:left;}
+.Block08 .bg{height:511px; overflow:hidden;}
+.Block08 .tt1{ position:absolute; left: 241px; top: 468px; font-size: 12px;}
+.Block08 .tt2{ position:absolute; left: 257px; top: 100px; width: 742px; height: 347px;}
+
+.zt_btn1{width:97px; height:34px; display:block; background:url(public/special/20130325/zt_btn.png) no-repeat;}
+.zt_btn1:hover{background-position:0 -47px;}
+.zt_btn1_on{background-position:0 -93px; cursor:default}
+.zt_btn1_on:hover{background-position:0 -93px;}
+
+.zt_btn1_ons , .zt_btn1_ons:hover{background-position:0 -138px; cursor:default}
+
+
+.zt_btn2{ width:133px; height:40px; display:block; background:url(public/special/20130325/zt_btn.png) -108px 0 no-repeat;}
+.zt_btn2:hover{background-position:-108px -47px;}
+.zt_btn2_on{background-position:-108px -93px; cursor:default}
+.zt_btn2_on:hover{background-position:-108px -93px;}
+
+.zt_btn3{width:92px; height:33px; display:block; background:url(public/special/20130325/zt_btn.png) -252px 0 no-repeat;}
+.zt_btn3:hover{background-position:-252px -47px;}
+.zt_btn3_on{background-position:-252px -93px;  cursor:default}
+.zt_btn3_on:hover{background-position:-252px -93px;}
+
+.zt_btn4{width:128px; height:34px; display:block; background:url(public/special/20130325/zt_btn.png) -355px 0 no-repeat;}
+.zt_btn4:hover{background-position:-355px -47px;}
+.zt_btn4_on{background-position:-355px -93px; cursor:default;}
+.zt_btn4_on:hover{background-position:-355px -93px;}
+.zt_btn4_ons{background-position:-355px -137px;}
+.zt_btn4_ons:hover{background-position:-355px -137px;}
+
+.zt_btn5{width:106px; height:34px; display:block; background:url(public/special/20130325/zt_btn.png) -498px 0 no-repeat;}
+.zt_btn5:hover{background-position:-498px -47px;}
+.zt_btn5_on{background-position:-498px -93px; cursor:default;}
+.zt_btn5_on:hover{background-position:-498px -93px;}
+
+.zt_btn6{width:205px; height:33px; display:block; background:url(public/special/20130325/zt_btn.png) -613px 0 no-repeat;}
+.zt_btn6:hover{background-position:-613px -47px;}
+.zt_btn6_on{background-position:-613px -93px; cursor:default;}
+.zt_btn6_on:hover{background-position:-613px -93px;}
+
+.bgs{background:url(public/special/20130325/bgs.jpg) center top no-repeat;}
+.Block03 .tt12{ position:absolute; left: 66px; top: 107px; width:500px; height:500px;}
+.Block04 .was_bg{width:943px; filter:alpha(opacity=40); opacity:0.4; background:#000; height:683px; z-index:9999; position:absolute; left: 44px; top: 103px;}
+.Block06 .was_bg{width:951px; filter:alpha(opacity=40); opacity:0.4; background:#000; height:627px; z-index:9999; position:absolute; left: 36px; top: 122px;}
+.Block04 .was_title{
+	width:398px;
+	height:99px;
+	background:url(public/special/20130325/wtips.png) no-repeat;
+	position:absolute;
+	left: 325px;
+	top: 367px;
+}
+.Block06 .was_title{
+	width:398px;
+	height:99px;
+	background:url(public/special/20130325/wtips.png) no-repeat;
+	position:absolute;
+	left: 316px;
+	z-index:99;
+	top: 353px;
+}
+.zt_xfleft{width:192px; padding:5px; height:579px; position:fixed; z-index:9999; right:5px; top:600px; background:url(public/special/20130325/xu_left.gif) no-repeat;}
+.zy_xfM1{display:block; height:65px;}
+.zy_xfM2{display:block; height:70px;}
+.zy_xfM3{display:block; height:75px;}
+.zy_xfM4{
+	width:82px;
+	height:82px;
+	display:block;
+	margin: 70px 0 0 58px;
+}
+</style>
+<script>
+function turnPlate() 
+{
+	alert("活动已结束，下次早点来参加哦");
+	return false;
+	if(USER_ID==""){
+		dialog_login("");
+	}else{
+		var kou_ub =10;
+		var ub = parseInt($('#current_ub').html());
+		ub-=kou_ub;
+		if(ub>=0){
+			$.ajax({
+				url:"/activity/oneyear_activity_ajax.html",
+				type:'post',
+				dataType:"json",
+				success:function(ret){
+					if(ret.status==1){
+						var key=ret.data;
+						var keyid=ret.info;
+						$('#current_ub').html(ub);
+						$.post( "/activity/oneyear_zhuanpan_ajax.html?rn=" + Math.random(),{act: "turnPlate",key:key,keyid:keyid},function( data ) 
+											{
+												$('#flash').html(data);
+												return false;
+										    });
+					}else{
+						show_success_div("");
+						if(ret.data==100){
+							$(".add_giftinfo").html("<p>亲爱滴，您今天已经抽过5次奖啦。</p><p>请明天再来转动转盘吧！</p>");
+						}else{
+							$(".add_giftinfo").html("<p>"+ret.info+"</p>");	
+						}
+					}
+				}
+			})
+		}else{
+			show_success_div("");
+			var score=parseInt($('#current_ub').html());
+			$(".add_giftinfo").html("<p>您当前的积分为：<span style='color:#E22879;font-size:18px;'>"+score+"</span> 积分</p><p>您的积分不足，无法启动转盘</p><p><a href=\"<{:u('info/about',array('aid'=>11))}>#score\" target='_blank'>如何获得积分？</a></p>");
+		}
+	}
+}
+
+function init_flash()
+{
+	turnPlate();
+}
+function confrim_flash()
+{
+	$.post( "/activity/oneyear_zhuanpan_ajax.html?rn=" + Math.random(),{act: "load"},function( data ) 
+	{
+		$('#flash').html(data);
+		return false;
+    });
+}
+
+</script>
+<div class="zt_xfleft" id="meg">
+	<a href="__SELF__#block01" class="zy_xfM1"></a>
+	<a href="__SELF__#block02" class="zy_xfM2"></a>
+	<a href="__SELF__#block03" class="zy_xfM3"></a>
+	<a href="http://e.weibo.com/lolitaboxcn" target="_blank" class="zy_xfM4"></a>
+</div>
+
+<div class="bgs">
+<div class="Block01">
+	<div class="bg"><img src="public/special/20130325/bg_01.jpg" width="1033" height="544" /></div>
+</div>
+<div class="Block02" id="wrap" >
+	<a name="block01"></a>
+	<div class="bg"><img src="public/special/20130325/bg_02.gif" width="1033" height="584" /></div>
+  <div class="tt1">砸金蛋——每日签到即可砸蛋赢优惠券</div>
+    <div class="tt2">活动说明：<br />
+1、登录后点击签到即可获得1次砸蛋机会，每日只能签到1次；<br />
+2、每天送出千元优惠券，单张优惠券最高面值达50元哦；<br />
+3、获得的优惠券可到个人中心查看，并请在有效期内使用。
+</div>
+  <div class="tt3">实时获奖信息</div>
+ 
+    <div class="tt4" id="boxRet">
+<ul id="boxWrap">
+<if condition="$gift_list neq ''">
+<volist name="gift_list" id="vo">
+	<li>
+		<div class="user_name"><a href="<{:u("space/$vo[userid]")}>" target="_blank"><{$vo[nickname]}></a></div>
+          获得了
+          <if condition="$vo[url] neq ''">
+          		<a href="<{:u("products/$vo[url]")}>" target="_blank"><{$vo[giftinfo]}></a>
+          <else />
+          		<{$vo[giftinfo]}>
+          </if>
+	</li>
+</volist>
+<else />
+   <p style="margin-top:35px;margin-left:40px; height:56px; text-align:center; width:300px; line-height:28px;"> 哎呀呀，稍微有点小抽抽，<br />请稍后再试一下啦^_^</p>
+</if>
+</ul>
+<ul id="addWrap"></ul>
+</div>
+    <div class="tt5">
+   		 <a  class="zt_btn1 zt_btn1_ons" ></a>
+    </div>
+    <div class="tt6" onclick="fc(this);"><img src="public/special/20130325/zt_bx.png"/></div>
+  <div class="tt7" onclick="fc(this);"><img src="public/special/20130325/zt_bx.png"  /></div>
+ 	 <div class="tt8" onclick="fc(this);"><img src="public/special/20130325/zt_bx.png" /></div>
+    <div class="tt9" onclick="fc(this);"><img src="public/special/20130325/zt_bx.png" /></div>
+</div>
+
+<script>
+var count="<{$count}>";
+if(count>10){
+	scorllUnim('boxRet','boxWrap','addWrap');
+}
+
+function fc(obj){
+	alert("活动已结束，下次早点来参加哦");
+	return false;
+	var userid="<{$userid}>";
+	if(userid==""){
+		open_login_div("");
+	}else{
+		$.ajax({
+			url:"<{:u('activity/zadan')}>",
+			type:"post",
+			dataType:"json",
+			success:function(ret){
+						show_success_div("");
+						if(parseInt(ret.status)==1){
+							if(parseInt(ret.data)==100){
+								$(".add_giftinfo").html("<p>手气不太好，什么都没砸到，再接再厉哦~</p>");
+							}else{
+								var url="__APP__/home/mycoupon";
+								$(".add_giftinfo").html("<p>恭喜您！获得"+ret.info+"1张</p><p>请到个人中心的 <a href='"+url+"' target='_blank'>优惠券</a> 里查看</p>");
+							}
+							var oImg = obj.getElementsByTagName('img')[0];
+								oImg.src="public/special/20130325/zt_bx_on.png";		
+						}else{
+							$(".add_giftinfo").html("<p>"+ret.info+"</p>");
+						}
+			}
+		})
+	}
+}
+
+</script>
+
+
+<div class="Block03">
+  <div class="bg"><img src="public/special/20130325/bg_03.jpg" width="1033" height="636" /></div>
+  <if condition="$userinfo neq ''">
+  	  	<div class="tt1">亲爱的 <a href="<{:u('home/index')}>" target="_blank"><{$userinfo[nickname]}></a>  您当前剩余积分：<span class="red" id="current_ub"><{$userinfo[score]}></span></div>
+  </if>
+  <div class="tt2">肌醇有礼大转盘——免费萝莉盒转出来</div>
+    <div class="tt3">活动说明：<br />
+１、每人每天有5次转盘机会，每次需消耗10积分；<br />
+２、转到的优惠券可进入个人中心查看；实物奖将会在活动结束<br />
+　　后5个工作日内安排邮寄至您设置的默认地址；<br />
+<span class="red">３、为避免重复扣减积分，转盘指针没完全停止前，请不要再次<br />
+　　转动哦；</span><br />
+４、无添加调理型品牌肌醇同步助力，收藏他家天猫店铺还可获<br />　　赠超值礼券哦。<a href="http://pureskin.tmall.com/" target="_blank">去看看</a></div>
+    <div class="tt4">肌醇品牌专属萝莉盒详情</div>
+    <div class="tt5">内含：<a href="<{:u('products/63002')}>" target="_blank">肌醇营养美白面膜</a>、<a href="<{:u('products/63003')}>" target="_blank">隔离美白凝胶</a>、<a href="<{:u('products/62903')}>" target="_blank">营养脂质</a>、<a href="<{:u('products/62900')}>" target="_blank">精华保湿液</a>、<a href="<{:u('products/62901')}>" target="_blank">营养精华液</a>、<a href="<{:u('products/62904')}>" target="_blank">深层卸妆凝胶</a>、起泡海绵以及产品手册等。</div>
+    <div class="tt6"><a href="<{:u('products/63002')}>" target="_blank"><img src="public/special/20130325/cp_01.jpg" width="94" height="94" /></a></div>
+  <div class="tt7"><a href="<{:u('products/63003')}>" target="_blank"><img src="public/special/20130325/cp_02.jpg" width="94" height="94" /></a></div>
+  <div class="tt8"><a href="<{:u('products/62903')}>" target="_blank"><img src="public/special/20130325/cp_03.jpg" width="94" height="94" /></a></div>
+  <div class="tt9"><a href="<{:u('products/62900')}>" target="_blank"><img src="public/special/20130325/cp_05.jpg" width="94" height="94" /></a></div>
+  <div class="tt10"><a href="<{:u('products/62901')}>" target="_blank"><img src="public/special/20130325/cp_04.jpg" width="94" height="94" /></a></div>
+    <div class="tt11"><a href="<{:u('products/62904')}>" target="_blank"><img src="public/special/20130325/cp_06.jpg" width="94" height="94" /></a></div>
+<div class="flash tt12" id="flash">
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="500" height="500" id="turnplate">
+ 	<param name="allowScriptAccess" value="always" />
+    <param name="FlashVars" id="FlashVars" value="fvar=0&tips=" />
+    <param name="movie" value="../public/special/20130325/zp_flash.swf">
+    <param name="menu" value="false">
+    <param name="quality" value="high">
+    <param name="wmode" value="transparent">
+    <embed src="../public/special/20130325/zp_flash.swf" FlashVars="fvar=0&tips=" id="FlashVars"  width="500" height="500"  quality="high" id="turnplate" name="turnplate" wmode="transparent" allowScriptAccess="always"  pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>
+</object>
+</div>
+</div>
+<div class="Block04">
+<a name="block02"></a>
+	<!-- div class="was_bg" ></div>
+    <div class="was_title"></div-->
+	<!-- div class="was_bg" ></div-->
+	<div class="bg"><img src="public/special/20130325/bg_04.jpg" width="1033" height="412" /></div>
+  <div class="tt1">活动说明： </div>
+    <div class="tt2">１、想让购买的萝莉盒更超值？周年庆期间我们限量特供大礼包；<br/>
+２、会员在购买萝莉天天购这一款自由选萝莉盒时，只要下订单时<br/>　　选择加42.1元，即可再额外获得价值100元的产品大礼包；<br/>
+３、活动期间特惠大礼包每天限量10份，售完为止；<br/>
+４、成功获得加价购大礼包的会员还会获得CUB淘宝专卖店7.5折<br/>
+　　淘代码哦； </div>
+	<div class="tt3"><a class="zt_btn2 zt_btn2_on"></a></div>
+     <div class="bg1"><img src="public/special/20130325/bg_05.jpg" width="1033" height="409" /></div>
+  <div class="tt11">周年庆限量特供礼品卡产品详情：</div>
+    <div class="tt21">①<a href="http://www.lolitabox.com/products/62919.html" target="_blank">Coach波碧花样女士香氛</a>　②<a href="http://www.lolitabox.com/products/62922.html" target="_blank">蜂言蜜语蜜雨润白有机洁面乳</a>  ③<a href="http://www.lolitabox.com/products/121.html" target="_blank">施丹兰覆盆子黑莓皂</a> 
+④<a href="http://www.lolitabox.com/products/62934.html" target="_blank">欧珀莱时光锁紧实弹润系列迷你4件套</a>  ⑤<a href="http://www.lolitabox.com/products/37.html" target="_blank">静佳Jcare鲟鱼子酱焕肤紧致面膜</a></div>
+</div>
+<div class="Block06">
+<a name="block03"></a>
+	<!-- div class="was_bg"></div>
+    <div class="was_title"></div>
+	<div class="was_bg" >
+    </div-->
+	<div class="bg"><img src="public/special/20130325/bg_06.gif" width="1033" height="450" /></div>
+  <div class="tt1">新会员——注册有礼</div>
+    <div class="tt2">活动说明：<br />
+1、凡在4月15日——21日内注册的新会员，均有机会获得免<br/>　　费萝莉盒1个，每日抽取1位幸运会员；<br/>
+2、注册后您需完善基本资料、激活邮箱以及绑定新浪微博<br/>　　方能获得一个抽奖ID；<br/>
+3、中奖规则以当日体育彩票排列5开奖号码为依据，当您所<br/>　　获得的ID与排列5一致时即为获奖用户；<br/>
+4、当无人与体彩排列5号码一致时，最接近且小于排列5号<br/>　　码的会员则为获奖用户；<br/>
+5、当日获奖信息将于次日在<a href="http://www.lolitabox.com/space/blog_detail/blogid/2250/id/2375.html" target="_blank">LOLITABOX官方空间</a>以及<a href="http://e.weibo.com/lolitaboxcn" target="_blank">官方<br/>　　微博</a>进行公布。</div>
+    <div class="tt3">
+    <if condition="$userinfo eq ''">
+    	<a href="<{:u('user/reglogin')}>" target="_blank" class="zt_btn3"></a> 
+    <else />
+    	<a class="zt_btn3 zt_btn3_on"></a> 
+    </if>
+    </div>
+    
+    <div class="tt4">
+	    <a class="zt_btn4 zt_btn4_ons"></a>
+    </div>
+    
+    <div class="tt5"><img src="public/special/20130325/tips1.png" width="136" height="146" /></div>
+  <div class="tt6"><img src="public/special/20130325/tips2.png" width="136" height="146" /></div>
+    <div class="tt7"><img src="public/special/20130325/tips3.png" width="136" height="146" /></div>
+    
+  <div class="bgs"><img src="public/special/20130325/bg_07.gif" width="1033" height="349" /></div>
+  <div class="tt11">老会员——晒单有礼</div>
+  <div class="tt21">活动说明：<br />
+1、	以#我是最粉丝#为标题开头在个人空间发表晒单日志，并将您的日志链接回复到“我是最粉丝”活动贴的评论处；</div>
+    <div class="tt31">2、	日志附上您的所有订单截图+萝莉盒照片+您与LOLITABOX的缘分；<br />
+3、	订单截止到4月21日的均有效。如已发表内容后有新增加订单，可直接在日志里进行更改并添加订单截图即可；<br />
+4、	日志征集截止至21日，22日将在“我是最粉丝”活动帖处公布获奖名单<br />
+5、	我们将甄选出1位历来订单最多的用户，赠送品牌专属萝莉盒1个。</div>
+
+    <div class="tt41">
+    	<a class="zt_btn5 zt_btn5_on"></a>
+    </div>
+    <div class="tt51"><a href="http://www.lolitabox.com/space/blog_detail/blogid/2117/id/2375.html" target="_blank" class="zt_btn6"></a></div>
+</div>
+<div class="Block08">
+   <div class="bg"><img src="public/special/20130325/bg_08.gif" width="1033" height="511" /></div>
+     <div class="tt1">特此鸣谢benefit贝玲妃、AUPRES欧珀莱、PURE SKIN肌醇、CUB品牌对本周年庆活动的大力支持！</div>
+     <div class="tt2"><iframe width="740" height="345"  frameborder="0" scrolling="no" src="http://widget.weibo.com/livestream/listlive.php?language=zh_cn&width=740&height=345&uid=2011574621&skin=1&refer=1&appkey=&pic=0&titlebar=1&border=1&publish=1&atalk=1&recomm=0&at=0&atopic=LOLITABOX%E7%94%9F%E6%97%A5%E5%BF%AB%E4%B9%90&ptopic=LOLITABOX%E7%94%9F%E6%97%A5%E5%BF%AB%E4%B9%90&dpc=1"></iframe></div>
+</div>
+</div>
+<!-- 提示框 -->
+<div class="tc_dp tc_Points"  id="confirm_kuan" style="display:none;">
+  <div class="abs" ><img src="public/images/zhuce_close.png"  id="close_div" /></div>
+  <div class="tc_dpTop"></div>
+  <div class="tc_dpCont convert">
+  <div class="add_giftinfo">
+  </div>
+  <p id="go_confirm" ></p>
+  </div>
+  <div class="tc_dpBtm">
+  </div>
+</div>
+ <script type="public/js/showResult.js"></script>
+ <script>
+
+var userid="<{$userid}>";
+
+ function user_sign(){
+	 if(userid==""){
+		 open_login_div("");
+	 }else{
+		 $.ajax({
+				url:"<{:u('home/user_sign')}>",
+				type:"post",
+				dataType:"json",
+				success:function(ret){
+					show_success_div("");
+					if(parseInt(ret.status)==1){
+						$("#to_sign").hide();
+						$("#have_sign").show();
+						$(".add_giftinfo").html("<p>恭喜您，签到成功，获得一次砸蛋机会哦！</p>");
+					}else{
+						$(".add_giftinfo").html("<p>您今天已签到，请勿重复操作！</p>");
+					}
+				} 
+		 })
+	 }
+ }
+ 
+
+ 
+ function cannot_take_activity(){
+	 show_success_div("");
+	 $(".add_giftinfo").html("<p>亲，您不是4月15日-4月21日注册的新会员哦，</p><p>暂时不能参加此活动哦~</p>");
+ }
+ 
+ function get_lottery(){
+	 if(userid==""){
+		 return false;
+	 }else{
+		 var lottery_id="<{$lottery_id}>";
+		 $.ajax({
+			 url:"<{:u('activity/get_user_lottery')}>",
+			 type:"post",
+			 dataType:"json",
+			 data:"lottery_id="+lottery_id,
+			 success:function(ret){
+				 show_success_div("");
+				 if(parseInt(ret.status)==0){
+					 if(parseInt(ret.data)==100){
+						 $(".add_giftinfo").html("<p>您已领取过抽奖号，请勿重复操作！</p>");
+					 }else if(parseInt(ret.data)==1000){
+						 $(".add_giftinfo").html("<p>"+ret.info+"</p>");
+					 }else{
+						 $(".add_giftinfo").html("<p>请您稍后再试，现在有点小抽抽~~~</p>");
+					 }
+				 }else{
+					 $("#to_lottery").hide();
+					 $("#have_lottery").show();
+					 $(".add_giftinfo").html("<p>您的抽奖ID为："+ret.data+"，您可以在私信中进行查看哦~</p>");
+				 }
+			 }
+		 })
+	 }
+ }
+ 
+ $(function(){
+	 $("body").css({ background:'#ab020c'});
+})
+
+function findDimensions(){
+	//让内容页面左右两边的高度一样高；
+	//var get_h_cont = $(".content");
+	//var get_h_asid = $(".aside");
+	//var h_cont= $(".content").height();
+	//get_h_asid.height(h_cont);
+	
+	var isIE6 = !-[1,] && !window.XMLHttpRequest;
+	var meg =$("#meg");
+	var ids =$('.Block02');
+	var idns =$('.Block02').offset().left;
+	var scrolltop_top = ids.offset().top;
+	var scrolltop_left = idns+1033 ;
+
+	meg.css({"position":"absolute",'top':'600px',"left":scrolltop_left+'px'});
+	$(window).scroll(function(){
+		var H = $(this).scrollTop();
+		var fl_left = scrolltop_left+"px";
+		
+		
+		
+		 if( H >= scrolltop_top ){
+			 if(isIE6){
+				meg.css({position: "absolute","top":H+"px","right":fl_left});
+			 }else{
+				meg.css({"position":"fixed","top":"0px","right":fl_left});
+			}
+			
+		}else{
+			//alert(fl_left)
+			meg.css({"position":"absolute",'top':'600px','right':fl_left});
+		}
+	});
+	
+}
+findDimensions();
+window.onresize=findDimensions;
+ </script>
+<include file="public:footer.inc" />

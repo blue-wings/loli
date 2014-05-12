@@ -1,0 +1,276 @@
+<include file="public:header.inc" />
+<div class="fm1020 top_guide">
+所在位置：<a href="/">网站首页</a> &gt; <in name="return[boxinfo][boxid]" value="109,128,133,134,135,136"><a href="<{:U('buy/tch')}>">订购贪吃盒</a><else/><a href="<{:U('buy/index')}>">订购美妆盒</a></in> &gt; <span class="g9"><{$return[boxinfo][name]}>详细信息</span>
+</div>
+<div class="fm1020_c wp1020">
+	<div class="wp1020 mb16 box_jieshao">
+	<if condition="$return[boxinfo][if_select] eq 1">
+		<!-- <div class="test_r_btn"><a href="javascript:void(0)" onclick="dialog_tryto('<{$return.boxinfo.boxid}>',2,this)">长草了</a></div>	  -->
+			<input type="hidden" id="pro_ifsina" value="<{$bind[sina]}>" />
+			<input type="hidden" id="pro_ifqq" value="<{$bind[qq]}>" />
+			<input type="hidden" id="pro_reurl" value="<{$return[returnurl]}>" />
+	</if>
+		<div class="hd_t"></div>
+		<div class="main">
+			<div class="buy_boxs_details">
+				<dl class="boxs_details_dl cfl">
+					<dt>
+					<if condition="$return[boxinfo][if_select] eq 1">
+						<a href="javascript:void(0)" onclick="check_buy('<{$return[boxinfo][boxid]}>')"><img src="<{$return[boxinfo][pic_big]}>" width="580" height="310" alt="<{$return[boxinfo][name]}>"/></a>
+					<else />
+						<img src="<{$return[boxinfo][pic_big]}>" width="580" height="310" alt="<{$return[boxinfo][name]}>"/>
+					</if>
+					</dt>
+					<dd class="boxs_name"><h2><{$return[boxinfo][name]}><notempty name="return.boxinfo.special_url"><span style="margin-left:10px;font-size:16px;"><a href="<{$return.boxinfo.special_url}>" target="_blank" class="A_line3">(详细介绍)</a></span></notempty></h2></dd>
+					<dd class="boxs_details boxs_details_02">
+						<{$return[boxinfo][box_intro]}>
+					</dd>
+					<dd class="member_price">
+					<eq name="return.boxinfo.eq" value="1">
+						&nbsp;
+					<else />
+						普通会员价：￥<{$return[boxinfo][box_price]}>元
+					</eq>
+					</dd>
+					<dd class="boxs_btn">
+						<div class="buy_btn_log <{$return[boxinfo][btn]}>">
+							<eq name="return.boxinfo.eq" value="1">
+							<p class="buy_price l">￥<{$return[boxinfo][box_price]}>元</p>
+							<else />
+								<p class="buy_price es_member_price_02 l">特权会员价:￥<notempty name="return.boxinfo.member_price"><{$return[boxinfo][member_price]}><else /><{$return[boxinfo][box_price]}></notempty>元</p>
+							</eq>
+								<p class="r">
+								<if condition="$return[boxinfo][if_select] eq 4">
+									<a class="buy_btn_out">即将开始...</a>
+								<elseif condition="$return[boxinfo][if_select] eq 3" />	
+									<a class="buy_btn_out">已售罄</a>
+								<elseif condition="$return[boxinfo][if_select] eq 2" />
+									<a class="buy_btn_out buy_btn_href">已售罄</a>
+								<else />
+									<a href="javascript:void(0)" class="buy_btn_href" onclick="check_buy('<{$return[boxinfo][boxid]}>',this)">立即订购</a>
+								</if>
+								</p>
+						</div>
+					</dd>
+				</dl>
+			</div>
+				<div class="member_tsh hint"><p align="center"><b>订购小贴示：</b>特权会员选择立即订购将自动尊享“特权会员价”,非特权会员享受“普通会员价”。<a href="<{:u('special/xszn')}>" target="_blank" class="A_line2">※ 查看普通会员与特权会员的区别？</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<{:u('member/index')}>" target="_blank" class="A_line3">※ 立即成为特权会员尊享特权会员价</a></p></div>	
+		</div>
+		<div class="ft"></div>
+	</div>
+	
+	
+	<div class="wp1020 mb16">
+		<div class="hd">
+			<div class="tit_hd_tab l">
+			
+			<if condition="$return[sharecount] elt 0 && $return[productlist] eq ''">
+				<span class="tit_hd_con select hd_ft"><a href="javascript:void(0)" onclick="range_type(1,this)">订购介绍</a></span>
+			<else />
+				<span class="tit_hd_con"><a href="javascript:void(0)" onclick="range_type(1,this)">订购介绍</a></span>
+			</if>	
+			
+			
+			
+			
+				<notempty name="return[productlist]">
+					<if condition="$return[sharecount] gt 0">
+						<if condition="$return[boxinfo][if_select] eq 1">
+							<span class="tit_hd_con select"><a href="javascript:void(0)" onclick="range_type(2,this)">打开盒子</a></span>
+						<else />
+							<span class="tit_hd_con"><a href="javascript:void(0)" onclick="range_type(2,this)">打开盒子</a></span>
+						</if>
+					<else />
+							<span class="tit_hd_con select hd_ft"><a href="javascript:void(0)" onclick="range_type(2,this)">打开盒子</a></span>
+					</if>	
+				</notempty>
+				
+				
+				<gt name="return[sharecount]" value="0">
+					<if condition="$return[boxinfo][if_select] eq 1">
+						<span class="tit_hd_con hd_ft"><a href="javascript:void(0)" onclick="range_type(3,this)">谁在晒盒</a></span>
+					<else />
+						<span class="tit_hd_con hd_ft select"><a href="javascript:void(0)" onclick="range_type(3,this)">谁在晒盒</a></span>
+					</if>
+				</gt>
+			</div>
+			<notempty name="return.if_toshare">
+			<div class="tit_hd_share r">
+				<p class="r mt10" style="_width:200px;">
+					<a href="javascript:void(0)" class="W_pin_b mr10" onclick="dialog_share('<{$return.if_toshare}>',4)">晒盒</a>
+				</p>
+			</div>
+			</notempty>
+		</div>
+		
+<script>
+	function range_type(id,obj){
+		if(id==3){
+			var num="<{$return['sharecount']}>";
+			if(num>0){
+				 $("#ajax_content").empty();
+				 select_ajax_replace("__SELF__");
+				 $('#container').masonry('reload');
+			}
+		}
+		$(".tit_hd_con").removeClass("select");
+		$(obj).closest(' span ').addClass("select");
+		$(".boxshow").hide();
+		$("#boxshow_"+id).show();
+	}
+</script>	
+		
+		<div class="main">
+		
+		<if condition="$return[productlist] eq '' && $return[sharecount] elt 0">
+			<div class="boxs_introduce boxshow" id="boxshow_1">
+		<else />
+			<div class="boxs_introduce boxshow" id="boxshow_1" style="display:none;">
+		</if>
+		
+		    <eq name="return['boxinfo']['zixuan']" value="1">
+		    	<div class="introduce_list cfl mb16">
+					<div class="introduce_small_t l"><p>萝莉盒</p><p>订购指南</p></div>
+					<div class="introduce_tips introduce_tips_02 l">
+						<ul class="cfl">
+							<li>
+								<p>１注册会员</p>
+								<span>轻松注册成为萝莉盒会员</span>
+							</li>
+							<li>
+								<p>２立即订购</p>
+								<span>选择心仪萝莉盒，点击【立即订购】</span>
+							</li>
+							<li>
+								<p>3挑选产品</p>
+								<span>挑选产品加入到萝莉盒</span>
+							</li>
+							<li>
+								<p>４提交订单</p>
+								<span>填写并核对信息，提交订单</span>
+							</li>
+							<li>
+								<p>５支付订单</p>
+								<span>选择支付方式完成订单支付</span>
+							</li>
+							<li>
+								<p>６享受试用</p>
+								<span>三至五天后收到萝莉盒，享受试用的快乐</span>
+							</li>
+							<li>
+								<p>７获得奖励</p>
+								<span>发表精彩的晒盒分享，被收录后将获得奖励</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+		    <else />
+				<div class="introduce_list cfl mb16">
+					<div class="introduce_small_t l"><p>萝莉盒</p><p>订购指南</p></div>
+					<div class="introduce_tips l">
+						<ul class="cfl">
+							<li>
+								<p>１注册会员</p>
+								<span>轻松注册成为萝莉盒会员</span>
+							</li>
+							<li>
+								<p>２立即订购</p>
+								<span>选择心仪萝莉盒，点击【立即订购】</span>
+							</li>
+							<li>
+								<p>３提交订单</p>
+								<span>填写并核对信息，提交订单</span>
+							</li>
+							<li>
+								<p>４支付订单</p>
+								<span>选择支付方式完成订单支付</span>
+							</li>
+							<li>
+								<p>５享受试用</p>
+								<span>三至五天后收到萝莉盒，享受试用的快乐</span>
+							</li>
+							<li>
+								<p>６获得奖励</p>
+								<span>发表精彩的晒盒分享，被收录后将获得奖励</span>
+							</li>
+						</ul>
+					</div>
+				</div>	
+				</eq>
+
+			
+				<div class="introduce_list cfl mb16">
+					<div class="introduce_small_t l"><p>萝莉盒</p><p>服务保障</p></div>
+					<div class="order_list_tips l">
+						<ul class="cfl">
+							<li><a href="<{:u('special/fwbz')}>#zbbz" class="zp"><em class="list1">&nbsp;</em>正品授权</a></li>
+							<li><a href="<{:u('special/fwbz')}>#kjzf" class="kj"><em class="list2">&nbsp;</em>快捷支付</a></li>
+							<li><a href="<{:u('special/fwbz')}>#mfsh" class="sh"><em class="list3">&nbsp;</em>优质物流</a></li>
+							<li><a href="<{:u('special/fwbz')}>#zxkf" class="kf"><em class="list4">&nbsp;</em>在线客服</a></li>
+						</ul>
+					</div>
+				</div>	
+
+				<div class="introduce_list cfl">
+					<div class="introduce_small_t l"><p>萝莉盒</p><p>攻略</p></div>
+					<div class="order_list_tips l">
+						<ul class="cfl">
+							<li><a href="<{:u('info/lolitabox')}>"   target="_blank" class="wz"><em class="list5">&nbsp;</em>玩转萝莉盒</a></li>
+							<li><a href="<{:u('info/about',array('aid'=>11))}>" target="_blank"  class="gy"><em class="list6" >&nbsp;</em>关于积分</a></li>
+							<li><a href="<{:u('info/about',array('aid'=>9))}>" target="_blank"  class="cj"><em class="list7">&nbsp;</em>常见问题</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		    
+			<!--内容--->
+			<if condition="$return['productlist'] neq ''">
+					<if condition="$return[boxinfo][if_select] neq 1 && $return[sharecount] gt 0">
+						<div class="boxs_product_type boxshow" id="boxshow_2"  style="display:none;">
+					<else />
+						<div class="boxs_product_type boxshow" id="boxshow_2" >
+					</if>
+			
+					<div class="mb16">
+						<h4 class="gray_title_bg"><{$return[boxinfo][name]}>全部产品</h4>
+					</div>
+					<if condition="$return[boxinfo][box_remark] neq ''">
+						<div class="send_title"><{$return[boxinfo][box_remark]}></div>
+					</if>
+					<div class="cfl My_order_fabirc">
+						<!----内容块1---->
+						<volist name="return[productlist]" id="vo">
+							<include file="brand:public_productsinfo" />					
+						</volist>
+						<!----内容块1---->
+					</div>
+				</div>
+			</if>
+			
+			<if condition="$return[boxinfo][if_select] eq 1">
+				<if condition="$return[productlist] eq ''">
+					<div class="index_boxs_show boxshow" id="boxshow_3">
+				<else />
+					<div class="index_boxs_show boxshow" id="boxshow_3" style="display:none;">
+				</if>
+			<else />
+				<div class="index_boxs_show boxshow" id="boxshow_3">
+			</if>
+			
+			<gt name="return['sharecount']" value="0">
+				<div id="ajax_content" style="width:980px;"><include file="home:share_waterfall" /></div>			
+			</gt>
+				<i class="hei1"></i>
+			</div>
+			
+			<i class="hei1"></i>
+		</div>
+		<div class="ft"></div>
+	</div>	
+<input type="hidden" id="if_select_box" value="<{$return[boxinfo][zixuan]}>" />
+</div>
+
+<!--订购萝莉盒--内容--end-------->
+<script src="public/js/buy.js"></script>
+
+<include file="public:footer.inc" />

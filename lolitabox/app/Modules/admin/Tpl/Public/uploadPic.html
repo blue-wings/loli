@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+       <form enctype='multipart/form-data' method='post' action="__ACTION__"  onsubmit="return check_form()">
+       <input type='hidden' value='{$inputname}' name='inputname' id="inputname">
+       <input type='hidden' value='{$Think.request.previewPhoto}' name='previewPhoto' />
+       <input type="hidden" value='{$url}' name="url">
+       图片:<input type='file' name='photoname' style='border:1px solid #999'>&nbsp;&nbsp;&nbsp;<input type='submit' value='上传图片'  id="submit_pic"  name='upload_pic_submit'><br><br>
+       <div id='preview_pic' style='width:470px;height:300px;border:1px solid #777;color:#777;font-size;24px;overflow:auto'>图片预览</div>     
+ </form>
+<script>
+var api = frameElement.api, W = api.opener;
+window.onload=function(){
+	if($("#inputname").val() && $("input[name='url']").val()){
+		W.document.getElementsByName($("#inputname").val())[0].focus();
+		W.document.getElementsByName($("#inputname").val())[0].value=$("input[name='url']").val();
+		if($("input[name='previewPhoto']").val()==1)
+		   $("form").html("上传成功<br><img src='"+$("input[name='url']").val()+"'>");
+		else{
+		   $("form").html("上传成功");
+		}
+		api.button({
+		    id:'valueOk',
+			name:'确 定',
+			callback:function(){
+				api.close();
+			}
+		});
+	}
+	if(!$("#inputname").val())
+		{
+		    $("#inputname").val(api.data) ;	
+		}
+	
+}
+function check_form(){
+	var a=$("input[name='photoname']");
+	if(!a.val())
+		return false;
+	else{
+		var extend=a.val().substring(a.val().lastIndexOf(".")+1);
+		if(extend=='jpg' || extend=='png' || extend=='gif') {
+			$("input[name='previewPhoto']").val(1);
+		}
+	}
+}
+function aa(width,height){
+	if(width || height){
+			 var imgobj=document.getElementById("divhead");
+             checkimg(imgobj.width,imgobj.height,{width:width,height:height});
+    }
+
+}
+
+function checkimg(width,height,size){
+	console.log(width);
+	console.log(height);
+	 if(width==size.width && height==size.height){
+		 document.getElementById("submit_pic").disabled=false;
+	 }else{
+		 alert("图片尺寸不满足"+size.width+"*"+size.height+"像素");
+	 }
+		
+}
+</script>
+</body>
+</html>

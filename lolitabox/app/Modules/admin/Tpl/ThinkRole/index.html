@@ -1,0 +1,76 @@
+<include file="Public:header" />
+<link href="__PUBLIC__/css/table.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/common.css" type="text/css" rel="stylesheet"/>
+<div class="list-div">
+<table width="800" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th align="left" scope="col" class="sectitle">角色组列表</th>
+  </tr>
+  <tr height="20px;">
+  <td>&nbsp;&nbsp;</td>
+  </tr>
+  <tr  align="left">
+    <td>
+       <input type="button" value="添加角色" onclick="window.location.href='__URL__/add/'"  name="addAmin"/>
+        <form action="__URL__/index/" method="post">
+        	<input type="text" value=""  name="name"  size="20"/>
+            <input type="submit" value="查询" />
+        </form>
+    </td>
+  </tr>
+</table>
+<div>
+<div class="list-div">
+<table border="0" cellspacing="1" cellpadding="2" id="datatable">
+  <tr align="center">
+    <th scope="col">编号</th>
+    <th scope="col">组名</th>
+    <!--<th scope="col">上级组</th>-->
+    <th scope="col">状态</th>
+    <th scope="col">描述</th>
+    <th scope="col">操作</th>
+  </tr>
+  
+  <volist name="list"  id="data">
+  <tr align="center">
+    <td>{$data.id}</td>
+    <td>{$data.name}</td>
+    <!--<td>{$data.pid|getGroupName}</td>-->
+    <td>{$data.status|getStatus}</td>
+    <td>{$data.remark}</td>
+    <td>
+     {$data.status|showStatus=###,$data['id']}
+     |<a href="__URL__/edit/id/{$data.id}">编辑</a> 
+     | <a href="javascript:void(0);" onclick="return del({$data.id});">删除</a>
+     | <a href="__URL__/app/groupId/{$data.id}">授权</a> 
+     | <a href="__URL__/user/id/{$data.id}">用户列表</a>
+     | <a href="__URL__/readrolelist/id/{$data.id}">浏览组权限</a> 
+     </td>
+  </tr>
+  </volist>
+  
+  <tr>
+ 	<td colspan="8">{$page}</td>
+  </tr>
+</table>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#datatable tr:gt(0)").hover(function() {
+		$(this).children("td").css({background:"#bcd4ec"});
+	}, function() {
+		$(this).children("td").css({background:"#F5F5F5"});
+	});
+})
+
+function del(id)
+{
+	if(confirm("你确定要删除吗？")){
+		window.location.href="__URL__/delete/id/"+id;
+		return true;
+	}else{
+		return false;
+	}
+}
+</script>
+<include file="Public:footer" />

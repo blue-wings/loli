@@ -1,0 +1,36 @@
+                 <gt name="total"   value="0">
+                 <div class="cfl My_order_fabirc">
+						<!----内容块1---->
+						<volist name="list"  id="vo">
+						<div class="fabric_list_cont auto" id="follow_brand_<{$vo['whoid']}>" style="height:300px;">
+							<dl>
+								<dt><a href="<{$vo.spaceurl}>"><img src="public/images/modbg_v5.jpg"  data-original="<{$vo.userface_100_100}>" width="185" height="185" alt="<{$vo.nickname}>" style="display: inline;"></a>
+								</dt>
+								<dd class="name18 tc"><a href="<{$vo.spaceurl}>" target="_blank"><{$vo.nickname}></a></dd>
+								<dd class="tc"><gt name="vo.info_num" value="0">资讯数：<a href="<{$vo.info_url}>"  class="A_line3"><{$vo.info_num}></a><else/>&nbsp;</gt></dd> 
+								<dd class="tc">
+								<a href="javascript:void(0)"  class="W_pin_grey"  onclick="cancel_follow('<{$vo.whoid}>',3,1)" id="cancel_brand_f_<{$vo.whoid}>">取消订阅</a>
+								<a href="javascript:void(0)"  class="W_pin_b"  onclick="follow('<{$vo.whoid}>')" id="brand_f_<{$vo.whoid}>" style="display:none;">订阅品牌资讯</a>
+								</dd>
+							</dl>
+						</div>
+						</volist>
+						<!----内容块1---->
+					</div>	
+					<!---列表---->
+					<div class="W_pages"  id="page">
+						<{$page}>
+					</div>
+<script>
+	$(function () {
+		$("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
+	});
+</script>
+					<else/>
+					<script>
+					   $(function(){
+							nodata("ajax_content","您还米有订阅任何品牌哦，去<a href='<{:u('brand/index')}>' target='_blank' >品牌汇</a>看看");
+							
+					   })
+					</script>
+					</gt>

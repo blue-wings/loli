@@ -1,0 +1,46 @@
+<include file="Public:header" />
+<table width="100%" cellspacing="1" cellpadding="6" border="0" align="center" class="tborder">
+<tbody><tr>	<td class="tcat">修改购买渠道</td></tr>
+<tr>
+	<td align="center" class="panelsurround">
+	<form action="{:u('Product/updatecha')}" method="POST">
+	<input type="hidden" name="pid" value="{$productinfo[pid]}">
+	<div class="panel">
+		<div align="left">
+			<fieldset class="fieldset">
+				<legend>修改</legend>
+
+<div>
+
+	<dd><input type="hidden" value="{$list.id}" name="cid"></dd><br/>
+	<dd><input type="hidden" value="{$list.pid}" name="pid"></dd><br/>
+	<dd>购买渠道名称:&nbsp;&nbsp;<select name='channelname'><option>{$list.channelname}<option>品牌官方商城</option><option>丝芙兰官网</option><option>天猫官方商城</option><option>品牌专柜</option><option>淘宝旗舰店</option></select></dd><br/>
+	<dd>购&nbsp;&nbsp;买&nbsp;&nbsp;URL&nbsp;&nbsp;:&nbsp;&nbsp;<input type="text" value="{$list.url}" name="url"></dd><br/>
+	<dd>价格:<input type='text' name='price' value="{$list.price}"></dd><br/>
+	<dd>人&nbsp;工&nbsp;点&nbsp;击数:&nbsp;&nbsp;<input type="text" value="{$list.basehit}" name="basehit"></dd><br/>
+	<dd>实&nbsp;际&nbsp;点&nbsp;击数:&nbsp;&nbsp;{$list.realhit}</dd><br/>
+	<dd>&nbsp;&nbsp;&nbsp;排&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;序&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<input type="text" value="{$list.sortnum}" name="sortnum"></dd><br/>
+    <input type="hidden" name="realhit" value="{$list.realhit}" />
+</div>
+
+			</fieldset>
+			
+		</div>
+	</div>
+	<div style="margin-top:6px">
+		<input type="submit" value="提交" name="sub" />
+	</div>
+	</form>
+	</td>
+</tr>
+</tbody></table>
+
+
+
+
+
+
+
+
+
+<include file="Public:footer" />

@@ -1,0 +1,173 @@
+<include file="public:header.inc" />
+
+<script type="text/javascript" src="public/special/20121115/js/jQuery.blockUI.js"></script>
+<script type="text/javascript" src="public/special/20121115/js/jquery.SuperSlide.js"></script>
+
+<style type="text/css">
+body {text-align: center; margin:0; color:#fff; padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif; }
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p{margin: 0; padding: 0; border: 0}
+a {color:#ffad01; text-decoration:none;}
+a:hover {color: #ffad01; text-decoration:underline} 
+font{font-size:14px}
+/*公有*/
+
+
+.Block02 .tt1{ position:absolute; font-size:24px; line-height:28px; left: 528px; top: 65px; width: 496px; height: 33px; } .Block02 .tt2{ font-size:14px; line-height:24px; position:absolute; left: 511px; top: 167px; width: 538px; height: 338px; }  .Block03 .tt1{ position:absolute; left: 75px; top: 457px; width: 270px; height: 105px; } .Block03 .tt2{ position:absolute; left: 394px; top: 457px; width: 292px; height: 105px; } .Block03 .tt3{ position:absolute; left: 716px; top: 456px; width: 287px; height: 106px; } .Block03 .tt4{ position:absolute; left: 476px; top: 68px; width: 114px; height: 21px; } .Block04{ height:476px; background:url(public/special/20121115/images/bg_04.jpg) no-repeat; text-align:left; width:1077px; position:relative; margin:0 auto; font-size: 14px; } .Block04 .tt1{ position:absolute; left: 79px; top: 361px; width: 266px; height: 103px; } .Block04 .tt2{ position:absolute; left: 406px; top: 361px; width: 265px; height: 105px; } .Block04 .tt3{ position:absolute; left: 735px; top: 362px; width: 256px; height: 107px; } .Block05{height:503px; background:url(public/special/20121115/images/bg_05.jpg) no-repeat; text-align:left; width:1077px;position:relative; margin:0 auto;} .Block05 .tt1{ position:absolute; left: 468px; top: 74px; width: 133px; height: 22px; } .Block05 .tt2{ position:absolute; left: 93px; top: 473px; width: 160px; height: 22px; } .Block05 .tt3{ position:absolute; left: 332px; top: 473px; width: 181px; height: 22px; } .Block05 .tt4{ position:absolute; left: 581px; top: 474px; width: 153px; height: 21px; } .Block05 .tt5{ position:absolute; left: 825px; top: 473px; width: 166px; height: 22px; } .Block06{height:398px; background:url(public/special/20121115/images/bg_06.jpg) no-repeat; text-align:left; width:1077px;position:relative; margin:0 auto;} .Block06 .tt1{ position:absolute; left: 81px; top: 366px; width: 199px; height: 21px; } .Block06 .tt2{ position:absolute; left: 324px; top: 366px; width: 190px; height: 22px; } .Block06 .tt3{ position:absolute; left: 556px; top: 366px; width: 213px; height: 23px; } .Block06 .tt4{ position:absolute; left: 801px; top: 365px; width: 195px; height: 22px; } .Block07{height:404px; background:url(public/special/20121115/images/bg_07.jpg) no-repeat; text-align:left; width:1077px;position:relative; margin:0 auto;} .Block07 .tt1{ position:absolute; left: 98px; top: 365px; width: 155px; height: 25px; } .Block07 .tt2{ position:absolute; left: 293px; top: 367px; width: 259px; height: 23px; } .Block07 .tt3{ position:absolute; left: 563px; top: 365px; width: 189px; height: 22px; } .Block07 .tt4{ position:absolute; left: 788px; top: 366px; width: 235px; height: 22px; } .Block08{height:399px; background:url(public/special/20121115/images/bg_08.jpg) no-repeat; text-align:left; width:1077px;position:relative; margin:0 auto;} .Block08 .tt1{ position:absolute; left: 108px; top: 369px; width: 202px; height: 24px; } .Block08 .tt2{ position:absolute; left: 381px; top: 369px; width: 319px; height: 21px; } .Block08 .tt3{ position:absolute; left: 783px; top: 369px; width: 164px; height: 20px; } .Block09{height:393px; background:url(public/special/20121115/images/bg_09.jpg) no-repeat; text-align:left; width:1077px;position:relative; margin:0 auto;} .Block09 .tt1{ position:absolute; left: 105px; top: 243px; width: 217px; height: 24px; } .Block09 .tt2{ position:absolute; left: 423px; top: 241px; width: 229px; height: 23px; } .Block09 .tt3{ position:absolute; left: 794px; top: 242px; width: 143px; height: 21px; } .Block10{ height:412px; background:url(public/special/20121115/images/bg_10.jpg) no-repeat; text-align:left; width:1077px; position:relative; margin:0 auto; line-height: 20px; } .Block10 .tt1{ position:absolute; left: 67px; top: 363px; width: 209px; height: 44px; } .Block10 .tt2{ position:absolute; left: 341px; top: 363px; width: 150px; height: 43px; } .Block10 .tt3{ position:absolute; left: 587px; top: 364px; width: 149px; height: 41px; } .Block10 .tt4{ position:absolute; left: 797px; top: 364px; height: 42px; } .Block11{ height:503px; background:url(public/special/20121115/images/bg_11.jpg) no-repeat; text-align:left; width:1077px; position:relative; margin:0 auto; line-height: 20px; } .Block11 .tt1{ position:absolute; left: 66px; top: 370px; width: 229px; height: 43px; } .Block11 .tt2{ position:absolute; left: 329px; top: 368px; width: 167px; height: 46px; } .Block11 .tt3{ position:absolute; left: 571px; top: 369px; width: 175px; height: 44px; } .Block11 .tt4{ position:absolute; left: 802px; top: 369px; } .Block12{height:598px; background:url(public/special/20121115/images/bg_12.jpg) no-repeat; text-align:left; width:1077px;position:relative; margin:0 auto;} .zt_title {font-size:16px; padding-bottom:3px; line-height:22px; text-align:center;}    .Block01 { height:507px; background:url(public/special/20121115/images/bg_01.jpg) no-repeat; width:1077px; position:relative; margin:0 auto;  text-align:left; } .Block02 {height:578px; background:url(public/special/20121115/images/bg_02.jpg) no-repeat; text-align:left; width:1077px; position:relative; margin:0 auto; } .Block03 {  width:1077px; height:579px; background:url(public/special/20121115/images/bg_03.jpg) no-repeat; margin:0 auto; text-align:left; position:relative; font-size: 14px;} .Block03 .a1{ position:absolute; width:282px; height:334px; left: 78px; top: 107px; } .Block03 .a2{ position:absolute; width:283px; height:332px; left: 399px; top: 108px; } .Block03 .a3{ position:absolute; width:283px; height:335px; left: 719px; top: 106px; } .Block04 .a1{ position:absolute; width:282px; height:333px; left: 79px; top: 14px; } .Block04 .a2{ position:absolute; width:282px; height:333px; left: 400px; top: 14px; } .Block04 .a3{ position:absolute; width:282px; height:334px; left: 719px; top: 14px; } .Block05 .a1{ position:absolute; width:207px; height:335px; left: 75px; top: 121px; } .Block05 .a2{ position:absolute; width:204px; height:335px; left: 318px; top: 122px; } .Block05 .a3{ position:absolute; width:204px; height:333px; left: 558px; top: 123px; } .Block05 .a4{ position:absolute; width:204px; height:333px; left: 799px; top: 122px; } .Block06 .a1{ position:absolute; width:205px; height:330px; left: 75px; top: 16px; } .Block06 .a2{ position:absolute; width:206px; height:336px; left: 316px; top: 14px; } .Block06 .a3{ position:absolute; width:206px; height:335px; left: 558px; top: 15px; } .Block06 .a4{ position:absolute; width:206px; height:336px; left: 799px; top: 15px; } .Block07 .a1{ position:absolute; width:206px; height:333px; left: 76px; top: 15px; } .Block07 .a2{ position:absolute; width:206px; height:333px; left: 316px; top: 15px; } .Block07 .a3{ position:absolute; width:206px; height:335px; left: 557px; top: 15px; } .Block07 .a4{ position:absolute; width:206px; height:336px; left: 797px; top: 15px; } .Block08 .a1{ position:absolute; width:301px; height:229px; left: 711px; top: 131px; } .Block08 .a2{ position:absolute; width:301px; height:230px; left: 389px; top: 130px; } .Block08 .a3{ position:absolute; width:299px; height:229px; left: 70px; top: 130px; } .Block09 .a1{ position:absolute; width:302px; height:235px; left: 68px; top: 2px; } .Block09 .a2{ position:absolute; width:301px; height:231px; left: 389px; top: 4px; } .Block09 .a3{ position:absolute; width:303px; height:231px; left: 711px; top: 5px; } .Block10 .a1{ position:absolute; width:207px; height:330px; left: 75px; top: 19px; } .Block10 .a2{ position:absolute; width:208px; height:336px; left: 315px; top: 14px; } .Block10 .a3{ position:absolute; width:207px; height:333px; left: 557px; top: 16px; } .Block10 .a4{ position:absolute; width:205px; height:337px; left: 799px; top: 14px; } .Block11 .a1{ position:absolute; width:203px; height:336px; left: 77px; top: 14px; } .Block11 .a2{ position:absolute; width:203px; height:336px; left: 317px; top: 14px; } .Block11 .a3{ position:absolute; width:206px; height:336px; left: 558px; top: 14px; } .Block11 .a4{ position:absolute; width:206px; height:335px; left: 799px; top: 17px; }  .Block04 .a8{position:absolute; width:100px; height:100px;}  .Block02 .focus{ width:468px; height:567px; background:url(public/special/20121115/images/focus.png) no-repeat; position:absolute; left: -22px; top: 3px; } .slideBox{position:relative; margin:40px 0 0 51px; width:372px; height:486px;}  .slideBox .hd{ height:34px; overflow:hidden; position:absolute; right:90px; font-size:24px; bottom:10px; z-index:1; line-height:34px; } .slideBox .hd ul{ overflow:hidden; zoom:1; float:left;  } .slideBox .hd ul li{ float:left; margin-right:5px;  width:34px; height:34px; text-align:center; background:url(public/special/20121115/images/focus_btn1.png); cursor:pointer; } .slideBox .hd ul li.on{ background:url(public/special/20121115/images/focus_btn2.png); color:#fff; } .slideBox .bd{ position:relative; height:100%; z-index:0;   } .slideBox .bd img{ width:372px; height:486px; }  .topLoop{position:absolute; width:980px; height:355px; left: 51px; top: 123px; font-size:14px; line-height:20px; overflow:hidden; position:relative; } .infoList{overflow:hidden; zoom:1;} .infoList li{padding:15px 0; clear:both; border-bottom:1px dashed #58083b;} .infoList li span{float:left; width:180px; text-align:right; padding-right:10px;} .infoList li p{margin-left:200px; width:780px; }  .topLoop a{color:#fff; text-decoration:none;} .topLoop a:hover{color:#fff; text-decoration:underline;}
+.bgs{margin-top:56px;font-size:16px; line-height:18px; background:url(public/special/20121115/images/bg.jpg) top center no-repeat;}
+</style>
+</head>
+<script>
+$(function(){
+	$('body').css('background','#1d0520 url(public/special/20121115/images/bgy.gif) repeat-y center');
+})
+
+</script>
+<body>
+<div class="bgs">
+<div class="Block01"></div>
+<div class="Block02">
+
+	<div class="focus">
+<div class="slideBox" id="slideBox">
+                    <div class="hd">
+						<ul><li>1</li><li>2</li><li>3</li><li>4</li></ul>
+					</div>
+<div class="bd">
+                    <ul>	
+                  	  	<li><a href="<{:U('article/detail',array('id'=>553))}>" target="_blank"><img src="public/special/20121115/images/fouces01.jpg" width="372" height="486" /></a></li>
+                  	  	<li><a href="<{:U('article/detail',array('id'=>553))}>" target="_blank"><img src="public/special/20121115/images/fouces02.jpg" width="372" height="486" /></a></li>
+                  	  	<li><a href="<{:U('article/detail',array('id'=>553))}>" target="_blank"><img src="public/special/20121115/images/fouces03.jpg" width="372" height="486" /></a></li>
+                  	  	<li><a href="<{:U('article/detail',array('id'=>553))}>" target="_blank"><img src="public/special/20121115/images/fouces04.jpg" width="372" height="486" /></a></li>
+        			</ul>
+	  </div>
+      </div>
+    </div>
+	<div class="tt1">神秘的萝莉盒LOLITABOX平台发布会盛大启动</div>
+	<div class="tt2">　　10月30日，LOLITABOX平台发布会在上海安达仕酒店隆重举行，盛会邀请了来自于知名媒体、时尚名企、知名化妆品品牌方的六十多位嘉宾共同探索LOLITABOX的神秘力量，见证LOLITABOX网站新功能及APP客户端的发布。<br />　　LOLITABOX是一个为消费者订制美丽，充满着神秘力量的新媒体平台。是每一位爱美人士身边的化妆品服务专家，致力于配合消费者完成化妆品购买决策，帮助品牌寻找精准的目标受众，发挥离线介质和在线媒体的优势，使品牌和消费者的关系变得更加亲密诚恳。自4月20日内测以来，获得了品牌的支持、网友的青睐、媒体的认可，其使用邀请码来精准的定位目标人群的策略也保证了前期基础会员的质量和顾客的信赖，此次正式发布将更好的为品牌及消费者服务。<br />
+　　会上特别邀请了艾瑞高级分析师尤天宇现场对化妆品行业互联网投放趋势进行分析；贝玲妃中国区总经理胡伟雄讲解与LOLITABOX深度合作对品牌的意义；搜狐女人频道主编李李布SOHU &amp; LOLITABOX战略合作；以及行业资深专家老师牛尔老师分享达人对LOLITABOX的喜爱等相关资讯。东方风行&amp;乐蜂网董事长李静也通过视频问候了LOLITABOX团队及其新模式的发布……<a href="<{:U('article/detail',array('id'=>516))}>" target="_blank">查看更多</a></div>
+</div>
+<div class="Block03">
+	<a href="<{:U('article/detail',array('id'=>553))}>" target="_blank" class="a1"></a>
+	<a href="<{:U('article/detail',array('id'=>553))}>" target="_blank" class="a2"></a>
+	<a href="<{:U('article/detail',array('id'=>553))}>" target="_blank" class="a3"></a>
+    
+	<div class="tt1"><p class="zt_title">行业资深专家老师<br />牛尔</p>既是达人，还是专家，同时有着独创品牌的牛尔老师现场与大家分享达人、专家、品牌对LOLITABOX的喜爱与支持。</div>
+    <div class="tt2"><p class="zt_title">贝玲妃中国区总经理<br />胡伟雄</p>讲解贝玲妃与LOLITABOX的深度合作的意义，表示试用装只有给到正确的人群，才能体现出它的价值，而LOLITABOX正好能做到这一点。</div>
+    <div class="tt3"><p class="zt_title">搜狐女人频道主编<br />李李</p>公布SOHU女人与LOLITABOX战略合作，频道将携手LOLITABOX为网友提供全新的SOLO盒试用模式。</div>
+    <div class="tt4">（排名不分先后）</div>
+</div>
+<div class="Block04">
+	<a href="<{:U('article/detail',array('id'=>553))}>" target="_blank" class="a1"></a>
+	<a href="<{:U('article/detail',array('id'=>553))}>" target="_blank" class="a2"></a>
+	<a href="<{:U('article/detail',array('id'=>553))}>" target="_blank" class="a3"></a>
+<div class="tt1"><p class="zt_title">知名彩妆师<br />吴淼</p>知名彩妆师吴淼老师亲临发布会祝贺。吴淼老师曾为大家搭配的裸妆盒可是深受到网友的一致喜爱呢。</div>
+    <div class="tt2"><p class="zt_title">艾瑞高级分析师<br />由天宇</p>现场对化妆品行业互联网投放趋势、网民行为进行分析，并阐述能够解决化妆品及快速消费品品牌投放的新媒体特点。</div>
+    <div class="tt3"><p class="zt_title">东方风行集团副总裁<br />尹娜</p>带来东方风行总裁李静的祝贺视频，并现场主持抽奖环节，为幸运嘉宾抽出谢娜自创服饰品牌"欢型"授权的限量版熊。</div>
+
+</div>
+<div class="Block05">
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a1"></a>
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a2"></a>
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a3"></a>
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a4"></a>
+<div class="tt1">（排名不分先后）</div>
+    <div class="tt2">玉兰油OLAY品牌代表</div>
+    <div class="tt3">巴宝莉Burberry品牌代表</div>
+    <div class="tt4">苇芝Veld's品牌代表</div>
+    <div class="tt5">优酷网youku平台代表</div>
+
+</div>
+<div class="Block06">
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a1"></a>
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a2"></a>
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a3"></a>
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a4"></a>
+
+    <div class="tt1">上海思畅咨询有限公司代表</div>
+    <div class="tt2">庄能子SONOKO品牌代表</div>
+    <div class="tt3">欧舒丹L'OCCITANE品牌代表</div>
+    <div class="tt4">娜露可NARUKO品牌代表</div>
+</div>
+<div class="Block07">
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a1"></a>
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a2"></a>
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a3"></a>
+	<a href="<{:U('article/detail',array('id'=>554))}>" target="_blank" class="a4"></a>
+
+    <div class="tt1">魅可M.A.C品牌代表</div>
+    <div class="tt2">菲诗小铺THE FACE SHOP品牌代表</div>
+    <div class="tt3">贝佳斯Borghese品牌代表</div>
+    <div class="tt4">上海思畅咨询有限公司客户经理</div>
+</div>
+<div class="Block08">
+	<a href="http://v.youku.com/v_show/id_XNDcyODMwNzk2.html" target="_blank" class="a1"></a>
+	<a href="http://v.youku.com/v_show/id_XNDcyODI1ODYw.html" target="_blank" class="a2"></a>
+	<a href="http://v.youku.com/v_show/id_XNDcyODI0NzEy.html" target="_blank" class="a3"></a>
+
+    <div class="tt1">艾瑞高级分析师由天宇发言</div>
+    <div class="tt2">搜狐女人频道主编介绍与LOLITABOX的合作</div>
+    <div class="tt3">LOLITABOX CEO发言</div>
+</div>
+<div class="Block09">
+	<a href="http://v.youku.com/v_show/id_XNDcyMTIyNjky.html" target="_blank" class="a1"></a>
+	<a href="http://v.youku.com/v_show/id_XNDcyODYxMTA0.html" target="_blank" class="a2"></a>
+	<a href="http://v.youku.com/v_show/id_XNDcyODYxNjg4.html" target="_blank" class="a3"></a>
+
+    <div class="tt1">东方风行董事长李静发来问候</div>
+    <div class="tt2">乐蜂网副总裁尹娜主持抽奖环节</div>
+    <div class="tt3">牛尔老师接受专访</div>
+
+</div>
+<div class="Block10">
+	<a href="<{:U('article/detail',array('id'=>555))}>" target="_blank" class="a1"></a>
+	<a href="<{:U('article/detail',array('id'=>555))}>" target="_blank" class="a2"></a>
+	<a href="<{:U('article/detail',array('id'=>555))}>" target="_blank" class="a3"></a>
+	<a href="<{:U('article/detail',array('id'=>555))}>" target="_blank" class="a4"></a>
+
+    <div class="tt1">LOLITABOX为到场嘉宾准备<br />好的神秘礼物和限量鼠熊玩偶</div>
+    <div class="tt2">发布会开始前嘉宾们<br />在热烈交谈中</div>
+    <div class="tt3">东方风行集团副总裁<br />尹娜主持抽奖环节</div>
+    <div class="tt4">外籍乐队在盒子里为大家演出<br />不一样版本的《缘来就是你》</div>
+
+</div>
+<div class="Block11">
+	<a href="<{:U('article/detail',array('id'=>555))}>" target="_blank" class="a1"></a>
+	<a href="<{:U('article/detail',array('id'=>555))}>" target="_blank" class="a2"></a>
+	<a href="<{:U('article/detail',array('id'=>555))}>" target="_blank" class="a3"></a>
+	<a href="<{:U('article/detail',array('id'=>555))}>" target="_blank" class="a4"></a>
+
+<div class="tt1">东方风行副总裁尹娜和行业资深<br />专家牛尔老师在签到幕前合照</div>
+    <div class="tt2">各品牌到场嘉宾在<br />签到幕前开心合照留念</div>
+    <div class="tt3">LOLITABOX团队上台为<br />众多嘉宾表演江南Style</div>
+    <div class="tt4">LOLITABOX团队成员在台上<br />为大家表演自导的开心小品</div>
+
+</div>
+
+<div class="Block12">
+<div class="topLoop">
+					
+						<div class="bd">
+							<ul class="infoList">
+								<li><span class="date"><a href="http://weibo.com/1677875323/z2RVcwIWX" target="_blank">喵爷-吴淼</a></span><p><a href="http://weibo.com/1677875323/z2RVcwIWX" target="_blank">与搜狐合作的神秘盒子@Lolitabox 为网友提供的试用服务特别贴心。贴心在哪里？如果你把它看作提供试用品的盒子那你就把他看低了，这个盒子不仅有@牛尔 老师和我还有各位老师的加持以及按照网友需求的搭配，还有各个网站或者说平媒的报道。</a></p></li>
+								<li><span class="date"><a href="http://weibo.com/1886210881/z30Mw4a0L" target="_blank">benefit胡伟雄</a></span><p><a href="http://weibo.com/1886210881/z30Mw4a0L" target="_blank">昨天参加Lolita box的发布会，见到老牛，谈了他资助边区儿童的事情，很有感触，听他描绘孩子们看到新课桌课椅的快乐表情，身临其境，身边美好的东西还是很多的，只是你不曾看到</a></p></li>
+								<li><span class="date"><a href="http://e.weibo.com/2314104177/z2SFNgXGN" target="_blank">thefaceshop官方微博</a></span><p><a href="http://e.weibo.com/2314104177/z2SFNgXGN" target="_blank">#Lolitabox#小编今天去参加萝莉盒的发布会，很开心。主办方也很用心的准备了此次的发布会了哦。大家一起支持Lolitabox吧~还有谢谢lolitabox送的礼物哦~</a></p></li>
+								<li><span class="date"><a href="http://weibo.com/1853760797/z2Szyuqbi" target="_blank">T小娜娜尚零极</a></span><p><a href="http://weibo.com/1853760797/z2Szyuqbi" target="_blank">@Lolitabox 发布会现场，收到定制幸运鼠熊一枚，感谢主办方的各种贴心。塔罗很赞好想算卦</a></p></li>
+								<li><span class="date"><a href="http://e.weibo.com/2058627504/z2SvXpEij" target="_blank">CEST_UNE_BEAUTE香港</a></span><p><a href="http://e.weibo.com/2058627504/z2SvXpEij" target="_blank">祝贺lolitabox发布会圆满成功，lolitabox是国内领先的美妆盒子之一，也是cest une beaute的合作伙伴。</a></p></li><li><span class="date"><a href="http://weibo.com/1677875323/z2RVcwIWX" target="_blank">喵爷-吴淼</a></span><p><a href="http://weibo.com/1677875323/z2RVcwIWX" target="_blank">与搜狐合作的神秘盒子@Lolitabox 为网友提供的试用服务特别贴心。贴心在哪里？如果你把它看作提供试用品的盒子那你就把他看低了，这个盒子不仅有@牛尔 老师和我还有各位老师的加持以及按照网友需求的搭配，还有各个网站或者说平媒的报道。</a></p></li>
+								<li><span class="date"><a href="http://weibo.com/1886210881/z30Mw4a0L" target="_blank">benefit胡伟雄</a></span><p><a href="http://weibo.com/1886210881/z30Mw4a0L" target="_blank">昨天参加Lolita box的发布会，见到老牛，谈了他资助边区儿童的事情，很有感触，听他描绘孩子们看到新课桌课椅的快乐表情，身临其境，身边美好的东西还是很多的，只是你不曾看到</a></p></li>
+								<li><span class="date"><a href="http://e.weibo.com/2314104177/z2SFNgXGN" target="_blank">thefaceshop官方微博</a></span><p><a href="http://e.weibo.com/2314104177/z2SFNgXGN" target="_blank">#Lolitabox#小编今天去参加萝莉盒的发布会，很开心。主办方也很用心的准备了此次的发布会了哦。大家一起支持Lolitabox吧~还有谢谢lolitabox送的礼物哦~</a></p></li>
+								<li><span class="date"><a href="http://weibo.com/1853760797/z2Szyuqbi" target="_blank">T小娜娜尚零极</a></span><p><a href="http://weibo.com/1853760797/z2Szyuqbi" target="_blank">@Lolitabox 发布会现场，收到定制幸运鼠熊一枚，感谢主办方的各种贴心。塔罗很赞好想算卦</a></p></li>
+								<li><span class="date"><a href="http://e.weibo.com/2058627504/z2SvXpEij" target="_blank">CEST_UNE_BEAUTE香港</a></span><p><a href="http://e.weibo.com/2058627504/z2SvXpEij" target="_blank">祝贺lolitabox发布会圆满成功，lolitabox是国内领先的美妆盒子之一，也是cest une beaute的合作伙伴。</a></p></li>
+                                
+							</ul>
+						</div>
+					</div>
+</div>
+		<script type="text/javascript">
+		jQuery(".slideBox").slide( { mainCell:".bd ul",autoPlay:true} );
+		jQuery(".topLoop").slide({ mainCell:".bd ul",effect:"topMarquee",vis:6,interTime:40,autoPlay:true});
+        
+        </script>
+                    
+</div>
+<include file="public:footer.inc" />

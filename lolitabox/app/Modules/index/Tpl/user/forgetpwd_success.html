@@ -1,0 +1,57 @@
+<include file="public:header_simple.inc" />
+<!--公用---头部--end------->
+<i class="zc_hd_register"></i>
+
+<div class="mb16">
+<div class="fm1024">
+	<div class="wp1020">
+		<div class="hd_t"></div>
+		<div class="main">
+			<div class="W_reg_info cfl login_wrap">
+				<!------左边表单栏------------>
+				<div class="W_reg_form">
+					<div class="forget_pass_wrao">
+						<h1>找回密码</h1>
+						<h4><b class="W_ico45 icon_yes_45"></b>重置密码邮件发送成功</h4>
+						<p class="info_list_t">
+						您可以到  <span class="S_txt1"><{$return.usermail}></span>  去查收邮件，并根据邮件中的提示，在24小时内完成密码重置。
+						</p>
+						<p class="info_list_t">
+							   <if condition="$return.mail_all neq ''">
+										<a href="<{$return.mail_all}>" target="_target" class="W_pin_b">
+											<span>去邮箱验证</span>
+										</a>
+									</if>
+						</p>
+								
+						
+						
+						
+						<dl class="login_state_dl login_pass_dl">
+							<dt>失败的可能原因如下：</dt>
+							<dd>1、可能您操作的时间间隔太长，邮件内的重置密码链接超过了有效期（24小时）；</dd>
+							<dd>2、如果您是复制重置密码邮件中的链接地址到浏览器地址栏中，请确认链接地址是否完整；</dd>
+							<dd>3、如以上方法不能解决，还请您发送邮件至：<a href="mailto:service@lolitabox.com" target="_blank">service@lolitabox.com</a> 或电话联系我们的</dd>
+							<dd>客服：<b class="W_ico20 icon20_phone"></b>4006-263-362</dd>
+						</dl>
+					</div>
+					
+					
+				</div>
+				<!------右边表单栏------------>
+				<div class="W_reg_sidebar">
+					<div class="sidebar_title">
+						<p class="tit">忽然想起密码啦</p>
+						<p>
+							<a href="javascript:void(0)" class="W_pin_b1 dialog_login_obj" >马上登录</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+</div>
+<include file="public:footer_simple.inc" />

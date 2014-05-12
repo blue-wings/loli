@@ -1,0 +1,110 @@
+<include file="Public:header" />
+<include file="Public:upload" />
+<style>
+  div.texts{color:#0080FF;padding-top:10px;margin-left:200px}
+</style>
+<div class="texts">增加产品图片:</div>	
+ <div style="margin-left:200px">
+ <form action="{:u('Product/picManager')}"  method="post"  id="frm">
+       <input type="hidden"  name="ac"  value="add" />
+        <input type="hidden"  name="pid"  value="{$Think.get.pid}" />
+       <input type="text"  name="pic_url"   value="" ><input type="button"  value="上传图片"  onclick="uploadPic('pic_url')"> 
+       <input type="button"  value="提 交"  onclick="submit_pic()">
+ </form>
+ </div>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />产品图片管理</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif" align="center">
+           	<td width="8%" height="18">产品ID</td>
+           	<td width="44%" height="18">产品图</td>
+            <td width="15%" height="18">时间</td>  
+            <td width="8%" height="18">操作</td>  
+          </tr>
+          <volist name="list" id="vo"  key="k">
+          <tr height="24px" bgcolor="#FFFFFF" align="center">
+          	 <td><a href="{:u('Product/index',array('pid'=>$vo['pid']))}">{$vo.pid}</a></td>
+          	 <td><img src="{$vo.pic_url}"  height="100px"></td>
+          	 <td>{$vo.toptime|date="Y-m-d H:i:s",###}</td>
+			 <td><a href="javascript:void(0)"  onclick='edit("{$vo.id}")'>置顶</a>|
+			     <a href="javascript:void(0)"  onclick="del('{$vo.id}')">删除</a>
+			 </td>
+          </tr>
+		</volist>
+        </table>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<script>
+   
+   function del(id){
+	   if(confirm("您确定删除么？？")){
+		   $.ajax({
+			   url:"__ACTION__",
+			   type:"post",
+			   data:{ac:"del",id:id},
+			   dataType:"json",
+			   success:function(data){
+				   if(data.status==1){
+					   location.reload();
+				   }else{
+					   alert(data.info);
+				   }
+			   }
+		   })
+	   }
+   }
+   
+   
+   function edit(id){
+	   $.ajax({
+		   url:"__ACTION__",
+		   type:"post",
+		   data:{ac:"top",id:id},
+		   dataType:"json",
+		   success:function(data){
+			   if(data.status==1){
+				   location.reload();
+			   }else{
+				   alert(data.info);
+			   }
+		   }
+	   })
+   }
+   
+   function submit_pic(){
+	   var pid="{$Think.get.pid}";
+	   $.ajax({
+		   type:"post",
+		   url:"__ACTION__",
+		   data:$("#frm").serialize(),
+		   dataType:"json",
+		   success:function(data){
+			   alert(data.info);
+			   if(data.status==1){
+				   location.reload();
+			   }			   
+		   }
+	       
+	   })
+   }
+</script>
+<include file="Public:footer" />

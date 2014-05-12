@@ -1,0 +1,279 @@
+<include file="public:header.inc" />
+<style type="text/css">
+body {text-align: center; margin:0; padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif;}
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p{margin: 0; padding: 0; border: 0}
+a {color:#dd1471; text-decoration:none;}
+a:hover {color: #dd1471; text-decoration:underline} 
+.lineHei30{line-height:30px; height:30px; overflow:hidden; width:170px; margin:0 auto;}
+
+.Block01{width:1040px; background:url(public/special/20121115_1/bg_01.gif) no-repeat; height:465px; margin:0 auto; position:relative;} .Block02{ width:1040px; background:url(public/special/20121115_1/bg_02.jpg) no-repeat; height:575px; text-align:left; margin:0 auto; position:relative;
+} .Block03{ width:1040px; background:url(public/special/20121115_1/bg_03.gif) no-repeat; height:485px; margin:0 auto; position:relative; text-align:left;
+} .Block03 .tt1{ position:absolute; left: 55px; top: 28px; font-size: 16px; line-height: 24px; width: 925px; height: 97px; } .Block03 .tt2{ position:absolute; left: 95px; top: 89px; line-height: 18px; width: 330px; height: 379px;
+} .Block03 .tt2 p{ padding-bottom:13px; } .Block03 .tt2 p span{color:#dd1471; background:url(public/special/20121115_1/dian.gif) 0 5px no-repeat; } .Block03 .tt3{ position:absolute; width:461px; height:340px; overflow:hidden; left: 518px; top: 99px;
+} .Block03 .tt3 li{zoom:1; overflow:hidden; padding:6px 10px; border-bottom:1px dashed #dd1471;} .Block03 .tt3 .name{float:left; overflow:hidden; width:160px;} .Block03 .tt3 .text{float:left; margin-left:15px; overflow:hidden;  width:85px;} .Block03 .tt3 .money{float:left; margin-left:10px; color:#dd1471; overflow:hidden;  width:170px;}  .Block04{width:1040px;  margin:0 auto; text-align:left;} .Block04 .MyBox{ background: url(public/special/20121115_1/bg_07.gif) bottom no-repeat; width: 945px; margin: 0 auto; } .Block04 .MyBox .list{ background: url(public/special/20121115_1/bg_06.gif) top no-repeat; zoom:1; overflow:hidden; }   .Block04 .MyBox .box_xian{border:1px solid #cccccc; border-top:none; border-bottom:none; zoom:1; overflow:hidden; width:943px; margin:3px 0;} .Block04 .MyBox .list li{ width:187px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;  height:200px; text-align:center; float:left; } .Block04 .MyBox .list li .boxWrap{ height:143px; position:relative; padding:7px 0 5px; }  .Block04 .MyBox .list li .boxWrap .zt_tips{ width:64px; height:52px; background:url(public/special/20121115_1/tips.png) no-repeat; position:absolute; font-size:16px; padding-top:12px; line-height:22px; color:#fff; left: 119px; top: 6px; }  .Block04 .MyBox .list li .a_wait{width:108px; height:35px; background:url(public/special/20121115_1/nav.gif) no-repeat; color:#666; display:block; line-height:31px; font-size:17px; text-align:center; margin:0 auto;}   .Block04 .MyBox .list li .a_goOnce{width:108px; height:35px; color:#fff; background:url(public/special/20121115_1/nav.gif) 0 -40px no-repeat; display:block; line-height:31px; font-size:17px; text-align:center; margin:0 auto;} .Block04 .MyBox .list li .a_goOnce:hover{background-position:0 -81px; text-decoration:none;}    .Block05{ width:1040px; background:url(public/special/20121115_1/bg_05.gif) no-repeat; height:534px; margin:0 auto; position:relative; text-align:left;
+} .Block05 .all_gift{ position:absolute; left: 45px; top: 71px; width: 946px; height: 435px; } .Block05 .all_gift .list{} .Block05 .all_gift .list li{width:189px; text-align:center; height:220px; float:left; } .Block05 .all_gift .list li .img{height:165px; position:relative; padding-top:15px;} .Block05 .all_gift .list li .img .zt_tips{ width:64px; height:52px; background:url(public/special/20121115_1/tips.png) no-repeat; position:absolute; font-size:16px; padding-top:12px; line-height:22px; color:#fff; left: 132px; top: -16px; } .Block05 .all_gift .list li p{height:32px; line-height:32px;} 
+.bgs{background:url(public/special/20121115_1/bg.jpg) top center no-repeat;  color:#555; font-size:14px; margin-top:56px;} .zt_red{color:#dd1471;}  .Block04 .MyBox .list .borRn{border-right:none;} .Block04 .MyBox .list .borBn{border-bottom:none;} .Block03 .tt5{position:absolute; left: 628px; top: 475px; height:32px; line-height:31px;width: 376px;
+} .Block03 .tt5 .a_looks{width:98px; height:31px; background:url(public/special/20121115_1/nav.gif) 0 -121px no-repeat; display:block; float:right; line-height:30px; font-size:16px; text-align:center; color:#fff;} .Block03 .tt5 .a_looks:hover{background-position:0 -158px; text-decoration:none;}
+.Block04 .top_head{background:url(public/special/20121115_1/myBox_top.gif) no-repeat; height:69px;}
+.Block04 .cont_wrap{background:url(public/special/20121115_1/myBox_cont.gif) repeat-y; zoom:1; overflow:hidden;}
+.Block04 .btn_foot{height:23px; background:url(public/special/20121115_1/myBox_btn.gif) no-repeat}
+.zt_f16{font-size:16px; line-height:24px;}
+.Block06{width:1040px; height:397px; background:url(public/special/20121115_1/bg_08.gif) no-repeat; margin:0 auto; text-align:left; position:relative;}
+.Block06 .tt1{ position:absolute; font-size:22px; color:#dd1471; line-height:22px; left: 66px; width: 115px; height: 31px; top: 110px;}
+.Block06 .tt2{ position:absolute; font-size:22px; color:#dd1471; line-height:22px; left: 66px; width: 114px; height: 25px; top: 194px;}
+.Block06 .tt3{ position:absolute; font-size:22px; color:#dd1471; line-height:22px; left: 69px; top: 283px; height: 25px;}
+.Block06 .tt4{ position:absolute; font-size:16px; line-height:20px; color:#570a2e; left: 189px; width: 787px; height: 56px; top: 110px;}
+.Block06 .tt5{ position:absolute; font-size:16px; line-height:20px; color:#570a2e; left: 190px; width: 644px; height: 45px; top: 194px;}
+.Block06 .tt6{ position:absolute; font-size:16px; line-height:20px; color:#570a2e; left: 191px; width: 510px; height: 23px; top: 283px;}
+.Block06 .zt_a1{ position:absolute; width:134px; height:49px; left: 705px; top: 271px;}
+.Block02 .tt1{ position:absolute; font-size:16px; line-height:24px; left: 25px; top: 429px; width: 984px; height: 134px;}
+.Block02 .tt1 p{ padding-bottom:10px;}
+.tc_dp .abs{cursor:pointer}
+</style>
+<div class="bgs">
+<div class="Block01">
+</div>
+<div class="Block02">
+	<div class="tt1"><p>邀请好友注册中大奖啦！活动期间，成功注册成为会员，即能获得10个神秘的未开启礼盒，将你的专属链接邀请发给好友，每成功邀请一位
+好友注册就能获得一把开启神秘礼盒钥匙，邀请越多能打开的神秘礼盒就越多，10个礼盒都开启后还会再新增10个，100%的中奖率！</p>
+<span class="zt_red">12月5日起，LOLITABOX携手贝玲妃Benefit在原有好礼基础上再给大家奉上三重好礼！贝玲妃Benefit商城赠品券、优惠券，以及最新单品
+正装齐助力，打造史上最给力抽奖活动，温暖整个寒冬！</span>给力一波接一波！亲爱的Lolitagirls，这是比拼你朋友满天下的时刻，这是你人品大
+爆发的时刻，还等神马？赶快邀请去吧！
+</div>
+
+</div>
+<div class="Block03"> 
+<div class="tt2"><p>每个神秘礼盒内均有一份惊喜等着你，100%的中奖率，人人不落空！</p>
+    				 <p>活动期间（2012.11.18-2012.12.18），将你的专属链接发给好友，好友通过你的链接进行注册并验证邮箱后即能获得开启神秘礼盒钥匙！
+                     <br />活动结束前如果未开启已点亮的盒子，将视为放弃。</p>
+                     <p>为保证公平，邀请好友成功需满足以下条件：<br />
+                     	<span>　您与邀请的好友IP地址不能相同；</span><br />
+                        <span>　您邀请的好友必须验证邮箱；</span><br />
+                     	<span>　被邀请人所有信息均不能和邀请人相同。</span>
+                     </p>
+                     <p>如被邀请人长时间未收到激活邮件。可用被邀请人注册邮箱发送【被XX（您的用户名）邀请，未收到激活邮件，请激活】到<a href="mailto:service@lolitabox.com" target="_blank">service@lolitabox.com</a>，由客服人工为您激活；</p>
+                     <p>抽到实物奖的网友，请在个人中心完善自己的收货地址，我们将统一在12月30日前发货；此活动的最终解释权归LOLITABOX所有。</p>
+    </div>
+    <div class="tt3" id="trends">
+    	<ul id="contant">
+    	<if condition="$gift_count gt 10">
+    	<volist name="gift_list" id="vo" offset="0" length="100">
+        	<li><div class="name"><a href="<{:u("space/$vo[userid]")}>" target="_blank"><{$vo.nickname}></a></div><div class="text">刚刚获得了</div><div class="money"><{$vo.type}></div></li>
+        	</volist>
+        	<else />
+        	<li><div class="name"><a href="<{:u("space/1356")}>" target="_blank">彼岸流年__ </a></div><div class="text">刚刚获得了</div><div class="money">10元优惠券</div></li>
+        	<li><div class="name"><a href="<{:u("space/2508")}>" target="_blank">一朵氣質花 </a></div><div class="text">刚刚获得了</div><div class="money">雙妹袭人皂（玉兰）</div></li>
+        	<li><div class="name"><a href="<{:u("space/2464")}>" target="_blank">沒那么簡單 </a></div><div class="text">刚刚获得了</div><div class="money">10元优惠券</div></li>
+        	<li><div class="name"><a href="<{:u("space/37")}>" target="_blank">叮当嘻嘻 </a></div><div class="text">刚刚获得了</div><div class="money">20元优惠券</div></li>
+        	<li><div class="name"><a href="<{:u("space/2500")}>" target="_blank">你在就心安 </a></div><div class="text">刚刚获得了</div><div class="money">5元优惠券</div></li>
+        	<li><div class="name"><a href="<{:u("space/14")}>" target="_blank">Monkey霏</a></div><div class="text">刚刚获得了</div><div class="money">倩碧持久透亮唇彩 SPF15</div></li>
+        	<li><div class="name"><a href="<{:u("space/2473")}>" target="_blank">炎夏蹲街角  </a></div><div class="text">刚刚获得了</div><div class="money">5元优惠券</div></li>
+        	<li><div class="name"><a href="<{:u("space/2501")}>" target="_blank">不打算流淚</a></div><div class="text">刚刚获得了</div><div class="money">施丹兰覆盆子黑莓皂</div></li>
+        	<li><div class="name"><a href="<{:u("space/1227")}>" target="_blank">莫小七儿  </a></div><div class="text">刚刚获得了</div><div class="money">10元优惠券</div></li>
+        	<li><div class="name"><a href="<{:u("space/1818")}>" target="_blank">得意的笑 </a></div><div class="text">刚刚获得了</div><div class="money">Lolitabox一个</div></li>
+        	<li><div class="name"><a href="<{:u("space/2465")}>" target="_blank">回家采草药</a></div><div class="text">刚刚获得了</div><div class="money">Benefit（贝玲妃）以真乱假睫毛膏</div></li>
+        	<li><div class="name"><a href="<{:u("space/757")}>" target="_blank">雨袭儿</a></div><div class="text">刚刚获得了</div><div class="money">5元优惠券</div></li>
+        	<li><div class="name"><a href="<{:u("space/2465")}>" target="_blank">幸福的氣息</a></div><div class="text">刚刚获得了</div><div class="money">15元优惠券</div></li>
+        	</if>
+        </ul>
+        <ul id="add_contant"></ul> 
+    </div>
+    <div class="tt5"><a href="<{:u('home/myinvite')}>" target="_blank" class="a_looks">立即查看</a>您的专属邀请链接就在您的个人中心里面哦 </div>
+</div>
+<div class="Block04">
+<div class="top_head"></div>
+    <div class="cont_wrap">
+    <div class="MyBox">
+    	<ul class="list">
+    	<div class="box_xian">
+    	<if condition="$userid neq ''">
+    	<volist name="giftbox_list" id="vo"  key="ekey" >
+        	<if condition="$vo.status  eq 1">
+        	<li <if condition="$ekey eq 20">class="borRn borBn"<elseif condition="$ekey gt 15" />class="borBn"<elseif condition="$ekey%5 eq 0" />class="borRn"</if> >
+        	<div class="boxWrap">
+        	<if condition="$vo.type eq 'product' && $vo.giftid neq 0"  >
+        	<a href="<{:u("products/$vo[giftid]")}>" target="_blank"><img src="<{$vo.giftinfo}>" width="143" height="143" /></a>
+        	<elseif condition="$vo.type eq 'product' && $vo.giftid eq 0" />
+        	<img src="public/special/20121115_1/hui_block.gif" /><div class="zt_f16 zt_red"><{$vo.brandtype}><br />券号：<{$vo.giftinfo}></div>
+        	<elseif condition="$vo.type eq '5元优惠券'" />
+        	<img src="public/special/20121115_1/5.gif" width="143" height="143" />
+        	<elseif condition="$vo.type eq '10元优惠券'" />
+        	<img src="public/special/20121115_1/10.gif" width="143" height="143" />
+        	<elseif condition="$vo.type eq '15元优惠券'" />
+        	<img src="public/special/20121115_1/15.gif" width="143" height="143" />
+        	<elseif condition="$vo.type eq '20元优惠券'" />
+        	<img src="public/special/20121115_1/20.gif" width="143" height="143" />
+        	<elseif condition="$vo.type eq 'box'" />
+        	<img src="public/special/20121115_1/1.jpg" width="143" height="143" />
+        	</if>
+        	</div><p class="lineHei30 zt_red"><if condition="($vo.type eq '5元优惠券') OR ($vo.type eq '10元优惠券') OR  ($vo.type eq '15元优惠券') OR ($vo.type eq '20元优惠券')">LOLITABOX现金券<elseif condition="$vo.type eq 'product' && $vo.giftid neq 0"  />
+        	<a href="<{:u("products/$vo[giftid]")}>" target="_blank"><{$vo.pname}></a>
+        	<elseif condition="$vo.type eq 'product' && $vo.giftid eq 0" />Benefit 优惠券
+        	<elseif condition="$vo.type eq 'box'" />Lolitabox一个</if></p></li>
+        	<elseif condition="$vo.have_gift eq 1" />
+        	<li <if condition="$ekey eq 20">class="borRn borBn"<elseif condition="$ekey gt 15" />class="borBn"<elseif condition="$ekey%5  eq 0" />class="borRn"</if>>
+        	<div class="boxWrap"><img src="public/special/20121115_1/myBox_02.gif" width="143" height="143" /></div><p><a href="javascript:void()"  onclick="exchange_gift(<{$vo.id}>)" class="a_goOnce">马上开启</a></p></li>
+        	<else />
+        	<li <if condition="$ekey eq 20">class="borRn borBn"<elseif condition="$ekey gt 15" />class="borBn"<elseif condition="$ekey%5  eq 0" />class="borRn"</if>><div class="boxWrap"><img src="public/special/20121115_1/myBox_01.gif" width="143" height="143" /></div><div class="a_wait">等待点亮</div></li>
+        	</if>
+        	</volist>
+        	<else />
+        	<for start="0" end="10">
+        	<li <if condition="($i+1)%5 eq 0">class="borRn"</if>><div class="boxWrap"><img src="public/special/20121115_1/myBox_01.gif" width="143" height="143" /></div><div class="a_wait">等待点亮</div></li>
+        	</for>
+        </if>
+        </div>
+        </ul>
+    </div>
+</div>
+<div class="btn_foot"></div>
+
+</div>
+<div class="Block05">
+	<div class="all_gift">
+    	<ul class="list">
+    		<li>
+    		  <div class="img"><a href="http://www.lolitabox.com/products/121.html" target="_blank"><img src="public/special/20121115_1/2.jpg" alt="施丹兰覆盆子黑莓皂" width="174" height="143" /></a><div class="zt_tips">市场价<br />
+    		  ￥50</div></div><p><a href="http://www.lolitabox.com/products/121.html" target="_blank">施丹兰覆盆子黑莓皂</a></p></li>
+   		  <li>
+   		    <div class="img"><a href="http://www.lolitabox.com/share/box/cate_id/597/good_list/2.html" target="_blank"><img src="public/special/20121115_1/3.jpg" alt="CUB面部喷雾套组" width="174" height="143" /></a><div class="zt_tips">市场价<br />
+   		      ￥120</div></div><p><a href="http://www.lolitabox.com/share/box/cate_id/597/good_list/2.html" target="_blank">CUB面部喷雾套组</a></p>
+   		  </li>
+   		  <li><div class="img"><img src="public/special/20121115_1/1.jpg"/>
+          	<div class="zt_tips">市场价<br />￥100</div>
+          </div><p class="zt_red">Lolitabox一个</p>
+   		  </li>
+   		  <li>
+   		    <div class="img"><a href="http://www.lolitabox.com/products/152.html" target="_blank"><img src="public/special/20121115_1/4.jpg" alt="欧珀莱抗皱精萃眼霜" width="174" height="143" /></a><div class="zt_tips">市场价<br />
+   		    ￥95</div></div><p><a href="http://www.lolitabox.com/products/152.html" target="_blank">欧珀莱抗皱精萃眼霜</a></p>
+   		  </li>
+   		  <li>
+   		    <div class="img"><a href="http://www.lolitabox.com/products/95.html" target="_blank"><img src="public/special/20121115_1/5.jpg" alt="倩碧持久透亮唇彩 SPF15" width="174" height="143" /></a><div class="zt_tips">市场价<br />
+   		    ￥70</div></div><p><a href="http://www.lolitabox.com/products/95.html" target="_blank">倩碧持久透亮唇彩 SPF15</a></p>
+   		  </li>
+   		  <li>
+   		    <div class="img"><a href="http://www.lolitabox.com/products/106.html" target="_blank"><img src="public/special/20121115_1/6.jpg" alt="Benefit以真乱假睫毛膏" width="174" height="143" /></a><div class="zt_tips">市场价<br />
+   		    ￥98</div></div><p><a href="http://www.lolitabox.com/products/106.html" target="_blank">Benefit以真乱假睫毛膏</a></p>
+   		  </li>
+   		   <li>
+   		    <div class="img"><a href="http://www.benefitcosmetics.com.cn/contentpages/p_lolitabox"  target="_blank" ><img src="public/special/20121115_1/hui_block.gif" width="166" height="88"/></a><div class="zt_f16 zt_red"><a href="http://www.benefitcosmetics.com.cn/contentpages/p_lolitabox"  target="_blank" >买即赠Benefit三件套</a><br /><a href="http://www.benefitcosmetics.com.cn/contentpages/p_lolitabox"  target="_blank" >券号：18W1-Z72D</a></div></div><p class="zt_red"><a href="http://www.benefitcosmetics.com.cn/contentpages/p_lolitabox"  target="_blank" >Benefit网上商城优惠券</a></p>
+   		  </li>
+   		  <li>
+   		    <div class="img"><a href="http://www.lolitabox.com/products/149.html" target="_blank"><img src="public/special/20121115_1/8.jpg" width="174" height="143"/></a></div><p><a href="http://www.lolitabox.com/products/149.html" target="_blank">雙妹袭人皂（玉兰）</a></p>
+   		  </li>
+   		  <li><div class="img"><a href="http://www.benefitcosmetics.com.cn/contentpages/p_lolitabox"  target="_blank" ><img src="public/special/20121115_1/hui_block.gif" width="166" height="88"/></a><div class="zt_f16 zt_red"><a href="http://www.benefitcosmetics.com.cn/contentpages/p_lolitabox"  target="_blank" >购物满300即减30</a><br /><a href="http://www.benefitcosmetics.com.cn/contentpages/p_lolitabox"  target="_blank" >券号：18W1-Z72D</a></div></div><p class="zt_red"><a href="http://www.benefitcosmetics.com.cn/contentpages/p_lolitabox"  target="_blank" >Benefit网上商城优惠券</a></p>
+   		  </li>
+   		  <li><div class="img"><img src="public/special/20121115_1/20.gif" width="174" height="143" /></div><p class="zt_red">LOLITABOX现金券</p>
+   		  </li>
+    	</ul>
+    </div>
+</div>
+<div class="Block06">
+	<a href="http://www.benefitcosmetics.com.cn/contentpages/p_lolitabox"  target="_blank" class="zt_a1"></a>
+	<div class="tt1">一重好礼：</div>
+	<div class="tt2">二重好礼：</div>
+	<div class="tt3">三重好礼：</div>
+	<div class="tt4">点亮的神秘盒有机会出现Benefit网上商城赠品券，购物即赠Benefit三件套；还有买300减30优惠券，Benefit全球绝无仅有的折扣力度哦~</div>
+	<div class="tt5">用你注册LOLITABOX的邮箱同时注册成为Benefit网上商城用户，即有机会抽奖获得Benefit热卖单品正装1份！</div>
+	<div class="tt6">使用赠品券及优惠券购买产品，还能获抽奖机会再得热卖单品正装1份！</div>
+
+</div>
+
+</div>
+<div id="confirm_kuan"  style="display:none;">
+<div class="tc_dp tc_Points" >
+  <div class="abs" ><img src="public/images/zhuce_close.png"  id="close_div" /></div>
+  <div class="tc_dpTop"></div>
+  <div class="tc_dpCont convert">
+  <div class="add_giftinfo">
+  </div>
+   <p id="up_address"  style="display:none;"><a href="<{:u('home/myaddress')}>" target="_blank">马上去完善地址>></a></p>
+  <p id="go_confirm" style="display:none;"><a href="<{:u('home/mycoupon')}>" target="_blank">马上去查看>></a></p>
+  <p id="go_sixin" style="display:none;"><a href="<{:u('home/my_inbox')}>" target="_blank">查看私信>></a></p>
+  </div>
+  <div class="tc_dpBtm">
+   
+  </div>
+</div>
+
+</div>
+    <script>
+    $(function(){
+    	$('body').css('background','#ffffff')
+    })
+    
+		var demo =document.getElementById('trends');
+		var demo1 =document.getElementById('contant');
+		var demo2 =document.getElementById('add_contant');
+		var speed=30 
+		demo2.innerHTML=demo1.innerHTML 
+		function Marquee(){ 
+		if(demo2.offsetTop-demo.scrollTop<=0) 
+		demo.scrollTop-=demo1.offsetHeight 
+		else{ 
+		demo.scrollTop++ 
+		} 
+		} 
+		var MyMar=setInterval(Marquee,speed) 
+		demo.onmouseover=function() {clearInterval(MyMar)} 
+		demo.onmouseout=function() {MyMar=setInterval(Marquee,speed)} 	
+     </script>
+     <script>
+     
+     function show_succ_div(){
+    		$(this).openDOMWindow({
+    			windowSourceID:'#confirm_kuan',
+    			width:532,
+    			height:296,
+    			draggable:1,
+    			borderColor:'',
+    			borderSize:'0',
+    			windowBGColor:'none',
+    			overlayOpacity:10,
+    			modal:1
+    		});
+     }
+     
+     $("#close_div").click(function(){
+    	 $("#confirm_kuan").hide();
+    	 location.href="__SELF__";
+     })
+      $('#close_div').closeDOMWindow({eventType:'click'});
+     function exchange_gift(giftid){
+    	 alert("活动已结束！");
+    	 return false;
+    	 $.ajax({
+    		 url:"<{:u('special/checkgift')}>",
+    		 type:"post",
+    		 dataType:"json",
+    		 data:"giftid="+giftid,
+    		 success:function(ret){
+    			 show_succ_div();
+				 $("#confirm_kuan").show();
+    		 if(parseInt(ret.status)==1){
+    				 show_succ_div();
+    				 $("#confirm_kuan").show();
+    				 if(ret.data=="product"){
+						 $("#go_sixin").show();
+	  						$(".add_giftinfo").html("<p>恭喜您，获得 "+ret.info+" 一张</p><p>您可以到您的私信中查看！</p>");
+  					}else if(ret.data=="box"){
+  						$("#up_address").show();
+ 						$(".add_giftinfo").html("<p>恭喜您，获得萝莉盒一个。</p><p>赶紧到个人中心-收货地址中完善个人信息吧，以便为您寄送奖品。</p>");
+ 					}else{
+ 						$("#go_confirm").show();
+ 						$(".add_giftinfo").html("恭喜您，获得"+ret.data+"一张</p><p>您可以到个人中心-我的优惠券中进行查看。</p>");
+ 					}
+    			 } else{
+    				 if(parseInt(ret.data)==300){
+    					 $(".add_giftinfo").html("<p>"+ret.info+"</p>");
+    				 }else{
+    					 $(".add_giftinfo").html("<p>请您稍后再试，现在有点小抽抽~~~</p><p><a href=\"__SELF__\">重新打开该页</a></p>");
+    				 }
+    				 
+    			 }
+    		 }
+    	 })
+     }
+     </script>
+<include file="public:footer.inc" />

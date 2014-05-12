@@ -1,0 +1,115 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="/public/colorbox/colorbox.css">
+<script src="/public/colorbox/jquery.colorbox-min.js"></script>
+<link rel="stylesheet" href="/public/js/jquery_theme/smoothness/jquery.ui.all.css">
+<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+<style>
+table{white-space:normal; word-break:break-all;overflow:hidden}
+tr{
+	text-align:center;
+}
+.listshow{
+	/*display:none;*/
+}
+</style>
+
+
+<div class="listshow">
+<form name="myform" id="myform" action="__ACTION__" method="GET">
+单品名称查询：<input  name='products' type='text' value='{$Think.get.products}'> 
+单品ID查询:<input name='pid' type='text' value='{$Think.get.pid}'>
+<input type='submit' name='search'><input type='submit' name='export' value="导出excel表格" style="margin-left:10px;">
+</form>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" align="left" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />库存管理</td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>  
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            <td width="5%" height="26">序列号</td>
+            <td width="5%" height="26">单品ID</td>
+            <td width="10%" height="26">单品名称</td>
+			<td width="10%" height="26">人工入库数</td>
+          	<td width="10%" height="18">人工出库数</td>
+          	<td width="10%" height="18">系统出库数</td>
+            <td width="10%" height="18">库存量</td>
+          </tr>
+          <volist name="inventory_list" id="list" key="k">
+			<tr height='20'>
+				<td height="18" bgcolor="#FFFFFF">{$k}</td>
+				<td height="18" bgcolor="#FFFFFF">
+					<a href="{:U('Product/index',array('pid'=>$list['relation_id']))}">{$list[relation_id]}</a>
+				</td>
+				<td height="18" bgcolor="#FFFFFF">
+					<a href="#" onclick="manageInv('{$list[id]}')">{$list[name]}</a>
+				</td>
+				<td height="18" bgcolor="#FFFFFF"><if condition="$list[in] eq 0">0<else />{$list[in]}</if></td>
+				<td height="18" bgcolor="#FFFFFF"><if condition="$list[out] eq 0">0<else />{$list[out]}</if></td>
+				<td height="18" bgcolor="#FFFFFF">{$list[systemout]}</td>
+				<td height="18" bgcolor="#FFFFFF">{$list[quantity]}</td>
+			</tr>
+		  </volist>		  
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr style="text-align:center">
+          	<if condition="$list neq ''">            
+          		<td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+            	<td width="75%" class="STYLE1"></td>
+          	<else /><td>没有找到您搜索的数据!</td></if>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</div>
+<script type="text/javascript">
+(function(config){
+	config['extendDrag'] = false; // 注意，此配置参数只能在这里使用全局配置，在调用窗口的传参数使用无效
+	config['lock'] = true;
+	config['fixed'] = false;
+	config['okVal'] = 'Ok';
+	config['cancelVal'] = 'Cancel';
+})($.dialog.setting);
+
+function manageInv(pid){
+	$.dialog({
+		title:'库存管理',
+		content: "url:__URL__/aloneProductMessage/id/"+pid,
+		width:'900px',
+		height:'350px',
+		ok:function(){
+			location.reload();
+		}
+	})
+}
+
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,74 @@
+<include file="public:header_simple.inc" />
+<!--公用---头部--end------->
+<i class="zc_hd_register"></i>
+<div class="mb16">
+<div class="fm1024">
+	<div class="wp1020">
+		<div class="hd_t"></div>
+		<div class="main">
+		
+			<div class="W_reg_info cfl">
+				<!------左边表单栏------------>
+				<div class="W_reg_form login_wrap">
+					<div class="forget_pass_wrao">
+						<h1>找回密码</h1>
+						<p class="pass_tips">
+						请输入您注册时填写的邮箱地址，系统会自动发送密码重置邮件到您的邮箱，然后请您根据重置邮件提示，进行后续的操作。
+						</p>
+								
+						<div class="info_wrap">
+							<!--邮箱-->
+							<form action="__ACTION__" name="forg" method="post">
+							<div class="info_list cfl">
+								<div class="tit">注册邮箱：</div>
+								<div class="inp">
+									<input type="text"  tip="有效邮箱激活后可获得20积分"  errormsg="邮箱地址输入不正确"  nullmsg="请您输入邮箱地址"   datatype="e"  class="W_input_ws"   ajaxurl="<{:U('user/checkuserfield')}>" name="usermail"  onfocus="if(this.value==defaultValue) {this.value=''}"  onblur="if(!value) {value=defaultValue;}" >
+								</div>
+								<div class="tips">
+									<input type="submit"  id="sub"  class="W_pin_b"  value="发送">&nbsp;&nbsp;&nbsp;<span class="Validform_checktip Validform_label"></span>
+								</div>
+							</div>
+							<div class="info_list cfl">
+								<div class="tiwps">
+											<div class="Validform_checktip Validform_label">6-16个字符，推荐使用字母、数字和符号组合的密码。</div>
+								</div>
+							</div>
+							</form>
+							<script>
+							$(function(){
+								//注册表单验证
+								$("form[name='forg']").Validform({
+									tiptype:2,
+									ajaxPost:false,
+									callback:function(data){
+									}
+								});
+							})
+							</script>
+						</div>
+						
+						
+						<dl class="login_state_dl">
+							<dd>如以上方法不能解决，还请您发送邮件至：<a href="mailto:service@lolitabox.com" target="_blank">service@lolitabox.com</a> 或电话联系我们的</dd>
+							<dd>客服：<b class="W_ico20 icon20_phone"></b>4006-263-362</dd>
+						</dl>
+					</div>
+				</div>
+				<!------右边表单栏------------>
+				<div class="W_reg_sidebar">
+					<div class="sidebar_title">
+						<p class="tit">忽然想起密码啦</p>
+						<p>
+							<a href="javascript:void(0)" class="W_pin_b1 dialog_login_obj">马上登录</a>
+						</p>
+					</div>
+				</div>
+			</div>		
+		</div>
+	
+		<div class="ft"></div>
+	</div>
+</div>
+</div>
+<!--标准底---start--->
+<include file="public:footer_simple.inc" />

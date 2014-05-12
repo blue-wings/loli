@@ -1,0 +1,32 @@
+<include file="public:header.inc" />
+<!--公用---头部--end------->
+<i class="page_top"></i>
+
+<div class="mb16">
+<div class="fm1024">
+	<div class="wp1020">
+		<div class="hd_t"></div>
+		<div class="main">
+			<!--注册成功--内容--start-->
+				<div class="login_bound_con">
+					<div class="login_bound_succend">
+						<h1 class="bound_succeed_con"><b class="W_ico45 icon_yes_45"></b>您成功注册了萝莉盒会员账户 </h1>
+						<p class="tc f14">
+						我们已经发送一封确认邮件到您注册的邮箱：  <span class="rd"><{$return.usermail}></span>，请及时查看并验证您的邮箱。<br/>(验证邮箱可以立即获得20积分，可以用来免费兑换试用装哦！)<br/><br/>
+						<a href="<{:u('task/index',array('id'=>3))}>" target="_blank">验证手机，马上获得10元优惠券！ </a><br/><br/>
+						<if condition="$FromTitle neq ''">
+						<a href="<{$FromUrl}>" > <b>点击这里，返回”<{$FromTitle}>“</b></a> <br/><br/>
+						</if>
+						<a href="/buy/index.html" class="W_pin_b mr5">挑选萝莉盒</a> 
+						<a href="/try/index.html" class="W_pin_b mr5">我要试用</a> 
+						<a href="/home/index.html" class="W_pin_b">进入个人中心</a>
+						</p>
+					</div>
+				</div>
+			<!--注册成功--内容--end-->
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+</div>
+<include file="public:footer.inc" />

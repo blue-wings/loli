@@ -1,0 +1,275 @@
+<include file="public:header.inc" />
+<div class="fm1020_c">
+	<div class="wp1020_2 mb16" id="wrap">
+		<div class="hd">
+			<h3 class="i_tit l"><em class="t_arrows_bt">&nbsp;</em>请选择订购适合您的美妆盒</h3>
+			<span class="r"><a href="javascript:void(0)" onclick="ask_online()"><em class="tt_service">&nbsp;</em>在线客服</a><em class="tt_phone">&nbsp;</em>客服热线：4006-263-362</span>
+		</div>
+		<div class="beauty_boxs_top" id="meg">
+			<div class="t_main">
+				<div class="beauty_boxs_title">
+					<ul class="beauty_boxs_ul cfl" id="oldBoxList">
+					<li><a href="<{$Think.const.__SELF__}>#boxs_1"><p>订购</p>限量特购美妆盒</a></li>
+					<li><a href="<{$Think.const.__SELF__}>#boxs_2"><p>订购</p>当月美妆盒</a></li>
+					<li><a href="<{$Think.const.__SELF__}>#boxs_3"><p>订购</p>全年美妆盒</a></li>
+					<li><a href="<{$Think.const.__SELF__}>#boxs_4"><p>订购</p>新会员独享美妆盒</a><em class="beauty_title_r1">&nbsp;</em></li>
+					<li><a href="<{$Think.const.__SELF__}>#boxs_5"><p>订购</p>随心选美妆盒</a><em class="beauty_title_r2">&nbsp;</em></li>
+					<li><a href="<{$Think.const.__SELF__}>#boxs_6"><p>订购</p>SOLO神秘美妆盒</a><em class="beauty_title_r3">&nbsp;</em></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+<a name="boxs_1"></a>
+<div class="wp1020_2 mb16 box_list">
+    <div class="hd">
+    	<h3 class="i_tit l">订购限量特购美妆盒</h3>
+    	<p class="hui">&nbsp;</p>
+    </div>
+	<div class="main beauty_boxs_main">
+			<div class="beauty_boxs_details cfl">
+				<div class="beauty_boxs_con l cfl" >
+				    <a href="javascript:void(0)" class="aleft" id="foo2_prev"></a>
+				    <div class="beauty_boxs_cont imglist_w">
+				    	<div class="caroufredsel_wrapper">
+						    <ul class="beauty_boxs_image cfl" id="foo2">
+						    <volist name="boxlist[1]" id="vo">
+						    	<li>
+						    		<a href="<{:u('buy/show',array('boxid'=>$vo[boxid]))}>" target="_blank"><img src="<{$vo.pic_big}>" width="580" height="310" alt="<{$vo.name}>"/></a>
+						    		<dl class="beauty_boxs_dl beauty_boxs_dl_286 r cfl">
+										<dt class="boxs_name mb16"><h2><{$vo.name}></h2></dd>
+										<dd class="boxs_details mb16"><{$vo.box_intro}></dd>
+										<dd class="box_time mb16">派送时间：下单后2个工作日</dd>
+										<dd class="boxs_btn">
+											<div class="buy_btn_login buy_btn_login_190 boxs_btn_b cfl">
+												<p class="buy_price l"><a href="<{:u('buy/detail',array('boxid'=>$vo[boxid]))}>" target="_blank"  class="buy_btn_href">￥<if condition="$vo.member_price gt 0"><{$vo[member_price]}><else /><{$vo[box_price]}></if>元</a></p><p class="buy_btns r"><a href="<{:u('buy/detail',array('boxid'=>$vo[boxid]))}>" target="_blank"  class="buy_btn_href">立即订购</a></p>
+											</div>
+										</dd>
+								    </dl>
+						        </li>
+						        </volist>
+							</ul>
+						</div>
+					</div>
+			        <a href="javascript:void(0)" class="aright"  id="foo2_next"></a>
+			        <div class="pagination" id="foo2_pag"></div>
+			    </div>
+			</div>
+		</div>
+		<div class="ft"></div>
+</div>
+<a name="boxs_2"></a>
+<div class="wp1020_2 mb16 box_list">
+    <div class="hd">
+    	<h3 class="i_tit l">订购当月美妆盒（<{$boxlist[2]["year"]}>年<{$boxlist[2]["mon"]}>月）</h3>
+    	<p class="hui">&nbsp;</p>
+    </div>
+		<div class="main beauty_boxs_main">
+			<div class="beauty_boxs_details cfl">
+				<dl class="beauty_boxs_dl l cfl">
+					<dt class="boxs_name mb16"><h2><{$boxlist[2]["name"]}></h2></dd>
+					<dd class="boxs_details mb16"><{$boxlist[2]["box_intro"]}></dd>
+					<dd class="box_time mb16">派送时间：<{$boxlist[2]["year"]}>年<{$boxlist[2]["mon"]}>月<{$boxlist[2]["day"]}>日</dd>
+					<dd class="boxs_btn">
+						<div class="buy_btn_login buy_btn_login_190 boxs_btn_b cfl">
+							<a href="<{:u('buy/detail',array('boxid'=>$boxlist[2][boxid]))}>" target="_blank" class="buy_btn_href"><p class="buy_price l">￥<{$boxlist[2][member_price]}>元</p><p class="buy_btns r">立即订购</p></a>
+						</div>
+					</dd>
+				</dl>
+				<div class="beauty_boxs_image r">
+				     <p><a href="<{:u('buy/show',array('boxid'=>$boxlist[2][boxid]))}>" target="_blank" ><img src="<{$boxlist[2][pic_big]}>" width="580" height="310" alt="<{$boxlist[2][name]}>"/></a></p>
+			    </div>
+			</div>
+		</div>     
+    <div class="ft"></div>
+</div>
+<a name="boxs_3"></a>
+<div class="wp1020_2 mb16 box_list">
+    <div class="hd">
+    	<h3 class="i_tit l">订购全年美妆盒</h3>
+    	<p class="hui">&nbsp;</p>
+    </div>
+		<div class="main beauty_boxs_main">
+			<div class="beauty_boxs_details cfl">
+				<div class="beauty_boxs_image l">
+				     <p><a href="<{:u('special/ndsy')}>"  target="_blank"><img src="public/images/30.jpg" width="580" height="310"/></a></p>
+			    </div>
+				<dl class="beauty_boxs_dl r cfl">
+					<dt class="boxs_name mb16"><h2>2014全年美妆盒</h2></dd>
+					<dd class="boxs_details mb16">每个月收到美妆盒的那一天，总会伴有无限的惊喜！我们推荐您像订阅报纸、杂志那样，一次订购就会在2014年的每月定期收到一个精美的美妆盒，省力又省钱哦！</dd>
+					<dd class="boxs_btn boxs_btn_b">
+						<div class="buy_btn_login buy_btn_login_100">
+							<p class="buy_btns r"><a href="<{:u('special/ndsy')}>"  target="_blank" class="buy_btn_href">查看详情</a></p>
+						</div>
+					</dd>
+				</dl>
+			</div>
+		</div>
+    <div class="ft"></div>
+</div>
+<a name="boxs_4"></a>
+<div class="wp1020_2 mb16 box_list">
+    <div class="hd">
+    	<h3 class="i_tit l">订购新会员独享美妆盒</h3>
+    	<p class="hui">&nbsp;</p>
+    </div>
+		<div class="main beauty_boxs_main">
+			<div class="beauty_boxs_details cfl">
+				<dl class="beauty_boxs_dl l cfl">
+					<dt class="boxs_name mb16"><h2><{$boxlist[4]['name']}></h2></dd>
+					<dd class="boxs_details mb16"><{$boxlist[4]['box_intro']}></dd>
+					<dd class="box_time mb16">派送时间：下单后2个工作日</dd>
+					<dd class="boxs_btn mb16">
+						<div class="buy_btn_login buy_btn_login_190">
+							<p class="buy_price l"><a href="javascript:void(0)" onclick="check_buy('<{$boxlist[4][boxid]}>',this)">￥<{$boxlist[4][member_price]}>元</a></p><p class="buy_btns r"><a href="javascript:void(0)" onclick="check_buy('<{$boxlist[4][boxid]}>',this)" class="buy_btn_href">立即订购</a></p>
+						</div>
+					</dd>
+					<dd class="beauty_boxs_tips"><em class="pbl_praise">&nbsp;</em><span>温馨提示：新会员美妆盒只为新会员定制，是萝莉盒订购者的第一份超级福利盒，不可错过呦！如果您已经订购过任意一款萝莉盒，就不能享受购买新会员美妆盒的福利啦！</span></dd>
+				</dl>
+				<div class="beauty_boxs_image r">
+				     <p><a href="<{:u('buy/show',array('boxid'=>$boxlist[4][boxid]))}>" target="_blank"><img src="<{$boxlist[4][pic_big]}>" width="580" height="310" alt="<{$boxlist[4]['name']}>"/></a></p>
+			    </div>
+			</div>
+		</div>
+    <div class="ft"></div>
+</div>
+<a name="boxs_5"></a>
+<div class="wp1020_2 mb16 box_list">
+    <div class="hd">
+    	<h3 class="i_tit l">订购随心选美妆盒</h3>
+    	<p class="hui">&nbsp;</p>
+    </div>
+		<div class="main beauty_boxs_main">
+			<div class="beauty_boxs_details cfl">
+				<div class="beauty_boxs_image l">
+				     <p><a href="<{:u('buy/show',array('boxid'=>$boxlist[5][boxid]))}>" target="_blank"><img src="<{$boxlist[5][pic_big]}>" width="580" height="310" alt="<{$boxlist[5]['name']}>"/></a></p>
+			    </div>
+				<dl class="beauty_boxs_dl r cfl">
+					<dt class="boxs_name mb16"><h2><{$boxlist[5][name]}></h2></dd>
+					<dd class="boxs_details mb16"><{$boxlist[5][box_intro]}></dd>
+					<dd class="box_time mb16">派送时间：下单后2个工作日</dd>
+					<dd class="boxs_btn mb16">
+						<div class="buy_btn_login buy_btn_login_190">
+							<p class="buy_price l"><a href="javascript:void(0)" onclick="check_buy('<{$boxlist[5][boxid]}>',this)">￥<{$boxlist[5][member_price]}>元</a></p><p class="buy_btns r"><a href="javascript:void(0)" onclick="check_buy('<{$boxlist[5][boxid]}>',this)" class="buy_btn_href">立即订购</a></p>
+						</div>
+					</dd>
+					<dd class="beauty_boxs_tips"><em class="pbl_praise">&nbsp;</em><span>温馨提示：随心选美妆盒是“特权会员”的特权。<a href="<{:U("special/xszn")}>" target="_blank">什么是特权会员？</a> <a href="<{:U("member/index")}>" target="_blank">如何成为特权会员？</a></span></dd>
+				</dl>
+			</div>
+		</div>
+    <div class="ft"></div>
+</div>
+<a name="boxs_6"></a>
+<div class="wp1020_2 mb16 box_list">
+    <div class="hd">
+    	<h3 class="i_tit l">订购SOLO神秘美妆盒</h3>
+    	<p class="hui">&nbsp;</p>
+    </div>
+		<div class="main beauty_boxs_main">
+			<div class="beauty_boxs_details cfl">
+				<dl class="beauty_boxs_dl l cfl">
+					<dt class="boxs_name mb16"><h2><{$boxlist[6][name]}></h2></dd>
+					<dd class="boxs_details mb16"><{$boxlist[6][box_intro]}></dd>
+					<dd class="box_time mb16">派送时间：<{$boxlist[6]["year"]}>年<{$boxlist[6]["mon"]}>月<{$boxlist[6]["day"]}>日</dd>
+					<dd class="boxs_btn mb16">
+						<div class="buy_btn_login buy_btn_login_190">
+							<p class="buy_price l"><a href="javascript:void(0)" onclick="check_buy('<{$boxlist[6][boxid]}>',this)">￥<{$boxlist[6][member_price]}>元</a></p><p class="buy_btns r"><a href="javascript:void(0)" onclick="check_buy('<{$boxlist[6][boxid]}>',this)" class="buy_btn_href">立即订购</a></p>
+						</div>
+					</dd>
+					<dd class="beauty_boxs_tips"><em class="pbl_praise">&nbsp;</em><span>温馨提示：购买SOLO盒必须先要成为SOHU用户哦！如果您还不是SOHU用户，请点击<a href="http://try.women.sohu.com/LolitaBox/href_LolitaBox" target="_blank">这里</a>注册后再点击订购，即可80元订购超值SOLO盒。</span></dd>
+				</dl>
+				<div class="beauty_boxs_image r">
+				     <p><a href="<{:u('buy/show',array('boxid'=>$boxlist[6][boxid]))}>" target="_blank"><img src="<{$boxlist[6][pic_big]}>" width="580" height="310" alt="<{$boxlist[6]['name']}>"/></a></p>
+			    </div>
+			</div>
+		</div>
+    <div class="ft"></div>
+</div>
+
+	<div class="subscription_service">
+		<ul class="cfl">
+			<li><a><em class="t_sevice_all">&nbsp;</em><span>所有萝莉盒订单均<br/>享受免费送货服务</span></a></li>
+			<li><a><em class="t_sevice_he">&nbsp;</em><span>每个萝莉盒都可以是送给<br/>TA的一份神秘温馨礼品</span></a></li>
+			<li><a href="<{:u('member/index')}>" target="_blank"><em class="t_sevice_privilege">&nbsp;</em><span>特权会员&nbsp;尊享特价<br/>如何成为特权会员？</span></a></li>
+			<li><a href="<{:u('special/fwbz')}>" target="_blank"><em class="t_sevice_accredit">&nbsp;</em><span>正品授权&nbsp;快捷支付<br/>优质物流&nbsp;在线客服</span></a></li>
+		</ul>
+	</div>
+</div>
+<!--订购萝莉盒-内容-end-->
+<!--滚动触发焦点导航-->
+<script type="text/javascript" defer="defer">
+$(document).ready(function(){
+    $(window).scroll(function(){
+    	var scrolltop_top = $('#wrap').offset().top;
+        var H = $(this).scrollTop(); 
+        var windowH =$(window).height()/2;
+        var arrBox = new Array();
+        var n=document.getElementById("oldBoxList").getElementsByTagName("li");
+        arrBox[0]=scrolltop_top;
+    	//alert(n.length);
+        for(var i=0;i<n.length;++i) { 
+              arrBox[i]=$('.box_list').eq(i).offset().top-H;
+           };
+        for (var i=0;i<=n.length;++i){    	 	   
+	           if(windowH>=arrBox[i]){
+	          	$('.beauty_boxs_ul').find('li').removeClass('selected');
+	          	$('.beauty_boxs_ul').find('li').eq(i).addClass('selected');
+	          }
+         }              	   
+    })   
+});
+</script>
+<!--导航栏固定和锚点导航-->
+<script type="text/javascript">//产品导航定位以及锚点链接定位
+        function findDimensions(){           
+            var isIE6 = !-[1,] && !window.XMLHttpRequest;
+            var meg = $("#meg");
+            var ids = $("#wrap")
+            var scrolltop_top =  ids.offset().top;
+            $(window).scroll(function(){//定位导航栏
+                var H = $(this).scrollTop();
+                 if( H >= scrolltop_top){
+                     if(isIE6){
+                        meg.css({ "position": "absolute","top":H+"px"});
+                     }else{
+                        meg.css({"position":"fixed","top":"0"});	
+                    } 
+                }else{
+                    meg.css({"position":"static"});	
+                }
+				});
+           $('.beauty_boxs_top ul li').click(function(){
+              setTimeout(function(){
+              var scrollTop = $(window).scrollTop();
+              $(window).scrollTop(scrollTop-90);
+             },10)}); 
+        }
+        findDimensions();
+        window.onresize=findDimensions;       					
+</script>
+<script type="text/javascript" src="public/js/jquery.carouFredSel-6.2.1-packed.js"></script>
+<script type="text/javascript">
+	$("#foo2").carouFredSel({
+	circular: true,//循环滚动
+	infinite: false,
+	auto 	:true,//自动滚动
+	scroll  :{//滚动设置
+		fx:"scroll",//滚动效果("none", "scroll", "directscroll", "fade", "crossfade", "cover" or "uncover")("无", "滚动", "directscroll", "淡出", "淡入淡出", "覆盖" or "揭开")
+		easing:"quadratic",// 滚动缓冲效果("linear","swing","quadratic","cubic","elastic")（"线性","摆动","二次","三次","弹性"）
+		duration:1500,//滚动速度
+		pauseOnHover:true//鼠标hover
+	},
+	prev	: {	
+		button	: "#foo2_prev",
+		key		: "left"
+	},
+	height	: 310,
+	next	: { 
+		button	: "#foo2_next",
+		key		: "right"
+	},
+	pagination	: "#foo2_pag"
+	});
+</script>
+<script src="/public/js/buy.js"></script>
+<include file="public:footer.inc" />

@@ -1,0 +1,164 @@
+<include file="public:header.inc" />
+<!--我要参加弹框-end-->
+<div class="be_content">
+<!--贝玲妃minisite内容-start-->
+	<div class="fm1020 wp1020 cfl">
+    <div class="hd_t"></div>
+		<div class="main main_b cfl">
+			<div class="fm1020 be_nav_con cfl">
+			<!-- BENEFIT CLUB COMMON NAV(start) -->
+			<include file="benefit_nav.inc" />
+	        <!-- BENEFIT CLUB COMMON NAV(end) -->
+		    </div>
+		    <div class="fm1020">
+		    	<div class="be_banner_wrap be_banner_wrap_b">
+		    		<div class=" be_banner_menu_f2">
+				    	<ul class="be_banner_menu cfl">
+				    		<li class="be_banner_menu_01"><a href="<{:U("club/benefit_task",array("type"=>"1"))}>"><em class="be_banner_01">&nbsp;</em></a></li>
+			    		    <li class="be_banner_menu_02 be_banner_menu_selected""><a href="<{:U("club/benefit_task",array("type"=>"2"))}>"><em class="be_banner_02">&nbsp;</em></a></li>
+				    		<li class="be_banner_menu_03"><a href="<{:U("club/benefit_task",array("type"=>"3"))}>"><em class="be_banner_03">&nbsp;</em></a></li>
+				    	</ul>
+			    	</div>
+			    	<p><em class="be_banner_txt02"></em></p>
+			    	<dl class="be_banner_con be_banner_con_02">
+			    	    <dd>打败原本稀疏、扁平的眉毛，展现丰盈、立体美眉！</dd> 
+				    	<dd><em class="pbl_praise">&nbsp;</em><span>参与本阶段活动：即有机会赢取benefit"gimme brow眉梦成真丰眉膏"或"眉吧体验券"！</span></dd>
+				    	<dd><em class="pbl_praise">&nbsp;</em><span>【“眉”来运转 美梦成真】终极投票将于2月24日开始，为自己拉票，赢benefit超级大奖！</span></dd>
+				    	<dd><em class="pbl_praise">&nbsp;</em><span>宣传贡献奖：通过其他论坛、博客等途径对gimme brow进行宣传的会员，将额外获得50-300不等的积分奖励。<span onclick="ask_online();" style="cursor:pointer;">(联系LOLITABOX客服)</span></span></dd>
+                    </dl>
+		        </div>
+		       <script type="text/javascript">
+		        $(function(){
+		        	var be_b = $('.be_banner_wrap_b');
+		        	var be_bb = $('.be_banner_menu');
+		        	be_b.find('.be_banner_menu_01').mouseover(function(){
+		        		be_bb.css({'background':'url(public/images/be_banner_li_bg.png) 0px 0px no-repeat'})
+		        	})
+		        	be_b.find('.be_banner_menu_02').mouseover(function(){
+		        		be_bb.css({'background':'url(public/images/be_banner_li_bg.png) 0px -47px no-repeat'})
+		        	})
+		        	be_b.find('.be_banner_menu_03').mouseover(function(){
+		        		be_bb.css({'background':'url(public/images/be_banner_li_bg.png) 0px -94px no-repeat'})
+		        	})
+		        	be_b.find('li').mouseleave(function(){
+		        		be_bb.css({'background':'none'})
+		        	})  
+		        })
+                  
+		        </script>
+		    </div>
+		    <div class="fm1020 be_way_02_ft cfl">
+			    <div class="wp500 be_way_con be_way_01_con part_method l">
+			    	<div class="main part_method_title_con cfl">
+			    		<div class="be_welcome_title_sho cfl">
+							<div class="be_welcome_title_ml l"></div>
+							<div class="be_welcome_title_mm l"><em class="be_way_01">&nbsp;</em></div>
+							<div class="be_welcome_title_mr l"></div>
+						</div>
+						<dl class="be_way_con_top">
+						<dt>拥有gimme brow眉梦成真丰眉膏的会员看这里!</dt>
+							<dd>Step 1、<span>请以“图文混排分享模式”提交试用报告(内容中需包含使用gimme  brow眉梦成真丰眉膏前后的对比照及试用感受)</span></dd>
+							<dd>Step 2、<span>审核通过即得300积分；<a href="<{:u('try/iexchange')}>" target="_blank">积分兑换>></a></span></dd>
+							<dd>Step 3、<span>记得给自己拉票，赢取benefit超级大奖！</span></dd>
+					    </dl>
+					    <p class="be_btn_b">
+			                <eq name="return.if_can" value="0">
+			               	 	<em class="be_btn_4_off">提交试用报告</em>
+			                <else />
+								<a href="javascript:void(0)" onclick="dialog_share('63118',1)"><em class="be_btn_4">提交试用报告</em></a> 
+			                </eq>
+							
+					    </p>
+					    <div class="part_method_main be_ways2">
+		                	<p>Yuck  VS  WOW：it is so magical！</p>
+		                	<ul class="cfl">
+		                		<li>
+		                			<dl>
+		                				<dt><img src="public/images/shiyong1.jpg"><p class="yuck">&nbsp;</p><p class="wow"><img src="" with="35" height="35"></p></dt>
+		                			</dl>
+		                		</li>
+		                		<li>
+		                			<dl>
+		                				<dt><img src="public/images/shiyong2.jpg"><p class="yuck">&nbsp;</p><p class="wow"><img src="" with="35" height="35"></p></dt>
+		                			</dl>
+		                		</li>
+		                	</ul>
+		                </div>
+					</div>
+				</div>
+				<div class="wp500 be_way_con be_way_02_con part_method r">
+			    	<div class="main part_method_title_con cfl">
+			    		<div class="be_welcome_title_sho cfl">
+							<div class="be_welcome_title_ml l"></div>
+							<div class="be_welcome_title_mm l"><em class="be_way_02">&nbsp;</em></div>
+							<div class="be_welcome_title_mr l"></div>
+						</div>
+						<dl class="be_way_con_top">
+							<dt>没有gimme brow眉梦成真丰眉膏也能赢大奖，快来这里！</dt>
+							<dd>Step 1、<span>上传自己眉毛打造前后（稀疏扁平vs丰盈立体）的照片，审核通过即得300积分；<a href="<{:u('try/iexchange')}>" target="_blank">积分兑换>></a></span></dd>
+							<dd>Step 2、<span>参加此任务即有机会赢取benefit最新产品gimme brow眉梦成真丰眉膏和眉吧体验券！</span></dd>
+							<dd>Step 3、<span>记得给自己拉票，赢取benefit超级大奖！</span></dd>
+							
+					    </dl>
+					    <p class="be_btn_b">
+
+		                <eq name="return.if_can" value="0">
+		               	 	<em class="be_btn_4_off">我要参加</em>
+		                <else />
+		                	<if condition="$return.if_join eq 1">
+		                		<em class="be_btn_4_off">已审核</em>
+		                	<elseif condition="$return.if_join eq 2" />
+		                		<a href="javascript:void(0)" onclick="show_benefit_join(2)"><em class="be_btn_4">重新上传</em></a>
+		                	<else />
+		                		<a href="javascript:void(0)" onclick="show_benefit_join(2)"><em class="be_btn_4" id="b_to_join">我要参加</em></a>
+		                	</if>
+		                </eq>
+
+						</p>
+					    <div class="part_method_main be_ways2 cfl">
+		                	<p>Yuck  VS  WOW：u are perfect girl！</p>
+		                	<ul class="cfl">
+		                		<li>
+		                			<dl>
+		                				<dt><img src="public/images/shangchuan1.jpg"><p class="yuck">&nbsp;</p><p class="wow"><img src="" with="35" height="35"></p></dt>
+		                			</dl>
+		                		</li>
+		                		<li>
+		                			<dl>
+		                				<dt><img src="public/images/shangchuan2.jpg"><p class="yuck">&nbsp;</p><p class="wow"><img src="" with="35" height="35"></p></dt>
+		                			</dl>
+		                		</li>
+		                	</ul>
+		                </div>
+				    </div>
+				</div>
+		    </div>
+		    <p class="hei_b2">&nbsp;</p>
+		    <div class="f1020 cfl">
+		    	<div class="wp1020_d">
+		    		<div class="be_pro_new be_pro_new_b be_pro_plus ">
+		    		    <div class="be_eyebrows_02 be_pro_plus_con">
+		    		    	<div class="be_eyebrows_02_con">
+			    		    	<dl>
+			    		    		<dt style=" padding:30px 0px 0px 10px"><em class="question_mark">&nbsp;</em></dt>
+			    		    	</dl>
+			    		    	<dl>
+			    		    	    <dd class="plus">=</dd>
+			    		    	</dl>
+			    		    	<dl>
+			    		    		<dt><a href="<{:getProductUrl(63118)}>" target="_blank"><img src="public/images/be_new_pro.png" width="150" height="150"></a></dt>
+			    		    	</dl>
+		    		    	</div>
+		    		    </div>
+		    		</div>
+		    	</div>
+            </div>
+		<!--完美大人-end-->
+	    </div>
+	</div>
+<!--贝玲妃minisite内容-end-->
+</div>
+<include file="benefit_user_login" />
+<script src="/public/js/club_benefit.js"></script>
+<include file="public:footer.inc" />
+

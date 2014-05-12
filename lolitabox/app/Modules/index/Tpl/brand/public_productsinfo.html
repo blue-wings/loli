@@ -1,0 +1,29 @@
+	<div class="fabric_list_cont auto <notempty name='return[products_class]'><{$return[products_class]}></notempty>" style="height:380px;">
+			<dl>
+				<dt>
+				<a href="javascript:void(0)"  onclick="dialog_products('<{$vo.pid}>');"><img src="<{$vo.pimg}>" width="185" height="185" alt="<{$vo.pname}>"></a>
+				<notempty name="vo.commend_tags_class">	<i class="<{$vo.commend_tags_class}>"></i></notempty>
+				</dt>
+				<dd class="name"><a href="javascript:void(0)"  onclick="dialog_products('<{$vo.pid}>');" class="A_line2"><{$vo.pname}></a></dd>
+				<dd>试用规格：<{$vo.norms}></dd>
+				<dd>
+				<if condition="$vo[for_skin] eq '' && $vo[for_hair] eq ''">
+					适用肤质：暂无
+				<elseif condition="$vo.for_skin neq ''" />
+					适用肤质：<{$vo[for_skin]}>
+				<else />
+					适用发质：<{$vo[for_hair]}>
+				</if>
+				</dd>
+				<dd>适用人群：<{$vo[for_people]|default="暂无"}></dd>
+				<dd>产品功效：<{$vo[effect][1]|default="暂无"}></dd>
+				<dd class="brand">
+					<volist name="vo.sale_tags"    id="v">
+						<a href="javascript:void(0)" class="t_tips t_tips_0<{$i}>"><{$v}></a>
+					</volist>
+				</dd>	
+				<notempty name="return[products_class]">
+					<dd class="tc"><a href="javascript:void(0)"  onclick="dialog_share('<{$vo.pid}>',1)" class="W_pin_b">发分享</a></dd>		
+				</notempty>					
+			</dl>
+		</div>	

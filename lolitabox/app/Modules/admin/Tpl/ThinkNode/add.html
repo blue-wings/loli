@@ -1,0 +1,77 @@
+<include file="Public:header" />
+<link href="__PUBLIC__/css/table.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/common.css" type="text/css" rel="stylesheet"/>
+
+<div id="main" class="main" >
+<div class="content">
+<div class="list-div">
+<form method='post'  id="form1" action="__URL__/insert/" onsubmit="return check();">
+<table cellpadding=3 cellspacing=3 id="datatable" style="width:50%;">
+<tr><th colspan="2" scope="col" align="left">新增
+<eq name="level" value="1">应用</eq><eq name="level" value="2">模块</eq><eq name="level" value="3">操作</eq> [ <a href="__URL__/index/pid/{$pid}">返回列表</a> ]</th></tr>
+<tr>
+	<td><eq name="level" value="1">应用</eq><eq name="level" value="2">模块</eq><eq name="level" value="3">操作</eq>名：</td>
+	<td><input type="text" class="medium bLeftRequire"  check='Require' warning="<eq name="level" value="1">应用</eq><eq name="level" value="2">模块</eq><eq name="level" value="3">操作</eq>名称不能为空,且不能含有空格" name="name"></td>
+</tr>
+<tr>
+	<td>显示名：</td>
+	<td><input type="text" class="medium bLeftRequire" check='Require' warning="显示名称必须"  name="title"></td>
+</tr>
+<tr>
+	<td>分 组：</td>
+	<td>
+	<SELECT class="medium bLeft" name="group_id">
+	<option value="">未分组</option>
+	<volist name="list" id="vo">
+	<option value="{$vo.id}">{$vo.title}</option>
+	</volist>
+	</SELECT>
+	</td>
+</tr>
+<tr>
+	<td >是否菜单中显示：</td>
+	<td class="tLeft"><select class="small bLeft"  name="type">
+	<option value="1" selected>否</option>
+	<option value="0">是</option>
+	</select></td>
+</tr>
+<tr>
+	<td class="tRight">状态：</td>
+	<td class="tLeft"><SELECT class="small bLeft"  name="status">
+	<option value="1">启用</option>
+	<option value="0">禁用</option>
+	</SELECT></td>
+</tr>
+<tr>
+	<td class="tRight tTop">描 述：</td>
+	<td class="tLeft"><TEXTAREA class="large bLeft" name="remark"  rows="5" cols="57"></textarea></td>
+</tr>
+<tr>
+	<td></td>
+	<td class="center">
+	<input type="hidden" name="level" value="{$level}">
+	<input type="hidden" name="pid" value="{$pid}">
+	<input type="submit" value="保存">
+    <input type="reset" value="清空" >
+	</td>
+</tr>
+</table>
+</form>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+function check()
+{
+	var name = $("#name").val();
+	var title = $("#title").val();
+	if(name=="" || title==""){
+		alert("应用名或者显示名不能为空!");
+		return false;
+	}
+	return true;	
+}
+
+</script>
+
+<include file="Public:footer" />

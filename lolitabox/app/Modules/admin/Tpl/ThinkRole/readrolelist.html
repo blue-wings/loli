@@ -1,0 +1,50 @@
+<include file="Public:header" />
+<link href="__PUBLIC__/css/table.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/common.css" type="text/css" rel="stylesheet"/>
+<div class="list-div">
+<table width="800" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th align="left" scope="col" class="sectitle">游览组权限</th>
+  </tr>
+  <tr height="20px;">
+  <td>&nbsp;&nbsp;</td>
+  </tr>
+</table>
+<div>
+<div class="list-div">
+<table border="0" cellspacing="1" cellpadding="2" id="datatable">
+  <tr align="center">
+    <th scope="col">应用名</th>
+    <th scope="col">模块名(操作名)</th>
+  </tr>
+  
+  <volist name="list"  id="data" key="i">
+  <tr align="center">
+    <td>
+    {$i}:{$data.title}
+    </td>
+    <td>
+    <volist name="data.module" id="module" key="j">
+    {$j}:{$module.title}&nbsp;(
+    	<volist name="module.action" id="action" key="k">
+    	{$action.title}&nbsp;
+    	</volist>)
+    	<br />
+    </volist>
+    </td>
+  </tr>
+  </volist>
+</table>
+</div>
+<script type="text/javascript">
+function del(id)
+{
+	if(confirm("你确定要删除吗？")){
+		window.location.href="__URL__/delete/id/"+id;
+		return true;
+	}else{
+		return false;
+	}
+}
+</script>
+<include file="Public:footer" />

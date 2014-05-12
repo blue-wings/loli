@@ -1,0 +1,62 @@
+<include file="Public:header" />
+<form name="listform" id="listform" action="__URL__/delEvaluateImg" method="post">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">评测图片列表</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+<style type="text/css">
+img{border:0;}
+ul {list-style:none; width:800px;float:left}  
+li {width:150px;margin:5px 5px 5px 0; float:left;text-align:center;}  
+li img {width:100px;height:100px;border:1px solid #ddd;padding:5px;background:#f0f0f0; display:block; overflow:hidden;margin-bottom:5px;}
+li p{width:100px;text-align:left;}
+</style>
+<ul>
+<volist name="list" id="imglist" emtpy="这里一片空白">
+<li>
+<img src="/data/userdata{$imglist.imgpath}" title="评测标题：{$imglist.title}"/><p><input name="id[]" type="checkbox" class="STYLE2" value="{$imglist.imgid}" />
+评测ID:<a href="{:U('ProductsEvaluate/productEvaluateList',array('evaluateid'=>$imglist[evaluateid]))}">{$imglist.evaluateid}</a><br>
+用户ID：<a href="{:U('User/userlist',array('userid'=>$imglist[userid]))}">{$imglist.userid}</a><br>
+{$imglist.postdate}<br>
+<a onclick="return confirm('确认将此信息删除吗?')" href="__URL__/delEvaluateImg/id/{$imglist.imgid}">删除</a></p>
+</li>
+</volist>
+</ul>
+        </td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+            <td width="75%" class="STYLE1"> <input type="submit" id="delSelected" value="删除所有选定评测信息"></td>
+          </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</form>
+<include file="Public:footer" />

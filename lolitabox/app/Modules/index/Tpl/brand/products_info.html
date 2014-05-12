@@ -1,0 +1,303 @@
+<div class="preview details_l">
+		<div class="tit_hd">
+			<div class="tit_hd_tab l">
+				<span class="tit_hd_con"  id="type_1"><a href="javascript:void(0)" >产品图片</a></span>
+				<span class="tit_hd_con"  id="type_2"><a href="javascript:void(0)" >产品介绍</a></span>
+				<span class="tit_hd_con"  id="type_3"><a href="javascript:void(0)"  >使用方法</a></span>
+				<notempty name="return.share_list">
+				<span class="tit_hd_con"  id="type_4" ><a href="javascript:void(0)" >试用分享</a></span>
+				 </notempty>
+				 <span class="tit_hd_con hd_ft"  id="type_5"><a href="javascript:void(0)"  >购买渠道</a></span>
+			</div>
+		</div>
+		<!-----产品图片----->
+		<div class="details_l_wrap cfl"   index="1"  style="display:none">
+		    <div class="smallImg details_list l">
+				<div class="scrollbutton smallImgUp disabled atop"></div>
+				<div id="imageMenu">
+					<ul>
+						<li id="onlickImg"><img src="<{$return.info.pimg}>" width="76" height="76" alt=""/></li>
+						<volist name="return.info.pic"  id="vo">
+						      <li><img src="<{$vo}>" width="76" height="76" alt=""/></li>
+						</volist>
+					</ul>
+				</div>
+				<div class="scrollbutton smallImgDown abottom"></div>
+			</div>
+		    
+			<div class="fabric_wrap l">
+				<div id="vertical" class="bigImg fabric">
+					<img src="<{$return.info.pimg}>" width="310" height="310" alt="<{$return.info.pname}>" id="midimg" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="details_l_wrap cfl"   index="2"  style="display:none">
+			<{$return.info.pintro_all}>
+		</div>
+		
+		<div class="details_l_wrap cfl"   index="3"  style="display:none">
+			<{$return.info.readme_all}>
+		</div>
+		
+		<notempty name="return.share_list">
+		<div class="details_l_wrap cfl"   index="4"  style="display:none"  >
+			<div class="comment_lists">
+			 <volist name="return.share_list"  id="vo">
+			     <dl class="comment_list ">
+					<dt>
+					<a href="<{$vo.spaceurl}>"  target="_blank"><img src="<{$vo.userface}>" width="45" height="45"></a></dt>
+					<dd><a href="<{$vo.spaceurl}>"  target="_blank"><{$vo.nickname}></a>：<{$vo.content}><a href="<{$vo.id|getShareUrl=###}>" target="_blank">详情>></a></dd>
+					<dd class="clear"></dd>
+				</dl>
+			 </volist>
+			 <p class="tc lh46 f14">共<{$total}>条分享，<a href="<{:u("products/$_GET[pid]")}>#share_list" >查看更多>></a></p>
+			</div>
+		</div>
+		</notempty>
+		
+		<div class="details_l_wrap cfl"   index="5"  style="display:none">
+	        <div class="comment_lists">
+	        
+				<empty name="return[info][buylist]">
+					<div style="text-align:center;padding-top:100px;">暂无购买渠道~~</div>			
+				<else />			        
+	        
+			<div class="comment_list comment_list_wrap ">
+				<div class="comment_lists_buy cfl">
+		          <ul>
+		          <volist name="return[info][buylist]" id="vo" offset="0" length="4">
+		            <li>
+		                <p><a href="<{$vo[url]}>" target="_blank" class="click_buychannel" value_id="<{$vo[id]}>"><img src="<{$vo[img]}>" width="100" height="100" alt="<{$vo[channelname]}>"/></a></p>
+		                <p><a href="<{$vo[url]}>" target="_blank" class="click_buychannel" value_id="<{$vo[id]}>"><{$vo[channelname]}></a></p>
+		                <p>售价：<{$vo[price]}>元</p>	
+		            </li>
+		            </volist>
+		          </ul>
+		        </div>
+		        <div class="wenxin">萝莉盒温馨提示：请通过正品渠道购买，以确保安全、放心地使用。</div>
+            </div>
+            
+           <if condition="$return[brand_infolist] neq ''"> 
+ 			<div class="comment_lists_boxs cfl"> 
+                <!--a href=""  target="_blank" class="i_more r mt16">&nbsp;</a-->            	
+                <b class="comment_lists_title">品牌相关资讯</b>
+                <ul>      
+                <volist name="return[brand_infolist]" id="vo">         
+	               <span>•</span><li><a href="<{$vo[url]}>" target="_blank"><{$vo[title]}></a></li>
+	             </volist>
+                </ul>
+            </div>           
+            </if>	
+				</empty>	
+				
+			</div>		
+		</div>		
+	</div>
+	<script type="text/javascript">
+	
+	$(".click_buychannel").click(function(){
+		var id=$(this).attr("value_id");
+		if(id){
+			$.ajax({
+				url:"/brand/get_buychannel_hit.html",
+				type:"post",
+				dataType:"json",
+				data:{id:id},
+				success:function(ret){}
+			})
+		}
+	})
+	
+		$(document).ready(function() {
+			
+			// 图片上下滚动
+			var count = $("#imageMenu li").length - 3; /* 显示 4 个 li标签内容 */
+			var interval = $("#imageMenu li:first").height();
+			var curIndex = 0;
+			
+			$('.scrollbutton').click(function(){
+				if( $(this).hasClass('disabled') ) return false;
+				
+				if ($(this).hasClass('smallImgUp')) --curIndex;
+				else ++curIndex;
+				
+				$('.scrollbutton').removeClass('disabled');
+				if (curIndex == 0) $('.smallImgUp').addClass('disabled');
+				if (curIndex == count) $('.smallImgDown').addClass('disabled');
+				
+				$("#imageMenu ul").stop(false, true).animate({"marginTop" : -curIndex*interval + "px"}, 600);
+			});
+
+			//点击到中图
+			var midChangeHandler = null;
+			
+			$("#imageMenu li img").bind("click", function(){
+				if ($(this).attr("id") != "onlickImg") {
+					midChange($(this).attr("src").replace("small", "mid"));
+					$("#imageMenu li").removeAttr("id");
+					$(this).parent().attr("id", "onlickImg");
+				}
+			}).bind("click", function(){
+				if ($(this).attr("id") != "onlickImg") {
+					window.clearTimeout(midChangeHandler);
+					midChange($(this).attr("src").replace("small", "mid"));
+					$('#imageMenu li img').css({'border':"2px solid #f6f6f6"})
+					$(this).css({ "border": "2px solid #990000" });
+				}
+			})
+
+			function midChange(src) {
+				$("#midimg").attr("src", src).load(function() {
+					changeViewImg();
+				});
+			}
+			function changeViewImg() {
+				$("#bigView img").attr("src", $("#midimg").attr("src").replace("mid", "big"));
+			}
+			changeViewImg();
+		});
+		
+		$(function(){
+			if($('#imageMenu ul').height()<=260){
+				$('.smallImg  > .smallImgDown').css({'visibility':'hidden'})
+				$('.smallImg  > .scrollbutton ').css({'visibility':'hidden'})
+			}
+		})
+		var type= "<{$Think.get.type}>"  || 1;
+		$("[index='"+type+"']").show();
+		$("span[id='type_"+type+"']").addClass("select");
+		$("span[id^='type_']").click(function(){
+			$("span[id^='type_']").removeClass("select");
+			$(this).addClass("select");
+			$("[index]").hide();
+			var id=$(this).attr('id').replace("type_","");
+			$("[index='"+id+"']").show();
+			
+		})
+		</script>
+		
+		<div class="details_r l">
+		<!---产品---->
+		<div class="details_r_name">
+			<h2 ><{$return.info.pname}></h2>
+			<div class="cfl"><p class="l mr5">
+			<volist name="return.info.sale_tags"  id="vo">
+			    <a href="javascript:void(0)" class="t_tips t_tips_0<{$i}>"><{$vo}></a>
+			</volist>
+			</p> <!-- <span style="float:right">分 享 到：<a href="#" target="_blank" class="i_qq">&nbsp;</a><a href="#" target="_blank" class="i_sina">&nbsp;</a></span> --></div>
+		</div>
+		<ul class="details_r_text cfl" >
+			<li>所属品牌：<a href="<{$return.info.brandcid|getBrandUrl=###}>"  target="_blank"  class="A_line2"><{$return.info.brandname}></a></li>
+			<li>正装价格：￥<{$return.info.goodsprice}></li>
+			<li>正装规格：<{$return.info.goodssize}></li>
+			<notempty name="return.info.norms">
+			<li>试用装规格：<{$return.info.norms}></li>
+			</notempty>
+		</ul>
+		<p class="mb10" style="height:18px;overflow:hidden;">
+		<notempty name="return.info.effect.2">
+			产品功效：<{$return.info.effect.2}>
+		<else/>
+		    &nbsp;
+		 </notempty>
+		 </p>
+		
+		<div class="fabric_details_win">
+			<div class="details_hd">请选择试用方式</div>
+			<div class="details_main cfl">
+				<div class="details_main_list bd">
+					<p class="tc">方式一</p>
+					<p class="tc">订购萝莉盒试用</p>
+					<empty name='return.sale_list.1'>
+					<p class="tc"><a href="javascript:void(0)" class="W_pin_grey">暂不提供</a></p>
+					<else/>
+					    <volist name="return.sale_list.1.list"  id="vo">
+					        <p class="box_name" style="text-align:center;"><a href="<{$vo.url}>" target="_blank" class="A_line3"><{$vo.name}></a></p>
+					    </volist>
+					</empty>
+					
+				</div>
+				<div class="details_main_list bd">
+					<p class="tc">方式二</p>
+					<p class="tc">付邮试用</p>
+					<empty name="return.sale_list.2">
+					    <p class="tc"><a href="javascript:void(0)" class="W_pin_grey">暂不提供</a></p>
+					<else/>
+					
+					<if condition="$return[sale_list][2][num] eq 1">
+						<p class="tc"><a href="javascript:void(0)" class="W_pin_b" onclick="check_try('<{$return['sale_list'][2]['list'][0]['id']}>',2,this)">付邮领取</a></p>
+					<p class="tc">邮费：<span class="rd">￥10</span></p>
+					<else />
+					
+					<p class="tc"><a href="javascript:void(0)" class="W_pin_b" id="show_paydiv" rel="paypostage_<{$return[info][pid]}>">付邮试用</a></p>
+
+
+			<ul id="paypostage_<{$return[info][pid]}>" class="cfl details_main_tips" style="display:none;">
+				<foreach name="return['sale_list'][2]['list']" item="ivo">
+						<li>
+							<dl class="details_main_tips_dl">
+								<dt class="l">
+									<p>试用装规格：<{$ivo[norms]}></p>
+									<p>邮费：10元</p>
+								</dt>
+								<dd>
+									<a href="javascript:void(0)" class="W_pin_b" onclick="check_try('<{$ivo[id]}>',2,this)">我要试用</a>
+								</dd>
+							</dl>	
+						</li>
+					</foreach>	
+			</ul>
+
+					</if>
+					</empty>
+				</div>
+				<div class="details_main_list">
+					<p class="tc">方式三</p>
+					<p class="tc">积分试用</p>
+					<empty name="return.sale_list.3">
+					      <p class="tc"><a href="javascript:void(0)" class="W_pin_grey">暂不提供</a></p>
+					<else/>
+						<if condition="$return[sale_list][3][num] eq 1">
+						<p class="tc"><a href="javascript:void(0)" class="W_pin_b" onclick="check_score('<{$return.sale_list.3.list.0.id}>',this)">积分兑换</a></p>
+						<p class="tc">积分：<span class="rd"><{$return['sale_list'][3]['list'][0]['score']}></span></p>				
+						<else />
+						 <p class="tc"><a href="javascript:void(0)"  id="show_scoremsg" rel="score_<{$return[info][pid]}>" class="W_pin_b">积分兑换</a>
+					 </p>
+					
+			<ul id="score_<{$return[info][pid]}>" class="cfl details_main_tips" style="display:none;">
+				<foreach name="return['sale_list'][3]['list']" item="ivo">
+						<li>
+							<dl class="details_main_tips_dl">
+								<dt class="l">
+									<p>试用装规格：<{$ivo[norms]}></p>
+									<p>需要积分：<{$ivo[score]}></p>
+								</dt>
+								<dd>
+									<a href="javascript:void(0)" class="W_pin_b" onclick="check_score('<{$ivo[id]}>',this)">我要试用</a>
+								</dd>
+							</dl>	
+						</li>
+					</foreach>	
+			</ul>					
+					
+						</if>
+				   </empty>
+				</div>
+			</div>
+			<div class="details_ft">所有试用产品均为品牌直供，100%正品保证</div>
+		</div>
+		<if condition="$return[sale_num] neq 0">
+		<!-- <div class="test_r_btn"><a href="javascript:void(0)" onclick="dialog_tryto('<{$return.info.pid}>',1,this)">长草了</a></div>  -->
+		<input type="hidden" id="pro_ifsina" value="<{$bind[sina]}>" />
+		<input type="hidden" id="pro_ifqq" value="<{$bind[qq]}>" />
+		<input type="hidden" id="pro_reurl" value="<{$return[returnurl]}>" />
+		</if>
+	</div>
+	<script>
+	$(function(){
+		$("#show_scoremsg").powerFloat();
+		$("#show_paydiv").powerFloat();
+	})
+	</script>
+	

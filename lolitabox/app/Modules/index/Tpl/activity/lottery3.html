@@ -1,0 +1,311 @@
+<include file="public:header.inc" />
+<style type="text/css">
+body { margin:0; color:#444; padding:0;line-height:28px; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif; background-color:#fee9f8;}
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p  ,dl,dd,dt{margin: 0; padding: 0; border: 0}
+h4{font-weight:normal; padding:0; margin:0}
+a{color:#e22879; text-decoration:none;}
+a:hover{color:#e22879; text-decoration:underline;}
+font{font-size:14px}
+b{color:#fff}
+/*公有*/
+
+/*定位*/
+.Block01{height:545px; background:url(public/special/20130228/header_top.jpg) top center no-repeat;}
+.Block02{width:1001px; height:374px; background:url(public/special/20130228/bg_01.png) no-repeat; margin:0 auto; position:relative;}
+.Block02 .raffle_img{
+	position:absolute;
+	width:435px;
+	height:368px;
+	overflow:hidden;
+	left: 27px;
+	top: 6px;
+}
+.Block02 .raddle_box{ position:absolute; width:513px; height:299px; left: 502px; top: 43px;}
+.Block02 .raddle_box .btn_box{width:513px; height:107px; background:url(public/special/20130228/raffle_btn.png) no-repeat; margin-bottom:18px;}
+.Block02 .raddle_box .moneys{font-size:65px; line-height:107px; color:#fff; margin-left:85px; float:left}
+.Block02 .raddle_box .t_btn{width:188px; height:59px; display:block; background:url(public/special/20130228/raffle_btn1.png) no-repeat; margin:28px 20px 0 0; float:right; line-height:59px; font-size:30px; text-decoration:none; color:#fff; text-align:center;}
+.Block02 .raddle_box .lineHeight{padding:28px 0; font-size:28px; line-height:28px; color:#333;}
+.Block02 .raddle_box .ico01{margin-left:150px;}
+.Block02 .raddle_box .ico02{margin-left:95px;}
+.Block02 .raddle_tips{
+	width:151px;
+	height:91px;
+	background:url(public/special/20130228/tips.png) no-repeat;
+	position:absolute;
+	left: 835px;
+	top: -9px;
+}
+
+.Block03{width:1001px; height:470px; background:url(public/special/20130228/bg_02_02.png) no-repeat; margin:0 auto; position:relative;}
+.Block03_1 .explain_box{ position:absolute; left: 45px; top: 17px; color:#555; font-size:18px; line-height:24px; width: 916px; height: 162px;}
+.Block03_1 .explain_box h4{font-size:24px; line-height:24px; padding-bottom:12px; color:#d60856; }
+.Block03 .rule_box{
+	position:absolute;
+	left: 72px;
+	font-size:16px;
+	line-height:28px;
+	top: 115px;
+	color:#444;
+	width: 368px;
+	height: 317px;
+}
+.Block03 .rule1_box{
+	position:absolute;
+	font-size:16px;
+	line-height:28px;
+	color:#444;
+	left: 533px;
+	top: 109px;
+	width: 399px;
+	height: 345px;
+}
+
+.Block04{width:1001px; height:543px; background:url(public/special/20130228/bg_03.png) no-repeat; margin:0 auto; position:relative;}
+.Block04 .tt1{ position:absolute; font-size:16px; line-height:28px; left: 151px; top: 117px; width: 754px; height: 113px;}
+.Block04 .tt2{
+	position:absolute;
+	left: 47px;
+	top: 336px;
+	width: 992px;
+	height: 178px;
+}
+.Block04 .tt2 li{margin-right:35px; float:left; width:300px; font-size:16px; color:#666; height:28px; line-height:28px;}
+.Block04 .tt2 li.l1{width:216px;}
+.Block04 .tt2 li.l2{width:323px;}
+
+
+
+.Block04 .tt2 li.last{margin-right:0;}
+.Block04 .tt2 li a{color:#444;}
+.Block04 .tt2 li a:hover{color:#cc3366;}
+.Block05{width:1001px; height:471px; background:url(public/special/20130228/bg_04.png) no-repeat; margin:0 auto; position:relative;}
+.Block05 .tt1_img{
+	position:absolute;
+	text-align:center;
+	left: 12px;
+	top: 12px;
+	width: 966px;
+	height: 296px;
+}
+.Block05 .tt2{ position:absolute; font-size:16px; line-height:28px; left: 82px; top: 347px; width: 859px; height: 61px;}
+.Block06{width:1001px; height:505px; background:url(public/special/20130228/bg_05.png) no-repeat; margin:10px auto 0; position:relative;}
+.Block06 .tt1{ position:absolute; left: 33px; top: 125px; width: 949px; height: 347px;}
+.Block06 .tt1 li{width:225px; text-align:center; float:left; margin-right:125px;}
+.Block06 .tt1 li.last{margin-right:0;}
+.Block06 .tt1 li .f_img{width:222px; border:1px solid #ccc; height:222px; margin-bottom:5px; overflow:hidden; display:block;}
+.Block06 .tt1 li dd{height:38px; padding:5px 0; line-height:38px;}
+.Block06 .tt1 li .order_btn{width:122px; height:38px; display:block; background:url(public/special/20130228/order_btn.png) no-repeat; text-align:center; color:#fff; text-decoration:none; margin:0 auto;}
+.Block03_1{width:1001px; height:195px; margin:0 auto; background:url(public/special/20130228/bg_02_01.png) no-repeat; position:relative;}
+.Block03_1 .explain_box{position:absolute;}
+
+.Block06 .tt2{
+	position:absolute;
+	width:424px;
+	height:49px;
+	background:#fff url(public/special/20130228/order_title.jpg) center center no-repeat;
+	left: 288px;
+	top: 65px;
+}
+.Block06 .tt3{
+	position:absolute;
+	left: 72px;
+	top: 132px;
+}
+.Block06 .tt4{
+	position:absolute;
+	left: 546px;
+	top: 152px;
+}
+.Block06 .tt_list1{
+	position:absolute;
+	width:125px;
+	height:85px;
+	background:url(public/special/20130228/order_tips.png) no-repeat;
+	left: 413px;
+	top: 115px;
+	line-height:27px;
+	text-align:center;
+	z-index:99; padding-top:35px;
+}
+.Block06 .tt_list2{
+	position:absolute;
+	width:125px;
+	height:85px;
+	background:url(public/special/20130228/order_tips.png) no-repeat;
+	left: 845px;
+	top: 112px;
+	line-height:27px;
+	text-align:center;
+	z-index:99;
+	padding-top:35px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="Block01"></div>
+<div class="Block02">
+	<div class="raffle_img"><img src="public/special/20130228/raffle_img.jpg" width="435" /></div>
+    <div class="raddle_box">
+<div class="btn_box">
+        	<p class="moneys">￥0</p>
+        	<a href="javascript:void(0)" onclick="check_lottery()" class="t_btn">已结束</a>
+        </div>
+        <p class="lineHeight ico01">参与人数：<{$lottery_count}></p>
+        <p class="lineHeight ico02 lxftime" endtime="3/14/2013 23:59:59">剩余时间：</p>
+    </div>
+</div>
+
+<div class="Block03_1">
+  <div class="explain_box">
+    	<h4>超级萝莉盒第三期获奖名单公布</h4>
+        <p>价值888元的超级萝莉盒花落谁家？现正式为你公布：<br />
+本期抽奖获奖名单：昵称为<a href="<{:u('space/3661')}>" target="_blank">pplion</a>（抽奖号04252，与2013年3月15日体育彩票排列5开奖号码04464最接近且小于该开奖号码），来自山东的网友将获得价值888元超级萝莉盒！撒花祝贺超级幸运儿~<br /><br />PS：不记得自己的抽奖号？可登录个人账号到私信里查询哦~
+</p>   
+  </div>
+</div>
+
+<div class="Block03">    
+  <div class="rule_box">
+１、点击"我要抽奖"，系统自动扣除您20个积分<br />　　后获得一个抽奖号，凭此号码即可参与本次<br />　　活动；<br />
+２、本次大奖：超值萝莉盒 1个，市场价值888元；<br />
+３、活动时间：2013.3.1——2013.3.14；<br />
+４、开奖日期：2013年3月15日；<br />
+５、获奖名单公布：2013年3月18日；<br />
+６、我们将在名单公布后5个工作日内寄送萝莉盒<br />　　至您的默认地址。（<if condition="$userinfo.userid eq ''"><a href="javascript:void(0)" id="lottery3_login" onclick="return dialog_login(this.id);" target="_blank">点击设置默认地址</a><else /><a href="<{:u('home/myaddress')}>">点击设置默认地址</a></if>）
+  </div>
+    <div class="rule1_box">
+    １、以开奖当天的体育彩票排列5的开奖号码为最终获<br />
+　　奖号码依据；<br />
+２、参与会员的抽奖号码与体育彩票排列5开奖号码一<br />
+　　
+致者则为本期超级萝莉盒幸运获得者；<br />
+３、当无人抽奖号与体彩开奖号一致时，抽奖号最接近<br />
+　　
+且小于体彩开奖号者可以获得超级萝莉盒；<br />
+<strong>例如：</strong><br />
+体育彩票"排列5"2013年2月21日第13045期开奖结果： 
+29902，本期所有参与者抽奖号没有与此号码一致，会员A的抽奖号是29901，会员B的抽奖号是29903，那么本期获奖者为会员A。</div>
+    
+
+</div>
+<div class="Block04">
+	<div class="tt1">每邀请1名朋友成功参与本活动，不仅你的朋友会获得1个抽奖号，您也可以多获得1个抽奖号。朋友越多，获奖几率就越大。快快借助QQ、MSN、人人、开心、微博奔走相告吧！            <if condition="$userinfo.userid neq ''"><a href="<{:u('home/myinvite')}>" target="_blank">点击获取活动邀请链接</a><else /><a href="javascript:void(0)" id="lottery3_2_login" onclick="return dialog_login(this.id);">点击获取活动邀请链接</a></if></div>
+    <div class="tt2">
+    	<ul>
+        	<li class="l1"><a href="<{:u('products/121')}>" target="_blank">施丹兰覆盆子黑莓皂</a></li>
+            <li class="l2"><a href="<{:u('products/89')}>" target="_blank">贝佳斯赋活青春肌底精华</a></li>
+            <li><a href="<{:u('products/61718')}>" target="_blank">阿芙AFU玫瑰面部按摩香膏</a></li>
+            <li class="l1"><a href="<{:u('products/43')}>" target="_blank">Benefit（贝玲妃）花漾胭脂水</a></li>
+            <li class="l2"><a href="<{:u('products/88')}>" target="_blank">贝佳斯蓝海新生美肤泥浆膜</a></li>
+            <li><a href="<{:u('products/61334')}>" target="_blank">悠莱URARA纯白之光精华液</a></li>
+            <li class="l1"><a href="<{:u('products/36')}>" target="_blank">Benefit（贝玲妃）泡沫洁面膏</a></li>
+            <li class="l2"><a href="<{:u('products/87')}>" target="_blank">植物医生芦荟纳米金补水润白乳液</a></li>
+            <li><a href="<{:u('products/62894')}>" target="_blank">悠莱透润焕白特护防晒乳</a></li>
+            <li class="l1"><a href="<{:u('products/62969')}>" target="_blank">花的样子T+U面膜两件套</a></li>
+            <li class="l2"><a href="<{:u('products/86')}>" target="_blank">植物医生芦荟纳米金补水润白凝露</a></li>
+            <li><a href="<{:u('products/62952')}>" target="_blank">欧珀莱臻白抗斑赋弹系列护肤套装</a></li>
+            <li class="l1"><a href="<{:u('products/62899')}>" target="_blank">施丹兰绿色按摩蜡（正装）</a></li>
+            <li class="l2"><a href="<{:u('products/62930')}>" target="_blank">黛汐魅Daisymee水蜜桃水润盈透3秒钟肌底液</a></li>
+            <li><a href="<{:u('products/62958')}>" target="_blank">苇芝植物护肤套组</a></li>
+            <li class="l1"><a href="<{:u('products/62965')}> " target="_blank">锐度男士3+矿石能量两件套</a></li>
+            <li class="l2"><a href="<{:u('products/62956')}>" target="_blank">Coach香氛两件套</a></li>
+            <li><a href="<{:u('products/62953')}>" target="_blank">丝蓓绮TSUBAKI奢耀柔艳洗护（50ml装）</a></li>
+    	</ul>
+    </div>
+
+</div>
+<div class="Block05">
+	<div class="tt1_img"><img src="public/special/20130228/details_img.jpg" /></div>
+    <div class="tt2">施丹兰的香氛皂、黛汐魅的肌底液、悠莱的特护防晒乳、贝佳斯的泥浆面膜、贝玲妃的胭脂水、Coach的香氛……让你里里外外，上上下下，全情绽放流光溢彩。</div>
+</div>
+<div class="Block06">
+<div class="tt1">
+	<ul>
+    	<li>
+        	<dl>
+        		<dt class="f_img"><a href="<{:u('buy/goods_select')}>" target="_blank"><img src="public/special/20130228/order_img1.jpg" width="222" height="222" /></a></dt>
+            	<dd>萝莉自由选礼盒（5）</dd>
+                <dd><a href="<{:u('buy/goods_select')}>" target="_blank" class="order_btn" style="padding-top:5px;">立即订购</a></dd>
+            </dl>
+        </li>
+    	<li>
+        	<dl>
+        		<dt class="f_img"><a href="<{:u('buy/goods_select')}>" target="_blank"><img src="public/special/20130228/order_img2.jpg" width="222" height="222" /></a></dt>
+            	<dd>3月SOLO盒之美白明肤盒</dd>
+                <dd><a href="<{:u('buy/goods_select')}>" target="_blank" class="order_btn" style="padding-top:5px;">立即订购</a></dd>
+            </dl>
+        </li>
+    	<li class="last">
+        	<dl>
+        		<dt class="f_img"><a href="<{:u('buy/goods_select')}>" target="_blank"><img src="public/special/20130228/order_img3.jpg" width="222" height="222" /></a></dt>
+            	<dd>洛俪塔香水专属盒</dd>
+                <dd><a href="<{:u('buy/goods_select')}>" target="_blank" class="order_btn" style="padding-top:5px;">立即订购</a></dd>
+            </dl>
+        </li>
+    
+    </ul>
+
+</div>
+</div>
+
+<div class="Block06">
+	<div class="tt2"></div>
+  <div class="tt3"><a href="<{:u('special/lottery')}>" target="_blank"><img src="public/special/20130228/order_img4.jpg" alt="超级萝莉盒第一期" width="440" /></a></div>
+  <div class="tt_list1">超级萝莉盒<br />第一期</div>
+	<div class="tt4"><a href="<{:u('activity/lottery2')}>" target="_blank"><img src="public/special/20130228/order_img5.jpg" alt="超级萝莉盒第一期" /></a></div>
+  <div class="tt_list2">超级萝莉盒<br />第二期</div>
+
+</div>
+</div>
+<!-- 弹出框start -->
+<div id="confirm_kuan"  style="display:none;">
+<div class="tc_dp tc_Points" >
+  <div class="abs" ><img src="public/images/zhuce_close.png"  id="close_div" /></div>
+  <div class="tc_dpTop"></div>
+  <div class="tc_dpCont convert">
+  <div class="add_giftinfo">
+  </div>
+  <p id="go_confirm" style="display:none;" ><a class='a-pink' href="<{:u('home/myaddress')}>"   target="_blank">马上完善地址>></a>　　<a href="<{:u('home/myinvite')}>" target="_blank" class='a-pink' >查看邀请链接>></a></p>
+  </div>
+  <div class="tc_dpBtm">
+  </div>
+</div>
+</div>
+<!-- 弹出框end -->
+<script>
+	$(function(){
+		$("body").css("background","#FEE9F8");
+		lxfEndtime();
+	})
+	
+  function lxfEndtime(){
+          $(".lxftime").each(function(){
+                var endtime = new Date($(this).attr("endtime")).getTime();//取结束日期(毫秒值)
+                var nowtime = new Date().getTime();        //今天的日期(毫秒值)
+                var youtime = endtime-nowtime;//还有多久(毫秒值)
+                var seconds = youtime/1000;
+                var minutes = Math.floor(seconds/60);
+                var hours = Math.floor(minutes/60);
+                var days = Math.floor(hours/24);
+                var CDay= days ;
+                var CHour= hours % 24;
+                var CMinute= minutes % 60;
+                var CSecond= Math.floor(seconds%60);//"%"是取余运算，可以理解为60进一后取余数，然后只要余数。
+                if(endtime<=nowtime){
+                        $(this).html("<span class='red'>活动已结束，下次早点来哦</span>")//如果结束日期小于当前日期就提示过期啦
+                        }else{
+                        $(this).html("剩余时间：<span>"+days+"</span>天<span>"+CHour+"</span>时<span>"+CMinute+"</span>分<span>"); 
+                        }
+          });
+   setTimeout("lxfEndtime()",1000);
+  };
+
+var userid='<{$userinfo[userid]}>';
+function check_lottery(){		
+	alert("活动已经结束");
+}
+</script>
+<include file="public:footer.inc" />

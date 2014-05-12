@@ -1,0 +1,106 @@
+<html>
+<head>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<title>{$title}</title>
+<style>
+body { margin:0;  padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif; }
+table{ text-align:center; font-size:12px;border-collapse: collapse;border-spacing: 0;width:1000px;}
+th{border: 1px solid #ccc; background:#FFC;}
+tr{display: table-row;vertical-align: inherit;border-color: inherit;}
+td{border: 1px solid #eee;word-break: break-all;word-wrap: break-word; padding:3px;}
+table tr span{ font-weight:bold;}
+table tr p {margin:5px 0px;}
+span.tt{height:51px; line-height:66px; font-size:18px;text-align:center;}
+td a{ color:#f00; text-decoration:none;}
+td a:hover{text-decoration: underline;}
+p.tt_con{ text-align:left;}
+p.tt_con span{ font-weight:normal;padding-right:40px;}
+.tr_text{text-align:left;}
+</style>
+</head>
+<body>
+
+<script>
+	$(function(){
+		var num="{$count}";
+		if(num>0){
+			var i;
+			for(i=0;i<num;i++){
+				var d_class="get_div_"+i;
+				var height=$("."+d_class).height();
+				var o_height=Math.ceil(height/686);
+				var new_height=o_height*686;
+				$("."+d_class).css({"height":new_height});
+			}
+		}
+	})
+</script>
+
+<foreach name="list" item="pro" key="skey">
+  <div class="get_div_{$skey}">
+<table>
+  <tr>
+    <td colspan="4" class="td_img">
+    <span class="tt">
+     <notempty name="tips.abst">
+     	{$tips.abst}
+     <else />
+    	发货明细单
+    </notempty>
+    </span>
+    </td>
+    <td colspan="5">
+    <notempty name="tips.img">
+     	<img src="{$tips.img}" width="393" height="141"/>
+     <else />
+    	 <img src="{$img[2]}" width="393" height="141"/>
+    </notempty>
+    </td>
+  </tr>
+    <tr>
+    <td colspan="9" >
+    <p class="tt_con">
+     <span><strong>订单名称：</strong>{$pro.boxname}</span>
+     <span><strong>订单编号：</strong>{$pro.orderid}</span>
+     <span><strong>订单时间：</strong>{$pro.addtime}</span>
+     <span><strong>收货人姓名：</strong>{$pro.linkman}</span>
+    </p>
+    </td>
+  </tr>
+  <tr>
+    <th width="40px">编号</th>
+    <th width="60px">品牌</th>
+    <th  width="230px">产品名称</th>
+    <th  width="100px">规格</th>
+    <th  width="60px">有效期</th>
+    <th  width="40px">数量</th>
+    <th v width="150px">产品功效</th>
+    <th  width="60px">价值</th>
+  </tr>
+  <foreach name="pro.list" item="vo" key="ikey">
+  <tr>
+    <td>{$ikey+1}</td>
+    <td class="tr_text">{$vo.cname}</td>
+    <td class="tr_text">{$vo.pname}</td>
+    <td>{$vo.norms}</td>
+    <td>{$vo.enddate}</td>
+    <td>{$vo.num}</td>
+    <td align="left">{$vo.effect}</td>
+    <td>￥{$vo.price}</td>
+  </tr>
+  </foreach>
+  <tr>
+    <td colspan="7" align="right"><span>产品总价值：</span></td>
+    <td><span>￥{$pro.totalprice}</span></td>
+  </tr>
+  <notempty name="tips.info">
+	  <tr>
+	    <td colspan="9" align="left">{$tips.info}</td>
+	  </tr>
+  </notempty>
+</table>
+<div style="margin-bottom:10px;"></div>
+</div>
+</foreach>
+</body>
+</html>

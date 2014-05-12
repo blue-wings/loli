@@ -1,0 +1,445 @@
+<include file="Public:header" />
+<style>
+tr{
+	width:100%;
+	text-align:left;
+}
+td{
+	border:0;
+}
+.f_width{
+	display:block;
+	width:120px;
+	float:left;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+}
+input,select{
+	border-color:#008080;
+}
+.createmakt,.particular{
+	display:none;
+}
+.show{
+	display:none;
+}
+.ntitle{
+	font-size:16px;
+	color:#004040;
+}
+.left{
+	padding:10px  50px;
+}
+.fo{
+	font-size:14px;
+	color:#004040;
+}
+.createshop{
+	display:none;
+	font-size:16px;
+	color:#808080;
+}
+.wh{
+	width:90%;
+	border:0;
+	padding:20px 100px;
+}
+.crshop{
+	width:100px;
+}
+.red{
+	color:red;
+}
+td.left{
+	float:left;
+}
+td.tdwidth{
+	width:20%;
+	padding-left:50px;
+}
+.maxwidth{
+	width:90%;
+}
+.site{
+	display:block;
+	margin:10px 150px;
+	border:#91C351;
+}
+
+div.survey dd{height:30px;}
+div.proshare dd{height:30px;}
+div.di1{float:left;width:100px;height:100%;background:#808080;color:#000;cursor:pointer}
+div.di2{float:left;width:100px;height:100%;background:#C0C0C0;color:#FFFFFF;cursor:pointer}
+</style>
+
+<link rel="stylesheet" href="__PUBLIC__/js/colorbox/colorbox.css">
+<script src="__PUBLIC__/js/colorbox/jquery.colorbox-min.js"></script>
+
+<div class="panel">
+	<div align="left">
+		<fieldset class="fieldset"><legend>查询条件</legend>
+			<form name="myform" id="myform" action="__ACTION__" method="GET">
+				上级任务名称:<select name="parentid">
+					<option value="">全部</option>
+					<volist name="tasklist" id="tl">
+						<option value="{$tl.id}">{$tl.name}</option>
+					</volist>
+				</select>
+				&nbsp;&nbsp;&nbsp;	
+				任务名称：<input name='taskname' type='text' value='{$Think.get.taskname}'>&nbsp;&nbsp;&nbsp;
+				起始时间:<input name='startdate'  type='text' value='{$Think.get.startdate}'>&nbsp;&nbsp;
+				结束时间:<input name='enddate' type='text' value='{$Think.get.enddate}'>
+				&nbsp;&nbsp;&nbsp;
+				状态:<select name="status">
+						<option value="1">开启</option>
+						<option value="2">全部</option>
+						<option value="0">关闭</option>
+					 </select> 	
+				<br/><br/>
+				<input type='submit' name='search' value=" 查 询">
+			</form>
+			<br/><br/>
+			<a href="#ceat"  class="inline">新建子任务</a>
+		</fieldset>			
+	</div>
+</div>
+
+<div class="showcontents">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />任务管理>子任务列表</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">{$page}</td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr> 
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+         <table width="99%" border="0" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr  background="__PUBLIC__/images/tab_14.gif" id="awarp">
+            <td width="2%" height="26" align="center">ID</td>
+			<td width="10%" height="26" align="center">上级任务名称</td>
+	    	<td width="10%" height="26" align="center">子任务名称</td>
+            <td width="10%" height="18" align="center">资源ID</td>  
+			<td width="10%" height="18" align="center">备注</td>
+            <td width="5%" height="18" align="center">起始时间</td>
+            <td width="5%" height="18" align="center">结束时间</td>
+            <td width="15%" height="18" align="center">积分</td>
+			<td width="5%" height="18" align="center">状态</td>
+            <td width="8%" height="18" align="center">功能</td>
+          </tr>
+          <volist name="tlist" id="list"  key="k">
+			  <tr height="30">
+				 <td bgcolor="#FFFFFF" align="center">{$list.id}</td>
+				 <td bgcolor="#FFFFFF" align="center">{$list.name}</td>
+				 <td bgcolor="#FFFFFF" align="center">{$list.title}</td>
+		  	     <td bgcolor="#FFFFFF" align="center">{$list.relationid}</td>
+				 <td bgcolor="#FFFFFF" align="center">{$list.rules}</td>
+				 <td bgcolor="#FFFFFF" align="center">{$list.from|date="Y-m-d",###}</td>
+				 <td bgcolor="#FFFFFF" align="center">{$list.to|date="Y-m-d",###}</td>
+				 <td bgcolor="#FFFFFF" align="center">{$list.credit}</td>
+				 <td bgcolor="#FFFFFF" align="center">
+					<a href="javascript:void(0)" onclick="changestatus(this,'{$list.id}')">
+						<eq name='list.status' value='1'>开启<else/>关闭</eq>
+					</a>
+					<input type="hidden" value="{$list.status}">
+				 </td>
+				 <td bgcolor="#FFFFFF" align="center">
+				 <a href="javascript:void(0)" onclick="edit('{$list.id}')">编辑</a>/
+				 <a href="javascript:void(0)" onclick="deltask('{$list.id}')">删除</a>
+				 </td>
+			  </tr>
+			</volist>
+        </table>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr >
+	<if condition="$list eq ''">
+	<td  colspan='8' align="center"><b>无数据</b></td>
+	<else />
+	<td  colspan='8' align="center">{$page}</td>
+	</if>
+  </tr>
+</table>
+</div>
+
+<!-- colorbox -->
+<div style="display:none">
+<div id="ceat">
+<table width="100%" cellspacing="1" cellpadding="6" border="0"  align="center">
+<tr>
+	<td align="center" class="panelsurround">
+	
+	<div class="panel">
+		<div align="left">
+
+			<fieldset class="fieldset">
+				<legend>创建子任务</legend>
+				<div style="width:700px;margin-left:50px;">
+					<div style="height:20px;font-weight:bolder;text-align:center">
+						<div class="di1" onclick="cl(1)">调查问卷</div>
+						<div class="di2" onclick="cl(2)">指定产品分享</div>
+					</div>
+					<div style="width:700px;height:300px;border:solid #999 1px;padding-top:20px;text-align:left">
+						<div class="survey">
+							<form name="cform" action="__ACTION__" method="post">
+								<input type="hidden" name="action" value="create">
+								<input type="hidden" name="parentid"  value="7">
+ 							<div style="float:left;width:60%;">
+								<dt>
+									<dd>问卷  ID: 
+									<input type="text" name="relationid" value="">&nbsp;&nbsp;&nbsp;
+									<a href="" id="tourl" target="_blank" onclick="tourl(this)">预览问卷</a></dd>
+									<dd>任务名称:<input type="text" name="taskname" value=""></dd>
+									<dd>任务积分:<input type="text" name="score" value=""></dd>
+									<dd>起始时间:<input type="text" name="from" value=""></dd>
+									<dd>结束时间:<input type="text" name="to" value=""></dd>
+									<dd></dd>
+									<dd"><div style="text-align:center"><input type="submit" value="创建完成" style="background:#0080FF"></div></dd>
+								</dt>
+							</div>
+							<div style="float:left;">
+								<span>备注:<span>
+								<div><textarea name="note"  cols="30" rows="5"></textarea></div>
+							</div>
+						</form>
+						</div>
+						<div class="proshare" style="display:none">
+						<form name="cdform" action="__ACTION__" method="post">
+							<input type="hidden" name="action" value="create">
+							<input type="hidden" name="parentid"  value="9">
+							<div style="float:left;width:60%;text-align:left">
+								<dt>
+									<dd>产品  ID: <input type="text" name="relationid" value=""></dd>
+									<dd>任务名称:<input type="text" name="taskname" value=""></dd>
+									<dd>任务积分:<input type="text" name="score" value=""></dd>
+									<dd>起始时间:<input type="text" name="from" value=""></dd>
+									<dd>结束时间:<input type="text" name="to" value=""></dd>
+									<dd style="height:120px;">
+										<span>备注:<span>
+										<div><textarea name="note"  cols="30" rows="5"></textarea></div>
+									</dd>
+									<dd"><div style="text-align:center"><input type="submit" value="创建完成" style="background:#0080FF"></div></dd>
+								</dt>
+							</div>
+							<div style="float:left;width:260px;">
+								<div style="border:solid #999 1px;width:200px;height:150px;">
+									<img src="" id="pimg" width="195" height="145">
+								</div>
+								<div class="info" style="padding-top:5px;">
+									<dt>
+										<dd>产品ID:<span class="proid"></span><span class="sproinfo"></span></dd>
+										<dd>单品ID:<span class="inid"></span></dd>
+										<dd>产品名称:<br/><span class="proname"></span></dd>
+										<dd>分享数:<span class="sharenum"></span></dd>
+									</dt>
+								</div>
+							</div> 
+						</form>	
+						</div>
+					</div>
+				</div>	
+			</fieldset>			
+		</div>
+	</div>
+
+	</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+
+<script>	
+$(".inline").colorbox({inline:true,width:"70%"});
+
+$("a.inline").colorbox({
+	onOpen:function(){
+			$("#ceat").find("select[name='parentid'] option:eq(0)").attr('selected',true);
+			$("form[name='cform']").find(":hidden[name='oldid']").remove();
+			$(":text[name='taskname']").val('');
+			$(":text[name='note']").val('');
+			$(":text[name='from']").val('');
+			$(":text[name='to']").val('');
+			$(":text[name='relationid']").val('');
+			$(":text[name='score']").val('');
+	}
+});
+
+if("{$Think.get.parentid}"){
+	$("form[name='myform']").find("select[name='parentid']").val("{$Think.get.parentid}");
+}
+
+function tourl(obj){
+	var lv = $(obj).prev().val();
+	
+	if(lv){
+		$(obj).attr("href","/public/survey/id/"+lv+".html");
+	}else{
+		return false;
+	}
+}
+
+function edit(id){
+	$.post("__ACTION__",{action:'edit',id:id},function(reponse){
+		if(reponse.data){
+			$("a.inline").click();
+			
+			var data = reponse.data;
+			var obj = null;
+			
+			if(data.taskid == 7){
+				$("div.survey").show();
+				$("div.proshare").hide();			
+				$("div.di1").css({background:"#808080",color: "#000000"}).show();
+				$("div.di2").hide();
+				obj = $("form[name='cform']");
+			}else{
+				$("div.survey").hide();
+				$("div.proshare").show();
+				$("div.di1").hide();
+				$("div.di2").css({background:'#808080',color:'#000'}).show();
+				obj = $("form[name='cdform']");
+			}
+			
+			obj.prepend("<input type='hidden' name='oldid' value='"+data.id+"'>");
+			obj.find(":text[name='taskname']").val(data.title);
+			obj.find(":input[name='note']").val(data.rules);
+			obj.find(":text[name='from']").val(getLocalTime(data.from));
+			obj.find(":text[name='to']").val(getLocalTime(data.to));
+			obj.find(":text[name='relationid']").val(data.relationid);
+			obj.find(":text[name='score']").val(data.credit);
+			obj.find(":submit").val("修改完成");
+			ajaxproinfo(data.relationid);
+		}
+	})
+}
+
+
+$(":text[name='relationid']").keyup(function(){
+	ajaxproinfo($(this).val().trim());
+})		
+
+
+function ajaxproinfo(vl){
+	if(vl){
+		$.post("__ACTION__",{action:'selectpro',rid:vl},function(rel){
+			if(rel.status){
+				var info = rel.info;
+				$("#pimg").attr("src",info.pimg);
+				$("span.proid").text(info.pid);
+				//(前台,后台)
+				$("span.sproinfo").html("(<a href='/products/"+vl+".html' target='_blank'>前台</a>&nbsp;&nbsp;<a href='/admin/Product/index/pid/"+vl+"' target='_blank'>后台</a>)");
+				$("span.inid").text(info.id);
+				$("span.proname").text(info.pname);
+				$("span.sharenum").text(info.evaluatenum);
+			}
+		})
+	}
+}
+
+function cl(num){
+	if(num == 1){
+		$("div.survey").show();
+		$("div.proshare").hide();
+		$("div.di1").css({background:"#808080",color: "#000000"});
+		$("div.di2").css({background:'#C0C0C0',color:'#FFFFFF'});
+	}else{
+		$("div.proshare").show();
+		$("div.survey").hide();
+		$("div.di2").css({background:'#808080',color:'#000'});
+		$("div.di1").css({background:'#C0C0C0',color:'#FFFFFF'});
+	}
+}
+
+
+function getLocalTime(nS) {     
+	return new Date(parseInt(nS) * 1000).toLocaleString().
+	replace(/年|月/g, "-").replace(/日/g, " ").split(' ')[0];
+}     
+  
+
+
+function deltask(id){
+	if(confirm("确认删除么?")){
+		location.href="__ACTION__/action/del/taskid/"+id;
+	}
+}
+			
+function changestatus(obj,id){
+	var vl = $(obj).next().val() ==1?0:1;
+	var status = Array('关闭','开启');
+	$.post("__ACTION__",{action:'changestatus',val:vl,taskid:id},function(reponse){
+		if(reponse.status){
+			$(obj).next().val(vl);
+			$(obj).text(status[vl]);
+		}else{
+			alert('状态修改失败,请检查!');
+		}
+	})
+}			
+
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+$(function() {
+	$(":text[name='from']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$( ":text[name='to']" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$( ":text[name='to']" ).datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$(":text[name='from']").datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+	
+	$(":text[name='startdate']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$( ":text[name='enddate']" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	
+	$( ":text[name='enddate']" ).datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$(":text[name='startdate']").datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+});
+</script>
+<include file="Public:footer" />

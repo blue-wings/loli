@@ -1,0 +1,68 @@
+	
+<gt name="total" value="0">	
+	<if condition="$info[type] neq 1">
+		<p class="gify_rental">礼品卡消费总额为：<span class="rd">￥<{$info['cost_price']}></span></p>
+		<!--消费记录-->
+		<table class="order_tables" border="0" cellspacing="0" cellpadding="0" width="100%">
+			<tbody>
+			<tr height="46">                                                                                    
+				<th width="246">消费时间</th>
+				<th width="168">金额</th>
+				<th width="282">备注说明</th>
+			</tr>
+			<volist name="list" id="vo">
+			<tr>
+				<td><{$vo['paytime']}></td>
+				<td><span class="rd">￥<{$vo['giftcard']}></span></td>
+				<td><{$vo['status']}>，订单号为：<span class="rd"><a href="<{:u('home/order_detail',array('id'=>$vo[ordernmb]))}>" target="_blank"><{$vo['ordernmb']}></a></span></td>
+			</tr>
+			</volist>
+			</tbody>
+		</table>		
+		
+<else />
+		<p class="gify_rental">礼品卡充值总额为：<span class="rd">￥<{$info['totalprice']}></span></p>
+		<!--已充值-->
+		<table class="order_tables" border="0" cellspacing="0" cellpadding="0" width="100%">
+			<tbody>
+			<tr height="46">                                                                                    
+				<th width="246">礼品卡卡号</th>
+				<th width="168">面值</th>
+				<th width="282">充值时间</th>
+			</tr>
+			<volist name="list" id="vo">
+				<tr>
+					<td><{$vo[card_id]}></td>
+					<td><span class="rd">￥<{$vo[price]}></span></td>
+					<td><{$vo[activate_datetime]}></td>
+				</tr>
+			</volist>
+			</tbody>
+		</table>		
+	
+	</if>
+	
+		<div class="W_order_wrap"><div class="W_pages" id="page"><{$page}></div></div>
+				
+				
+<else />
+
+<script>
+    $(function(){
+    	var type="<{$info[type]}>";
+    	if(parseInt(type)!=1){
+    		var msg="您还没有任何礼品卡消费记录~";
+    	}else{
+    		var msg="您还没有已充值的礼品卡~";
+    	}
+	nodata("ajax_content",msg,"");
+   })
+</script>		
+
+</gt>		
+		
+		
+		
+		
+		
+		

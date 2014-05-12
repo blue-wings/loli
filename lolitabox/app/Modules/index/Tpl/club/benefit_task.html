@@ -1,0 +1,203 @@
+<include file="public:header.inc" />
+<!--我要投票弹框-end-->
+<div class="be_content">
+<!--贝玲妃minisite内容-start-->
+	<div class="fm1020 wp1020 cfl">
+    <div class="hd_t"></div>
+		<div class="main main_b cfl">
+			<div class="fm1020 be_nav_con cfl">
+			<!-- BENEFIT CLUB COMMON NAV(start) -->
+			<include file="benefit_nav.inc" />
+	        <!-- BENEFIT CLUB COMMON NAV(end) -->
+		    </div>
+		    <div class="fm1020">
+		    	<div class="be_banner_wrap be_banner_wrap_b">
+		    		<div class="be_banner_menu_f1">
+				    	<ul class="be_banner_menu cfl">
+				    		<li class="be_banner_menu_01 be_banner_menu_selected"><a href="<{:U("club/benefit_task",array("type"=>"1"))}>"><em class="be_banner_01">&nbsp;</em></a></li>
+			    		    <li class="be_banner_menu_02"><a href="<{:U("club/benefit_task",array("type"=>"2"))}>"><em class="be_banner_02">&nbsp;</em></a></li>
+				    		<li class="be_banner_menu_03"><a href="<{:U("club/benefit_task",array("type"=>"3"))}>"><em class="be_banner_03">&nbsp;</em></a></li>
+				    	</ul>
+			    	</div>
+			    	<p><em class="be_banner_txt01"></em></p>
+			    	<dl class="be_banner_con be_banner_con_01"> 
+				    	<dd><em class="pbl_praise">&nbsp;</em><span>参与本阶段活动：即有机会赢取benefit"gimme brow眉梦成真丰眉膏" 或"眉吧体验券"！</span></dd>
+				    	<dd><em class="pbl_praise">&nbsp;</em><span>参与全部三阶段活动：更有"benefit超级大奖"等你赢！</span></dd>
+				    	<dd><em class="pbl_praise">&nbsp;</em><span>宣传贡献奖：通过其他论坛、博客等途径对gimme brow进行宣传的会员，将额外获得50-300不等的积分奖励。<span onclick="ask_online();" style="cursor:pointer;">(联系LOLITABOX客服)</span></span></dd>
+                    </dl>
+		        </div>
+		        <script type="text/javascript">
+		        $(function(){
+		        	var be_b = $('.be_banner_wrap_b');
+		        	var be_bb = $('.be_banner_menu');
+		        	be_b.find('.be_banner_menu_01').mouseover(function(){
+		        		be_bb.css({'background':'url(public/images/be_banner_li_bg.png) 0px 0px no-repeat'})
+		        	})
+		        	be_b.find('.be_banner_menu_02').mouseover(function(){
+		        		be_bb.css({'background':'url(public/images/be_banner_li_bg.png) 0px -47px no-repeat'})
+		        	})
+		        	be_b.find('.be_banner_menu_03').mouseover(function(){
+		        		be_bb.css({'background':'url(public/images/be_banner_li_bg.png) 0px -94px no-repeat'})
+		        	})
+		        	be_b.find('li').mouseleave(function(){
+		        		be_bb.css({'background':'none'})
+		        	})  
+		        })
+                  
+		        </script>
+		    </div>
+		    <div class="fm1020 cfl">
+			    <div class="wp500 be_way_con be_way_01_con l">
+			    	<div class="main cfl">
+			    		<div class="be_welcome_title_sho cfl">
+							<div class="be_welcome_title_ml l"></div>
+							<div class="be_welcome_title_mm l"><em class="be_way_01">&nbsp;</em></div>
+							<div class="be_welcome_title_mr l"></div>
+						</div>
+						<dl class="be_way_con_top">
+						<dt>投票证明你是会欣赏懂审美的丰盈达人！</dt>
+							<dd>Step 1、<span>点击下方“我要投票”，9组对比照随你喜欢任你投！投票即得100积分；(仅奖励一次)</span></dd>
+							<dd>Step 2、<span>绑定微博即得50积分；一键转发到微博，再得5积分(最多奖励5次转发)；<a href="<{:u('try/iexchange')}>" target="_blank">积分兑换>></a></span></dd>
+							<dd>Step 3、<span>9组照片均可投票，每组仅一次机会;</span></dd>
+							<dd>Step 4、<span>从完成转发任务的成员中抽取15名，赠送benefit眉吧体验券。</span></dd>
+					    </dl>
+					    <p class="be_btn_b">
+					    
+			                <eq name="return.if_can" value="0">
+			               	 	<em class="be_btn_4_off">投票已结束</em>
+			                <else />
+								<em class="be_btn_4"><a href="javascript:void(0);" onclick="dialog_votelist();">我要投票</a></em>
+			                </eq>
+					    
+					    </p>
+					</div>
+				</div>
+				<div class="wp500 be_way_con be_way_02_con r">
+			    	<div class="main cfl">
+			    		<div class="be_welcome_title_sho cfl">
+							<div class="be_welcome_title_ml l"></div>
+							<div class="be_welcome_title_mm l"><em class="be_way_02">&nbsp;</em></div>
+							<div class="be_welcome_title_mr l"></div>
+						</div>
+						<dl class="be_way_con_top">
+							<dt>上传照片展现你高超的眉毛丰盈术！</dt>
+							<dd>Step 1、<span>上传眉毛打造前、后（稀疏扁平vs丰盈立体）的照片，审核通过即得300积分，并直接入围第三阶段【“眉”来运转美梦成真】投票，赢取benefit超级大奖；<a href="<{:u('try/iexchange')}>" target="_blank">积分兑换>></a></span></dd>
+							<dd>Step 2、<span>从审核通过的成员中抽取15名获得benefit眉吧体验券和gimme brow眉梦成真丰眉膏正品！</span></dd>
+					    </dl>
+					    <p class="be_btn_b">
+			                <eq name="return.if_can" value="0">
+			               	 	<em class="be_btn_4_off">已结束</em>
+			                <else />
+					                <if condition="$return.if_join eq 1">
+					                		<a><em class="be_btn_4_off">已审核</em></a>
+					                <elseif condition="$return.if_join eq 2" />
+					                		<a href="javascript:void(0)" onclick="show_benefit_join(1,'b_to_join')"><em class="be_btn_4" id="b_to_join">重新上传</em></a>
+					                <else />
+					               		<a href="javascript:void(0)" onclick="show_benefit_join(1)"><em class="be_btn_4">我要参加</em></a>
+					                </if>
+			                </eq>
+					    </p>
+				    </div>
+				</div>
+		    </div>
+		    <p class="hei_b2">&nbsp;</p>
+		    <div class="fm1020 cfl">
+		    	<div class="be_pro_plus be_pro_plus_b">
+    		    <p class="be_pro_plus_title l"><em class="be_plus_title">&nbsp;</em></p>
+    		    <div class="be_pro_plus_con be_pro_plus_con_b l cfl">
+    		    	<dl>
+    		    		<dt><a href="<{:getProductUrl(10455)}>" target="_blank"><img src="public/images/be_vays1_pro_01.png" width="120" height="120"></a></dt>
+    		    		<dd><a href="<{:getProductUrl(10455)}>" target="_blank">贝玲妃benefit完美眉毛组合</a></dd>
+    		    	</dl>
+    		    	<dl>
+    		    	    <dd class="plus">+</dd>
+    		    	</dl>
+    		    	<dl>
+    		    		<dt><a href="<{:getProductUrl(16478)}>" target="_blank"><img src="public/images/be_vays1_pro_02.png" width="120" height="120"></a></dt>
+    		    		<dd><a href="<{:getProductUrl(16478)}>" target="_blank">贝玲妃benefit速效丰眉笔</a></dd>
+    		    	</dl>
+    		    	<dl>
+    		    	    <dd class="plus">+</dd>
+    		    	</dl>
+    		    	<dl>
+    		    		<dt class="be_w_160"><a href="<{:getProductUrl(63120)}>" target="_blank"><img src="public/images/be_vays1_pro_03.png" width="120" height="120"></a></dt>
+    		    		<dd><a href="<{:getProductUrl(63120)}>" target="_blank">贝玲妃benefit快速眉毛造型膏</a></dd>
+    		    	</dl>
+    		    	<dl>
+    		    	    <dd class="plus">+</dd>
+    		    	</dl>
+    		    	<dl>
+    		    		<dt style=" padding:20px 0px 0px 10px"><a href="<{:getProductUrl(63118)}>" target="_blank"><em class="question_mark">&nbsp;</em></a></dt>
+    		    	</dl>
+    		    	<dl>
+    		    	    <dd class="plus">=</dd>
+    		    	</dl>
+    		    	<dl>
+    		    		<dt style=" padding:30px 0px 0px 10px"><a href="<{:getProductUrl(63118)}>" target="_blank"><em class="be_eyebrows">&nbsp;</em></a></dt>
+    		    	</dl>
+    		    </div>
+    		</div>
+		    </div>
+	    </div>
+	</div>
+</div>
+
+
+
+<div class="fm1020 cfl" id="dialog_vote_html" style="padding:5px;display:none;">
+	<div class="wp1020_b be_ballot_box">
+        <ul class="cfl">
+        <volist name="return.list" id="vo">
+	    	<li>
+		    	<dl>
+		    		<dt><img src="<{$vo.img}>" width="308" height="178"></dt>
+	    				  <if condition="$vo.order eq 0">
+	    							<eq name="vo.if_vote" value="0">
+	    								<dd class="vote_left"><a href="javascript:void(0);" onclick="benefit_vote('<{$vo.id}>',1,0,'<{$vo.cate_id}>','<{$vo.img}>',this);" class="benefit_vo_<{$vo.id}>"><i class="be_btn_2">投票</i></a></dd>
+	    							<else />
+	    								<dd class="vote_left"><i class="be_btn_2_off">已投票</i></dd>
+	    							</eq>
+	    							<if condition="$vo.if_vote eq 0">
+		    							<dd class="vote_right"><a href="javascript:void(0);" onclick="benefit_vote('<{$vo.id}>',1,1,'<{$vo.cate_id}>','<{$vo.img}>',this);" class="benefit_vo_<{$vo.id}>"><i class="be_btn_2">投票</i></a></dd>
+	    							<elseif condition="$vo.if_vote eq 2 AND $vo.to_weibo eq 1" />
+		    							<dd class="vote_right"><i class="be_btn_2"><a href="javascript:void(0);" onclick="benefit_to_weibo('<{$vo.cate_id}>','<{$vo.id}>',1,'<{$vo.img}>',this,1);">转发</a></i></dd>
+		    						<else />
+		    							<dd class="vote_right"><i class="be_btn_2_off">已投票</i></dd>
+	    							</if>	    							
+	    				   </if>
+	    					<if condition="$vo.order eq 1">
+	    							<if condition="$vo.if_vote eq 0">
+		    							<dd class="vote_right"><a href="javascript:void(0);" onclick="benefit_vote('<{$vo.id}>',1,1,'<{$vo.cate_id}>','<{$vo.img}>',this);" class="benefit_vo_<{$vo.id}>"><i class="be_btn_2">投票</i></a></dd>
+	    							<elseif condition="$vo.if_vote eq 2 AND $vo.to_weibo eq 1" />
+		    							<dd class="vote_right"><i class="be_btn_2"><a href="javascript:void(0);" onclick="benefit_to_weibo('<{$vo.cate_id}>','<{$vo.id}>',1,'<{$vo.img}>',this,1);">转发</a></i></dd>
+		    						<else />
+		    							<dd class="vote_right"><i class="be_btn_2_off">已投票</i></dd>
+	    							</if>
+	    							<eq name="vo.if_vote" value="0">
+	    								<dd class="vote_left"><a href="javascript:void(0);" onclick="benefit_vote('<{$vo.id}>',1,0,'<{$vo.cate_id}>','<{$vo.img}>',this);" class="benefit_vo_<{$vo.id}>"><i class="be_btn_2">投票</i></a></dd>
+	    							<else />
+	    								<dd class="vote_left"><i class="be_btn_2_off">已投票</i></dd>
+	    							</eq>		    					
+	    					</if>	
+		    	</dl>
+	    	</li>
+	    	</volist>
+        </ul>
+	</div>
+</div>
+<script>
+	function dialog_votelist(){
+		$.dialog({
+		    content: document.getElementById('dialog_vote_html'),
+		    id: 'dialog_votelist',
+		    fixed:false,
+		    opacity:0.3,
+		    lock:true
+		});
+	}
+</script>
+
+<include file="benefit_user_login" />
+<script src="/public/js/club_benefit.js"></script>
+<include file="public:footer.inc" />
+

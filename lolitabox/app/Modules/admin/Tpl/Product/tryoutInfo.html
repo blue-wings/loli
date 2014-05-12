@@ -1,0 +1,65 @@
+<include file="Public:header" />
+<fieldset class="fieldset"><legend>试用申请列表</legend>
+<form name="myform" id="myform" action="__SELF__" method="post">
+用户ID查询：<input id='userid' name='userid' type='text' value='{$Think.request.userid}'>  用户昵称查询:<input id='nickname' name='nickname' type='text' value='{$Think.request.nickname}'> 
+产品ID查询:<input id='productid' name='productid' type='text' value='{$Think.request.productid}'> 产品名称查询:<input id='pname' name='pname' type='text' value='{$Think.request.pname}'>
+<br/><br/>
+<input type="button" name="resetpage" value="重置">
+<input type="submit" name="search" value="提交">
+</form>
+</fieldset>		
+
+<form name="listform" id="listform" action="__URL__/delEvaluateReply" method="post">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">试用申请列表</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+          	<td width="5%" height="26"><div align="center" class="STYLE2 STYLE1">序列</div></td>
+			<td width="5%" height="26"><div align="center" class="STYLE2 STYLE1">用户ID</div></td>
+            <td width="8%" height="26"><div align="center" class="STYLE2 STYLE1">用户昵称</div></td>
+            <td width="20%" height="18"><div align="center" class="STYLE2 STYLE1">产品名称</div></td>
+            <td width="45%" height="18"><div align="center" class="STYLE2 STYLE1">试用申请</div></td>
+            <td width="20%" height="18"><div align="center" class="STYLE2 STYLE1">申请时间</div></td>
+          </tr>
+          <volist name="list" id="trylist" key="k">
+          <tr style="text-align:center">
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2">{$k}</td>
+			<td height="25" bgcolor="#FFFFFF" class="STYLE2">{$trylist.userid}</td>
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2">
+				<a href="#" onclick="dialogmeseeage('{:U('User/userList',array('userid'=>$trylist['userid']))}','用户信息')">{$trylist.username}</a>
+			</td>
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2">
+				<a href="#" onclick="dialogmeseeage('{:U('Product/index',array('pid'=>$trylist['pid']))}','产品信息')">{$trylist.pname}</a>
+			</td>
+            <td height="25" bgcolor="#FFFFFF">{$trylist.content}</td>
+            <td height="25" bgcolor="#FFFFFF"><div style="word-break: break-all; overflow:hidden;">{$trylist.addtime|date="Y-m-d H:i:s",###}</div></td>
+          </tr>
+		</volist>
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+	<if condition="$list eq ''"><tr style="text-align:center"><td colspan="5">抱歉,没找到您查询的数据!</td></tr></if> 
+  <tr style="text-align:center"><td colspan="5">{$page}</td></tr>
+</table>
+</form>
+<include file="Public:footer" />

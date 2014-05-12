@@ -1,0 +1,241 @@
+<include file="Public:header" />
+<script language="javascript" type="text/javascript"> 
+	$(document).ready(function(){ 
+		//根据分类提取产品列表
+		$('#categoryselect').change(function(){ 
+			cid=$(this).children('option:selected').val();
+			if(cid>0) {
+				$('#productlist').empty();
+				$('#productlist').append("<option value='0'>选择产品</option>");
+				$.post('__URL__/ajaxGetProductList/cid/'+cid,'',function(data){
+					$('#productlist').append(data);
+				},'html');
+			}
+		});
+		
+		//根据品牌提取产品列表
+		$('#brandselect').change(function(){
+			cid=$(this).children('option:selected').val();
+			if(cid>0){
+				$('#productlist').empty();
+				$('#productlist').append("<option value='0'>选择品牌</option>");
+				$.post('__URL__/ajaxGetbrandlist/brandid/'+cid,'',function(data){
+					$('#productlist').append(data);
+				},'html');
+			}
+		});
+
+		
+		//根据关键字提取产品列表
+		$("#productkeyword").blur(function(){
+				kw=$(this).val();
+				if(kw.length>0){
+					$('#productlist').empty();
+					$('#productlist').append("<option value='0'>选择产品</option>");
+					$.post('__URL__/ajaxGetProductListByKey/searchkeyword/'+kw,'',function(data){
+						$('#productlist').append(data);
+					},'html');			
+				}
+		});
+	
+		$('#add_list').click(function(){ 
+			var productselected=$('#productlist').children('option:selected');
+			var cids=""
+			$.each( productselected, function(i, n){
+				if(n.value!=0){
+			   		cids +=n.value;
+			   		if(productselected.length!=(i+1)){ cids+=","; }
+				}
+			});
+			//判断某一项是否还有库存，没有不加载到列表
+			 $.post("__URL__/packageProduct/",{cids:cids},function(data){
+					   if(data[0]!=null){
+							var str="";
+							$.each(data[0], function(i, n){
+								str+="<option value='"+n['id']+"'>"+n['name']+"</option>";
+							});
+							$('#productselected').append(str);
+							calculateProductList(); //实时统计
+						}										
+	
+			},"json");
+		});
+		
+		$('#del_list').click(function(){
+			deleteSelect();
+		});
+			
+		$('#clearlist').click(function(){
+			$("#productselected").empty();
+			calculateProductList(); 
+		});
+});
+
+function deleteSelect()
+	{
+	var select1 = document.getElementById("productselected");
+	var delIndex=-1;
+	delIndex=select1.options.length-1;
+	if(delIndex<1){
+		alert("没有可以删除的选项！");
+		return;
+	 }
+	 for(i=0;i<select1.options.length;i++){
+		if(select1.options[i].selected==true){
+			delIndex=i;
+			break;
+		}
+	 }
+	 if(delIndex>=0){
+		select1.remove(delIndex);
+	 }
+	 calculateProductList();
+}
+
+function checkForm()
+{
+	var name = $("#name").val();
+	if(name==""){
+		alert("套餐名称不能为空！");
+		return false;
+	}
+	var select1 = document.getElementById("productselected");
+	if(select1.options.length<1){
+		alert("套餐列表不能为空！");
+		return false;
+	}else{
+		var cids='';
+		var select1 = document.getElementById("productselected");
+		for(i=0;i<select1.options.length;i++){
+			if(select1.options[i].value>0){
+				if(select1.options[i].value>0) {
+					cids+=select1.options[i].value;
+					if(i!=select1.options.length-1){
+						cids+=",";	
+					}
+				}
+			}
+		}	
+		$("#cids").val(cids);
+	}
+	return true;
+}
+
+function calculateProductList(){
+	var cids='';
+	var select1 = document.getElementById("productselected");
+	for(i=0;i<select1.options.length;i++){
+		if(select1.options[i].value>0){			
+				cids+=select1.options[i].value+",";			
+		}
+	}
+	$.post('__URL__/ajaxCalculateProductList/userid/{$userorderinfo[userid]}/orderid/{$userorderinfo[ordernmb]}/cids/'+cids,'',function(data){
+		$('#calculateresult').html(data);
+	},'html');
+}
+$(function(){
+	calculateProductList();
+})
+</script> 	
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+          <td width="1200" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">
+            <if condition="$id eq ''">添加套餐
+              <else />
+              编辑套餐--{$vo.name}</if>
+            </span></td>
+          <td width="281" background="__PUBLIC__/images/tab_05.gif"></td>
+          <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+          
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td><form action="{$action}" method="post" onsubmit="return checkForm();">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+            <td bgcolor="#f3ffe3"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+                <tr background="__PUBLIC__/images/tab_14.gif">
+                  <td height="26" colspan="5" align="center"> 套餐名称：
+                    <input type="text" name="name" id="name" value="{$name}" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    是否启用这个套餐：
+                    <input name="status" type="radio" value="1"  checked />
+                    是
+                    <input name="status" type="radio" value="0" />
+                    否
+                    &nbsp;&nbsp; 产品关键字查询:<input type="text" name="productkeyword" id="productkeyword"> 
+                   <br> 选择添加套餐品牌：<select id="brandselect" name="brandselect">
+                    <option value='0'>--品牌分类--</option>
+                    <volist name='brand_list'  id='vo'>
+                     <option value="{$vo[id]}">|--{$vo[name]}</option>
+                     </volist>
+                    </select>
+                    选择添加套餐产品： </td>
+               
+                </tr>
+                <tr align="center">
+                  <td align="center"></td>
+                </tr>
+                <tr align="center">
+                  <td align="center">
+                <select id="categoryselect" name="categoryselect" size="20" style="height: auto;width:200px">
+                    <option value="0">--产品分类--</option>
+                    <volist name="clist" id="catgoryinfo">
+                    <option value="{$catgoryinfo['cid']}"><php>if($catgoryinfo['signnum']>1){	echo "|--"; }</php>{$catgoryinfo['cname']}</option>
+                    </volist>
+                </select>	
+                  </td>
+                  <td align="center">
+                  	<select name="productlist" size="20" multiple="multiple" id="productlist"  style="width:expression((this.offsetWidth < 100) ? '100' : ((this.offsetWidth > 300)? '300' : this.offsetWidth))">
+                    <option value="0">--产品列表--</option>
+                    </select>	
+                  </td>
+                  <td align="center"> 
+                     <input type="button" id="add_list" value="加入" /><br>
+                      <input type="button" id="del_list" value="删除" /><br>
+                       <input type="button" id="clearlist" value="清空" /><br>
+                  </td>
+                  <td height="18" align="center">
+                  	<select name="productselected" size="20" multiple="MULTIPLE" id="productselected"   style="width:expression((this.offsetWidth < 100) ? '100' : ((this.offsetWidth > 300)? '300' : this.offsetWidth))">
+                    <volist name="own_product" id="vo" empty="">
+                    	<option value="{$vo.id}">{$vo.name}</option>
+                    </volist>
+                    </select>
+                  </td>
+                  <td>	<div id='calculateresult' name='calculateresult' style="padding: 10px;border: 1px solid #000000; margin-left:10px; width:80px; height:200px; background:#ffffff;"></div></td>
+             </tr>
+            
+                <tr>
+                  <td height="26" colspan="5" align="center" background="__PUBLIC__/images/tab_21.gif">
+                  <input type="hidden" value="" name="cids"  id="cids"/>
+                  <input type="hidden" value="{$id}" name="id"/>
+                  <input type="hidden" value="1" name="isshow" />
+                  <input type="submit" name="button" id="button" value="提交" /></td>
+                </tr>
+              </table></td>
+            <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+          </tr>
+        </table>
+      </form></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+          <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+                <td width="75%" valign="top" class="STYLE1"></td>
+              </tr>
+            </table></td>
+          <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<include file="Public:footer" />

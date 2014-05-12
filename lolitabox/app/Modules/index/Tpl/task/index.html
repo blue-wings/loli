@@ -1,0 +1,99 @@
+<include file="public:header.inc" />
+
+<!--分页--start-->
+<div class="fm1020 top_guide">
+	所在位置：<a href="/">网站首页</a> > <a href="<{:u('home/index')}>">个人主页</a> > <span class="g9">未完成任务</span>
+</div>
+<!--分页--end-->
+
+<!--个人中心--内容--start-------->
+<div class="fm1020_b cfl">
+	<!--左侧导航--->
+	<include file="home:left.inc" />
+	
+	
+	<!--右侧-内容-->
+	<div class="f738 r wp738">
+		<!--分享详情页内容-->
+		<div class="hd">
+			<div class="tit_hd_tab l">
+				<h2 class="tit_hd_strong">我的任务</h2>
+				<span class="tit_hd_con select"><a href="<{:u('home/task')}>">未完成任务(<{$datanum['ntasknum']}>)</a></span>
+				<span class="tit_hd_con"><a href="<{:u('home/finished_task')}>">已完成任务(<{$datanum['ytasknum']}>)</a></span>
+			</div>
+		
+		</div>
+		<div class="main My_details_wrap">
+			<!---未完成任务--->
+			<div class="W_main_task">
+				<div class="task_domain cfl">
+					<i class="task_top_bg"></i>
+					<i class="task_btm_bg"></i>
+					<!--左导航--start---->
+					<div class="task_domain_l">
+					       <if condition="$return[tasklist] neq ''">
+								<ul class="task_domain_l_list">
+									<volist name="return[tasklist]" id="vo">
+										<li>
+											<if condition="$return[type] eq $vo[id]">
+												<a href="javascript:void(0)" onclick="get_task_info('<{$vo[id]}>')" id="index_list_<{$vo.id}>" class="index_list select"><i class="W_ico20 <{$vo[style]}>"></i><{$vo[name]}></a>
+											<else />
+												<a href="javascript:void(0)" onclick="get_task_info('<{$vo[id]}>')" id="index_list_<{$vo.id}>" class="index_list"><i class="W_ico20 <{$vo[style]}>"></i><{$vo[name]}></a>
+											</if>
+										</li>
+									</volist>
+								</ul>
+							</if>
+						
+					</div>
+					<!--左导航--end---->
+					<!----内容--star------>
+					<div class="task_domain_r"   id="task_info">
+					</div>
+					<!----内容--end------>
+				</div>
+			
+			</div>
+			
+		</div>
+
+		<div class="ft"></div>
+	</div>
+</div>
+<script>
+
+function get_task_info(id){
+	if(!id){
+		return false
+	}
+	$(".index_list").removeClass("select");
+	$("#index_list_"+id).addClass("select");
+	$.ajax({
+		url:"<{:u('task/index')}>",
+		type:"get",
+		data:"id="+id,
+		dataType:"html",
+		success:function(data){
+			$("#task_info").html("");
+			$("#task_info").append(data);
+		}
+	})
+}
+
+ $(function(){
+	var if_r="<{$return[if_right]}>";
+	if(if_r==1){
+		var typeid="<{$return[type]}>";
+		get_task_info(typeid);
+	}
+}) 
+
+if(!USER_ID){
+	dialog_login("span_dialog_login",false);
+}
+
+</script>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=0" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<!--标准底---start--->
+<include file="public:footer.inc" />

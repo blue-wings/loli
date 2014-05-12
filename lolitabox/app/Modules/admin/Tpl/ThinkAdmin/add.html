@@ -1,0 +1,67 @@
+<include file="Public:header" />
+<link href="__PUBLIC__/css/table.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/common.css" type="text/css" rel="stylesheet"/>
+
+<div id="main" class="main" >
+<div class="content">
+<div class="list-div">
+<form method='post' id="form1" action="__URL__/insert/" onsubmit="return check();">
+<table cellpadding=3 cellspacing=3 id="datatable" style="width:50%;">
+<tr>
+<th colspan="2" align="left">新增后台用户 [ <a href="__URL__">返回列表</a> ]</th>
+</tr>
+<tr>
+	<td>用户名：</td>
+	<td><input type="text" id="account" name="account" value="">
+    </td>
+</tr>
+<tr>
+	<td>密码：</td>
+	<td><input type="text" id="password" name="password" value=""></td>
+</tr>
+<tr>
+	<td>昵称：</td>
+	<td><input type="text" id="nickname" name="nickname" value=""></td>
+</tr>
+
+<tr>
+	<td class="tRight">状态：</td>
+	<td class="tLeft"><SELECT class="small bLeft"  name="status">
+	<option value="1">启用</option>
+	<option value="0">禁用</option>
+	</SELECT></td>
+</tr>
+<tr>
+	<td class="tRight tTop">备  注：</td>
+	<td class="tLeft"><TEXTAREA class="large bLeft"  name="remark" rows="5" cols="57"></textarea></td>
+</tr>
+<tr>
+	<td></td>
+	<td class="center">
+	<input type="submit" value="保 存" class="small submit">
+	<input type="reset" class="submit  small" value="清 空" >
+	</td>
+</tr>
+</table>
+</form>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+function check()
+{
+	var account = $("#account").val();
+	var password = $("#password").val();
+	var nickname = $("#nickname").val();
+	if(account =="" || password == "" || nickname == ""){
+		alert("账号或密码或昵称不能为空！");
+		return false;
+	}
+	if(account.length < 5 || password.length <5){
+		alert("账号或密码长度不能小于5个字符！");
+		return false;
+	}
+	return true;	
+}
+</script>
+<include file="Public:footer" />

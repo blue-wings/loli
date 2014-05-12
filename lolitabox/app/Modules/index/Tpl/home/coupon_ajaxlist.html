@@ -1,0 +1,78 @@
+				<div class="W_order_wrap">
+					<table class="order_tables" border="0" cellspacing="0" cellpadding="0" width="100%">
+						<tbody>
+						<tr height="46">                                                                                    
+							<th width="88">优惠劵面值 </th>
+							<th width="108">优惠劵号码 </th>
+							<th width="128">优惠劵说明 </th>
+							<th width="108">状态
+								<div href="#" class="post_order_hover"><span id="stat_val">全部</span>
+									<ul>
+										<li><a href="javascript:void(0)" class="stat" stat_id="1">未使用</a></li>
+										<li><a href="javascript:void(0)" class="stat" stat_id="2">已使用</a></li>
+										<li><a href="javascript:void(0)" class="stat" stat_id="3">已过期</a></li>
+									</ul>
+								</div>
+							</th>
+							<th width="90">开始日期</th>
+							<th width="90">结束日期</th>
+						</tr>
+						
+					<volist name="list" id="vo">	
+						<tr>
+							<td><b><{$vo[price]}>元</b><if condition="$vo.status eq 1"><br/><a class="W_pin_b" href="<{:u('buy/index')}>">使用</a></if></td>
+							<td><{$vo[code]}></td>
+							<td><{$vo[remark]}></td>
+							<td>
+								<if condition="$vo[status] eq 1">
+									未使用
+								<elseif condition="$vo[status] eq 2" />
+									已使用
+								<else />
+									已过期
+								</if>
+							</td>
+							<td><{$vo[starttime]}></td>
+							<td><{$vo[endtime]}></td>
+						</tr>
+					</volist>
+						</tbody>
+					</table>
+</div>			
+		
+<empty name="list">					
+	<div id="no_msg"></div>
+<script>
+	$(function(){
+		nodata("no_msg","您还米有优惠券"); 
+	})
+</script>						
+</empty>					
+<div class="W_pages"  id="page"><{$page}></div>	
+	<script>
+	var state="<{$state}>";
+	if(state==1){
+		$("#stat_val").html("未使用");
+	}else if(state==2){
+		$("#stat_val").html("已使用");
+	}else if(state==3){
+		$("#stat_val").html("已过期");
+	}
+	
+ 	$(".stat").click(function(){
+		var state=$(this).attr("stat_id");
+		$.ajax({
+			url: "/home/coupon.html",
+			dataType: "html",
+			type: "get",
+			cache: false,
+			async:true,
+			data:"state="+state,
+			success: function(html){
+				$("#ajax_content").html(html);
+				return false;
+			}
+		});
+		return false;	
+	}) 
+</script>		

@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="__PUBLIC__/css/datepicker/jquery.ui.all.css">
+<link rel="stylesheet" href="__PUBLIC__/dialogskins/igreen.css" type="text/css"/>
+<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" >
+<link rel="stylesheet" href="__PUBLIC__/css/public.css" type="text/css"/>   <!-- 公共css -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/lhgdialog.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/chainedmenu.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/order.js"></script>
+<title>LOLITABOX管理</title>
+</head>
+<style>
+	#myform{
+		color:#0080FF;font-size:16px
+	}
+</style>
+<body>
+
+  <div style="position:fixed;right:-100px;top:0;width:auto;font-size:12px;height:auto;z-index:999;" id="search_kuan">
+      <div style="float:left;border:1px solid #aaa;background:#fff;border-radius:8px;">
+           <input type='button' id='search_kuaiguan' value='搜索' style="background:#bbd895; border-radius:5px; color:#4d7c0c; border-color:#4d7c0c;" />
+      </div>
+      <div style="float:left;border:1px solid #aaa;background:#fff;border-radius:8px; ">
+       <input type='button' id='search_product'  value='产品查询' style="background:#bbd895; border-radius:5px; color:#4d7c0c; border-color:#4d7c0c;"><br>
+       <input type='button' id='search_user' value='用户查询' style="background:#bbd895; border-radius:5px; color:#4d7c0c; border-color:#4d7c0c;"><br>
+       <input type='button' id='search_order' value='订单查询' style="background:#bbd895; border-radius:5px; color:#4d7c0c; border-color:#4d7c0c;"><br>
+        <input type='button' id='search_brand' value='品牌查询' style="background:#bbd895; border-radius:5px; color:#4d7c0c; border-color:#4d7c0c;"><br>
+        <input type='button' id='search_inventoty_item' value='库存单品查询' style="background:#bbd895; border-radius:5px; color:#4d7c0c; border-color:#4d7c0c;"><br>
+      </div>
+ </div >
+   
+    <script>
+    (function(config){
+    	config['extendDrag'] = false; // 注意，此配置参数只能在这里使用全局配置，在调用窗口的传参数使用无效
+    	config['lock'] = true;
+    	config['fixed'] = false;
+    	config['okVal'] = 'Ok';
+    	config['cancelVal'] = 'Cancel';
+    })($.dialog.setting);
+
+    function dialogmeseeage(url,info){
+    	$.dialog({
+    		title:info,
+    		content: "url:"+url,
+    		width:'9999px',
+    		height:'500px',
+    		cancelVal: '关闭',
+    		close: function(){
+    			this.reload();
+    		}
+    	})
+    }
+
+    $("#search_product").click(function(){
+    	$.dialog({
+    		title:"产品查询",
+    		width:"1000px",
+    		height:"400px",
+    		content:'url:{:U('Product/index')}'
+    	})
+    })
+    $("#search_user").click(function(){
+    	$.dialog({
+    		title:"用户查询",
+    		width:"1000px",
+    		height:"400px",
+    		content:'url:{:U('User/userlist')}'
+    	}).max();
+    })
+    $("#search_order").click(function(){
+    	$.dialog({
+    		title:"订单查询",
+    		width:"1000px",
+    		height:"400px",
+    		content:'url:{:U('BoxSend/orderList')}'
+    	})
+    })
+    $("#search_brand").click(function(){
+    	$.dialog({
+    		title:"品牌查询",
+    		width:"1000px",
+    		height:"400px",
+    		content:'url:{:U('Product/brandList')}'
+    	});
+    })
+    $("#search_inventoty_item").click(function(){
+    	$.dialog({
+    		title:"库存单品查询",
+    		width:"1000px",
+    		height:"400px",
+    		content:'url:{:U('Inventory/productList')}'
+    	});
+    })
+
+    $("#search_kuaiguan").toggle(function(){
+    	$("#search_kuan").animate({right: '0px'}, "slow");
+    },function(){
+    	$("#search_kuan").animate({right: '-100px'}, "slow");
+    })
+	
+	$(function(){
+		//重新加载页面 为了重置表单
+		$(":button[name='resetpage']").click(function(){
+			location.href="__ACTION__";
+		})	
+	})
+</script>

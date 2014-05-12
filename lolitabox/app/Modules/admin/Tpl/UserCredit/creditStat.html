@@ -1,0 +1,249 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="/public/js/jquery_theme/smoothness/jquery.ui.all.css">
+<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+<div class="panel">
+<div align="left">
+<fieldset class="fieldset">
+<legend>查询条件</legend>
+<form name="myform" id="myform" action="__SELF__" method="get">
+用户ID查询：<input id='userid' name='userid' type='text' value='{$Think.request.userid}'>  &nbsp;&nbsp;&nbsp;
+用户昵称查询:<input id='nickname' name='nickname' type='text' value='{$Think.request.nickname}'>
+动作行为查询:<select name="action_id" id="action_id">{/* 动作选项*/}
+<option value="0" selected>--请选择动作--</option>
+<volist name="setlist" id="slist" key="k">
+<option value="{$slist[action_id]}">{$slist.action_name}</option>
+</volist>
+</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+行为类型:<select name="credit_type" id="credit_type">
+<option value="" selected>全部</option>
+<option value="1">积分</option>
+<option value="2">经验值</option>
+</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+开始时间查询:<input id='starttime' name='starttime' type='text' value='{$Think.request.starttime}'>&nbsp;&nbsp;&nbsp;
+结束时间查询:<input id='endtime' name='endtime' type='text' value='{$Think.request.endtime}'><br><br>
+<input type="button" name="resetpage" value="重置">
+<input type="submit" name='search' value="查询">
+</form>
+</fieldset>
+	 </div>
+	</div>
+<p align="right">
+	<span style="padding:5px;background:#eee;border:1px solid #999;cursor:default" id="addScore">增加积分或经验值</span>
+</p>	
+<form name="listform" id="listform" action="__URL__/delEvaluateReply" method="post">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">用户积分经验值查询表</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+          	<td width="5%" height="26"><div align="center" class="STYLE2 STYLE1">ID</div></td>
+			<td width="5%" height="26"><div align="center" class="STYLE2 STYLE1">用户ID</div></td>
+            <td width="12%" height="26"><div align="center" class="STYLE2 STYLE1">用户昵称</div></td>
+            <td width="15%" height="18"><div align="center" class="STYLE2 STYLE1">动作名称</div></td>
+            <td width="15%" height="18"><div align="center" class="STYLE2 STYLE1">行为类型</div></td>
+            <td width="10%" height="18"><div align="center" class="STYLE2 STYLE1">行为变化值</div></td>
+            <td width="18%" height="18"><div align="center" class="STYLE2 STYLE1">时间</div></td>
+            <td width="15%" height="18"><div align="center" class="STYLE2 STYLE1">描述</div></td>
+          </tr>
+          <volist name="list" id="userlist" key="k">
+          <tr style="text-align:center">
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$userlist.id}</div></td>
+			<td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">
+				<a href="{:U('User/userList',array('userid'=>$userlist['userid']))}">{$userlist.userid}</a>
+			</div></td>
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">
+				<a href="/space/{$userlist.userid}.html" target="_blank">{$userlist.nickname}</a>	
+			</div></td>
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$userlist.action_name}</div></td>
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1"><if condition="$userlist.credit_type eq 1">积分<else />经验值</if></div></td>
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$userlist.credit_value}</div></td>
+            <td height="25" bgcolor="#FFFFFF"><div style="word-break: break-all; overflow:hidden;">{$userlist.add_datetime}</div></td>
+            <td height="25" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$userlist.remark|default="无"}</div></td>
+          </tr>
+		</volist>
+
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+	<if condition="$list eq ''"><tr style="text-align:center"><td colspan="5">抱歉,没找到您查询的数据!</td></tr></if> 
+   <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="25%" height="29" nowrap="nowrap">
+			<if condition="$_GET['userid'] neq null OR $_GET['nickname'] neq null">{$list[0]['nickname']}</if>
+			<if condition="$user_info.cscore neq '' AND $user_info.userid">
+				的查询积分为<font color="red">{$user_info.cscore}</font>,
+				查询经验值为<font color="red">{$user_info.cexperience}</font>,
+			</if>
+			<if condition="$user_info.score neq '' AND $user_info.userid">
+				总积分为<font color="red">{$user_info.score}</font>,
+				总经验值为<font color="red">{$user_info.experience}</font>
+			</if>
+			</td>
+            <td width="75%" class="STYLE1" align="right"><span class="STYLE1">{$page}</span></td>
+          </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</form>
+<div id="confirm_add_score" style="display:none">
+<form action="__URL__/addScore" method="post" id="add_form"  onsubmit="return check_add_form()">
+   用户ID：<span style="color:red">支持多个用户,请用英文逗号分隔开</span><br><textarea id='add_userid' name='add_userid' rows="3" cols="40">{$Think.request.userid}</textarea> <br>
+   动 &nbsp; 作：<select name="add_action_id" id="add_action_id" onchange="show_input()">{/* 动作选项*/}
+<option value="0" selected>--请选择动作--</option>
+<volist name="setlist" id="slist" key="k">
+<option value="{$slist[action_id]}"
+<eq name="Think.request.action_id"  value="$slist[action_id]">selected</eq>
+ >{$slist.action_name}</option>
+</volist>
+</select><br>
+   <div id="add_input" style="display:none">
+   积分值：<input type='text' name='jifenzhi' id='jifenzhi' value='0'><br>
+		   经验值：<input type='text' name='jingyanzhi' id='jingyanzhi' value='0'><br>	 
+		   描 &nbsp; 述：<textarea name="describe" id="describe" cols="22" rows="2"></textarea><br>
+		   </div>
+<input type="submit" name="add_submit" id="add_submit"  onsubmit="check_add_form()" value=" 增 加 "></form>
+ <span id="tishi" style="color:red"></span>
+ </div>
+
+<script>
+$(function(){
+	var action ="{$Think.request.action_id}";
+	var type="{$Think.request.credit_type}";
+	if(action!=''){
+	$("#action_id option[value='"+action+"']").attr("selected","selected");
+	}
+	
+	if(type!=''){
+	$("#credit_type option[value='"+type+"']").attr("selected","selected");
+	}
+	show_input();
+
+
+})
+
+//增加积分 弹出框
+$("#addScore").bind("click",function(){
+	$.dialog({title:"增加积分|经验值",content:$("#confirm_add_score").html()})
+})
+
+
+//判断是否显示积分经验输入框
+function show_input(){
+	$("#add_input").css("display","none");
+
+	if($("#add_action_id").val()=='system')
+		{
+		$("#add_input").css("display","block");
+		}
+		
+}
+
+//检查表单是否有空值
+function check_add_form(){
+	if(! ($("#add_userid").val() && $("#add_action_id").val() ))
+	{
+		$("#tishi").html("  表单不能为空");
+		return false;
+	}
+	else{
+		if($("#add_action_id").val()=='system')
+		{	
+		   if(! $("#describe").val()){
+			   $("#tishi").html("  描述不能为空");
+			   return false;
+		   }
+		   var p=/(\d)*/;
+		   if(!(p.test($("#jifenzhi").val()) && p.test($("#jingyanzhi").val()) ))
+			{
+				$("#tishi").html("  经验值或积分值请填入有效的整数");
+				return false;
+			}
+		}
+	}
+	$.ajax({
+		url:$("#add_form").attr("action"),
+		type:"post",
+		data:$("#add_form").serialize(),
+		dataType:"html",
+		success:function(data){
+			$("#add_form").html(data);
+		}
+	})
+	return false;
+}
+	jQuery(function($){
+		$.datepicker.regional['zh-CN'] = {
+			closeText: '关闭',
+			prevText: '&#x3c;上月',
+			nextText: '下月&#x3e;',
+			currentText: '今天',
+			monthNames: ['一月','二月','三月','四月','五月','六月',
+			'七月','八月','九月','十月','十一月','十二月'],
+			monthNamesShort: ['一','二','三','四','五','六',
+			'七','八','九','十','十一','十二'],
+			dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+			dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+			dayNamesMin: ['日','一','二','三','四','五','六'],
+			weekHeader: '周',
+			dateFormat: 'yy-mm-dd',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: true,
+			yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+	});
+	$(function() {
+		$( "#starttime" ).datepicker({
+			defaultDate: "-1w",
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$( "#starttime" ).datepicker( "option",selectedDate );
+			}
+		});
+		$( "#endtime" ).datepicker({
+			defaultDate: "-1w",
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				$( "#endtime" ).datepicker( "option",selectedDate );
+			}
+		});
+	});
+</script>
+<script language="javascript" for="document" event="onkeydown">
+if (event.keyCode == 13)
+{
+	$(":submit[name='search']").click();
+}
+</script>
+<include file="Public:footer" />

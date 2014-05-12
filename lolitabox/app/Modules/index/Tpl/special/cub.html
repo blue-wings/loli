@@ -1,0 +1,228 @@
+<include file="public:header.inc" />
+
+<style type="text/css">
+body {text-align: left; font-size:14px;color:#333; background:#1a0a38; margin:0;  padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif; background:#fff9e7;}
+body,html{width:100%;}
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p,dl,dt,dd{margin: 0; padding: 0; border: 0}
+a {color:#333; text-decoration:none;}
+h1,h2,h3,h4,h5,h6,h7{margin:0; padding:0;}
+a:hover {color: #333; text-decoration:underline} 
+font{font-size:14px}
+.textRight{text-align:right;}
+b{color:#fff}
+
+.t1,.t2,.t3,.t4,.t5,.t6,.t7,.t8,.t9,.t10,.t11,t12,t13,t14,t15{ line-height:18px;}
+.zt_bgs{ width:1300px; background: url(public/special/20131028_3/bgs.jpg) center top no-repeat; margin:0 auto;}
+.bg_main{ background:url(public/special/20131028_3/bg_main.jpg) repeat-x; height:3252px; margin:0 auto;}
+.zt1{width:1016px;height:407px; position:relative; margin:0 auto;}
+.zt1 .bg{ height:407px;}
+
+.zt2{ width:1016px;height:751px; position:relative; margin:0 auto;}
+.zt2 .bg{ height:751px;}
+.zt2 .t1{position:absolute;left: 23px;top: 30px;}
+.zt2 .t2{width:150px;height:57px;position:absolute;background:url(public/special/20131028_3/gray_btn.png) no-repeat;left: 554px;top: 631px;text-align:center;line-height:54px;font-size:24px;}
+.zt2 .t3{width:150px;height:57px;position:absolute;background:url(public/special/20131028_3/yellow_btn.png) no-repeat;left: 555px;top: 633px;text-align:center;line-height:54px;font-size:24px;}
+.zt2 .t4{
+	position:absolute;
+	font-size:16px;
+	left: 706px;
+	top: 635px;
+	height: 49px;
+	line-height:24px;
+	font-weight:600;
+}
+.zt2 .t4 span{ font-size:18px;}
+
+.zt3{ width:1016px;height:659px; position:relative; margin:0 auto;}
+.zt3 .t7,.zt3 .t8,.zt3 .t9{ color:#fff;}
+.zt3 .t10,.zt3 .t11,.zt3 .t12{ color:#535353;}
+.zt8 .t1 ,.zt5 .t2 ,.zt5 .t3 ,.zt5 .t5 ,.zt6 .t3,.zt6 .t7{ font-size:24px; color:#333333;}
+.zt2 .t2 a:hover,.zt2 .t3 a:hover,.zt8 .t1 a:hover,.zt5 .t2 a:hover,.zt5 .t3 a:hover,.zt5 .t5 a:hover,.zt6 .t3 a:hover,.zt6 .t7 a:hover{color:#333333; text-decoration:none;}
+.zt5 .t2 ,.zt5 .t3 ,.zt5 .t5 ,.zt6 .t3,.zt6 .t7{ line-height:30px;}
+.zt3 .bg{ height:659px;}
+.zt3 .t1{position:absolute;left: 83px;top: 42px;}
+.zt3 .t2{position:absolute;left: 378px;top: 42px;}
+.zt3 .t3{position:absolute;left: 686px;top: 42px;}
+.zt3 .t4{position:absolute;left: 89px;top: 316px;}
+.zt3 .t5{position:absolute;left: 384px;top: 316px;}
+.zt3 .t6{position:absolute;left: 692px;top: 316px;}
+.zt3 .t7{position:absolute;left: 103px;top: 362px;}
+.zt3 .t8{position:absolute;left: 391px;top: 362px;}
+.zt3 .t9{position:absolute;left: 712px;top: 362px;}
+.zt3 .t10{position:absolute;left: 69px;top: 392px;width: 281px;}
+.zt3 .t11{position:absolute;left: 379px;top: 392px;width: 279px;}
+.zt3 .t12{position:absolute;left: 691px;top: 394px;width: 282px;}
+.zt3 .t13{position:absolute;left: 602px;top: 533px;}
+.zt3 .t14{position:absolute;left: 12px;top: 38px;}
+
+.zt4{ width:1016px;height:519px; position:relative; margin:0 auto;}
+.zt4 .bg{ height:519px;}
+.zt4 .t1{position:absolute;left: 34px;top: 45px;}
+
+.zt5{ width:1016px;height:388px; position:relative; margin:0 auto;}
+.zt5 .bg{ height:388px;}
+.zt5 .t1{position:absolute;left: 54px;top: 70px;}
+.zt5 .t2{position:absolute;left: 98px;top: 267px;}
+.zt5 .t3{position:absolute;left: 293px;top: 266px;}
+.zt5 .t4{position:absolute;left: 510px;top: 70px;}
+.zt5 .t5{position:absolute;left: 573px;top: 267px;}
+.zt5 .t6{position:absolute;font-size:24px;color:#000;left: 72px;top: 46px;}
+.zt5 .t7{position:absolute;font-size:24px;color:#000;left: 522px;top: 43px;}
+
+.zt6{ width:1016px;height:426px; position:relative; margin:0 auto;}
+.zt6 .bg{ height:426px;}
+.zt6 .t1{position:absolute;left: 53px;top: 73px;}
+.zt6 .t2{position:absolute;left: 94px;top: 256px;}
+.zt6 .t3{position:absolute;left: 94px;top: 304px;}
+.zt6 .t4{position:absolute;left: 500px;top: 62px;}
+.zt6 .t5{position:absolute;font-size:24px;color:#000;left: 68px;top: 49px;}
+.zt6 .t6{position:absolute;font-size:24px;color:#000;left: 528px;top: 47px;}
+.zt6 .t7{position:absolute;left: 573px;top: 304px;}
+
+.zt7{ width:1016px;height:376px; position:relative; margin:0 auto;}
+.zt7 .bg{ height:376px;}
+.zt7 .t1{position:absolute;left: 43px;top: 44px;}
+.zt7 .t2{position:absolute;left: 576px;top: 26px;}
+.zt7 .t3{position:absolute;left: 698px;top: 26px;}
+
+.zt8{ width:1016px;height:133px; background:3fff3d2; position:relative; margin:0 auto;}
+
+</style>
+</head>
+
+<body>
+<div class="zt_bgs">
+<div class="zt1">
+<div class="bg"> <img src="public/special/20131028_3/bg_01.jpg" width="1016" height="407" alt=""/></div>
+</div> 
+
+<div class="bg_main">
+<div class="zt2">
+<div class="bg"> <img src="public/special/20131028_3/bg_02.jpg" width="1016" height="751" alt=""/></div>
+<div class="t1"> <img src="public/special/20131028_3/cub.png" width="966" height="118" alt=""/></div>
+<if condition="$return[if_buy] eq 1">
+	<div class="t3">
+		<a href="http://cestunebeauteakdy.tmall.com/" target="_blank">立即订购</a>
+	</div>
+<else />
+	<div class="t2">敬请期待</div>
+</if>
+
+<div class="t4">进店即可领取5元无限制优惠券<br/>
+消费<span>满99</span>再<span>送20元</span>无限制优惠券</div>
+
+<div class="aaaa"><a href="__SELF__#haoli" style="color:red;">猛戳这里！赢取600元CUB大礼盒！>></a></div>
+
+<style>
+.aaaa{
+	position:absolute;
+	font-size:20px;
+	left: 552px;
+	top: 696px;
+	height: 49px;
+	line-height:24px;
+	font-weight:600;
+	color:red;
+	text-decoration:underline;
+}
+</style>
+</div> 
+
+<div class="zt3">
+<div class="bg"> <img src="public/special/20131028_3/bg_03.jpg" width="1016" height="659" alt=""/></div>
+<div class="t1"><a href="http://detail.tmall.com/item.htm?spm=a1z10.5.w4011-2870673818.97.7D2axJ&id=17523763174&rn=533a38ef4cb86506c5232504ca2e4eff" target="_blank"><img src="public/special/20131028_3/pro_01.png" width="294" height="270" alt=""/></a></div>
+<div class="t2"><a href="http://detail.tmall.com/item.htm?spm=a1z10.5.w4011-2870673818.91.7D2axJ&id=20440876638&rn=533a38ef4cb86506c5232504ca2e4eff" target="_blank"><img src="public/special/20131028_3/pro_02.png" width="308" height="270" alt=""/></a></div>
+<div class="t3"><a href="http://detail.tmall.com/item.htm?spm=a1z10.5.w4011-2870673818.94.7D2axJ&id=20441052540&rn=533a38ef4cb86506c5232504ca2e4eff" target="_blank"><img src="public/special/20131028_3/pro_03.png" width="302" height="270" alt=""/></a></div>
+<div class="t4"><a href="http://detail.tmall.com/item.htm?spm=a1z10.5.w4011-2870673818.97.7D2axJ&id=17523763174&rn=533a38ef4cb86506c5232504ca2e4eff" target="_blank"><img src="public/special/20131028_3/pro_name_01.png" width="294" height="42" alt=""/></a></div>
+<div class="t5"><a href="http://detail.tmall.com/item.htm?spm=a1z10.5.w4011-2870673818.91.7D2axJ&id=20440876638&rn=533a38ef4cb86506c5232504ca2e4eff" target="_blank"><img src="public/special/20131028_3/pro_name_02.png" width="308" height="42" alt=""/></a></div>
+<div class="t6"><a href="http://detail.tmall.com/item.htm?spm=a1z10.5.w4011-2870673818.94.7D2axJ&id=20441052540&rn=533a38ef4cb86506c5232504ca2e4eff" target="_blank"><img src="public/special/20131028_3/pro_name_03.png" width="302" height="42" alt=""/></a></div>
+<div class="t7">适合敏感、暗沉、油性肌肤使用</div>
+<div class="t8">适合干燥、肤色不均、需排毒的肌肤使用</div>
+<div class="t9">适合干燥、老化、有妊娠纹的肌肤使用</div>
+<div class="t10">薰衣草身体牛油也能让你放松情绪，卸下平日的心防助你进入甜甜的梦乡，蕴含的檀香精油和薰衣草精油能助眠安神，能去除老化角质，促进细胞再生。</div>
+<div class="t11">椰浆萃取精华能改善表面干燥、肤色不均或是有鳞屑的皮肤，在十分钟左右渗透到皮肤里，恢复身体那层天然的化学保护膜，强化皮肤，使其更滋润有弹性。</div>
+<div class="t12">茉莉身体牛油添加珍贵的“精油之王”茉莉花精油，能很好的淡化妊娠纹和疤痕，增强皮肤水嫩，而清新高雅的茉莉香味能给人带来欢愉的感受，而对于女性来说更是能调节生殖系统平衡，舒缓痛经的功效。</div>
+
+<div class="t13"><a href="__SELF__#haoli" style="color:red;font-size:20px;font-weight:600;text-decoration:underline;line-height:24px;">猛戳这里！赢取600元CUB大礼盒！>></a></div>
+
+<div class="t14"><img src="public/special/20131028_3/dazhe.png" width="106" height="95" alt=""/></div>
+</div> 
+
+<div class="zt4">
+<div class="bg"> <img src="public/special/20131028_3/bg_04.jpg" width="1016" height="519" alt=""/></div>
+<div class="t1"><img src="public/special/20131028_3/pro_04.jpg" width="950" height="415" alt=""/></div>
+</div>
+<a name="haoli"></a>
+<div class="zt5">
+<div class="bg"> <img src="public/special/20131028_3/bg_05.jpg" width="1016" height="388" alt=""/></div>
+<div class="t1"><img src="public/special/20131028_3/weibo.png" width="375" height="123" alt=""/></div>
+<div class="t2">
+
+<if condition="$Think.cookie.userid neq ''">
+	<a href="javascript:void(0)" onclick="have_register(this)">马上注册</a>
+<else />
+	<a href="<{:u('user/reglogin')}>" target="_blank">马上注册</a>
+</if>
+</div>
+<div class="t3">
+
+
+<!--a id="to_sina" href="javascript:void(0)">转发微博</a-->
+
+<a title="转发微博" onclick="javascript:bShare.share(event,'sinaminiblog',0);return false;" href="javascript:void(0)">
+转发微博
+</a>
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=d0450ae2-8861-464d-a951-8c690dd91f17&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<script type="text/javascript" charset="utf-8">
+bShare.addEntry({
+	title:"#只需一点点，滋润你整个冬天#",
+    summary: "11月1至7日，CUB天猫店三款身体牛油300套正品6.5折！还买一送一（送￥120喷雾组）http://t.cn/zWdYkzO  @CEST_UNE_BEAUTE香港，在@Lolitabox 还有超值活动！",
+});
+</script>
+
+</div>
+<div class="t4"><img src="public/special/20131028_3/niuyou.png" width="442" height="171" alt=""/></div>
+<div class="t5">
+<a href="<{:u('products/62968')}>" target="_blank">发表分享</a>
+</div>
+
+<div class="t6">活动一：</div>
+<div class="t7">活动二：</div>
+</div>
+<script>
+function have_register(obj){
+	id_dialog("您已经注册了萝莉盒账号，目前正处于登录状态中。",obj,2);
+}
+</script>
+<div class="zt6">
+<div class="bg"> <img src="public/special/20131028_3/bg_06.jpg" width="1016" height="426" alt=""/></div>
+<div class="t1"><img src="public/special/20131028_3/yaoqinghaoyou.png" width="418" height="232" alt=""/></div>
+<div class="t2"><a href="<{:u('info/lolitabox',array('aid'=>11))}>" target="_blank"><img src="public/special/20131028_3/jifenyongchu.png" width="76" height="35" alt=""/></a></div>
+<div class="t3">
+<if condition="$Think.cookie.userid neq ''">
+	<a href="<{:u('task/index',array('id'=>10))}>" target="_blank">马上邀请</a>
+<else />
+	<a href="javascript:void(0)" onclick="return dialog_login();">马上邀请</a>
+</if>
+</div>
+<div class="t4"><img src="public/special/20131028_3/fuyou.png" width="442" height="300" alt=""/></div>
+<div class="t5">活动三：</div>
+<div class="t6">活动四：</div>
+<div class="t7"><a href="<{:u('try/index',array('type'=>1))}>" target="_blank">付邮试用</a></div>
+</div>
+
+<div class="zt7">
+<div class="bg"> <img src="public/special/20131028_3/bg_07.jpg" width="1016" height="376" alt=""/></div>
+<div class="t1"><img src="public/special/20131028_3/wenxinshuoming.png" width="885" height="307" alt=""/></div>
+<div class="t2"><a href="http://e.weibo.com/lolitaboxcn"  target="_blank"><img src="public/special/20131028_3/sina.png" width="107" height="124" alt=""/></a></div>
+<div class="t3"><img src="public/special/20131028_3/weixin.png" width="94" height="125" alt=""/></div>
+</div>
+
+<div class="zt8">
+</div>
+</div>
+</div> 
+
+<include file="public:footer.inc" />

@@ -1,0 +1,267 @@
+<include file="public:header.inc" />
+<style type="text/css">
+body { text-align:center; background:#fff1f4; margin:0 auto; padding:0; font-family:'微软雅黑', arial, 'YaHei', '黑体', Tahoma, Helvetica, arial, sans-serif; color:#333;}
+body > div { text-align:center; margin-right:auto; margin-left:auto}
+div, form, img, ul, ol, li, p { margin: 0; padding: 0; border: 0}
+h1, h2, h3, h4, h5, h6 { margin:0; padding:0; font-size:12px; font-family:'微软雅黑', arial, 'YaHei', '黑体', Tahoma, Helvetica, arial, sans-serif; font-weight:normal;}
+ul, li, ol { list-style:none;}
+.mainBox .blue { color:#73d7f8;}
+.f14 { font-size:14px;}
+.hei1 { height:0px; overflow:hidden; clear:both; width:100%;}
+.box-hide { display:block; overflow:hidden;}
+.a_red { color:#e15392; text-decoration:none;}
+.a_red:hover { color:#e15392; text-decoration:underline;}
+.bannerBox { height:425px; background-color:#cce0ef;}
+.mainBox { width:999px; margin:-32px auto 0; position:relative;}
+.mainBox .top_Box { height:654px; background:url(public/special/20120928/Nav_banner1.png); _background:none;
+_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='public/special/20120928/Nav_banner1.png'); margin-bottom:10px; padding:0 20px;}
+.mainBox .top_Box .slogan { height:92px; background:url(public/special/20120928/top_banner.gif) center no-repeat; padding:18px 96px 0 98px; text-align:left; color:#fff; font-size:14px; line-height:24px;}
+.mainBox .cont_list { margin-bottom:15px; _margin-bottom:10px;}
+.mainBox .cont_list .left_focus { width:440px; float:left; text-align:left;}
+.mainBox .cont_list .left_focus .imges { width:440px; height:325px; position:relative;}
+.mainBox .cont_list .left_focus .imges .abs { width:85px; height:85px; background:url(public/special/20120928/new_Tips.png); _background:none;
+_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='public/special/20120928/new_Tips.png'); position:absolute; left: 359px; top: -22px;}
+.mainBox .cont_list h4 { font-size:22px; color:#1b6eaa; height:40px; line-height:40px;}
+.mainBox .cont_list .right_fabric { float:left; margin-left:70px;}
+.mainBox .cont_list .right_fabric .list { margin:15px auto 0; text-align:left;}
+.mainBox .cont_list .right_fabric .list li { font-size:14px; line-height:30px; color:#1b6eaa;}
+.mainBox .cont_list .right_fabric .list li a { color:#1b6eaa; text-decoration:none;}
+.mainBox .cont_list .right_fabric .list li a:hover { color:#dc3583; text-decoration:underline;}
+.mainBox .top_Box .special { clear:both;}
+.mainBox .top_Box .special li { float:left; margin-right:7px;}
+.mainBox .top_Box .special .li { margin:0;}
+.mainBox .NavBox { background:url(public/special/20120928/NavBox_con.gif) center bottom no-repeat; margin-bottom:10px; padding-bottom:18px;}
+.mainBox .NavBox .topTitle { height:89px; background:url(public/special/20120928/NavBox.jpg) no-repeat; font-size:32px; color:#1b6eaa; padding-top:25px;}
+.mainBox .NavBox .slogan { width:861px; height:77px; margin:0 auto; color:#fff; text-align:left; background:url(public/special/20120928/NavBox_tie.gif) no-repeat; font-size:14px; line-height:24px; padding:5px 26px 0; margin-bottom:20px;}
+.mainBox .NavBox .navList01 { margin:0 12px;}
+.mainBox .NavBox .navList01 li { width:300px; height:410px; background:url(public/special/20120928/NavBox_con01.gif) no-repeat; margin-right:7px; padding:10px; float:left;}
+.mainBox .NavBox .navList01 .public/special/20120928 { width:300px; height:300px; margin-bottom:10px;}
+.mainBox .NavBox .navList01 .text { font-size:12px; line-height:20px; color:#fff; font-family:"宋体"; text-align:left; margin:0 5px;}
+.mainBox .NavBox .navList01 .li { margin-right:0;}
+.mainBox .NavBox .navList02 { margin:0 12px;}
+.mainBox .NavBox .left_focus { float:left; padding:10px; width:646px; height:437px; background:url(public/special/20120928/NavBox_con02.gif) no-repeat;}
+.mainBox .NavBox .left_focus .focus { float:left; width:250px;}
+.mainBox .NavBox .left_focus .focus .text { width:230px; margin:12px auto 0; font-size:12px; line-height:20px; font-family:"宋体"; color:#fff;}
+.mainBox .NavBox .left_focus .list li { margin:0 0 10px 10px; width:185px; height:210px; float:left;}
+.mainBox .NavBox .right_cont { text-align:left; margin-left:10px; float:left; width:295px; font-family:"宋体"; font-size:12px; line-height:20px; color:#1b6eaa;}
+.mainBox .NavBox .right_cont .title { margin-bottom:5px;}
+.mainBox .NavBox .right_cont .cont .imges { padding:5px; background:#1b6eaa; float:left; margin:0 10px 10px 0}
+.mainBox .NavBox .right_cont .foot_img { padding:5px; background:#1b6eaa; margin-top:10px;}
+.mainBox .foot_title { padding:10px; font-size:16px; line-height:24px; text-align:left;}
+.mainBox .foot_title span { padding:2px 4px; background:#1b6eaa; color:#fff;}
+.bgs { font-size:12px; background:#fff; line-height:18px; background:#cce0ef;margin-top:56px;}
+</style>
+<body>
+<div class="bgs">
+  <div class="bannerBox"><img src="public/special/20120928/head.jpg" width="995" height="425" /></div>
+  <div class="bgz">
+    <div class="mainBox">
+      <div class="top_Box">
+        <div class="slogan"> 导语：“男人何须置镜”的年代早已过去，如今的男性，越来越关注自己的外在形象，男士美容护肤浪潮也不断蔓延。男士护肤也要弄清自己皮肤的类型，有针对性的使用护肤品才能让肌肤清爽细致，让自己更有“面子”哦。本期LOLITABOX将为Lolitagirls带来完美男人打造术，体贴他的“面子”，塑造体贴男友，他有“面子”之时你也有face！</div>
+        <div class="cont_list box-hide">
+          <div class="left_focus">
+            <h4>9月萝莉盒の限量男士盒</h4>
+            <div class="imges"> <img src="public/special/20120928/t01.jpg" width="440" height="325" />
+              <div class="abs"></div>
+            </div>
+          </div>
+          <div class="right_fabric">
+            <h4>9月Lolitabox限量男士萝莉盒&nbsp;<span class="f14">试用产品：</span></h4>
+            <ul class="list">
+              <li>
+                <p><a target="_blank"  href="<{:U('products/90')}>">朗仕LAB SERIES 多功能洁面乳 </a><br />
+                  <a target="_blank"  href="<{:U('products/141')}>">郎仕LAB SERIES男用瞬透保湿凝胶</a> <br />
+                  <a target="_blank"  href="<{:U('products/116')}>">锐度男士3+矿石能量洁面乳</a> <br />
+                  <a target="_blank"  href="<{:U('products/117')}>">锐度男士3+矿石能量水凝乳</a> <br />
+                  <a target="_blank"  href="<{:U('products/118')}>">欧珀莱俊士温和洁面膏 </a><br />
+                  <a target="_blank"  href="<{:U('products/119')}>">欧珀莱俊士控油爽肤水</a>   <a target="_blank"  href="<{:U('products/120')}>">欧珀莱俊士滋润凝乳</a> <br />
+        
+                  <a target="_blank"  href="<{:U('products/115')}>">艾曦媤男士清透洁面磨砂 </a><br />
+                  <a target="_blank"  href="<{:U('products/112')}>">菲拉格慕非凡之旅男士淡香水</a> <br />
+                  <a target="_blank"  href="<{:U('products/128')}>">施丹兰矢车菊皂 </a></p>
+                <a target="_blank"  href="<{:U('products/129')}>">可悠然美肌沐浴露（恬静清香）</a> <a target="_blank"  href="<{:U('products/130')}>">（欣怡幽香）</a></li>
+            </ul>
+          </div>
+        </div>
+        <ul class="special">
+          <li><a target="_blank"  href="<{:U('special/szllj')}>"><img src="public/special/20120928/t0.jpg" width="315" height="145" border="0" /></a></li>
+          <li><a target="_blank"  href="<{:U('special/llzht2')}>"><img src="public/special/20120928/t02.jpg" width="315" height="145" border="0" /></a></li>
+          <li class="li"><a target="_blank"  href="<{:U('special/llzht1')}>">
+		  <img src="public/special/20120928/t03.jpg" width="315" height="145" border="0" /></a></li>
+        </ul>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle"><strong>你是精品男士吗？</strong></div>
+        <div class="slogan">这个世界有几类男人：保守男人根本还不知道完美的概念；自恋男人却认为自己已经很完美；只有精品男人才会不断突破自己，甚至打破看似完美的现状，去追求更高的层次。你是精品男士吗？若想成为女人心中那位呼风唤雨且知晓生活情趣的魅力男子，以下细节你必须知道！</div>
+        <ul class="navList01 box-hide">
+          <li>
+            <div class="public/special/20120928">
+              <div align="left"><img src="public/special/20120928/t2.jpg" width="300" height="300" /></div>
+            </div>
+            <p align="center"><strong>拥有俊朗容颜</strong><strong> </strong></p>
+            <div align="left">用剃须膏和手动剃须刀刮脸、洒上古龙水出门上班、带着男人独有的清新气息出席重要约会……现在的精英男士们就算曾经沧海，也要给自己一份阳光微笑……            </div>
+            <p align="left" class="text">&nbsp;</p>
+          </li>
+          <li>
+            <div class="public/special/20120928">
+              <div align="left"><img src="public/special/20120928/t1.jpg" width="300" height="300" /></div>
+            </div>
+            <p align="center"><strong>具备绅士仪态</strong><strong> </strong></p>
+            <div align="left">能给人至深印象的，除了昂贵华服外，就是他的一举一动：就餐会为她拉开椅子、坐车会为她打开车门、下雨会为她打伞……言行举止间便能折射出你是否真绅士！            </div>
+            <p align="left" class="text">&nbsp;</p>
+          </li>
+          <li class="li">
+            <div class="public/special/20120928">
+              <div align="left"><img src="public/special/20120928/t3.jpg" width="300" height="300" /></div>
+            </div>
+            <p align="center"><strong>酷爱户外运动</strong><strong> </strong></p>
+            <div align="left">精品男人至少要酷爱一项户外运动，它不仅是你健康身体的砝码，更是一种生活品位的体现：极限运动、攀岩、登山、滑雪、溯溪等等，都能让你的男人味展露无遗。            </div>
+            <p align="left" class="text">&nbsp;</p>
+          </li>
+        </ul>
+        <div class="hei1"></div>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle"><strong>干性皮肤：为他选择酸性清洁用品</strong></div>
+        <div class="slogan">此类皮肤无光泽，细微的皱纹较多，表面可见鳞片状皮屑，遇冷、热刺激时，容易发红，油脂分泌少，干涩、粗糙。保养方法是经常做面部按摩，改善局部血液循环；选用酸性清洁用品，并在洁面后，使用富含营养成分的油脂类护肤膏保养护肤。同时少吸烟，每天保持充足的睡眠；多食富含高蛋白及微量元素的食品。</div>
+        <div class="navList02 box-hide">
+          <div class="left_focus">
+            <div class="focus"> <img src="public/special/20120928/t4.jpg" width="250" height="300" />
+              <p align="center"><strong>欧珀莱俊士温和洁面膏</strong><strong> </strong></p>
+              <div align="left">通过细腻柔滑的泡沫清洁肌肤，具有卓越的洗净效果，在保持肌肤滋润的同时，迅速去除多余皮脂、汗渍和角质污垢，是一款可以变焕出清洁润滑肌肤的洁面产品。新成份[活力复合体]配方，可有效改善肌肤防御机能低下和细胞疲劳等肌肤内部问题。
+              </div>
+              <p class="text">&nbsp;</p>
+            </div>
+            <ul class="list">
+              <li><img src="public/special/20120928/t5.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t6.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t7.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t8.jpg" width="185" height="211" /></li>
+            </ul>
+          </div>
+          <div class="right_cont">
+            <p class="title">编辑有话要说：</p>
+            <div class="cont">
+              <div class="imges"><img src="public/special/20120928/tp1.jpg" width="118" height="118" /></div>
+            
+              <p>这是一款比较适合秋冬季节使用的洁面产品，质地很温和，却能够迅速清除汗迹和角质污垢。使用后肌肤没有感觉到紧绷感，非常滋润，测试水分值可以看到由使用前的32.9%上升至55.8%，补水效果非常明显。虽然泡沫量不算特别多，但尤其柔软，清淡的味道很怡人！配合其配套的控油爽肤水以及滋润凝乳一起使用效果更好哦，干净的肌肤，补充水分和锁住水分，再干燥的气候也不怕！</p>
+              <p>&nbsp;</p>
+            </div>
+            <div class="foot_img"> <img src="public/special/20120928/t9.jpg" width="285" height="170" /> </div>
+          </div>
+        </div>
+        <div class="hei1"></div>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle"><strong>油性肌肤：每日早晚必须认真做好清洁</strong></div>
+        <div class="slogan">此类肌肤皮脂分泌丰富，易受污染，对细菌的抵抗力较弱。若不注意清洁护理，易生粉刺、痘痘，皮肤变得粗糙。保养方法是每日至少早晚2次，先用清洁力强的男士专用洗面产品清洁脸部，后用滴入少量(几滴便可)白醋的温热水洗净，并用脱脂棉蘸适量化妆水轻轻拍打面部。同时使用男士专用乳液护肤，严格控制咖啡、烟、酒的摄入量。</div>
+        <div class="navList02 box-hide">
+          <div class="left_focus">
+            <div class="focus"> <img src="public/special/20120928/t10.jpg" width="250" height="300" />
+              <p align="center"><strong>朗仕</strong><strong> LAB</strong><strong>男用多功能洁面乳</strong><strong> </strong></p>
+              <div align="left">洁净泡沫温和去除老死角质及表面污垢，令皮肤回复洁净、健康，更见年轻。可溶解过多油脂，疏通堵塞的毛孔。净化柔珠可去除老化角质与污垢，改善暗沉肤色。滋养与调理肌肤，让肌肤做好剃须的准备。当中的舒缓成分有助于镇静皮肤。
+              </div>
+              <p class="text">&nbsp;</p>
+            </div>
+            <ul class="list">
+              <li><img src="public/special/20120928/t11.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t12.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t15.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t13.jpg" width="185" height="211" /></li>
+            </ul>
+          </div>
+          <div class="right_cont">
+            <p class="title">编辑有话要说：</p>
+            <div class="cont">
+              <div class="imges"><img src="public/special/20120928/tp2.jpg" width="118" height="118" /></div>
+            
+              <p>来自高级护肤雅诗兰黛集团的LAB SERIES，是专为男士订制的简约护肤产品，挤出来看到产品质地确实如乳霜，还有亮亮的；推开能感觉到磨砂般的感觉，那就是去角质柔珠。加水轻轻按摩后，薄荷清凉的感觉，但是泡沫没想象中丰富，不过很细腻。做水分值测试，可以看到水分值由未使用前的38.6%上升至53.3%，补水效果也很不错哦。对于油性肌肤非常适合哦。另外，配合男用瞬透保湿凝胶一起使用，能够很好做到水油平衡！</p>
+            </div>
+            <div class="foot_img"> <img src="public/special/20120928/t14.jpg" width="285" height="170" /> </div>
+          </div>
+        </div>
+        <div class="hei1"></div>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle"><strong>中性皮肤：洁面的同时不妨去一下角质</strong></div>
+        <div class="slogan">此类肌肤皮脂分泌通畅，皮肤细腻光滑；受气候的影响，夏天会稍油、冬天稍干，属正常皮肤。所以日常保养方法是夏天注意防晒、冬天防冻，早晚则用男士专用清洁用品洁面，之后用富含营养成分的男士专用护肤品护肤。虽说中性皮肤属正常皮肤，但充足的睡眠和忌食辛辣食品，控制烟酒仍是必要的哦。</div>
+        <div class="navList02 box-hide">
+          <div class="left_focus">
+            <div class="focus"> <img src="public/special/20120928/t16.jpg" width="250" height="300" />
+              <p><strong>艾曦媤男士清透洁面磨砂</strong><strong> </strong></p>
+              <div align="left">肉桂提取物控油、抗菌，预防粉刺；柔珠弹性颗粒圆润均匀，去除老化过厚角质，畅通毛孔，温和不伤皮肤。是一款具洁面效果的去角质产品，温和的磨砂微粒配合植物精华深层净化肌肤，溶解老化角质及顽固污垢，改善粗糙晦暗的肌肤状态。
+              </div>
+              <p class="text">&nbsp;</p>
+            </div>
+            <ul class="list">
+              <li><img src="public/special/20120928/t17.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t18.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t20.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t19.jpg" width="185" height="211" /></li>
+            </ul>
+          </div>
+          <div class="right_cont">
+            <p class="title">编辑有话要说：</p>
+            <div class="cont">
+              <div class="imges"><img src="public/special/20120928/tp3.jpg" width="118" height="118" /></div>
+        
+              <p>纯白乳状磨砂质地洁面产品，加入清水揉出泡沫量很丰富，打在脸上很温和。具备洁面和去角质功效，肌肤深层的顽固污垢都被洗掉了，洗后皮肤明显感到清爽，无厚重感。对于油性、毛孔粗大，易痘的肤质非常适合，是一款比较清透的洁面磨砂产品。不过，秋冬季节干燥多变的气候，肌肤也格外脆弱，其实并不是特别适合做强力的去角质护理哦，不过日常的温和去角质还是可以的，而次数也不应过于频繁，每周两次即可。</p>
+            </div>
+            <div class="foot_img"> <img src="public/special/20120928/t21.jpg" width="285" height="170" /> </div>
+          </div>
+        </div>
+        <div class="hei1"></div>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle"><strong>过敏性皮肤：温和洁面，并补充能量</strong></div>
+        <div class="slogan">此类皮肤易对紫外线、化妆品、药品、化学制剂和化纤衣物过敏。过敏时，皮肤出现红肿、发痒、脱皮、丘疹，严重的还会引起严重的皮肤炎症。 所以护理要格外的用心哦，在未确定过敏源的情况下，最好别接触海鲜、花粉、长毛宠物、化纤衣物、杀虫剂，不要随便服用兴奋剂、镇静剂、减肥药、泻药以及未经试用的化妆品。早晚净面和护肤时，应选用含有营养成分、性质柔和的男士洁面用品和护肤品。</div>
+        <div class="navList02 box-hide">
+          <div class="left_focus">
+            <div class="focus"> <img src="public/special/20120928/t22.jpg" width="250" height="300" />
+              <p align="center"><strong>锐度男士</strong><strong>3+</strong><strong>矿石能量洁面乳</strong><strong> </strong></p>
+              <div align="left">一款能彻底清洁，不干涩的滋润感完美结合的洁面产品，内涵三种天然液态矿石赤铁矿、菱锰矿、橄榄石，能提升肌肤活力，洗走肌肤倦容。而含VE/VC衍生物及黄瓜提取物，可有效收敛肌肤，提亮肤色。
+              </div>
+              <p class="text">&nbsp;</p>
+            </div>
+            <ul class="list">
+              <li><img src="public/special/20120928/t23.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t24.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t26.jpg" width="185" height="210" /></li>
+              <li><img src="public/special/20120928/t25.jpg" width="185" height="210" /></li>
+            </ul>
+          </div>
+          <div class="right_cont">
+            <p class="title">编辑有话要说：</p>
+            <div class="cont">
+              <div class="imges"><img src="public/special/20120928/tp4.jpg" width="118" height="118" /></div>
+              <p>&nbsp;</p>
+              <p>为肌肤增加能量！轻柔的纯白色乳状质地，加入清水轻轻摩擦即能揉出大量的细腻柔和的泡沫，用后感觉肌肤被彻底洗干净，所有的油脂、污物一扫而空，厚重感卸掉，倦容消失，肌肤变得光滑，能量体现在脸上！做水分值测试，可以看见水分值由使用前的35.5%上升至62.8%，补水效果非常明显，对于亟需补水的秋冬季节来说，尤其适合，而其温和的质地，即使是敏感肌肤也不怕哦。清淡的香味，和净爽的肌肤，人也变得格外好心情！</p>
+            </div>
+            <div class="foot_img"> <img src="public/special/20120928/t27.jpg" width="285" height="170" /> </div>
+          </div>
+        </div>
+        <div class="hei1"></div>
+      </div>
+      <div class="NavBox">
+        <div class="topTitle"><strong>帅男升级：体面帅气的穿着</strong></div>
+        <div class="slogan">正所谓人靠衣装，很多时候你在银幕上看到的那些美型男之所以那么的有型有款，很大原因就是他们的装扮非常有范儿！所以，Lolitagirls如果也想让心爱的他真正成为一位有型有款的完美体面型男，除了体贴他的“面子”外，他的穿着也要下功夫哦~活力运动风、英伦绅士风、成熟稳重风……为他帅气转型~ </div>
+        <ul class="navList01 box-hide">
+          <li>
+            <div class="public/special/20120928"><img src="public/special/20120928/t28.jpg" width="300" height="300" /></div>
+            <p class="text">红黑格子衫+黑色针织衫+蓝色磨破牛仔裤+复古系皮鞋，墨镜、手提包，帅气！就这样牵着他的手一起去郊游吧，保证羡煞旁人！</p>
+          </li>
+          <li>
+            <div class="public/special/20120928"><img src="public/special/20120928/t29.jpg" width="300" height="300" /></div>
+            <p class="text">高领马甲+条纹西装+条纹西裤，叠穿一个马甲，更加层次感，再配以黑色手提包，商务男士风潮帅到爆！话说，穿黑色的男银最有魅力有木有！</p>
+          </li>
+          <li class="li">
+            <div class="public/special/20120928"><img src="public/special/20120928/t30.jpg" width="300" height="300" /></div>
+            <p class="text">蓝色衬衫MIX休闲短裤和马丁靴，亮色的袜子和鞋带让造型活泼。话说，不羁的男人总是能轻易的就让女人倾心啊，那不羁的眼神，不羁的装束，帅中还有点痞~<strong> </strong></p>
+          </li>
+        </ul>
+        <div class="hei1"></div>
+      </div>
+      <div class="foot_title"> <span>小编寄语：</span>&nbsp;如果你对LOLITABOX有好的建议或个人独家Tips，小编随时欢迎Lolitagirls新浪微博私信投稿！持续关注LOLITABOX也许下一秒幸运就会悄悄降临哦！每期盒子惊喜不断，保证让你尖叫不停！ </div>
+    </div>
+  </div>
+<include file="public:footer.inc" />

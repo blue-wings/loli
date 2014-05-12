@@ -1,0 +1,76 @@
+<script>
+
+	function previewimg(file,size){
+	    var imgsrc;
+	    var preview_pic=api.content.document.getElementById("preview_pic");
+		if (file.files && file.files[0])
+		{
+			var reader = new FileReader();
+			reader.onload = function(evt){
+				preview_pic.innerHTML="<img id='divhead' src='"+evt.target.result+"' onload='aa("+size.width+","+size.height+")'>";
+			  
+			}
+			reader.readAsDataURL(file.files[0]);
+		/*	api.content.document.getElementById("divhead").onload=function(){
+					if(size){
+								 var imgobj=api.content.document.getElementById("divhead");
+					             checkimg(imgobj.width,imgobj.height,size);
+					 }
+
+			}
+	 	*/
+			
+		}
+		else
+		{
+		 /*   file.select();
+			imgsrc= api.content.document.selection.createRange().text;
+			var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="'+imgsrc+'\"';
+			preview_pic.innerHTML="<div id='divhead'></div>";
+			var imgobj=api.content.document.getElementById("divhead");
+            imgobj.style=sFilter;
+            imgobj.width="100px";
+            imgobj.height="100px";
+            var img=new Image();
+            img.src=imgsrc;
+            alert(img.height);
+    		alert(imgobj.width);
+			alert(imgobj.height);
+			if(size){
+				 checkimg(imgobj.width,imgobj.height,size);
+				 
+			}
+		  */
+		   alert("浏览器不支持,请使用谷歌、火弧、360极速浏览器");
+		}
+	}
+    
+
+</script>
+<script>
+	 function uploadPic(name,size){
+		 api=$.dialog({
+			  id:'L1360',
+			  width:'500px',
+			  height:'400px',
+			  title:"上传图片",
+			  content:"url:__URL__/uploadPic ",  
+			  data:name,
+			  lock:true,
+			  init:function(){
+				 var obj=this.content.document.getElementsByName("photoname")[0];
+				 if(obj == undefined)
+					 return false;
+				 obj.onchange=function(){
+				    	previewimg(this,size);
+			     }
+				 if(size) {
+					this.content.document.getElementById("submit_pic").disabled=true;
+                    
+				 }
+			  }
+		  })
+		  
+	  }
+		
+</script>

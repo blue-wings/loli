@@ -1,0 +1,74 @@
+<include file="public:header.inc" />
+<!--分页--start-->
+<div class="fm1020 top_guide">
+	所在位置：<a href="/">网站首页</a> > <a href="<{:u('home/index')}>">个人主页</a> > <span class="g9">试用订单</span></a>
+</div>
+<!--分页--end-->
+
+<!--个人中心--内容--start-------->
+<div class="fm1020_b cfl">
+	<!--左侧导航--->
+<include file="left.inc" />
+	
+	<!--右侧-内容-->
+	<div class="f738 r wp738">
+		<!--分享详情页内容-->
+		<div class="hd">
+			<div class="tit_hd_tab l">
+				<span class="tit_hd_con "><a href="<{:u('home/boxorder')}>">萝莉盒订单(<{$datanum['ordernum']}>)</a></span>
+				<span class="tit_hd_con select hd_ft"><a href="<{:u('home/tryorder')}>">试用订单(<{$datanum['trynum']}>)</a></span>
+			</div>
+		
+		</div>
+		<div class="main My_details_wrap">
+			<div class="pl_content_orders">
+			
+				<!----内容--->
+				<i class="hei1"></i>
+				<div class="send_title">
+					<p class="title">小萝莉温馨提示：</p>
+<p>收到产品后记得回来分享试用感受哦，而且分享被加精后就能获得10积分！
+   <a href="<{:u('info/lolitabox',array('aid'=>1235))}>" target="_blank">如何获得更多积分？</a>      <a href="<{:u('info/lolitabox',array('aid'=>1237))}>" target="_blank">积分试用常见问题？</a>     <a href="<{:u('info/lolitabox',array('aid'=>1273))}>" target="_blank">什么样的试用分享会被加精？</a></p>
+<p>小贴士：给你的试用产品拍上美美的照片，给你的分享理由捆绑上诚意，小萝莉才会真的喜欢呢！</p>
+				</div>
+				
+				<div class="W_order_wrap">
+					<div class="send_title_tab">
+						<p><a href="javascript:void(0)"  <eq name="state" value="1">class="select try_select"<else />class="try_select"</eq> onclick="get_try_state(1)" id="try_list_1">已支付订单(<{$datanum['trynum_y']}>)</a><a href="javascript:void(0)"  <eq name="state" value="2">class="select try_select"<else />class="try_select"</eq> onclick="get_try_state(2)" id="try_list_2">未支付订单(<{$datanum['trynum_n']}>)</a></p>
+					</div>
+				</div>
+				
+				<div id="ajax_content"><include file="tryorder_ajaxlist" /></div>
+				
+				<em class="hei1"></em>
+
+			</div>
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+
+	<script>
+	function get_try_state(state){
+		$(".try_select").removeClass("select");
+		var id="try_list_"+state;
+		$("#"+id).addClass("select");
+		$.ajax({
+			url: "__SELF__",
+			dataType: "html",
+			type: "get",
+			cache: false,
+			async:true,
+			data:"state="+state,
+			success: function(html){
+				$("#ajax_content").html(html);
+				return false;
+			}
+		});
+			return false;
+	}	
+	</script>
+
+<!--个人中心--内容--end-------->
+
+<include file="public:footer.inc" />

@@ -1,0 +1,86 @@
+<include file="public:header.inc" />
+<!--分页--start-->
+<div class="fm1020 top_guide">
+	所在位置：<a href="/">网站首页</a> > <a href="<{:u('home/index')}>">个人主页</a> > <span class="g9">我的帐户</span></a>
+</div>
+<!--分页--end-->
+
+<!--个人中心--内容--start-------->
+<div class="fm1020_b cfl">
+	<!--左侧导航--->
+<include file="left.inc" />
+	
+	<!--右侧-内容-->
+	<div class="f738 r wp738">
+		<!--分享详情页内容-->
+		
+		<include file="info.inc" />
+		
+		<div class="main My_details_wrap">
+			<div class="pl_content_orders">
+				<!----内容--->
+				<i class="hei1 mb16"></i>
+				<!---账号绑定--->
+				<div class="account_bin_W">
+					<div class="account_bin">
+						<ul class="content">
+							<li>绑定账号可以将您的美妆心得、购物乐趣分享给更多的朋友哦！</li>
+							<li>首次绑定还能获得50积分哦，当然解绑也是会扣除相应积分的哦，只要积分累积到一定数量就可以</li>
+							<li>兑换产品进行试用啦，还在等什么，赶紧绑定吧！</li>
+						</ul>
+						
+						<div class="account_main">
+							<dl class="account_main_con cfl">
+								<dt><b class="account_W acc_sinaW"></b></dt>
+								<dd>
+									<if condition="$return[bound][sina] eq 1">
+										<p class="user_name">您已绑定新浪微博：</p>
+										<p>
+											<a class="W_pin_grey">已绑定</a>
+											<a href="<{:u('user/sina_unlock')}>" class="A_line2">取消绑定</a>
+										</p>	
+									<else />	
+										<p class="user_name">绑定新浪微博：</p>
+										<p>
+												<a href="<{:u('user/sina_lock')}>?returnurl=<{$return[returnurl]}>" class="W_pin_b">立即绑定</a>
+										</p>
+									</if>	
+								</dd>
+							</dl>
+							
+							<dl class="account_main_con cfl">
+								<dt><b class="account_W acc_qqW"></b></dt>
+								<dd>
+									
+									<if condition="$return[bound][qq] eq 1">
+										<p class="user_name">您已绑定QQ号码：</p>
+										<p>
+											<a class="W_pin_grey">已绑定</a>
+											<a href="<{:u('user/qq_unlock')}>" class="A_line2">取消绑定</a>
+										</p>	
+									<else />	
+										<p class="user_name">绑定QQ号码：</p>
+										<p>
+												<a href="<{:u('user/qq_lock')}>?returnurl=<{$return[returnurl]}>" class="W_pin_b">立即绑定</a>
+										</p>
+									</if>										
+									
+									
+								</dd>
+							</dl>
+						</div>
+
+					</div>
+				
+				</div>
+				
+				<i class="hei1"></i>
+			</div>
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+
+<!--个人中心--内容--end-------->
+
+<include file="public:footer.inc" />

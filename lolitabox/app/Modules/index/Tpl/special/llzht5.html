@@ -1,0 +1,178 @@
+<include file="public:header.inc" />
+
+<style type="text/css">
+body {text-align: center; margin:0; color:#333; padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif; background-color:#000;}
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p{margin: 0; padding: 0; border: 0}
+a {color:#000; text-decoration:none;}
+a:hover {color: #000; text-decoration:underline} 
+font{font-size:14px}
+b{color:#fff}
+/*公有*/
+.left {float:left}
+.zt_red{color:#df3f69;}
+.zt_write{color:#fff;}
+.right {float:right}
+.zt_glTitle{height:22px; line-height:22px; color:#fff; padding-bottom:16px;}
+.zt_glTitle span{font-size:16px; line-height:18px; color:#333;}
+
+.Block01{width:1076px; height:499px; position:relative; margin:0 auto; text-align:left;} .Block01 .bg{height:499px; overflow:hidden;} .Block01 .tt1{ position:absolute; left: 11px; top: 326px; color: #fff; width: 581px; height: 65px; line-height: 20px; } .Block02{width:1076px; height:503px; position:relative; margin:0 auto; text-align:left;} .Block02 .bg{height:503px; overflow:hidden;} .Block02 .tt1{ position:absolute; left: 41px; top: 10px; color: #fff; width: 1006px; height: 42px; } .Block03{width:1076px; height:570px; position:relative; margin:0 auto; text-align:left;} .Block03 .bg{height:570px; overflow:hidden;} .Block03 .tt1{ position:absolute; left: 48px; top: 40px; line-height: 17px; } .Block03 .tt2{ position:absolute; left: 403px; top: 40px; line-height: 17px; } .Block03 .tt3{ position:absolute; left: 751px; top: 40px; line-height: 17px; } .Block03 .tt4{ position:absolute; left: 410px; top: 246px; width: 636px; height: 79px; } .Block03 .tt5{ position:absolute; left: 425px; top: 498px; width: 172px; height: 36px; } .Block03 .tt6{ position:absolute; left: 642px; top: 497px; width: 171px; height: 39px; } .Block03 .tt7{ position:absolute; left: 857px; top: 498px; width: 174px; height: 37px; } .Block04{width:1076px; height:423px; position:relative; margin:0 auto; text-align:left;} .Block04 .bg{height:423px; overflow:hidden;} .Block04 .tt1{ position:absolute; left: 33px; top: 62px; width: 629px; height: 76px; } .Block04 .tt2{ position:absolute; left: 48px; top: 312px; width: 169px; height: 41px; } .Block04 .tt3{ position:absolute; left: 261px; top: 312px; width: 174px; height: 37px; } .Block04 .tt4{ position:absolute; left: 481px; top: 312px; width: 174px; height: 40px; } .Block05{width:1076px; height:480px; position:relative; margin:0 auto; text-align:left;} .Block05 .bg{height:480px; overflow:hidden;} .Block05 .tt1{ position:absolute; left: 409px; top: 13px; width: 636px; height: 79px; } .Block05 .tt2{ position:absolute; left: 425px; top: 262px; width: 171px; height: 39px; } .Block05 .tt3{ position:absolute; left: 640px; top: 262px; width: 172px; height: 39px; } .Block05 .tt4{ position:absolute; left: 859px; top: 263px; width: 171px; height: 38px; } .Block05 .tt5{ position:absolute; left: 49px; top: 423px; color: #fff; width: 964px; height: 38px; } .Block06{width:1076px; height:474px; position:relative; margin:0 auto; text-align:left;} .Block06 .bg{height:474px; overflow:hidden;} .Block06 .tt1{ position:absolute; left: 49px; top: 354px; width: 198px; height: 38px; } .Block06 .tt2{ position:absolute; left: 309px; top: 354px; width: 199px; height: 39px; } .Block06 .tt3{ position:absolute; left: 572px; top: 354px; width: 200px; height: 39px; } .Block06 .tt4{ position:absolute; left: 834px; top: 354px; width: 204px; height: 39px; } .Block07 p{text-align:center; font-weight:bold; height:28px; line-height:28px;} .Block07{width:1076px; height:448px; position:relative; margin:0 auto; text-align:left;} .Block07 .bg{height:448px; overflow:hidden;} .Block07 .tt1{ position:absolute; left: 41px; top: 10px; width: 466px; height: 67px; } .Block07 .tt2{ position:absolute; left: 579px; top: 10px; width: 465px; height: 65px; } .Block07 .tt3{ position:absolute; left: 40px; top: 111px; width: 464px; height: 68px; } .Block07 .tt4{ position:absolute; left: 577px; top: 111px; width: 466px; height: 73px; } .Block07 .tt5{ position:absolute; left: 39px; top: 215px; width: 467px; height: 67px; } .Block07 .tt6{ position:absolute; left: 577px; top: 216px; width: 463px; height: 66px; } .Block07 .tt7{ position:absolute; left: 48px; top: 386px; color: #fff; width: 971px; height: 40px; } .Block08{width:1076px; height:366px; position:relative; margin:0 auto; text-align:left;} .Block08 .bg{height:366px; overflow:hidden;} .Block08 .tt1{ position:absolute; left: 27px; top: 284px; width: 324px; height: 74px; } .Block08 .tt2{ position:absolute; left: 380px; top: 283px; width: 285px; height: 74px; } .Block08 .tt3{ position:absolute; left: 738px; top: 284px; width: 308px; height: 74px; } .Block09{width:1076px; height:446px; position:relative; margin:0 auto; text-align:left;} .Block09 .bg{height:446px; overflow:hidden;} .Block09 .tt1{ position:absolute; left: 28px; top: 292px; width: 286px; height: 76px; } .Block09 .tt2{ position:absolute; left: 384px; top: 292px; width: 299px; height: 79px; } .Block09 .tt3{ position:absolute; left: 740px; top: 293px; width: 308px; height: 80px; } .Block10{width:1076px; height:334px; position:relative; margin:0 auto; text-align:left;} .Block10 .bg{height:334px; overflow:hidden;} .Block10 .tt1{ position:absolute; left: 47px; top: 14px; width: 971px; height: 38px; } .Block10 .tt2{ position:absolute; left: 96px; top: 303px; } .Block10 .tt3{ position:absolute; left: 448px; top: 303px; width: 186px; } .Block10 .tt4{ position:absolute; left: 820px; top: 302px; width: 161px; height: 22px; } .Block11{width:1076px; height:507px; position:relative; margin:0 auto; text-align:left;} .Block11 .bg{height:507px; overflow:hidden;} .Block11 .tt1{ position:absolute; left: 187px; top: 354px; width: 172px; height: 22px; } .Block11 .tt2{ position:absolute; left: 725px; top: 355px; width: 172px; height: 23px; } .Block11 .tt3{ position:absolute; left: 15px; top: 403px; color: #de7b95; width: 1050px; height: 37px; } .Block11 .tt4{ position:absolute; left: 29px; width: 1019px; top: 457px; height: 37px; } 
+.bgs{background:#000 url(public/special/20121109/bg.jpg) center top no-repeat; font-size:14px; line-height:18px; margin-top:56px;}
+
+</style>
+<script>
+$(function(){
+	$("body").css("background","#000");
+})
+
+</script>
+</head>
+
+<body >
+<div class="bgs">
+<div class="Block01"> <div class="bg"><img src="public/special/20121109/bg_01.jpg" width="1076" height="499" /></div>
+    <div class="tt1">今年的光棍节又到了，你还在急着"脱光"？其实单身本身并不可怕，对单身的焦虑才是烦恼之
+源。所以不要急，化个漂亮的妆，穿上最得瑟的服饰，去shopping，去看电影，去旅行……一个
+人的生活也可以很阳光灿烂哟！ </div>
+</div>
+<div class="Block02"> <div class="bg"><img src="public/special/20121109/bg_02.jpg" width="1076" height="503" border="0" usemap="#Map" />
+      <map name="Map" id="Map"><area shape="rect" coords="722,74,1063,501" href="<{:u('space/blog_detail',array('blogid'=>1234,'id'=>2375))}>" target="_blank" alt=" " /><area shape="rect" coords="368,72,709,499" href="<{:u('space/blog_detail',array('blogid'=>1234,'id'=>2375))}>" target="_blank" alt=" " />
+        <area shape="rect" coords="15,74,356,501" href="<{:u('space/blog_detail',array('blogid'=>1234,'id'=>2375))}>" target="_blank" alt=" " />
+      </map> </div>
+    <div class="tt1">美丽，不是为了别人，而是让自己时刻都自信满满的资本！单身又如何？穿上自己最爱的衣裳，画个自己一直想尝试的新妆，打造一个最能展示魅力的形象，
+就这样潇洒着招摇过市吧！或许，还会有那么个可能，某个他因此对你一见钟情了呢！</div>
+</div>
+<div class="Block03"> <div class="bg"><img src="public/special/20121109/bg_03.jpg" width="1076" height="570" border="0" usemap="#Map2" />
+      <map name="Map2" id="Map2"><area shape="rect" coords="838,335,1046,474" href="  <{:u('space/blog_detail',array('blogid'=>198,'id'=>2245))}>" target="_blank" alt=" " /><area shape="rect" coords="623,335,831,474" href="<{:u('space/blog_detail',array('blogid'=>198,'id'=>2245))}>" target="_blank" alt=" " /><area shape="rect" coords="406,336,614,475" href="<{:u('space/blog_detail',array('blogid'=>198,'id'=>2245))}>" target="_blank" alt=" " />
+        <area shape="rect" coords="28,219,383,563" href="<{:u('space/blog_detail',array('blogid'=>198,'id'=>2245))}>" target="_blank" alt=" " />
+      </map> </div>
+  <div class="tt1">面妆：白皙的无瑕底妆，自然而清新<br />
+眼妆：大地系眼影，眼睛清澈有神<br />
+唇妆：淡淡的粉唇，微笑起来最甜美<br />
+发型：简单的斜编发和针织发带，调皮感十足。<br /><br />
+<span class="zt_red">想要好心情就是这么简单！</span></div>
+  <div class="tt2">面妆：精致的妆容打上高光，立体且明亮<br />
+眼妆：黑色眼影，别致的下眼线，眼神魅惑<br />
+唇妆：白皙的脸色上复古的红唇有如烈火<br />
+发型：高高束起的马尾，个性十足，更显自信。<br /><br />
+<span class="zt_red">带点性感，更多的是个性十足！</span></div>
+    <div class="tt3">面妆：毫无瑕疵的底妆上淡施胭脂，彰显好气色<br />
+眼妆：深邃的眼线和卷翘的睫毛让眼睛犀利有神<br />
+唇妆：暗红色唇妆，不张扬却自然流露出霸气<br />
+发型：干练中自有一种女性独有的气场。<br /><br />
+<span class="zt_red">女王，就是要营造高不可攀的霸气！</span></div>
+    <div class="tt4">
+      <p class="zt_glTitle"><span>summer小洋子：　</span>卖萌大儿童，中了橘色的毒</p>越长大越孤单，越长大越是怀念小时候的美好。最近流行装嫩，我也想来尝试下新感觉，加上最近我可
+是中了橘色的毒啊，就一起来得瑟一把，变身卖萌大儿童！</div>
+  <div class="tt5">巴黎的粉底液52号非常自然白皙，夏天用很是轻薄…</div>
+  <div class="tt6">尾部是比较上翘的，能够使眼睛看上去显得更圆更大…</div>
+  <div class="tt7">亮丽出挑很有夏天的灵动感同时也非常适合我的肤色…</div>
+</div>
+<div class="Block04">
+	<div class="bg"><img src="public/special/20121109/bg_04.jpg" width="1076" height="423" border="0" usemap="#Map3" />
+      <map name="Map3" id="Map3"><area shape="rect" coords="25,148,236,291" href="<{:u('space/blog_detail',array('blogid'=>43,'id'=>2227))}>" target="_blank" alt=" " /><area shape="rect" coords="244,150,455,293" href="<{:u('space/blog_detail',array('blogid'=>43,'id'=>2227))}>" target="_blank" alt=" " /><area shape="rect" coords="458,148,669,291" href="<{:u('space/blog_detail',array('blogid'=>43,'id'=>2227))}>" target="_blank" alt=" " />
+        <area shape="rect" coords="691,35,1048,385" href="<{:u('space/blog_detail',array('blogid'=>43,'id'=>2227))}>" target="_blank" alt=" " />
+      </map>
+	</div>
+    <div class="tt1"><p class="zt_glTitle"><span>周小晨：</span>　卖萌少女变身性感女军官</p>因为我是大圆脸~所以一直妆容都以卖萌为主~这次偶也挑战一回性感军装范儿~嘎嘎~上一张妆前妆后
+对比图~</div>
+  <div class="tt2">用刷子从中心往外刷~正面看很无暇侧面觉得妆不浓...</div>
+  <div class="tt3">33字形修颜让脸显小，还能看起来很有立体感…</div>
+  <div class="tt4">先进行打底，营造欧式眼，加深眼窝处和双眼皮缝处…</div>
+</div>
+<div class="Block05">
+	<div class="bg"><img src="public/special/20121109/bg_05.jpg" width="1076" height="480" border="0" usemap="#Map4" />
+      <map name="Map4" id="Map4"><area shape="rect" coords="838,100,1047,239" href="<{:u('space/blog_detail',array('blogid'=>908,'id'=>2217))}>" target="_blank" alt=" " /><area shape="rect" coords="622,101,831,240" href="<{:u('space/blog_detail',array('blogid'=>908,'id'=>2217))}>" target="_blank" alt=" " /><area shape="rect" coords="406,100,615,239" href="<{:u('space/blog_detail',array('blogid'=>908,'id'=>2217))}>" target="_blank" alt=" " />
+        <area shape="rect" coords="29,4,384,319" href="<{:u('space/blog_detail',array('blogid'=>908,'id'=>2217))}>" target="_blank" alt=" " />
+      </map>
+	</div>
+    <div class="tt1">
+      <p class="zt_glTitle"><span>草莓小玩子：　</span>颠覆了！变身职场女王</p>带有气场的职场妆容，可以是boss。也可以是主管。也可以是小文职。成熟中带有小性感，稳重又不失
+优雅。</div>
+  <div class="tt2">这次打造的是职场妆，选的是美宝莲的五钻蓝色…</div>
+  <div class="tt3">带有微微的橘色，没有正红来得张扬但是看上去舒服…</div>
+  <div class="tt4">在笑肌往太阳穴方向涂抹。达到修饰脸型的目的…</div>
+  <div class="tt5">不管我是单身还是已婚，这天都是自己的shopping节。不过，对于各类电商来说，双十一更是个给力促销的日子，各类优惠各种广告，跟着节日疯狂的你，
+也要精明一把，既要Buy的开心，也要败的有价值！</div>
+</div>
+<div class="Block06">
+	<div class="bg"><img src="public/special/20121109/bg_06.jpg" width="1076" height="474" border="0" usemap="#Map5" />
+      <map name="Map5" id="Map5"><area shape="rect" coords="807,12,1057,342" href="<{:u('space/blog_detail',array('blogid'=>1235,'id'=>2375))}>" target="_blank" alt=" " /><area shape="rect" coords="545,12,795,342" href="<{:u('space/blog_detail',array('blogid'=>1235,'id'=>2375))}>" target="_blank" alt=" " /><area shape="rect" coords="284,11,534,341" href="<{:u('space/blog_detail',array('blogid'=>1235,'id'=>2375))}>" target="_blank" alt=" " />
+        <area shape="rect" coords="22,10,272,340" href="<{:u('space/blog_detail',array('blogid'=>1235,'id'=>2375))}>" target="_blank" alt=" " />
+      </map>
+	</div>
+  <div class="tt1">不化妆的女人是没有前途的，所以，你是买呢，还是买呢？</div>
+  <div class="tt2">对于女人来说，衣服只有不喜欢和喜欢的区别没有嫌多的道理！</div>
+  <div class="tt3">高跟鞋是女人的权力，也是自信的所在，谁没有N双高跟鞋呢？</div>
+  <div class="tt4">谁说礼物一定要别人送，自己更要送一份礼物给自己犒劳一下。</div>
+</div>
+<div class="Block07">
+	<div class="bg"><img src="public/special/20121109/bg_07.jpg" width="1076" height="448" /></div>
+  <div class="tt1"><p>暗号才是砍价利器</p>可以多关注自己喜欢的网站公告栏部分或者品牌的微博，有时商家在搞活动时会公布一些小暗号，这些能够帮你争取1-10元不等的小折扣。</div>
+  <div class="tt2"><p>有时大店徒有虚名</p>其实大店不一定很好，可以多关注一些新开的小网站，这些网站刚开业为了抬高人气会搞一些优惠活动，服务态度也会比较好。</div>
+  <div class="tt3"><p>帮忙商家晒货</p>购物网站都会有晒货功能，如果买到的宝贝感觉不错时可以来秀一秀，这样也能赚取积分之类的，下次购物就可以抵用。</div>
+  <div class="tt4"><p>好好写点评，二次购物折扣多</p>很多网友在购物后都懒得写评价，认真写下的评价商家是能够看到的，如果写的好的更会有各种不同的奖励哦，例如升级你的身份。</div>
+  <div class="tt5"><p>网购聊天记录要保存好</p>与在线客服沟通时的信息要保存好哟，如果购买的东西不符或者有残缺，这些聊天记录可以帮到你进行退货或讨回公道哟。</div>
+  <div class="tt6"><p>盯紧达人购物单</p>许多网络达人经常会分享自己代购或网购的心得，这时候就能很容易得到最新、最受欢迎产品的信息，也能发现一些好的网购平台。</div>
+  <div class="tt7">好的电影就有这样一种功能，当画面开始上演，你就会跟着剧情大喜大悲，爱恨纠缠，醉生梦死。直至结束也还沉浸于其中久久不能回到现实！作为电影迷的
+单身一族，情情爱爱那些暂时还是别看了，看些绝世好光棍自我治疗一下， 与他们一起快乐往前冲吧！</div>
+</div>
+<div class="Block08">
+	<div class="bg"><img src="public/special/20121109/bg_08.jpg" width="1076" height="366" border="0" usemap="#Map6" />
+      <map name="Map6" id="Map6"><area shape="rect" coords="722,2,1062,245" href="<{:u('space/blog_detail',array('blogid'=>1236,'id'=>2375))}>" target="_blank" alt=" " /><area shape="rect" coords="371,2,711,245" href="<{:u('space/blog_detail',array('blogid'=>1236,'id'=>2375))}>" target="_blank" alt=" " />
+        <area shape="rect" coords="15,0,355,243" href="<{:u('space/blog_detail',array('blogid'=>1236,'id'=>2375))}>" target="_blank" alt=" " />
+      </map>
+	</div>
+  <div class="tt1">经典指数：★★★★★<br />
+关键词：希望<br />
+学习要点：只要心存希望，就算是孑然一身，也能成就一番不平凡的事业！</div>
+  <div class="tt2">经典指数：★★★★☆<br />
+关键词：纯真<br />
+学习要点：不要再怨天尤人了，心态不要太复杂，放轻松享受单身的每一天吧！</div>
+  <div class="tt3">经典指数：★★★★<br />
+关键词：信仰<br />
+学习要点：要坚持自己的信念，不要因为路上的风景而动摇，就算是"光"着又怎样！</div>
+</div>
+<div class="Block09">
+	<div class="bg"><img src="public/special/20121109/bg_09.jpg" width="1076" height="446" border="0" usemap="#Map7" />
+      <map name="Map7" id="Map7"><area shape="rect" coords="724,0,1062,247" href="<{:u('space/blog_detail',array('blogid'=>1236,'id'=>2375))}>" target="_blank" alt=" " /><area shape="rect" coords="370,3,708,250" href="<{:u('space/blog_detail',array('blogid'=>1236,'id'=>2375))}>" target="_blank" alt=" " />
+        <area shape="rect" coords="15,1,353,248" href="<{:u('space/blog_detail',array('blogid'=>1236,'id'=>2375))}>" target="_blank" alt=" " />
+      </map>
+	</div>
+  <div class="tt1">经典指数：★★★<br />
+关键词：激情<br />
+学习要点：你有爱好吗？那就燃烧激情投入进去吧，小宇宙爆发的时刻，很闪亮哟！</div>
+  <div class="tt2">经典指数：★★★☆<br />
+关键词：优雅<br />
+学习要点：就算一辈子都宅在同一个地方，也尽量保持仪态，不要因为打光棍而放弃优雅！</div>
+  <div class="tt3">经典指数：★★★★★<br />
+关键词：坚强<br />
+学习要点：跟罗伯特的处境比起来，打个光棍还能有多惨？！振作起来吧！</div>
+</div>
+<div class="Block10">
+	<div class="bg"><img src="public/special/20121109/bg_10.jpg" width="1076" height="334" border="0" usemap="#Map8" />
+      <map name="Map8" id="Map8"><area shape="rect" coords="723,73,1064,291" href="<{:u('space/blog_detail',array('blogid'=>1237,'id'=>2375))}>" target="_blank" alt=" " /><area shape="rect" coords="370,75,711,293" href="<{:u('space/blog_detail',array('blogid'=>1237,'id'=>2375))}>" target="_blank" alt=" " />
+        <area shape="rect" coords="16,74,357,292" href="<{:u('space/blog_detail',array('blogid'=>1237,'id'=>2375))}>" target="_blank" alt=" " />
+      </map>
+	</div>
+    <div class="tt1">今年的双十一正好是周末，爱好旅行的你们，不妨来个短途游吧，当是放松身心也好，欣赏深秋美景也罢，关键的是，也许，就在那一刻，那一个地方，爱情
+就这样被你邂逅了！</div>
+  <div class="tt2">去看那一片的山峦倒影在水里</div>
+  <div class="tt3">去看那一片无际的大海吹吹风</div>
+  <div class="tt4">去等待那一轮下沉的红日</div>
+</div>
+<div class="Block11">
+	<div class="bg"><img src="public/special/20121109/bg_11.jpg" width="1076" height="507" border="0" usemap="#Map9" />
+      <map name="Map9" id="Map9"><area shape="rect" coords="550,5,1065,342" href="<{:u('space/blog_detail',array('blogid'=>1237,'id'=>2375))}>" target="_blank" alt=" " />
+        <area shape="rect" coords="16,5,531,342" href="<{:u('space/blog_detail',array('blogid'=>1237,'id'=>2375))}>" target="_blank" alt=" " />
+      </map>
+	</div>
+  <div class="tt1">进山的里面感受山的原始美</div>
+  <div class="tt2">去看那一片已经红透的枫叶</div>
+  <div class="tt3">你看，打光棍并没有什么了不起，只要自己"光"并快乐着就好。世界上深陷感情纠葛的痴男怨女那么多，也没有必要非去趟这一趟浑水是吧？我们单身，但我们有理想，有
+修养，我们争做"光棍好榜样"。今年的11月11日，脱不脱光？咱随缘吧！</div>
+  <div class="tt4"><span class="zt_write">小编寄语：</span>萝莉智慧团，Lolitagirls的专属美容护肤智囊团！如果你对LOLITABOX有好的建议或个人独家Tips，小编随时欢迎Lolitagirls新浪微博私信投稿！持续关注
+LOLITABOX也许下一秒幸运就会悄悄降临哦！每期盒子惊喜不断，保证让你尖叫不停！</div>
+</div>
+</div>
+<include file="public:footer.inc" />

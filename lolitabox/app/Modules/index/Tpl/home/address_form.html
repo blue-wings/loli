@@ -1,0 +1,118 @@
+<lt name="return.count"   value="3">
+					<div class="user_info_t  header_address">
+						<span>创建新的收货地址</span>（最多可创建3个）
+					</div>
+				   <form action="__URL__/add_address"  method="post"   class="address_frm">
+					<div class="user_message user_message_reap">
+					    <input type="hidden"  name="id"  id="id"  value="">
+						<dl class="login-dl cfl">
+											
+							<dt class="dt_l"><span class="S_txt1 sText">*</span>收货人姓名：</dt>
+							<dd class="dd_r">
+								<div class="user_phone">
+									<input type="text"   id="linkman"  name="linkman"  nullmsg="收货人姓名不能为空"  dataType="*" />
+									<div class="tips">		
+									    <div class="Validform_checktip"></div>							
+									</div>
+								</div>
+									
+							</dd>
+							
+							<dt class="dt_l"><span class="S_txt1 sText">*</span>手机号：</dt>
+							<dd class="dd_r">
+								<div class="user_phone">
+									<input type="text" maxlength="11"  maxlength="11"  id="telphone"  name="telphone"   nullmsg="手机号不能为空"  dataType="m"  errormsg="手机格式不正确"/>　
+									<div class="tips">									
+									    <div class="Validform_checktip"></div>
+									</div>
+									
+								</div>
+							</dd>
+							
+							<dt class="dt_l"><span class="S_txt1 sText">*</span>所在地：</dt>
+							<dd class="dd_r">
+								<div class="user_select_wrap cfl"    style="float:left" id="myarea">
+										       <select id="s1" class="prov" name="province"  nullmsg="省不能为空"  >
+												</select>
+												<select id="s2" class="city" name="city"  disabled="disabled"   nullmsg="市不能为空"><option  value=''>请选择</option>
+												</select>
+												<select id="s3" class="dist" name="district" disabled="disabled"><option value=''>请选择</option>
+												</select>
+								  <!--<div class="tips"  style="float:left;">									
+									    <div class="Validform_checktip">xx</div>
+									</div>
+									 -->
+								</div>
+								
+							</dd>
+							
+							<dt class="dt_l"><span class="S_txt1 sText">*</span>街道地址：</dt>
+							<dd class="dd_r">
+								<div class="user_phone">
+									<input type="text"  id="address"  name="address"   nullmsg="街道地区不能为空"  dataType="*" >　
+									<div class="tips">									
+									    <div class="Validform_checktip"></div>
+									</div>
+								</div>
+							</dd>
+							
+							<dt class="dt_l"><span class="S_txt1 sText">*</span>邮政编码：</dt>
+							<dd class="dd_r">
+								<div class="user_phone">
+									<input type="text"  id="postcode"  name="postcode"   nullmsg="邮编不能为空"   maxlength="6"  dataType="p"   errormsg="邮编格式不正确" >　
+									<div class="tips">									
+									    <div class="Validform_checktip"></div>
+									</div>
+								</div>
+							</dd>
+							
+							<dt class="dt_l">设为默认：</dt>
+							<dd class="dd_r"><input type="checkbox"   name="type"   id="if_active" value="1" >　</dd>
+							
+						</dl>
+					</div>
+					
+					<div class="user_message_cont">
+						<div class="user_mes">
+						    <input type="submit"   class="W_pin_b14"    id="save_addr"  value="保存">
+						</div>
+					</div>
+					</form>
+					</lt>
+<script type="text/javascript" src="public/area/jquery.cityselect.js"></script>
+<script>
+					set_area('北京市','北京市','东城区');
+					function set_area(prov,city,dist) {
+						if(prov=="" || prov=="请选择") {
+							$("#myarea").citySelect({nodata:"none",required:true});	
+						}
+						else {
+							$("#myarea").citySelect({
+						    	prov:prov, 
+						    	city:city,
+								dist:dist
+							}); 
+						}
+					}
+
+					$(".address_frm").Validform({
+						ajaxPost:true,
+						tiptype:function(msg,o,cssctl){
+							var obj = o.obj.next(".tips").children(".Validform_checktip");
+							cssctl(obj,o.type);
+							obj.html(msg);
+						},
+						callback:function(data){
+							if(data.status=="1"){
+								y_dialog(data.info,3,function(){
+									window.location.href=location.href;
+								},$("#save_addr").get(0))
+							}
+							else {
+								n_dialog(data.info,3,false,$("#save_addr").get(0));
+							}
+							
+						}
+					})
+</script>
+				

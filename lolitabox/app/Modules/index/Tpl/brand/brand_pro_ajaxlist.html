@@ -1,0 +1,25 @@
+           <a style="display:none;"  id="pro_list"></a>
+		<div class="brand_attention_all"  >
+           <gt name="total"  value="0">
+           <ul class="A_b cfl">
+			  <volist name="list"  id="vo">
+				<li>
+					<p class="fabric"><a href="<{$vo.pid|getProductUrl=###}>" target="_blank"><img src="<{$vo.pimg}>" width="135" height="135"  alt="<{$vo.pname}>"/></a></p>
+					<p class="name"><a href="<{$vo.pid|getProductUrl=###}>" target="_blank"><{$vo.pname}></a></p>
+					<p class="brand"><notempty name="vo[goodssize]">正装规格：<{$vo[goodssize]}></notempty>&nbsp;</p>
+					<p class="brand"><notempty name="vo[goodsprice]">正装价格：￥<{$vo[goodsprice]}></notempty>&nbsp;</p>
+				</li>
+			 </volist>
+			</ul>
+			<!---列表---->
+			<div class="W_pages" id="page">
+				<{$page}>
+			</div>
+			<else />
+			    <script>
+			      $(function(){
+			    	    nodata("ajax_content","该品牌下居然还没有产品~~");  
+			      })
+			    </script>
+			</gt>
+	   </div>

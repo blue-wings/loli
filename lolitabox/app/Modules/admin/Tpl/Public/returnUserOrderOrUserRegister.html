@@ -1,0 +1,103 @@
+		<fieldset class="fieldset"><legend>查询</legend>
+
+			<form name="sendDform" action="__ACTION__" onsubmit="return orderNum()">
+				<p>
+					<input checked  type="radio" name="selecttype" id="r1" value="userOrderNum">
+						<label for="r1">用户订单数查询</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="selecttype" id="r2" value="userRegisterNum">
+						<label for="r2">用户注册数查询</label>
+				</p>
+				<p>
+				推广类型:
+				<select name="sendcode" onchange="change(this.value)">
+					<option value="all">全部</option>
+				</select>
+				附加参数：
+				<select name="param" id="param">
+					<option value="all">全部</option>
+				</select>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<span id="dis">
+					申请时间: 
+					<label for="from">From</label>
+					<input type="text" id="from" name="from" value=""/>
+					<label for="to">to</label>
+					<input type="text" id="to" name="to" value=""/>
+				</span>&nbsp;&nbsp;&nbsp;&nbsp;
+				<br/><br/>
+				<input type="button" name="resetpage" value="重置">
+				<input type='submit' name='search' value=" 查 询 ">
+			</form></p>
+			</p>
+			</fieldset>
+	
+	<script>
+	window.onload=function(){
+		$.ajax({
+			url:"{:U('EdmMarketing/promotion')}",
+			type:"post",
+			dataType:"json",
+			data:'getpromotiondata=123321',
+			success: function(chkresult){
+				if(parseInt(chkresult.status)==1){
+					var data = chkresult.data;
+					if(data != null){
+						for(var i in data){
+							$("select[name='sendcode']").append("<option value='"+data[i].code+"'>"+data[i].name+"</option>");
+						}
+					}
+				}
+			}
+		})
+	}
+
+	function orderNum(){
+		var sendval = decodeURIComponent($("form[name='sendDform']").serialize());
+
+		if(sendval != null){
+			$.ajax({
+				url:"{:U('EdmMarketing/returnPromotionOrderNum')}",
+				type:"post",
+				dataType:"json",
+				data:sendval,
+				success: function(chkresult){
+					if(parseInt(chkresult.status)==1){
+						var tips = '';
+						if($(":radio[name='selecttype'][checked]").val() == 'userOrderNum'){
+							tips = '订单数:';
+						}else{
+							tips = '注册数:';
+						}
+						alert(tips+chkresult.data);
+					}
+				}
+			})
+		}
+		return false;
+	}
+
+	function change(value){
+		if(value != ''){
+			$.ajax({
+				url:"{:U('EdmMarketing/returnPromotionOrderNum')}",
+				type:"post",
+				dataType:"json",
+				data:'changeCode='+value,
+				success: function(chkresult){
+					if(parseInt(chkresult.status)==1){
+						var data = chkresult.data;
+						$("select[name='param'] option:gt(0)").remove();
+						if(data != null){
+							for(var i in data){
+								$("select[name='param']").append("<option value='"+data[i].frominfo+"'>"+data[i].frominfo+"</option>");
+							}
+						}
+					}
+				}
+			})
+		}else{
+			$("select[name='param'] option:gt(0)").remove();
+		}
+	}
+	</script>

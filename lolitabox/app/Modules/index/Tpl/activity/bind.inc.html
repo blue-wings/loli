@@ -1,0 +1,85 @@
+		<ul class="share_custom cfl">
+			<li>
+				<label for="shareto_sina">
+					<input type="checkbox"  id="shareto_sina"   name="shareto_sina"  class="shareto_checksinabox" <if condition="$bind['sina'] eq 1">checked="checked"</if>>
+					<b title="分享到新浪微博" class="i_sina">&nbsp;</b>新浪微博
+				</label>
+			</li>
+			<li>
+				<label for="shareto_qq">
+					<input type="checkbox" id="shareto_qq"    name="shareto_qq"  class="shareto_checkqqbox"  <if condition="$bind['qq'] eq 1">checked="checked"</if> >
+					<b title="分享到腾讯微博" class="i_qqweibo"></b>腾讯微博
+				</label>
+			</li>
+		</ul>
+		<input type="hidden" name="if_sina" id="if_sina" value="<{$bind['sina']}>"/>
+<input type="hidden" name="if_qq" id="if_qq" value="<{$bind['qq']}>"/>
+
+<script>
+function user_ifbind(){
+	$.ajax({
+		url:"<{:u('home/user_if_bind')}>",
+		type:"post",
+		dataType:"json",
+		async:false,
+		success:function(ret){
+			if(parseInt(ret.status)==1){
+					$("#if_sina").val(ret.info.sina);
+					$("#if_qq").val(ret.info.qq);
+			}
+		}
+	})
+}
+
+$(".shareto_checksinabox").click(function(){
+	if(!USER_ID){
+		dialog_login();return false;
+	}
+	if(document.getElementById("shareto_sina").checked==false){
+		$("#if_sina").val(0);
+	}else{
+		user_ifbind();
+		if($("#if_sina").val()!=1){
+			if($("#if_sina").val()==0){
+				window.open("__APP__/user/sina_lock");
+			}else{
+				window.open("__APP__/user/sina_login");
+			}
+			document.getElementById("shareto_sina").checked=false;
+		}
+	}
+})
+
+
+$(".shareto_checkqqbox").click(function(){
+	if(!USER_ID){
+		dialog_login();return false;
+	}
+	if(document.getElementById("shareto_qq").checked==false){
+		$("#if_qq").val(0);
+	}else{
+		user_ifbind();
+		if($("#if_qq").val()!=1){
+			if($("#if_qq").val()==0){
+				window.open("__APP__/user/qq_lock");
+			}else{
+				window.open("__APP__/user/qq_login");
+			}
+			document.getElementById("shareto_qq").checked=false;
+		}
+	}
+})
+
+
+</script>
+
+
+
+
+
+
+
+
+		
+		
+		

@@ -1,0 +1,28 @@
+	<div class="domain_playboxs">
+							<dl class="domain_playboxs_dl">
+								<dt>任务描述：</dt>
+								<dd>晒盒内容被加精即可获得50积分！</dd>
+								<dd>如果被小萝莉推荐到首页还会再得50积分！</dd>
+								<dd>小贴士：记得给你的萝莉盒拍个美照一起传上来哦！把收到盒子的感想、对盒子的评价、对产品的感受通通写出来吧！　<a href="<{:u('info/lolitabox',array('aid'=>1245))}>" target="_blank" class="A_line3">怎样的晒盒容易被加精和推荐？</a>
+								</dd>
+							</dl>
+							<empty name="info.list">
+							<div class="domain_sharebox">
+								<div class="domain_sharebox_not">
+									<p class="domain_sharebox_not_text">
+									 <eq name="info.ordercount" value="1">太棒了，您已经完成了所有的晒盒任务！现在就去看看最新的萝莉盒里有哪些您感兴趣的产品吧~<else/>额，该任务必须成功购买过萝莉盒的用户才能够参与哦，马上去看看有哪些您感兴趣的萝莉盒吧~</eq>
+									</p>
+									<p class="domain_sharebox_not_btn"><a href="<{:u('buy/index')}>"   target="_blank" class="W_pin_b14">查看萝莉盒</a></p>
+								</div>
+							</div>
+							<else/>
+							<div class="domain_sharebox">
+								<div class="domain_sharebox_yes">
+									<h2 class="domain_invite_tit">您曾经成功购买过如下萝莉盒，可以对任意一个发表晒盒哦~</h2>   
+									<div id="ajax_content">
+									<include file="task_8_ajaxlist" />
+									</div>
+								</div>
+							</div>
+							</empty>
+						</div>

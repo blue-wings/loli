@@ -1,0 +1,188 @@
+<include file="public:header.inc" />
+
+<style type="text/css">
+.f36 {
+	font-size:36px;
+	line-height:36px;
+}
+.zt_hd {
+	width:1000px;
+	height:476px;
+	margin:0 auto;
+	background:url(public/special/20130906/bg_01.jpg) no-repeat;
+}
+.zt_main {
+	width:1000px;
+	background-color:#fef7c9;
+	padding-bottom:30px;
+	margin:0 auto;
+}
+.zt_tptext {
+	text-align:center;
+	padding:12px 0 22px;
+	color:#f67754;
+	font-size:18px;
+	line-height:32px;
+	font-weight:bold;
+}
+.zt_tplist {
+	text-align:center;
+	padding-bottom:28px;
+}
+.zt_tplist .list {
+	display:inline-block;
+	width:280px;
+	text-align:center;
+	padding:14px 15px 0 0;
+	height:70px;
+	background:url(public/special/20130906/bg_02.jpg) right top no-repeat;
+	font-size:18px;
+	line-height:24px;
+	color:#ff6941;
+	margin:0 4px;
+}
+.zt_tplist .list:hover {
+	text-decoration:none;
+}
+.zt_tplist .list.select {
+	background-position:0 0;
+	color:#fff;
+}
+.zt_content {
+	width:940px;
+	background:#fff;
+	margin:0 auto;
+}
+.zt_bgs {
+	background:#fdd041 url(public/special/20130906/bgs.jpg) center top no-repeat;
+	padding-bottom:30px;
+}
+.zt_content_list {
+	width:103px;
+	float:left;
+	background-color:#ffcc33;
+	padding:10px 0;
+	border-right:1px dashed #ff6a41;
+	text-align:center;
+	font-size:14px;
+	line-height:18px;
+}
+.zt_content_list.last {
+	width:108px;
+	border-right:0 none;
+}
+.zt_content_wrap {
+	border-top:3px solid #ff6941;
+	padding:118px 0;
+	font-size:18px;
+	text-align:center;
+}
+.zt_content_main {
+	padding:15px;
+}
+.zt_content_l {
+	width:625px;
+	float:left;
+}
+.zt_content_l .zt_flow {
+	height:135px;
+	background-color:#f6f6f6;
+	margin-bottom:15px;
+}
+.zt_content_l .zt_flow_tit {
+	width:75px;
+	text-align:center;
+	height:85px;
+	background-color:#efefef;
+	padding:50px 10px 0;
+	font-size:14px;
+	line-height:20px;
+}
+.zt_content_l .zt_flow_list {
+	width:510px;
+	height:135px;
+	background:url(public/special/20130906/icon04.png) center center no-repeat;
+}
+.zt_content_l .zt_flow_text {
+}
+.zt_content_l .zt_flow_text ul {
+	margin:10px 0;
+	padding:9px 22px;
+	width:218px;
+	line-height:24px;
+}
+.zt_content_l .zt_times {
+	text-align:center;
+	font-size:18px;
+	height:65px;
+	line-height:65px;
+}
+.zt_content_l .zt_times i {
+	font-size:24px;
+	color:#d90c6c;
+	font-style:normal;
+}
+.zt_content_l .zt_showboxs_minute {
+}
+.zt_content_l .zt_showboxs_minute .cont_bg {
+	height:53px;
+	width:532px;
+	font-size:18px;
+	background:url(public/special/20130906/icon05.png) no-repeat;
+	padding:37px 0 0 95px;
+}
+.zt_content_l .zt_showboxs_minute .fabric_list_cont {
+	margin:0 24px;
+}
+.zt_content_l .zt_times span{display:inline-block; width:41px; height:49px; background:url(public/special/20130906/icon03.gif) no-repeat; line-height:49px; text-align:center; font-size:24px; margin:0 4px;}
+
+.zt_content_list.select{background-color:#ff6941}
+.zt_content_list.old{background-color:#f6f6f6;}
+
+</style>
+
+<!--正文--start---->
+<div class="zt_bgs">
+  <div class="zt_hd"></div>
+  <div class="zt_main">
+    <div class="zt_tptext">
+      <p><span class="f36">9</span>月，萝莉盒新版上线，小萝莉热情邀你来玩儿！</p>
+      <p>积分翻倍、限时优惠、12期萝莉盒大奖，惊喜后浪推前浪，一浪更比一浪强！</p>
+      <p>跟小萝莉一起连HIGH三周，包你一年化妆品，准备好了吗？</p>
+    </div>
+    
+    <include file="loliv5.inc" />
+      
+    <div class="zt_content">
+      <div class="cfl">
+      
+      <volist name="return[timelist]" id="vo" key="ikey">
+        <div class="zt_content_list <eq name='vo[day]' value='27'>last</eq> <eq name='vo[state]' value='1'>select</eq><eq name='vo[state]' value='2'>old</eq>">
+          <p>9月<{$vo[day]}>日</p>
+          <p>
+	          <if condition="$vo[state] eq 0">
+	          	13:00开始
+	          <elseif condition="$vo[state] eq 1" />
+	          	进行中
+	          <else />
+	          	已结束
+	          </if>
+          </p>
+        </div>
+       </volist> 
+      </div>
+      
+      
+      <if condition="$return[if_act] eq 1">
+      	<include file="active_part2.inc" />
+      <else />	
+      	  <include file="active_part2_not.inc" />
+      </if>
+      
+
+    </div>
+  </div>
+</div>
+<!--正文--end----> 
+
+<include file="public:footer.inc" />

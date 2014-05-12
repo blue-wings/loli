@@ -1,0 +1,155 @@
+<include file="Public:header" />
+<table width="100%" cellspacing="1" cellpadding="6" border="0" align="center" class="tborder">
+<tbody>
+<tr>
+	<td align="center" class="panelsurround">
+	<div class="panel">
+		<div align="left">
+			
+	<fieldset class="fieldset">
+	<legend>筛选产品</legend>
+	<table cellpadding="0" border="0" align="left">
+	<tbody>
+	<tr>
+	<script> 
+	    $(document).ready(function(){
+			$('#add_list').click(function(){ 
+				var productselected=$('#productlist').children('option:selected');
+				$.each(productselected,function(i,n){
+				    if(n.value) {
+				       if($("#productselected>option[value='"+n.value+"']").val()==n.value)
+				    	    $.dialog.tips("<span style='color:red'>"+n.innerHTML+"</span>己在列表");
+				       else
+					       $("#productselected").append("<option value='"+n.value+"'>"+n.innerHTML+"</option>");
+				    }
+				})
+				calculateProductList(); 
+			});
+
+			$('#del_list').click(function(){
+				deleteSelect();
+			});
+			
+			$('#clearlist').click(function(){
+				$("#productselected").empty();
+				calculateProductList(); 
+			});
+			
+			$("#prevmove").click(function(){
+				var select1 = document.getElementById("productselected");
+				var delIndex=-1;
+				delIndex=select1.options.length-1;
+				 for(var i=2;i<select1.options.length;i++){
+					if(select1.options[i].selected==true){
+						var temp=select1.options[i].value;
+						var innerhtm=select1.options[i].innerHTML;
+						select1.options[i].value=select1.options[i-1].value;
+						select1.options[i].innerHTML=select1.options[i-1].innerHTML;
+						select1.options[i-1].value=temp;
+						select1.options[i-1].innerHTML=innerhtm;
+						select1.options[i-1].selected=true;
+						calculateProductList();
+						break;
+					}
+				 }
+			});
+			$("#nextmove").click(function(){
+				var select1 = document.getElementById("productselected");
+				var delIndex=-1;
+				delIndex=select1.options.length-1;
+				 for(var i=1;i<delIndex;i++){
+					if(select1.options[i].selected==true){
+						var temp=select1.options[i].value;
+						var innerhtm=select1.options[i].innerHTML;
+						select1.options[i].value=select1.options[i+1].value;
+						select1.options[i].innerHTML=select1.options[i+1].innerHTML;
+						select1.options[i+1].value=temp;
+						select1.options[i+1].innerHTML=innerhtm;
+						select1.options[i+1].selected=true;
+						calculateProductList();
+						break;
+					}
+				 }
+			});
+	    })
+	</script> 					
+					
+	<td>
+	<select name="productlist" size="20" multiple="multiple" id="productlist" style="width:expression((this.offsetWidth < 100) ? '100' : ((this.offsetWidth > 300)? '300' : this.offsetWidth))">
+	<option value="">--产品列表--</option>
+		<volist name="brand_productlist" id="vo">
+		 <option value="{$vo['pid']}">{$vo['pname']}</option>
+		</volist>
+	</select>			
+							
+	</td>
+	<td>
+	<button id="add_list" name="addbox">加入</button><br>
+	<button id="del_list" name="delbox">删除</button><br>
+	<button id="clearlist" name="clearbox">清空</button><br>
+	<button id="prevmove" name="prevmove">上移</button><br>
+	<button id="nextmove" name="nextmove">下移</button><br>
+	</td>
+	<td>
+
+	<script>
+	function deleteSelect()
+	{
+		var select1 = document.getElementById("productselected");
+		var delIndex=-1;
+		delIndex=select1.options.length-1;
+		if(delIndex<1){
+			alert("没有可以删除的选项！");
+			return;
+		 }
+		 for(i=0;i<select1.options.length;i++){
+			if(select1.options[i].selected==true){
+				delIndex=i;
+				break;
+			}
+		 }
+		 if(delIndex>=0){
+			select1.remove(delIndex);
+		 }
+		 calculateProductList();
+	}
+	
+	function calculateProductList(){
+		var cids='';
+		var select1 = document.getElementById("productselected");
+		for(i=0;i<select1.options.length;i++){
+			if(select1.options[i].value>0){
+				if(select1.options[i].value>0) {
+					cids+=select1.options[i].value+",";
+				}
+			}
+		}
+		cids=cids.substring(0,cids.length-1);
+		$("#calculateresult").html(cids);
+	}
+	calculateProductList();
+	</script>
+	
+	<select id="productselected" name="productselected" size="20" style="width:expression((this.offsetWidth < 100) ? '100' : ((this.offsetWidth > 300)? '300' : this.offsetWidth))">
+		<option value="0">--已选产品--</option>
+		<volist name="select_productlist" id="catgoryinfo">
+		<option value="{$catgoryinfo['pid']}">{$catgoryinfo['pname']}</option>
+		</volist>
+	</select>
+</td>
+
+<td>
+	<div id='calculateresult' name='calculateresult' style="word-break:break-all; padding: 10px;border: 1px solid #CCCCCC; margin-left:10px; width:150px; height:100px;overflow:fixed"></div>
+</td>
+</tr>			
+
+
+				</tbody>
+				</table>
+			</fieldset>
+			
+		</div>
+	</div>
+	
+</tbody></table>
+<include file="Public:footer" />

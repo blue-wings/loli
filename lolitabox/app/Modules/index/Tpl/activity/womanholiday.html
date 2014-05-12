@@ -1,0 +1,341 @@
+<include file="public:header.inc" />
+<style type="text/css">
+body {text-align: center; margin:0; color:#333; font-size:14px; line-height:24px; padding:0; font-family: '微软雅黑',arial,'YaHei','黑体',Tahoma,Helvetica,arial,sans-serif; background-color:#ff8e8d;}
+ul,ol{list-style:none;}
+div, form, img, ul, ol, li ,p,h4{margin: 0; padding: 0; border: 0}
+a {color:#e22879; text-decoration:none;}
+a:hover {color: #e22879; text-decoration:underline} 
+font{font-size:14px}
+b{color:#fff}
+.red{color:#e22879;}
+/*公有*/
+.left {float:left}
+.right {float:right}
+.gray{color:#5d5d5d;}
+.hei1{height:1px; width:100%; overflow:hidden; clear:both;}
+.f20{font-size:20px; line-height:20px;}
+/*颜色*/
+
+.Block01 {width:1000px; height:619px; background:url(public/special/20130227/bg_01.jpg) no-repeat; position:relative; text-align:left; margin:0 auto;}
+.Block02 {
+	width:1000px;
+	height:780px;
+	background:url(public/special/20130227/bg_02.jpg) no-repeat;
+	position:relative;
+	text-align:left;
+	margin:0 auto;
+}
+.Block03 {width:1000px; height:557px; background:url(public/special/20130227/bg_03.jpg) no-repeat; position:relative; text-align:left; margin:0 auto;}
+.Block04 {width:1000px; height:438px; background:url(public/special/20130227/bg_04.jpg) no-repeat; position:relative; text-align:left; margin:0 auto;}
+.Block04 .bg{height:438px; overflow:hidden;}
+
+.Block02 .tt6{
+	position:absolute;
+	width:615px;
+	height:615px;
+	background:url(public/special/20130227/bg_05.jpg) no-repeat;
+	left: 29px;
+	top: 132px;
+}
+.Block01 .tt1{
+	position:absolute;
+	left: 435px;
+	top: 416px;
+	line-height: 20px;
+	width: 522px;
+	height: 61px;
+}
+.Block02 .tt1{
+	position:absolute;
+	left: 138px;
+	top: 26px;
+	width: 764px;
+	height: 26px;
+	font-size: 16px;
+	text-align: center;
+}
+.Block02 .tt2{
+	position:absolute;
+	left: 777px;
+	top: 143px;
+	font-size: 18px;
+	width: 99px;
+	height: 28px;
+}
+.Block02 .tt3{
+	position:absolute;
+	left: 669px;
+	top: 175px;
+}
+.Block02 .tt4{
+	position:absolute;
+	left: 770px;
+	top: 479px;
+	font-size: 18px;
+}
+.Block02 .tt5{
+	position:absolute;
+	left: 676px;
+	top: 512px;
+	line-height: 21px;
+	height: 213px;
+	width:300px;
+	overflow: hidden;
+}
+.Block02 .tt5 ul{position:relative;}
+.Block02 .tt5 li{line-height:21px; height:21px; overflow:hidden;}
+.Block02 .tt5 p{height:21px; float:left; overflow: hidden;white-space: nowrap; -o-text-overflow: ellipsis; text-overflow: ellipsis; }
+
+
+.Block02 .tt5 p.zt_name{width:90px;  }
+.Block02 .tt5 p.zt_con{width:180px;}
+
+.Block03 .tt1{
+	position:absolute;
+	left: 93px;
+	top: 179px;
+	width: 369px;
+	height: 27px;
+}
+.Block03 .tt2{
+	position:absolute;
+	left: 53px;
+	top: 389px;
+	width: 431px;
+	height: 108px;
+}
+.Block03 .tt2 h3{height:35px; margin:0; padding:0; font-weight:normal; line-height:35px; text-align:center; font-size:18px;}
+.Block03 .tt3{
+	position:absolute;
+	left: 285px;
+	top: 254px;
+}
+.Block03 .tt4{
+	position:absolute;
+	left: 528px;
+	top: 128px;
+	width: 472px;
+	height: 246px;
+}
+
+
+.btns_re{width:120px; height:42px; background:url(public/special/20130227/btn.png) no-repeat; display:block;}
+.btns_re:hover{background-position:0 -46px;}
+
+.Block03 .box_List{
+	width:92px;
+	height:92px;
+	background:url(public/special/20130227/bg04_box.jpg) no-repeat;
+	float:left;
+	padding:5px;
+	margin-right:15px;
+	margin-bottom: 18px;
+}
+.bgs{background:url(public/special/20130227/bgs.jpg) center top no-repeat;}
+</style>
+<script type="text/javascript" src="public/js/showResult.js"></script>
+<div class="bgs">
+<div class="Block01">
+	<div class="tt1">缤纷三月，女人最大。三八女人节来临，LOLITABOX倾情回馈，节日之际为你送上美丽大礼。参与幸运大转盘活动，转出惊喜大礼，38元购买自选萝莉盒、最热单品、超值优惠券……在这里，只要你够幸运，好手气，惊喜好礼任意拿！</div>
+</div>
+<div class="Block02">
+  <div class="tt1">
+	  <if condition="$userinfo neq ''">
+		  亲爱的 <a href="<{:u('home/index')}>" target="_blank"><{$userinfo[nickname]}></a>  您当前剩余积分：<span class="red" id="current_ub"><{$userinfo['score']}></span> 
+	  <else />
+	  	亲爱的Lolitagirl，请您先  <a href="<{:u('user/reglogin')}>" target="_blank">登录</a>  或  <a href="<{:u('user/reglogin')}>" target="_blank">注册</a>
+	  </if>
+	    	<p>在指针没有完全停止时，请不要再次点击转盘，避免重复扣减积分~</p>
+  </div>
+  <div class="tt2">活动规则：</div>
+    <div class="tt3">1、活动时间：2013年3月1——15日<br />
+２、每人每天有5次转盘机会，每次转盘需消<br />
+　　耗38个积分。<br />
+３、转到38元购盒卡的网友，在购买时直接使<br />
+　　用该卡即可仅支付38元购买1个自选萝莉盒。<br />
+４、奖品还包括各种不同面值的优惠券以及最热<br />
+　　单品，拼的全是你的手气哦。<br />
+５、转到的单品实物奖将在2013年3月20日统一<br />
+　　安排邮寄您的默认地址。<br />
+　　（<a href="javascript:void(0)" onclick="set_address(this.id)" id="to_setaddress">点击设置默认地址</a>）<br />
+６、本活动解释权归LOLITABOX所有。</div>
+	<div class="tt4">实时获奖信息</div>
+<div class="tt5" id="guildWrap">
+
+<if condition="$gift_list neq ''">
+    <ul id="guildScorll">
+    <volist name="gift_list" id="vo" >
+        <li>
+	        <p class="zt_name">
+	        	<a href="<{:u("space/$vo[userid]")}>" target="_blank"><{$vo[nickname]}></a>
+	        </p>
+	        <if condition="$vo.gifttype eq 'product'">
+	        	<p class="zt_con">获得了　<a href="<{:u("products/$vo[giftinfo]")}>" target="_blank"><{$vo[remark]}></a></p>
+	        <else />
+	        	<p class="zt_con">获得了　<{$vo[remark]}></p>
+	        </if>
+        </li>
+     </volist> 
+    </ul>
+ <else />  
+   <p style="margin-top:50px; height:56px; text-align:center; width:300px; line-height:28px;"> 哎呀呀，稍微有点小抽抽，<br />请稍后再试一下啦^_^</p>
+ </if>
+    <ul id="guildScorll1"></ul>
+</div>
+    
+    <div class="tt6">
+	    <div class="flash" id="flash" style="float:left">
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="615" height="615" id="turnplate">
+					<param name="allowScriptAccess" value="always" />
+					<param name="FlashVars" id="FlashVars" value="fvar=0&tips=0">
+					<param name="movie" value="../public/activity/choujiang/turnplate.swf">
+					<param name="menu" value="false">
+					<param name="quality" value="high">
+					<param name="wmode" value="transparent">
+					<embed src="../public/activity/choujiang/turnplate.swf" FlashVars="fvar=0&tips=" id="FlashVars"  width="615" height="615"  quality="high" id="turnplate" name="turnplate" wmode="transparent" allowScriptAccess="always"  pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash">
+					</embed>
+				</object>
+		</div>
+  </div>
+    
+    <script>
+    	var gift_count="<{$gift_count}>";
+    	if(gift_count>=15){
+    		scorllUnim('guildWrap','guildScorll','guildScorll1',30)
+    	}
+	</script>
+    
+</div>
+<div class="Block03">
+  <div class="tt1">使用此卡仅需38元即可购买任意1个正热售的自选萝莉盒！</div>
+  <div class="tt2"><h3>使用说明：</h3>订购盒子时，直接选择"使用38元购盒卡"并点击确认，系统将自动修改应付总金额为38元。此购盒卡不能与优惠券同时使用，请在有效期限内使用。</div>
+  <div class="tt3"><a href="<{:u('buy/goods_select')}>" target="_blank" class="btns_re"></a></div>
+<div class="tt4">
+<volist name="pro_list" id="vo">
+    	<div class="box_List"><a href="<{:u("products/$vo[pid]")}>" target="_blank"><img src="<{$vo[pimg]}>" width="93" height="93" alt="<{$vo.pname}>" /></a></div>
+</volist>
+    </div>
+</div>
+<div class="Block04">
+	<div class="bg"><img src="public/special/20130227/bg_04.jpg" width="1000" height="463" border="0" usemap="#Map" />
+      <map name="Map" id="Map">
+        <area shape="rect" coords="23,142,209,328" href="<{:u('buy/goods_select')}>" target="_blank"  />
+        <area shape="rect" coords="279,141,466,327" href="<{:u('buy/goods_select')}>" target="_blank" />
+        <area shape="rect" coords="535,138,724,325" href="<{:u('buy/goods_select')}>" target="_blank"   />
+        <area shape="rect" coords="792,138,979,328" href="<{:u('buy/goods_select')}>" target="_blank"  />
+      </map>
+	</div>
+</div>
+</div>
+
+
+<div id="confirm_kuan"  style="display:none;">
+<div class="tc_dp tc_Points" >
+  <div class="abs" ><img src="public/images/zhuce_close.png"  id="close_div" /></div>
+  <div class="tc_dpTop"></div>
+  <div class="tc_dpCont convert">
+  <div class="add_giftinfo">
+  </div>
+  <p id="go_confirm" ></p>
+  </div>
+  <div class="tc_dpBtm">
+  </div>
+</div>
+</div>
+<script>
+function show_succ_div(cls){
+	$(this).openDOMWindow({
+		windowSourceID:'#confirm_kuan',
+		width:532,
+		height:296,
+		draggable:1,
+		borderColor:'',
+		borderSize:'0',
+		windowBGColor:'none',
+		overlayOpacity:10,
+		modal:1
+	});
+	if(cls!=""){
+		$('#DOMWindow').addClass(cls);		
+	}
+}
+$(function(){
+	 $("#close_div").click(function(){
+		 $("#DOMWindow").hide();
+		 $("#DOMWindowOverlay").hide();
+	}) 
+	
+})
+
+var kou_ub = 3;
+var userid="<{$userinfo[userid]}>";
+
+/* function turnPlate() 
+{
+	alert("活动已结束，下次早点来参加哦！");
+	return false;
+	if(userid==""){
+		open_login_div("");
+	}else{
+		var kou_ub =38;
+		var ub = parseInt($('#current_ub').html());
+		ub-=kou_ub;
+		if(ub>=0){
+			$.ajax({
+				url:"/activity/check_boxcard_ajax.html",
+				type:'post',
+				dataType:"json",
+				success:function(ret){
+					if(ret.status==1){
+						var key=ret.data;
+						var keyid=ret.info;
+						$('#current_ub').html(ub);
+						$.post( "/activity/zhuanpan_ajax.html?rn=" + Math.random(),{act: "turnPlate",key:key,keyid:keyid},function( data ) 
+											{
+												$('#flash').html(data);
+												return false;
+										    });
+					}else{
+						show_succ_div("");
+						if(ret.data==100){
+							$(".add_giftinfo").html("<p>亲爱滴，您今天已经抽过5次奖啦。</p><p>请明天再来转动转盘吧！</p>");
+						}else{
+							$(".add_giftinfo").html("<p>"+ret.info+"</p>");	
+						}
+					}
+				}
+			})
+		}else{
+			show_succ_div("");
+			var score=parseInt($('#current_ub').html());
+			$(".add_giftinfo").html("<p>您当前的积分为：<span style='color:#E22879;font-size:18px;'>"+score+"</span> 积分</p><p>您的积分不足，无法启动转盘</p><p><a href=\"<{:u('info/about',array('aid'=>11))}>#score\" target='_blank'>如何获得积分？</a></p>");
+		}
+	}
+} */
+
+function turnPlate(){
+	alert("活动已结束，下次早点来参加哦！");
+}
+
+function init_flash()
+{
+	turnPlate();
+}
+function confrim_flash()
+{
+	$.post( "/activity/zhuanpan_ajax.html?rn=" + Math.random(),{act: "load"},function( data ) 
+	{
+		$('#flash').html(data);
+		return false;
+    });
+}
+function set_address(id){
+	if(USER_ID==""){
+		dialog_login(id);
+	}else{
+		var url="<{:u('home/myaddress')}>"
+		window.open(url);
+	}
+}
+</script>
+<include file="public:footer.inc" />

@@ -1,0 +1,202 @@
+<include file="Public:header" />
+	<link rel="stylesheet" href="/public/js/jquery_theme/base/jquery.ui.all.css">
+	<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+	<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+	<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+	<style type="text/css">
+	body{line-height:1.4; background:white;}
+	body,input,textarea,select{font-size:12px;  color:#666; word-wrap:break-word;}
+	body,h1,h3,h4,p,ul,ol,li,dl,dd,dt{margin:0; padding:0;}
+	ul,ol{padding:0; list-style:none;}
+	
+	.L_warehouse{color:#666;margin:10px 30px;}
+	.L_warehouse .title{font-size:14px; height:28px; line-height:28px; background:#efefef; margin-bottom:20px; padding-left:12px}
+	.L_warehouse .details{padding-left:12px;}
+	.L_warehouse .details li{ line-height:22px;}
+	.L_warehouse .button{ margin:10px 0 20px 10px;}
+	.L_warehouse .button input{margin-right:6px; padding:4px 6px;}
+	.L_warehouse .detail .title{font-size:14px;}
+	.L_warehouse .detail .list select{width:140px; height:20px; margin-right:8px;}
+	.L_warehouse .detail .list input[type="text"]{ margin:0 8px; width:140px;}
+	.L_warehouse .detail .list input[type="button"]{padding:0px 6px;}
+	
+	.L_warehouse #tb{border-collapse:collapse;border:1px solid #ddd;font-size:12px; text-align:center; line-height:18px; margin-top:12px;}  
+	.L_warehouse #tb th{background:#eee; border:1px solid #ddd; padding:4px 0;} 
+	.L_warehouse #tb td{padding:5px 0; border:1px solid #ddd; } 
+	input,select{
+		height:20px;
+		border:solid #DBDFE6 1px;
+	}
+	.ttd{
+	color:#004000;
+	margin:10px 30px;
+	font-size:14px;
+}
+table{
+	color:#43860C;
+}
+	
+</style>
+<script>
+function deloj(obj){
+	if(confirm("确定删除么?"))
+	{
+		$.ajax({
+			url:"{:u('Inventory/fdel')}",
+			type:"post",
+			dataType:"json",
+			data:"del="+obj+'&n='+Math.random(),
+			success: function(chkresult){
+				if(parseInt(chkresult.status)==1){
+					location.reload();
+				}else{
+					alert("删除失败!");
+				}
+			}
+		})
+	}
+}
+
+function  addId(name){
+	$("form[name='"+name+"']").append("<input type='hidden' name='pid' value='{$pid}'>");
+}
+</script>
+	
+<script>
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+
+$(function(){
+	var sta="{$Think.post.status}";
+	if(sta){
+		$("select[name='status']").val(sta);
+	}
+
+	$("input[name='increase'],input[name='reduce']").bind('click',function(){
+		$("#increase").toggle();
+	})
+
+
+	$( "#staorder" ).datepicker({
+		defaultDate: "-1w",
+		changeMonth: true,
+		numberOfMonths: 3,
+		onSelect: function( selectedDate ) {
+			$( "#to" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$( "#endorder" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 3,
+		onSelect: function( selectedDate ) {
+			$( "#from" ).datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+})
+</script>
+
+
+
+
+<div class="ttd"></div>
+<div class="L_warehouse">
+	<div class="title"><span style="color:#43860C">{$inventory_data['name']}</span>&nbsp;出入库明细<a href="{:U('Inventory/index')}" style='padding-left:20px;'>返回上级</a></div>
+	<ul class="details">
+    	<li>单品名称:<span style="color:#43860C">{$inventory_data['name']}</span></li>
+    	<li>库存id:<span style="color:#43860C">{$inventory_data['id']}</span></li>
+		<li>单品id:<span style="color:#43860C"><a href="{:U('Product/index',array('pid'=>$inventory_data['relation_id']))}">{$inventory_data[relation_id]}</a></span></li>
+		<li>系统出库数：<span style="color:#43860C">{$inventory_data['inventoryreduced']}</span></li>
+    	<li>单品当前库存数：<span style="color:red">{$inventory_data['quantity']}</span></li>
+
+    </ul>
+	<div class="button">
+    	<input type="button" name="increase" value="入库（增加库存）" />
+    	<input type="button" name="reduce" value="出库（使用记录）" />
+    </div>
+    <div id="increase" style="width:80%;height:230px;margin-left:10px;display:none">
+    	<form action="__ACTION__" method="POST" name="act" onsubmit="return addId(this.name)">
+    		<p>{$inventory_data['name']}-增加/减少库存</p>
+    		
+    		<p style="margin-top:10px;">
+    			数量:<input type="text" name="quantity" onfocus="this.value=''" value="请输入整数数量"><input type="hidden" name="itemid" value="{$inventory_data['id']}">
+    		</p>
+ 			
+    		<div style="margin-top:10px;">
+    			<span>备注:</span>
+    			<div style="folat:left;margin-left:30px;">
+    				<textarea name="message" id="message" cols="30" rows="5" style= "border:solid #DBDFE6 1px;;overflow:visible " onfocus="this.value=''">请输入库存备注</textarea>
+    			</div>
+    		</div>
+    		
+    		<p style="margin:20px 50px;"><input type="submit" name="subincrease" value="提交"></p>
+    	</form>
+    </div>
+    <div class="detail">
+    	<form action="__ACTION__" method="post" name="sear" onsubmit="return addId(this.name)">
+	   	<p class="title">出入库明细</p>
+	   	<div class="list">
+			<select name="status">
+	            	<option value="2">全部</option>
+	            	<option value="1">出库</option>
+	            	<option value="0">入库</option>
+	        </select>
+	        	<input type="hidden" name="itemid" value="{$inventory_data['id']}">
+				<label for="staorder">工单创建时间</label>
+				<input type="text" id="staorder" name="staorder" value="{$Think.post.staorder}"/>&nbsp;&nbsp;&nbsp;
+				<label for="endorder">到</label>&nbsp;&nbsp;&nbsp;
+				<input type="text" id="endorder" name="endorder"  value="{$Think.post.endorder}">	        
+	   	  <input type="submit" name="search" value="确定" />
+		</form>	   	  
+    </div>
+        
+                   
+	    <table width="600"  id="tb" cellpadding="0" cellspacing="0" border="1" align="left">
+	          <tr valign="middle">
+	            <th width="10%">出库/入库</th>
+	            <th width="5%">类型</th>
+	            <th width="30%">备注</th>
+	            <th width="5%">管理员</th>
+	            <th width="15%">时间</th>
+	            <th width="5%">状态</th>
+	          </tr>
+	          <volist name="inventory_data['list']" id="stat_list">
+		          <tr valign="middle">
+		          	<td>{$stat_list.quantity}</td>
+		          	<td><if condition="$stat_list[quantity] gt 0">入库<else />出库</if></td>
+		          	<td>{$stat_list.message}</td>
+		          	<td>{$stat_list.operator}</td>
+		          	<td>{$stat_list.add_time|date="Y-m-d H:i:s",###}</td>
+		          	<td><a href="#"  onclick="deloj('{$stat_list.id}')" class="table">删除</span></td>
+		          </tr>
+		      </volist>
+		     <if condition="$stat_list eq ''">
+			      <tr valign="middle">
+			      	<td colspan="6">
+			      		抱歉,没有查到该信息!
+		    	 	</td>
+			      </tr>
+		      </if>
+		 </table>
+    </div>
+</div>
+<include file="Public:footer" /> 

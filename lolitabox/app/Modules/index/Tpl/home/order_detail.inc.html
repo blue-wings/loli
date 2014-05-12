@@ -1,0 +1,41 @@
+
+
+			<if condition="$return[orderinfo][address_list]">	
+				<div class="W_order_wrap">
+					<div class="order_gl_t">
+						<h3 class="title">收货人信息</h3>
+					</div>
+					<div class="order_gl_l">
+						<ul>
+							<li>收货人：<{$return[orderinfo][address_list][linkman]}></li>
+							<li>联系电话：<{$return[orderinfo][address_list][telphone]}></li>
+							<li>收货地址：<{$return[orderinfo][address_list][address]}></li>
+							<li>邮政编码：<{$return[orderinfo][address_list][postcode]}></li>
+							<li>
+							<if condition="$return[orderinfo][state] eq 0">
+							<eq name="return[orderinfo][ifavalid]" value="1">
+								<a href="<{:u('buy/gopay',array('paytype'=>'repay','orderid'=>$return[orderinfo][orderid]))}>" class="W_pin_b" target="_blank">马上去支付</a>
+							<else />
+								<a class="W_pin_b W_pin_grey">已失效</a>
+							</eq>
+							</if>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</if>
+				
+			<if condition="$return[orderinfo][if_mon] gt 0">	
+				<include file="order_months.inc" />	
+				&nbsp;
+			</if>	
+				
+			<if condition="$return[orderinfo][proxyinfo]['senddate'] neq '' AND $return[orderinfo][if_mon] eq 0">	
+				<include file="public:dialog_proxy" />
+			</if>
+			
+			<if condition="$return[orderinfo][if_mon] eq 0 AND $return[orderinfo][product_list] neq '' AND $return[if_try] neq 1">		
+				<include file="public:dialog_order_products" />	
+		</if>
+
+	<em class="hei1"></em>

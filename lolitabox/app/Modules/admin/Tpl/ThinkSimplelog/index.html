@@ -1,0 +1,113 @@
+<include file="Public:header" />
+<link href="__PUBLIC__/css/table.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/common.css" type="text/css" rel="stylesheet"/>
+
+<div class="list-div">
+
+    <div class="panel">
+	<div align="left" style="color:#0080FF;font-size:16px">
+		<fieldset class="fieldset">
+			<legend>查询条件</legend>
+	         <form action="__URL__/index/" method="get">
+               用户名：<input type="text" value="{$Think.get.account}"  name="account"  size="20"/>&nbsp;&nbsp;
+               模块名：<input type="text" value="{$Think.get.module}"  name="module"  size="20"/>&nbsp;&nbsp;
+               操作行为：<input type="text" value="{$Think.get.action}"  name="action"  size="20"/><br>
+               操作时间：从<input type="text" name="from" id="from" value="{$Think.get.from}" size="20"/>到<input type="text" value="{$Think.get.to}" id="to" name="to"  size="20"/>	&nbsp;&nbsp;		
+		   	   参数关键字搜索:<input type="text" name="keywords" value='{$Think.get.keywords}'><br>
+               <input type="submit" value="查 询" />
+            </form>
+		</fieldset>
+	</div>
+</div>
+
+</div>
+<div class="list-div">
+<table border="0" cellspacing="1" cellpadding="2"  bordercolor="#c0de98" id="datatable">
+  <tr>
+    <th scope="col">编号</th>
+    <th scope="col">操作者</th>
+    <th scope="col">模块名</th>
+    <th scope="col">操作行为</th>
+    <th scope="col">参数</th>
+    <th scope="col">IP</th>
+    <th scope="col">操作时间</th>
+  </tr>
+  
+  <volist name="list"  id="data">
+  <tr>
+    <td>{$data.id}</td>
+    <td>{$data.username}</td>
+    <td>{$data.module}</td>
+    <td>{$data.action}</td>
+    <td>{$data.param|unserialize|print_r}</td>
+    <td>{$data.ip}</td>
+    <td>{$data.optime|date="Y-m-d H:i:s",###}</td>
+  </tr>
+  </volist>
+  
+  <tr>
+ 	<td colspan="8" align="right">{$page}</td>
+  </tr>
+</table>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#datatable tr:gt(0)").hover(function() {
+		$(this).children("td").css({background:"#bcd4ec"});
+	}, function() {
+		$(this).children("td").css({background:"#F5F5F5"});
+	});
+})
+
+function del(id)
+{
+	if(confirm("你确定要删除吗？")){
+		window.location.href="__URL__/delete/id/"+id;
+		return true;
+	}else{
+		return false;
+	}
+}
+
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+	$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+	
+	
+	$( "#from" ).datepicker({
+		defaultDate: "-1w",
+		changeMonth: true,
+		numberOfMonths: 2,
+		onSelect: function( selectedDate ) {
+			$( "#to" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$( "#to" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 2,
+		onSelect: function( selectedDate ) {
+			$( "#from" ).datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+	
+});
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,206 @@
+<style>
+#tipbox{ width:622px; height:596px;}
+#tipbox .tipbox_main{ z-index:1000;position: absolute; text-align:center;}
+#tipbox .tipbox_main_con{background: url(public/images/index_bg.png) center no-repeat; position:relative; z-index:10;height:421px;  padding-top:180px; }
+#tipbox .close ,#tipbox .a_close{position:absolute; width:70px; height:70px; right:-25px; top:95px;}
+#tipbox .close{ background:url(public/images/index_icon/index_bt_close.png) no-repeat; z-index:9;  }
+#tipbox .a_close{ z-index:99;}
+
+.step1{left:0px; top:0px; }
+.step1 .title,.step2 .title,.step3 .title{text-align:center;margin-bottom:40px;}
+.step1 .fore1{margin-bottom:28px;}
+.step1 .fore2{margin-bottom:30px;}
+.step_con{ width:622px; height: 208px; overflow:hidden;}
+.step_con ul {padding:0 50px; height:auto; float:left;}
+.step_con ul li{width:128px;  height:auto; float:left; margin:0px 1px;}
+.step_con ul li ol li ,#tipbox .step_ft ,.step_ft2,.step_con2{ display:inline-block;text-align:center; }
+.step_con ul li ol li{margin-bottom:25px;}
+.step_con2{ width:622px; height:100px; }
+#tipbox .step_ft {height:50px; margin-bottom:22px; display:block;}
+#tipbox .step_ft .step_ft1,.step2 .step_ft .step_ft1{ width:107px; display:inline-block; _display:inline; height:49px; background:url(public/images/index_icon/index_bt_bg.png) center no-repeat; text-align:center; line-height:49px; font-size:15px; color:#fff; font-weight:bold;}
+.step_ft a:hover{text-decoration:none;}
+.step2 .step_ft .step_ft0 ,.step3 .step_ft .step_ft0{ width:107px; display:inline-block; _display:inline; height:49px;text-align:center; line-height:49px; font-size:15px; color:#000; font-weight:bold;}
+
+.step2 .step_con{height:200px;}
+
+.step_ft2 a.select{background:url(public/images/index_bt_2.png) no-repeat;}
+.step_ft2_1 ,.step_ft2_2 , .step_ft2_3{width:14px; height:14px; display:inline-block; _display:inline; background:url(public/images/index_bt_1.png) no-repeat; margin-right:16px;}
+.step3{ padding-top:20px;}
+.step3 .close{ position:absolute; top:-82px; left:575px;}
+.step3 .step_con{height:140px;}
+.step3 .step_con2{margin-bottom:30px;}
+
+
+</style>
+
+<script>
+var cookie_name="index_guide";
+var guide_dialog;
+$(function(){
+		var cookie_val=getCookie(cookie_name);
+		if(parseInt(cookie_val)!=1){
+			guide_dialog=$.dialog({
+			    content: document.getElementById('tipbox'),
+			    fixed:true,
+			    opacity:0.3,
+			    lock:true,
+			    cancel:false,
+			    bgColor:true
+			})
+		}
+})
+
+function close_guide(type){
+	guide_dialog.close();
+	setCookie(cookie_name,1,100);
+	if(type==1){
+		location.href="/user/reglogin.html";
+	}
+}
+
+function guide_next(id){
+	var id_name="step"+id;
+	$(".tipbox_main").hide();
+	$("#"+id_name).show();
+}
+
+</script>
+
+
+<div id="tipbox" style="display:none;">
+<div class="tipbox_main" id="step1">
+<div class="tipbox_main_con">
+<div class="step1">
+<div class="title"><img src="public/images/index_icon/index_txt_10.png"/></div>
+<div class="step_con">
+<ul>
+<li>
+       <ol> 
+       <li><img src="public/images/index_icon/index_icon_01.png"/></li>
+       <li><img src="public/images/index_icon/index_txt_5.png"/></li>
+      </ol>
+     </li>
+     <li>
+       <ol> 
+       <li class="fore1"><img src="public/images/index_icon/index_icon_02.png"/></li>
+       <li><img src="public/images/index_icon/index_txt_6.png"/></li>
+      </ol>
+     </li>
+     <li>
+       <ol> 
+       <li class="fore2"><img src="public/images/index_icon/index_icon_03.png"/></li>
+       <li><img src="public/images/index_icon/index_txt_7.png"/></li>
+      </ol>
+     </li>
+     <li>
+       <ol> 
+       <li><img src="public/images/index_icon/index_icon_04.png"/></li>
+       <li><img src="public/images/index_icon/index_txt_8.png"/></li>
+      </ol>
+     </li>
+</ul>
+</div>
+<div class="step_ft">
+    <a class="step_ft1" href="javascript:void(0);" onclick="guide_next(2)" >下一页</a>
+</div>
+<div class="step_ft2">
+    <a class="step_ft2_1 select" href="javascript:void(0);" onclick="guide_next(1)"></a>
+    <a class="step_ft2_2" href="javascript:void(0);" onclick="guide_next(2)"></a>
+    <a class="step_ft2_3" href="javascript:void(0);" onclick="guide_next(3)"></a>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="tipbox_main" style="display:none" id="step2">
+<div class="tipbox_main_con">
+<div class=" step2">
+<div class="title"><img src="public/images/index_icon/index_txt_11.png"/></div>
+<div class="step_con">
+<ul>
+<li>
+       <ol> 
+       <li><img src="public/images/index_icon/index_icon_05.png"/></li>
+       <li><img src="public/images/index_icon/index_txt_1.png"/></li>
+      </ol>
+     </li>
+     <li>
+       <ol> 
+       <li><img src="public/images/index_icon/index_icon_06.png"/></li>
+       <li><img src="public/images/index_icon/index_txt_2.png"/></li>
+      </ol>
+     </li>
+     <li>
+       <ol> 
+       <li><img src="public/images/index_icon/index_icon_7.png"/></li>
+       <li><img src="public/images/index_icon/index_txt_3.png"/></li>
+      </ol>
+     </li>
+     <li>
+       <ol> 
+       <li><img src="public/images/index_icon/index_icon_8.png"/></li>
+       <li><img src="public/images/index_icon/index_txt_4.png"/></li>
+      </ol>
+     </li>
+</ul>
+</div>
+<div class="step_ft">
+<a class="step_ft0" href="javascript:void(0);" onclick="guide_next(1)">上一页</a>
+<a class="step_ft1" href="javascript:void(0);" onclick="guide_next(3)">下一页</a>
+</div>
+<div class="step_ft2">
+    <a class="step_ft2_1" href="javascript:void(0);" onclick="guide_next(1)"></a>
+    <a class="step_ft2_2 select" href="javascript:void(0);" onclick="guide_next(2)"></a>
+    <a class="step_ft2_3" href="javascript:void(0);" onclick="guide_next(3)"></a>    
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="tipbox_main" style="display:none;" id="step3">
+<span class="close"></span>
+<a href="javascript:void(0);" onclick="close_guide()" class="a_close"></a>
+<div class="tipbox_main_con">
+<div class=" step3">
+<div class="step_con">
+<ul>
+<li>
+       <ol> 
+       <li><img src="public/images/index_icon/index_icon_09.png"/></li>
+      </ol>
+     </li>
+     <li>
+       <ol> 
+       <li><img src="public/images/index_icon/index_icon_10.png"/></li>
+      </ol>
+     </li>
+     <li>
+       <ol> 
+       <li><img src="public/images/index_icon/index_icon_11.png"/></li>
+      </ol>
+     </li>
+     <li>
+       <ol> 
+       <li><img src="public/images/index_icon/index_icon_12.png"/></li>
+      </ol>
+     </li>
+</ul>
+</div>
+<div class="step_con2"> <img src="public/images/index_icon/index_txt_9.png"/></div>
+<div class="step_ft">
+    <a class="step_ft0" href="javascript:void(0);" onclick="guide_next(2)">上一页</a>
+    <a class="step_ft1" href="javascript:void(0);" onclick="close_guide(1)">立即注册</a>
+</div>
+
+<div class="step_ft2">
+    <a class="step_ft2_1" href="javascript:void(0);" onclick="guide_next(1)"></a>
+    <a class="step_ft2_2" href="javascript:void(0);" onclick="guide_next(2)"></a>
+    <a class="step_ft2_3 select" href="javascript:void(0);" onclick="guide_next(3)"></a>    
+</div>
+</div>
+</div>
+</div>
+
+</div>

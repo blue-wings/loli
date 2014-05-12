@@ -1,0 +1,266 @@
+<include file="public:header.inc" />
+<!--个人中心-内容-start-->
+<div class="fm1020_c cfl">
+	<!--左侧导航-->
+<include file="left.inc" />
+	<!--右侧-内容-->
+	<div class="f738 r wp738">
+		<!--分享详情页内容-->
+		<div class="hd">
+			<h3 class="i_tit l"><em class="t_listsBox">&nbsp;</em>萝莉档案</h3>			
+		</div>
+		<div class="main page-region">
+		     <i class="hei1 mb16"></i>
+			<div class="box_reminder">
+				<p class="box_reminder_title">小萝莉温馨提示：</p>
+                <p class="box_reminder_con"> 萝莉档案，是小萝莉为用户提供丰富的个性化服务基础，您在参与萝莉盒网站的活动或者购买萝莉盒推出商品时，我们都会根据您提交的萝莉档案信息进行仔细的筛选。</p>
+                <p class="box_reminder_points">为了感谢您对小萝莉的支持，您每次完善一条萝莉档案信息，将获得<span class="plr_5 rd">2个</span>积分的奖励哦</p>
+			</div>
+			<p class="information_cue">
+			<gt name="return.alist.num" value="0">
+			您还有<span class="plr_5 rd" id="vote_totalnum"><{$return['alist']['num']}></span>条萝莉档案信息没有完善
+			</gt>&nbsp;
+			<span class="z_btn r" id="toggleContent"><b>全部展开</b><i class="z_unfold">&nbsp;</i></span>
+			
+            <div class="page-region-content">
+                <ul>
+                <foreach name="return.alist.list" item="vo" key="ikey">
+                    <li <eq name="vo.if_answer" value="0">class="revise_answer"</eq>>
+                        <div class="boxs_questions">
+                            <div class="boxs_questions_title cfl">
+                                <h3 class="l">
+	                                <span class="t_shrinknfold t_unfold">+</span><{$vo.title}>
+	                                <eq name="vo.type" value="2">（可多选）</eq>
+                                </h3>
+                                <span class="answered_btn r">
+	                                <if condition="$vo.if_answer eq 1">
+	                                	修改
+	                                <else />
+	                                	完善
+	                                </if>
+                                </span>
+                            </div>
+                            <div class="boxs_questions_main" style="display:none;">
+                            <neq name="vo.if_answer" value="1">
+                                <div class="bonus_points" id="score_msg_<{$ikey}>">完成本档案信息，您将获得<span class="plr_5 rd">2个</span>积分奖励</div>
+                             </neq>
+                             
+                             <div class="boxs_questions_con">
+                             
+                             <if condition="$ikey eq 1">
+                             <!-- 基本信息 -->
+	                           <dl class="login-dl cfl">				
+								<dt class="dt_l">性别：</dt>
+								<dd class="dd_r g9">
+									<span class="sex_f"> <label for="d_woman" name="d_woman"><input id="d_woman" name="select_sex" type="radio" <neq name="vo[result][sex]" value="1">checked</neq> /><b class="people_ico woman"></b>女</label></span>&nbsp;&nbsp;&nbsp;&nbsp;
+									<span class="sex_f"><label for="d_boy" name="d_boy"><input type="radio" name="select_sex" id="d_boy"><b class="people_ico man"></b>男</label></span>
+								</dd>
+								<dt class="dt_l">生日：</dt>
+								<dd class="dd_r g9">
+									<div class="user_select_wrap">
+									
+										<select id="inpFeteYear" class="selectInput" name="select_years" onChange="return CheckDay();">
+											<foreach name="vo[other][yearlist]" item="io">
+												<option value="<{$io}>"  <if condition="$vo[result][years] eq $io">selected</if>><{$io}></option>
+											</foreach>
+										</select>年&nbsp;&nbsp;
+										
+										<select name="select_months"  onChange="return CheckDay();" class="selectInput">
+											<for start="1" end="13">
+												<option value="<{$i}>"><{$i}></option>
+											</for>
+										</select>月
+										
+										<select name="select_days" id="select_days" class="selectInput"></select>日
+										
+									</div>
+								</dd>
+								<dt class="dt_l">所在地：</dt>
+								<dd class="dd_r g9">
+									<div class="user_select_wrap" id="myarea">
+									       <select id="s1" class="prov" name="province">
+											</select>
+											<select id="s2" class="city" name="city"  disabled="disabled" ><option  value=''>请选择</option>
+											</select>
+											<select id="s3" class="dist" name="district" disabled="disabled"><option value=''>请选择</option>
+											</select>
+									</div>
+								</dd>
+								<dt class="dt_l">学历：</dt>
+								<dd class="dd_r g9">
+									<div class="user_select_wrap">
+										<select name="select_edu" id="select_edu" class="selectInput">
+											<option value="0">请选择</option>
+											<option value="1">高中</option>
+											<option value="2">大专</option>
+											<option value="3">本科</option>
+											<option value="4">硕士</option>
+											<option value="5">博士</option>
+											<option value="6">其他</option>
+										</select>
+										<if condition="$vo[result][edu] neq 0">
+											<script>
+												$("select[name='select_edu']").val("<{$vo[result][edu]}>");
+											</script>
+										</if>										
+		                            </div>
+		                        </dd>
+							</dl>
+                             
+                             <elseif condition="$vo.type eq 1" />
+                             <!-- 单选 -->
+                                   <div class="boxs_questions_con">
+	                                 <ul class="cfl radio_input">   
+	                                 <foreach name="vo.answer" item="anlist" key="ekey">
+		                                    <li>
+		                                    <input type="radio" name="inname_<{$ikey}>" value="<{$anlist}>" id="inname_<{$ikey}>_<{$ekey}>" <eq name="vo.result" value="$anlist">checked</eq> />
+		                                    <label for="inname_<{$ikey}>_<{$ekey}>""><{$anlist}></label>
+		                                    </li>
+	                                    </foreach>
+	                                 </ul>
+	                            </div>                              
+                             
+                             <elseif condition="$vo.type eq 2" />
+                               <!-- 多选 -->
+                                 <ul class="cfl <eq name='vo.stat' value='1'>checkbox_input</eq>">
+	                                 <foreach name="vo.answer" item="anlist" key="ekey">
+										<li>
+											<input type="checkbox" name="inname_<{$ikey}>"  value="<{$anlist}>" id="inname_<{$ikey}>_<{$ekey}>" <php>if(in_array($anlist,$vo[result])){echo "checked";}</php> /><label for="inname_<{$ikey}>_<{$ekey}>""><span><{$anlist}></span></label>
+										</li>
+									</foreach>
+                                 </ul>
+                             <elseif condition="$vo.type eq 4" />
+                                  <!-- 文本 -->
+                            	<textarea name="inname_<{$ikey}>"  class="input_detail" ><{$vo.result}></textarea> 
+                             
+                             </if>
+                             </div>
+	                            <p class="submit_btn cfl"><a href="javascript:void(0)" onclick="set_vote('<{$ikey}>','<{$vo[type]}>',this)" class="W_pin_b l">提交</a></p>
+                             </div>
+                        </div>
+                    </li>
+                  </foreach>  
+                </ul>               
+            </div>
+            <i class="hei1"></i>
+        </div>
+        <div class="ft"></div>
+	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var t_shrinknfold = $('.t_shrinknfold');
+		$('.boxs_questions_title').each(function(){
+		    $(this).click(function(){
+				var H_main=$(this).parents('li').height();
+			    	if (H_main<=38) {
+	                    $(this).parent().find('.boxs_questions_main').slideDown();
+			    		$(this).parents('li').addClass('selected').end().find('.t_shrinknfold').html("-");
+			    	}else{
+			    		$(this).parent().find('.boxs_questions_main').slideUp();
+			    		$(this).parents('li').removeClass('selected').end().find('.t_shrinknfold').html("+");
+			    	}
+		    })	
+		})
+		$('#toggleContent').click(function(){
+			if($(this).find('i').hasClass('z_shrink')){
+				$('.boxs_questions_main').css({ display:"none"})
+				$('.page-region-content>ul>li').removeClass('selected').find('.t_shrinknfold').html("+");
+				$(this).find('b').html("全部展开");
+		    }else{
+			   	$('.boxs_questions_main').css({ display:"block"})
+			   	$('.page-region-content>ul>li').addClass('selected').find('.t_shrinknfold').html("-");
+			   	$(this).find('b').html("全部收起");
+		   };
+			$(this).find('.z_unfold').toggleClass('z_shrink');
+		})
+	})
+	</script>
+	
+	<include file="home:vote.inc" />
+<script>
+check_address('<{$list.list.1.result.province}>','<{$list.list.1.result.city}>','<{$list.list.1.result.district}>');
+function set_vote(qid,type,obj){
+	var data;
+	if(qid==1){
+		//第一题
+		var info=[];
+		info['years']=$("select[name='select_years']").val();//出生-年
+		info['months']=$("select[name='select_months']").val();//出生-月
+		info['days']=$("select[name='select_days']").val();//出生-日
+		
+ 		info['province']=$("select[name='province']").val();//省
+		info['city']=$("select[name='city']").val();//市
+		info['district']=$("select[name='district']").val();//区 
+		
+		info['sex']=$("input[name='select_sex']:checked").val();//性别
+		info['edu']=$("select[name='select_edu']").val();//教育程度
+		if(info['edu']==0){
+			id_dialog("请选择学历",obj,2);return false;
+		}
+		data="years="+info['years']+"&months="+info['months']+"&days="+info['days']+"&province="+info['province']+"&city="+info['city']+"&district="+info['district']+"&sex="+info['sex']+"&edu="+info['edu'];
+	}else{
+		var in_name="inname_"+qid;
+		if(type==1){
+			var data=$("input[name='"+in_name+"']:checked").val();
+			if(data==undefined){
+				id_dialog("请先选择",obj,2);return false;
+			}
+		}else if(type==2){
+			var data=get_checkbox_value(in_name);
+			if(data==""){
+				id_dialog("请至少选择一个选项",obj,2);return false;
+			}
+		}else if(type==4){
+			var data=$("textarea[name='"+in_name+"']").val();
+			if(data==""){
+				id_dialog("内容不能为空",obj,2);return false;
+			}
+		}
+		data="data="+data;
+	}
+	$.ajax({
+		url:"<{:u('home/set_vote')}>",
+		type:"post",
+		dataType:"json",
+		data:"qid="+qid+"&"+data,
+		success:function(ret){
+			if(parseInt(ret.status)==1){
+				if(parseInt(ret.data)==100){
+					id_dialog("萝莉档案修改成功！",obj,1,false,3);
+				}else{
+					var num=parseInt($("#vote_totalnum").html());
+					num--;
+					$("#vote_totalnum").html(num)
+					id_dialog("萝莉档案提交成功，您已经获得 2 个积分奖励！",obj,1,false,3);	
+					$("#score_msg_"+qid).remove();
+				}
+			}else{
+				id_dialog(ret.info,obj,2,false,3);
+			}
+		}
+	})
+}
+
+function get_checkbox_value(name){
+	var length=$(":checkbox[name='"+name+"']").length;
+	if(length==0){
+		return "";
+	}else{
+		var info=document.getElementsByName(name);
+		var i,arr=[],j=0;
+		for(i=0;i<length;i++){
+			if(info[i].checked==true){
+				arr[j]=info[i].value;
+				j++;
+			}
+		}
+		return arr.join(",");
+	}
+}
+
+</script>
+	
+</div>
+
+<!--标准底-end-->
+<include file="public:footer.inc" />

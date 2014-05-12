@@ -1,0 +1,141 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="/public/js/jquery_theme/smoothness/jquery.ui.all.css">
+<script src="/public/js/jquery_ui/jquery.ui.core.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.widget.js"></script>
+<script src="/public/js/jquery_ui/jquery.ui.datepicker.js"></script>
+<script>
+(function(config){
+	config['extendDrag'] = false; // 注意，此配置参数只能在这里使用全局配置，在调用窗口的传参数使用无效
+	config['lock'] = true;
+	config['fixed'] = true;
+	config['okVal'] = 'Ok';
+	config['cancelVal'] = 'Cancel';
+})($.dialog.setting);
+
+$(function(){
+	$(".new").bind("click",function(){
+		var $str='';
+		$str="<form action={:u('Product/channeladd')} method='POST' name='addchannel'><br />";
+		$str+="购买渠道名称:<select name='cha'><option>品牌官方商城</option><option>丝芙兰官网</option><option>天猫官方商城</option><option>品牌专柜</option><option>淘宝旗舰店</option></select><br />";
+		$str+="价格:<input type='text' name='price'><br />";
+		$str+="购&nbsp;&nbsp;买&nbsp;&nbsp;URL&nbsp;&nbsp;:&nbsp;<input type='text' name='url' size='35'><br/>";
+		$str+="预&nbsp;设&nbsp;点击数:&nbsp;<input type='text' name='dea' size='10'><br />";
+		$str+="真&nbsp;实&nbsp;点击数:&nbsp;<input type='text' name='real' size='10'><br />";
+		$str+="排&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;序:&nbsp;&nbsp;&nbsp;&nbsp;<input type='text' name='sortnum' size='10'><br />";
+		$str+='<input type="hidden" name="pid" value="{$_GET[pid]}" />';
+		//		$str+="</form>";
+
+		$.dialog({
+			title:'增加购买渠道',
+			content:$str,
+			ok:function(){
+				var cha=$("input[name='cha']").val();
+				var url=$("input[name='url']").val();
+				if(cha!='' && url!=''){
+					$("form[name='addchannel']").submit();
+				}else{
+					alert('请填写完整!');
+				}
+
+			},
+			width:'500px',
+			cancel: true
+		});
+	})
+
+	$(".del").bind("click",function(){
+		if(confirm("确定删除么?")){return true;}else{return false}
+	})
+})
+
+/*function up($obj)
+{
+$.ajax({
+url:"{:u('Product/channelupdate')}",
+dataType:"json",
+data:"id="+$obj,
+success:function(cha){
+$("#cha").val(cha[0].id);
+}
+
+})
+$("#frm").show();
+}*/
+
+
+</script>
+
+
+<p style="color:blue;margin:20px;">{$productinfo.pname} > &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="new" style="cursor:pointer;color:red">增加购买渠道</a></p>
+<if condition="$list">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">商品信息</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            <td width="6%" height="26"><div align="center" class="STYLE2 STYLE1">ID</div></td>
+            <td width="6%" height="18"><div align="center" class="STYLE2 STYLE1">产品ID</div></td>
+            <td width="19%" height="18"><div align="center" class="STYLE2 STYLE1">购买渠道名称</div></td>
+            <td width="30%" height="18"><div align="center" class="STYLE2 STYLE1">购买URL</div></td>
+            <td width="8%" height="18"><div align="center" class="STYLE2 STYLE1">价格</div></td>
+            <td width="7%" height="18"><div align="center" class="STYLE2 STYLE1">预设点击数</div></td>
+            <td width="8%" height="18"><div align="center" class="STYLE2">真实点击数</div></td>
+            <td width="6%" height="18"><div align="center" class="STYLE2">排序</div></td>
+            <td width="10%" height="18"><div align="center" class="STYLE2">日期</div></td>
+   			<td width="8%" height="18"><div align="center" class="STYLE2">操作</div></td>
+          </tr>
+          
+				<volist name="list" id="cha" >
+					<tr>
+					<td align="center"  bgcolor="#FFFFFF"  class="va">{$cha.id}</td>
+					<td align="center"  bgcolor="#FFFFFF">{$cha.pid}</td>
+					<td align="center"  bgcolor="#FFFFFF">{$cha.channelname}</td>
+					<td bgcolor="#FFFFFF">{$cha.url}</td>
+					<td bgcolor="#FFFFFF">{$cha.price}</td>
+					<td align="center"  bgcolor="#FFFFFF">{$cha.basehit}</td>
+					<td align="center"  bgcolor="#FFFFFF">{$cha.realhit}</td>
+					<td align="center"  bgcolor="#FFFFFF">{$cha.sortnum}</td>
+					<td align="center"  bgcolor="#FFFFFF">{$cha.addtime }</td>
+					<td align="center"  bgcolor="#FFFFFF"><a href="{:u('Product/channelupdate',array('id'=>$cha[id]))}" >[编辑]</a>&nbsp;<a href="{:u('Product/channeldel',array('id'=>$cha[id],'pid'=>$cha[pid]))}" class="del">[删除]</span></td>
+					</tr>
+				</volist>
+	
+		</table>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+            <td width="75%" valign="top" class="STYLE1"></td>
+          </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</if>
+
+<include file="Public:footer" />

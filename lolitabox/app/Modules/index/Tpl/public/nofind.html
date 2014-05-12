@@ -1,0 +1,47 @@
+﻿<include file="public:header_simple.inc" />
+<!--公用---头部--end------->
+
+<i class="zc_hd_register"></i>
+
+<div class="mb16">
+<div class="fm1024">
+	<div class="wp1020">
+		<div class="hd_t"></div>
+		<div class="main">
+			<!--第三方登录失败--内容--start-->
+				<div class="login_bound_con">
+					<!---内容信息提示---->
+					<div class="no_bound_wrap">
+						<p class="icon">
+							<img src="public/images/face/feel.gif" width="120" height="120">
+						</p>
+						<p class="tit">404错误，小萝莉非常尴尬的通知您，找不到您想要的页面了~~</p>
+						<p>我们正在火速的联系萝莉盒总部查找您要找的页面，您可以去到：</p>
+						<p><a href="/" target="_blank" class="A_line3">网站首页</a>　　<a href="<{:u('buy/goods_selec')}>"  target="_blank" class="A_line3">订购BOX</a>　　<a href="<{:u('brand/index')}>" target="_blank" class="A_line3">品牌库</a>　　<a href="<{:u('try/index')}>" target="_blank" class="A_line3">试用中心</a></p>
+						<p class="text"><span class="rd"  id="time_tips">3</span> 秒后将自动跳转到LOLITABOX网站首页</p>
+					</div>
+					
+				</div>
+			<!--第三方登录失败--内容--end-->
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+</div>
+
+
+<script>
+  $(function(){
+	  setInterval("b()",1000);
+	  setTimeout('a()',3000);
+  })
+  function b(){
+	  var times = $("#time_tips").html();
+	  var t = parseInt(times)-1;
+	  $("#time_tips").html(t)
+  }
+  function a(){
+	  location.href= SITE_URL;
+  }
+</script>
+<include file="public:footer_simple.inc" />

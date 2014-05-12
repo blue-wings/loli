@@ -1,0 +1,279 @@
+<include file="Public:header" />
+<style>
+tr{
+	width:100%;
+	text-align:left;
+}
+td{
+	border:0;
+}
+.f_width{
+	display:block;
+	width:120px;
+	float:left;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+}
+input,select{
+	border-color:#008080;
+}
+.createmakt,.particular{
+	display:none;
+}
+.show{
+	display:none;
+}
+.ntitle{
+	font-size:16px;
+	color:#004040;
+}
+.left{
+	padding:10px  50px;
+}
+.fo{
+	font-size:14px;
+	color:#004040;
+}
+.createshop{
+	display:none;
+	font-size:16px;
+	color:#808080;
+}
+.wh{
+	width:90%;
+	border:0;
+	padding:20px 100px;
+}
+.crshop{
+	width:100px;
+}
+.red{
+	color:red;
+}
+td.left{
+	float:left;
+}
+td.tdwidth{
+	width:20%;
+	padding-left:50px;
+}
+.maxwidth{
+	width:90%;
+}
+.site{
+	display:block;
+	margin:10px 150px;
+	border:#91C351;
+}
+</style>
+<div class="panel">
+	<div align="left">
+		<fieldset class="fieldset"><legend>查询条件</legend>
+			<form name="myform" id="myform" action="__ACTION__" method="GET">
+				出库单名称：<input name='ordername' type='text' value='{$Think.get.ordername}'>&nbsp;&nbsp;&nbsp;
+				提交时间：<input name='startdate'  type='text' value='{$Think.get.startdate}'  size="10">到<input name='enddate' type='text' value='{$Think.get.enddate}' size="10">
+				<br/><br>
+                确认出库时间：<input name='from'  type='text' value='{$Think.get.from}'  size="10">到<input name='to' type='text' value='{$Think.get.to}' size="10">&nbsp;&nbsp;&nbsp;
+				出库单状态<select name="ormstatus">
+					<option value="">未删除</option>
+					<option value="2">已删除</option>
+				</select>				
+				&nbsp;&nbsp;&nbsp;
+				申请人筛选:<select name="proposer">
+					<option value="">全部</option>
+					<volist name="human" id="human">
+						<option value="{$human.operator}">{$human.operator}</option>
+					</volist>
+				</select>&nbsp;&nbsp;&nbsp;
+				出库单类型:<select name="type">
+				     <option value="">全部</option>
+				     <option value="1">系统</option>
+				     <option value="2">人工</option>
+				     </select>
+				&nbsp;&nbsp;&nbsp;
+				<input type='submit' name='search' value=" 查 询 "><br><br>
+				<input type='submit' name='export' value="导出出库单">&nbsp;&nbsp;
+				<input type='submit' name='exportHumanOrderData' value="出库报表导出">&nbsp;&nbsp;
+				
+				<input type="button" name="human" value="快速创建人工出库单">
+			</form>
+		</fieldset>			
+	</div>
+</div>
+
+<div class="showcontents">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />出库管理>出库单列表</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+        {$page}
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif" id="awarp">
+            <td width="2%" height="26">ID</td>
+	    	<td width="10%" height="26" align="center">出库单名称</td>
+	    	<td width="4%" height="18" align="center">出库单类型</td>   
+            <td width="3%" height="18" align="center">申请人</td>
+            <td width="6%" height="18">预计出库时间</td>  
+            <td width="10%" height="18">提交时间</td>
+            <td width="5%" height="18" align="center">主管审核</td>
+            <td width="5%" height="18" align="center">库管确认</td>
+            <td width="5%" height="18" align="center">出库单状态</td>   
+            <td width="15%" height="18" align="center">功能</td>
+          </tr>
+          <volist name="list" id="list"  key="k">
+          <tr height="30px">
+             <td bgcolor="#FFFFFF" height="18" align="center">{$list.id}</td>
+             <td bgcolor="#FFFFFF" height="18" align="center">
+             	<if condition="$list.status eq 0" >{$list.title}
+             	<else/>
+             		<a href="{:U('Inventory/outOrderInfo',array('id'=>$list['id']))}">{$list.title}</a>
+             	</if>
+             </td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">
+			 	 <switch name="list.type">
+			 	 	<case value="1">系统</case>
+			 	 	<case value="2">人工</case>
+			 	 </switch>
+			 </td>             
+			 <td bgcolor="#FFFFFF" height="18" align="center">{$list.operator}</td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">{$list.outdate}</td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">{$list.cdatetime}</td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">
+			 	<if condition="$list['agreeoperator'] neq ''">已审核
+			 	<else/>未审核
+			 	</if>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">
+			 	<switch name="list.ifconfirm">
+			 	<case value="0">未确认</case>
+			 	<case value="1">已确认</case>
+			 	</switch>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">
+			 	<if condition="$list['status'] eq 0">已删除
+			 	<elseif condition="$list['ifagree'] eq 1 AND $list['ifconfirm'] eq 1" />已出库
+			 	<elseif condition="$list['ifagree'] eq 0" />未审核
+				<elseif condition="$list['ifagree'] eq 1 AND $list['ifconfirm'] eq 0" />未确认
+			 	</if>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">
+			 <if condition="$list.status eq 1 AND $list.type eq 1">
+			 	<a href="javascript:void(0);" 
+				onclick="dialogmeseeage('{:U('Inventory/getOrderInfo',array('outid'=>$list[id],'resour'=>'outOrderEntry'))}');">查看订单</a>
+			 </if>
+			 <if condition="$list.status eq 1 AND $list.confirmoperator neq '' AND $list.type eq 1">
+			 	<a href="{:U('Inventory/exportOrder',array('outid'=>$list[id]))}">拣货导出</a>
+			 	<a href="{:U('Inventory/exportExpressOrder',array('outid'=>$list[id]))}">快递导出</a>
+			 </if>			 
+			 &nbsp;&nbsp;
+			 <if condition="($list.status eq 1 AND $list.ifagree eq 0)  OR ($list.status eq 1 AND $list.ifagree eq 1 AND $list.ifconfirm eq 0)">
+			 	<a href="{:U('Inventory/deleteorder',array('model'=>'out','id'=>$list['id']))}">删除</a>
+			 </if>
+			 
+			 <eq name="list.type" value="1">
+				 &nbsp;&nbsp;
+				 <a href="{:U('Inventory/exportOrderInfo',array('outid'=>$list['id']))}" target="_blank">发货明细单</a>
+			 </eq>
+			 
+			 </td>
+          </tr>
+		</volist>
+        </table>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr >
+	<if condition="$list eq ''">
+	<td  colspan='8' align="center"><b>无数据</b></td>
+	<else />
+	<td  colspan='8' align="center">{$page}</td>
+	</if>
+  </tr>
+</table>
+</div>
+<script type="text/javascript">
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+$(function() {
+	$("select[name='ormstatus']>option[value='"+"{$_GET['ormstatus']}"+"']").attr("selected",'true')
+	$("select[name='type']").val('{$_GET[type]}');
+	$("select[name='proposer']>option[value='"+"{$_GET['proposer']}"+"']").attr("selected",'true')
+	$("input[name='human']").bind('click',function(){
+		dialogmeseeage("{:U('Inventory/outOrderHuman')}","快速创建人工出库单");
+	})
+
+	$(":text[name='startdate']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$(":text[name='startdate']").datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$(":text[name='enddate']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$(":text[name='enddate']").datepicker( "option", "maxDate", selectedDate );
+		}
+	})
+	
+	$(":text[name='from']").datepicker({
+		changeMonth: true,
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$(":text[name='to']").datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$(":text[name='to']").datepicker({
+		changeMonth: true,
+		numberOfMonths:1,
+		onSelect: function( selectedDate ) {
+			$(":text[name='from']").datepicker( "option", "maxDate", selectedDate );
+		}
+	})
+});
+function chakanproduct(url){
+	$.dialog({title:"查看单品",content: "url:"+url,width:"500px",height:"400px"});
+}
+pregpattern({
+	"id":"ID",
+	"outdate":"预计出库时间",
+	"cdatetime":"提交时间"
+})
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,30 @@
+.list-div table {
+  width: 100%;
+}
+
+.list-div th {
+  line-height: 25px;
+  background: #9DDD4A;
+  white-space: nowrap;
+  color:#366;
+}
+
+
+.list-div td {
+  background: #f5f5f5;
+  line-height: 20px;
+  text-align: center;
+}
+.list-div a:visited, .list-div a:link {
+  text-decoration: underline;
+  color: #192E32;
+}
+.list-div input {
+  vertical-align: middle;
+}
+.list-div a:hover {
+  color: #9D7250;
+}
+.list-div input, list-div img {
+  vertical-align: middle;
+}

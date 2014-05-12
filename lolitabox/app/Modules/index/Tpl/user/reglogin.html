@@ -1,0 +1,215 @@
+<include file="public:header_simple.inc" />
+<!--公用---头部--end------->
+<i class="zc_hd_register"></i>
+<div class="mb16">
+<div class="fm1024">
+	<div class="wp1020">
+		<div class="hd_t"></div>
+		<div class="main">
+			<div class="W_reg_info_bg">
+				<div class="W_reg_info login_wrap cfl">
+					<!------左边表单栏------------>
+					<div class="W_reg_form">
+						<h1>使用以下网站账号直接登录</h1>
+		<div class="reg_shortcut">
+		    <a href="<{:U("user/sina_login")}>" class="login_btn"   target="_target"><em class="i_sina">&nbsp;</em>登录</a>
+			<a href="<{:U("user/qq_login")}>" class="login_btn"   target="_target"><em class="i_qq">&nbsp;</em>登录</a>
+		</div>
+						
+						<div class="reg_divide">或</div>
+						<form action="<{:U('user/register')}>" method="POST" class="registerform">
+						<input name="returntitle"  id="returntitle" value="<{$Think.get.returntitle}>" type="hidden"/>
+					        <input name="returnurl"  id="returnurl" value="<{$Think.get.returnurl}>" type="hidden"/>
+					        <input name="inviteuserid" id="inviteuserid" value="<{$Think.cookie.inviteuid}>" type="hidden" />
+						<div class="info_wrap">
+							<!--邮箱-->
+							<div class="info_list cfl">
+								<div class="tit">注册邮箱：</div>
+								<div class="inp">
+									<input type="text" class="W_input_ws" tip="有效邮箱激活后可获得20积分"  errormsg="邮箱地址输入不正确"  nullmsg="请您输入邮箱地址"   datatype="e"  class="W_input_ws"   ajaxurl="<{:U("user/allow_username")}>" value="用于登录和找回密码"  name="usermail"  onfocus="if(this.value==defaultValue) {this.value=''}"  onblur="if(!value) {value=defaultValue;}">
+								</div>
+									<div class="tips">
+											<div class="Validform_checktip">有效邮箱激活后可获得20积分</div>
+									</div>
+							</div>
+							<!--昵称-->
+							<div class="info_list cfl">
+								<div class="tit">昵称：</div>
+								<div class="inp">
+									<input value="起个洋气点的！" name="nickname" onfocus="if(this.value==defaultValue) {this.value=''}"  onblur="if(!value) {value=defaultValue;}"
+										errormsg="格式：2-10个字符（可包含汉字、数字、字母及下划线）"  nullmsg="请您输入昵称"  datatype="s2-10"  class="W_input_ws" ajaxurl="<{:U("user/allow_nickname")}>" />
+								</div>
+								<div class="tips">
+										<div class="Validform_checktip">2-10个字符（可包含汉字、数字、字母及下划线）</div>
+									</div>		
+							</div>
+							<!--登录密码-->
+							<div class="info_list cfl">
+								<div class="tit">登录密码：</div>
+								<div class="inp">
+									<input  type="password"   name="password1"  class="W_input_ws"
+										errormsg="密码范围在6~16位之间,不能使用空格！" nullmsg="请您输入密码" datatype="*6-16" />
+								</div>
+								<div class="tips">
+										<div class="Validform_checktip">6-16个字符，包含字母、数字，字母区分大小写</div>
+								</div>
+							</div>
+							<!--确认密码-->
+							<div class="info_list cfl">
+								<div class="tit">确认密码：</div>
+								<div class="inp">
+									<input type="password"  
+										errormsg="您两次输入的账号密码不一致！" nullmsg="请再输入一次密码(两次输入密码需一致)" recheck="password1" datatype="*"  value="" class="W_input_ws" name='password2'>
+								</div>
+								<div class="tips">
+										<div class="Validform_checktip"></div>
+								</div>
+							</div>
+
+
+							<div class="info_list cfl">
+								<div class="tit">如何知道萝莉盒：</div>
+								<div class="inp">
+									<select name="know_way" id="know_way">
+									<option>请选择</option>
+									<option>闺蜜推荐</option>
+									<option>度娘搜索</option>
+									<option>平面杂志</option>
+									<option>网络广告</option>
+									<option>微博微信</option>
+									<option>论坛博客</option>
+									<option>校园活动</option>
+									<option>旅行社</option>
+									<option>票务推荐</option>
+									<option>其他</option>
+									</select>
+								</div>
+							</div>
+							
+							
+							<!--验证码-->
+							<div class="info_list cfl">
+								<div class="tit">验证码：</div>
+								<div class="inp">
+									<input type="text" value="" name="verify" class="W_input_ws verification"  nullmsg="请您输入验证码"  ajaxurl="<{:U("public/CheckVerify")}>" datatype="*" >
+									<div class="verification_boxs">
+											<img src="<{:U('public/verify')}>" title="看不清，点击换一张"
+										onclick="show(this)" id="veimg" style="cursor:pointer">
+									</div>
+									<a href="javascript:void(0)" title="看不清，点击换一张" onclick="showa()" class="W_ico20 ico_refresh"></a>
+								</div>
+								<div class="tips">
+										<div class="Validform_checktip"></div>
+								</div>
+							</div>
+							
+							
+							<div class="info_list cfl">
+								<div class="checked">
+									<label for="deal_yes"><input type="checkbox" checked="checked" id="deal_yes"><span class="href">我已看过并同意《<a href="<{:u('info/about',array('aid'=>10))}>" target="_blank" class="A_line3">LOLITABOX用户协议</a>》</span></label>
+								</div>
+							</div>
+							
+							<div class="info_submit cfl">
+								<div class="inp">
+									<input type="submit" value="立即注册" class="W_Fixbtn W_fix_w84">
+									<div class="loading"></div>
+									<p class="info_submit_enroll"><a href="javascript:void(0)" class="A_line2 dialog_login_obj" >已有账号，马上登录&gt;&gt;</a></p>
+									<!--a href="#" class="W_btn btn_pink_a30">
+										<span>立即注册</span>
+									</a-->
+								</div>
+							</div>
+						</div>
+						</form>
+					</div>
+					<!------右边表单栏------------>
+					<div class="W_reg_sidebar">
+						<div class="reg_sidebar_wrap">
+						
+							<h1>加入LOLITABOX萝莉盒的好处</h1>
+							<div class="reg_shortcut">
+								<p><strong>萝莉盒：</strong>只倡导全球最时尚的生活消费理念，</p>
+								<p><strong>先试用后购买，理性消费</strong>最流行！</p>
+							</div>
+							
+				<div class="reg_sidebar_Tips">
+					<dl>
+						<dt>海量美妆 尽情试用</dt>
+						<dd>
+							<p> 60多家包括国际大牌在内的美妆品牌入驻萝莉盒，提供海量美妆试用。
+							</p>
+						</dd>
+					</dl>
+					<dl>
+						<dt>订阅自己关注的美妆资讯</dt>
+						<dd>
+							关注你喜欢的品牌， 及时获得最新美妆资讯，走在潮流前端。
+						</dd>
+					</dl>
+					<dl>
+						<dt>爱晒盒 爱分享 积分送不停 </dt>
+						<dd>
+							积极晒盒、发分享，被收录就得积分，积分可以当钱花！
+						</dd>
+					</dl>
+					<dl>
+						<dt>会员回馈 惊喜多多</dt>
+						<dd>
+							不定期的品牌优惠和会员奖励，让你惊喜不断！
+						</dd>
+					</dl>
+				</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ft"></div>
+	</div>
+</div>
+</div>
+<script>
+if(!document.referrer.match("user/logout")){
+	JUMP_URL=document.referrer;
+}
+if(!TRACK_URL){
+	JUMP_URL="<{$Think.request.track_url}>" ||  "<{:u('home/index')}>";
+}
+
+$(function(){
+	//注册表单验证
+	$(".registerform").Validform({
+		tiptype:2,
+		ajaxPost:false,
+		beforeSubmit:function(curform){
+			$(".loading").html('<img src="/public/images/loading.gif">');
+		},
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+				
+			}
+		}
+	});
+})
+
+//替换验证码
+function show(obj){
+	obj.src="__APP__/public/verify/random/"+Math.random();
+	var ve = $(":text[name='verify']")
+	if(ve.val() != ''){
+		cludefun();
+	}
+}
+
+function showa(){
+	$("#veimg").click();
+}
+
+</script>
+
+<!--标准底---start--->
+<include file="public:footer_simple.inc" />

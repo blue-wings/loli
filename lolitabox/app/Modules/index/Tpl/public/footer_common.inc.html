@@ -1,0 +1,13 @@
+<script src="public/js/jquery.lazyload.js"></script>
+<script src="/public/js/jquery-powerFloat.js"></script>
+<script src="/public/artdialog/jquery.artDialog.source.js?skin=simple"></script>
+<script src="/public/artdialog/plugins/iframeTools.source.js"></script>
+<script src="/public/js/public.js"></script>
+<script type="text/javascript"  src="<{:u('public/user_trace',array('module' => MODULE_NAME,'action' =>ACTION_NAME,'url' =>urlencode(base64_encode($_SERVER['REQUEST_URI']))))}>"></script>
+<script src="public/kindeditor/kindeditor.js"></script>
+<script src="public/kindeditor/lang/zh_CN.js"></script>
+<script>
+$(function () {
+	$("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
+});
+</script>

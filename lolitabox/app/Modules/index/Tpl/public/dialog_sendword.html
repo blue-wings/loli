@@ -1,0 +1,50 @@
+<div class="tc_pop tc_share_wrap ">
+	
+	<div class="login_tit">
+		<h2><{$return.sw_title}></h2>
+	</div>
+	<div class="share_content">
+		<!---内容--->		
+		<div class="share_entry">
+			<textarea class="input_detail"  id="shareto_textarea"><{$return.sendword}></textarea>
+		</div>
+		<!---按钮--->		
+		<div class="share_smb">
+			<a href="javascript:void(0)" class="W_pin_b" onclick="add_sw('<{$return[orderid]}>','<{$return[childid]}>','<{$return[type]}>',this)">提交</a>
+		</div>
+	</div>
+</div>
+<script>
+	
+	function add_sw(orderid,childid,type,obj){
+		if(!USER_ID){
+			dialog_login();
+		}else{
+			var content=$.trim($("#shareto_textarea").val());
+			if(content==""){
+				id_dialog("内容不能为空",obj,2);return false;
+			}
+			$.ajax({
+				url:"<{:u('home/add_sendword')}>",
+				type:"post",
+				dataType:"json",
+				data:{orderid:orderid,childid:childid,type:type,content:content},
+				success:function(ret){
+					if(parseInt(ret.status)==1){
+						if(type==1){
+							$("#sw_btn_"+childid).html("修改礼品赠言");
+							$("#sw_btn_"+childid).removeClass("W_pin_b");
+						}
+						var fun=function(){
+							sendword_dialog.close();
+						}
+						id_dialog(ret.info,obj,1,fun,3);
+					}else{
+						id_dialog(ret.info,obj,2,false,3);
+					}
+				}
+			})
+		}
+	}
+
+</script>

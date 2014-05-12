@@ -1,0 +1,299 @@
+<include file="public:header.inc" />
+<div class="fm1020 top_guide">
+	所在位置：<a href="/">网站首页</a> &gt; <a href="/buy/">订购美妆盒</a> &gt; <span class="g9"><{$return[boxinfo][name]}>【特权会员专属】</span>
+</div>
+<div class="fm1020_c">
+	<!-----提示-步骤------>
+	<div class="wp1020 mb10">
+		<div class="hd">
+			<div class="tit_hd_tab l">
+				<div class="indent_tit"><p class="hook">&nbsp;</p><p class="text">注册登录</p></div>
+				<div class="indent_tit"><p class="hook">&nbsp;</p><p class="text">立即订购</p></div>
+				<div class="indent_tit select"><p class="number">3</p><p class="text">挑选产品</p></div>
+				<div class="indent_tit"><p class="number">4</p><p class="text">提交订单</p></div>
+				<div class="indent_tit "><p class="number">5</p><p class="text">支付订单</p></div>
+				<div class="indent_tit"><p class="number">6</p><p class="text">享受试用</p></div>
+				<div class="indent_tit"><p class="number">7</p><p class="text">获得奖励</p></div>
+			</div>
+			</div>
+		<div class="main">
+			<i class="hei1"></i>
+			<!--订购步骤--->
+			<!-- 
+			<div class="showboxs_tips">
+				<ul class="steplist">
+				<volist name="return[titlelist]" id="vo">
+					<li class="stepspeak_<{$i}>"><p><{$vo[key]}>款</p><{$vo[info]}></li>
+				</volist>
+				</ul>
+			</div>
+			 -->
+			<div class="showboxs_tips showboxs_tips_new">
+				<ul class="steplist cfl">
+					<li class="stepspeak_1">选择<p>2款</p>推荐试用</li>
+					<li class="stepspeak_2">选择<p>6款</p>心水试用</li>
+					<li class="stepspeak_3"><p>特权会员专属加价购</p><p style="font-size:12px;">（提交订单后别忘记还有超值加价购哦）</p></li>
+				</ul>
+			</div>
+			<i class="hei1"></i>		
+		</div>
+		<div class="ft"></div>
+	</div>
+	
+	<!---自由选内容--->
+	<div class="showboxs_wrap cfl" id="loliboxsChangeWrap">
+		<div class="f738 wp738 l">
+			<div class="showboxs_minute">
+				<!---编辑热荐-标题--->
+			<foreach name="return[productlist]" item="pro" key="ikey">	
+				<div class="hd_bg">
+					<h3 class="l f18 mr10"><{$return[cnamelist][$ikey][title]}>：请在以下产品中选择您最想要的 <{$ikey}> 款</h3>
+				</div>
+				<div class="main">
+					<div class="fabric">
+						<div class="cfl My_order_fabirc">
+							
+						<foreach name="pro" item="vo">	
+							<div class="fabric_list_cont auto" style="height:390px;">
+								<dl>
+									<dt>
+									<a href="javascript:void(0)" onclick="dialog_products(<{$vo.pid}>);"><img src="public/images/modbg_v5.jpg" data-original="<{$vo.pimg}>" width="185" height="185" alt="<{$vo.pname}>" style="display: inline;"></a>
+									<notempty name="vo.commend_tags_class">	<i class="<{$vo.commend_tags_class}>"></i></notempty>
+									<i class="i_select" <neq name="vo[if_select]" value="1">style="display:none;"</neq> id="i_select_<{$vo.id}>"></i>
+									</dt>
+									
+								<dd class="name"><a href="javascript:void(0)"  onclick="dialog_products('<{$vo.pid}>')" class="A_line2"><{$vo.pname}></a></dd>
+								<dd>试用规格：<{$vo.norms|default="暂无"}></dd>
+								<dd>
+								<if condition="$vo[for_skin] eq '' && $vo[for_hair] eq ''">
+									适用肤质：暂无
+								<elseif condition="$vo.for_skin neq ''" />
+									适用肤质：<{$vo[for_skin]}>
+								<else />
+									适用发质：<{$vo[for_hair]}>
+								</if>								
+								<dd>适用人群：<{$vo.for_people|default="暂无"}></dd>
+								<dd>产品功效：<{$vo.effect.1|default="暂无"}></dd>									
+									<if condition="$vo.validdate neq ''">
+										<dd>有效期：<span><{$vo.validdate}></span></dd>
+									</if>
+									<dd class="brand">
+										<volist name="vo.sale_tags"    id="v">
+											<a href="javascript:void(0)" class="t_tips t_tips_0<{$i}>"><{$v}></a>
+										</volist>
+									</dd>
+									<dd class="tc">
+									<if condition="$vo.now_num elt 0">
+										<a class="W_pin_grey">已售完</a>
+									<else />
+										<a href="javascript:void(0)" <eq name="vo[if_select]" value="1">class="W_pin_grey zixuan_select"<else />class="W_pin_b zixuan_select"</eq> zixuan-id="<{$vo[id]}>" zixuan-type="<{$ikey}>" zixuan-name="<{$return[cnamelist][$ikey][title]}>"  id="iex_select_<{$vo.id}>"><span><eq name="vo[if_select]" value="1">已选择<else />选择</eq></span></a>
+									</if>
+									</dd>
+								</dl>
+							</div>
+						</foreach>	
+						</div>
+					</div>
+				</div>
+			</foreach>	
+				
+<if condition="$return[fulilist] neq ''">				
+				<!---口碑产品-标题--->
+				<div class="cont_bg">
+					<h3 class="l f18 mr10">超级福利</h3>再不入手就没咯！
+				</div>
+				<!---口碑产品-内容--->
+				<div class="main">
+					<div class="fabric">
+						<div class="cfl My_order_fabirc">
+							<!----内容块1---->
+							<volist name="return[fulilist]" id="vo">
+								<div class="fabric_list_cont auto">
+									<dl>
+										<dt><a href="javascript:void(0)" onclick="dialog_products(<{$vo.pid}>);"><img src="public/images/modbg_v5.jpg" data-original="<{$vo.pimg}>" width="185" height="185" alt="<{$vo.pname}>" style="display: inline;"></a>
+										<if condition="$vo.iscommend eq 1">
+											<i class="t_recommend r_t"></i>
+										</if>		
+										</dt>
+										
+									<dd class="name"><a href="javascript:void(0)"  onclick="dialog_products('<{$vo.pid}>')" class="A_line2"><{$vo.pname}></a></dd>
+									<dd>试用规格：<{$vo.norms|default="暂无"}></dd>
+									<dd>
+									<if condition="$vo[for_skin] eq '' && $vo[for_hair] eq ''">
+										适用肤质：暂无
+									<elseif condition="$vo.for_skin neq ''" />
+										适用肤质：<{$vo[for_skin]}>
+									<else />
+										适用发质：<{$vo[for_hair]}>
+									</if>								
+									<dd>适用人群：<{$vo.for_people|default="暂无"}></dd>
+									<dd>产品功效：<{$vo.effect.1|default="暂无"}></dd>											
+										
+										<dd class="brand">
+											<volist name="vo.sale_tags"    id="v">
+												<a href="javascript:void(0)" class="t_tips t_tips_0<{$i}>"><{$v}></a>
+											</volist>
+										</dd>										
+									</dl>
+								</div>
+							</volist>
+						</div>
+					</div>
+				</div>
+	</if>			
+	
+	
+
+<!-- 加价购start -->
+
+
+<!--if condition="$return[projectlist] neq ''">				
+			<foreach name="return[projectlist]" item="pro" key="ikey">	
+				<div class="cont_bg">
+					<h3 class="l f18 mr10"><{$pro[info][projectname]}></h3>
+					<p class="r mt10" style="_width:200px;">
+					
+					<a href="javascript:void(0)" class="W_pin_b mr10 qiang_hb" id="qiang_hb_<{$pro[info][id]}>" <eq name="pro[info][if_select]" value="1">style="display:none;"</eq> onclick="to_qiang('<{$pro[info][id]}>')">抢购红包</a>
+					
+					
+					<a href="javascript:void(0)" class="W_pin_grey mr10 cancel_hb" id="cancel_hb_<{$pro[info][id]}>" <neq name="pro[info][if_select]" value="1">style="display:none;"</neq> onclick="cancel_hb('<{$pro[info][id]}>')"><b>取消礼包</b></a>
+					
+				</div>
+				<div class="main">
+					<i class="hei1"></i>
+					<p class="mt10 f14"><{$pro[info][remark]}></p>
+					<div class="fabric">
+						<div class="cfl My_order_fabirc">
+							<volist name="pro[productlist]" id="vo">
+								<div class="fabric_list_cont auto">
+									<dl>
+										<dt><a href="javascript:void(0)" onclick="dialog_products(<{$vo.pid}>);"><img src="public/images/modbg_v5.jpg" data-original="<{$vo.pimg}>" width="185" height="185" alt="<{$vo.pname}>" style="display: inline;"></a>
+										<if condition="$vo.iscommend eq 1">
+											<i class="t_recommend r_t"></i>
+										</if>		
+										</dt>
+										
+										<dd class="name"><a href="javascript:void(0)"  onclick="dialog_products('<{$vo.pid}>')" class="A_line2"><{$vo.pname}></a></dd>
+										<dd>试用规格：<{$vo.norms|default="暂无"}></dd>
+										<dd>
+										<if condition="$vo[for_skin] eq '' && $vo[for_hair] eq ''">
+											适用肤质：暂无
+										<elseif condition="$vo.for_skin neq ''" />
+											适用肤质：<{$vo[for_skin]}>
+										<else />
+											适用发质：<{$vo[for_hair]}>
+										</if>								
+										<dd>适用人群：<{$vo.for_people|default="暂无"}></dd>
+										<dd>产品功效：<{$vo.effect.1|default="暂无"}></dd>												
+										
+										<dd class="brand">
+											<volist name="vo.sale_tags"    id="v">
+												<a href="javascript:void(0)" class="t_tips t_tips_0<{$i}>"><{$v}></a>
+											</volist>
+										</dd>										
+									</dl>
+								</div>
+							</volist>
+						</div>
+					</div>
+				</div>
+			</foreach>
+	</if-->
+
+<!-- 加价购end -->
+
+
+				<div class="ft" id="footerMeg" ></div>
+			</div>
+		</div>
+		
+		<!---右侧---->
+		<div class="f275 r">
+		
+		<div id="changeInventoryMeg">
+		<div class="order_integral_xf ">
+				<div class="hd">
+					<h2>我的随心选方案</h2>
+				</div>
+				<div class="main">
+					<!--悬浮框内容-->
+					<i class="hei1"></i>
+					
+					<div class="integral_wrap">
+					
+					<div class="integral_wrap_none" id="iexchange_nomsg" <notempty name="return[sessionlist]">style="display:none;"</notempty>>
+						您还没选择任何产品
+					</div>						
+					
+						<ul id="zixuan_selectlist">
+						<volist name="return[sessionlist]" id="vo">
+								<li id="have_select_<{$vo[itemid]}>">
+									<dl class="cfl">
+										<dt><a href="javascript:void(0)" onclick="dialog_products(<{$vo.productid}>);"><img src="<{$vo.pimg}>" width="64" height="64" alt="<{$vo[pname]}>" /></a></dt>
+										<dd class="name"><a href="javascript:void(0)" onclick="dialog_products(<{$vo.productid}>);">【<{$return[cnamelist][$vo[type]][title]}>】<{$vo[pname]}></a></dd>
+										<dd class="select">
+										<span><{$vo[norms]}></span>
+										<a href="javascript:void(0)" class="delect" onclick="del_zixuan('<{$vo.itemid}>','<{$vo[type]}>')">删除</a></dd>
+									</dl>
+								</li>
+						</volist>	
+						</ul>
+					</div>
+					
+			<div class="integral_submit">
+					<p class="tc"><a href="javascript:void(0)" class="W_pin_b14" onclick="check_zixuan(1,this)">立即订购</a></p>
+					<div><a href="<{:u("loli/daren")}>" style="display:block;color:red;font-size:12px;margin-top:10px;">拒绝选择困难，美妆达人给你支招！</a></div>
+			</div>			
+					
+			<i class="hei1"></i>
+			</div>
+			<div class="ft"></div>
+	</div>
+	
+	
+</div>
+			
+	
+			
+			
+		</div>
+		
+	</div>
+</div>
+<volist name="return[select_num]" id="vo">
+	<input type="hidden" id="pro_type_<{$i}>" value="<{$vo}>" />
+</volist>
+<input type="hidden" id="boxid" value="<{$return[boxinfo][boxid]}>" />
+<input type="hidden" id="total_selectnum" value="<{$return[total_selectnum]}>">
+<script src="public/js/buy.js"></script>
+<!--订购萝莉盒--内容--end-------->
+		<script>
+function findDimensions(topPeak,wrapPeak,btnPeak){
+	var isIE6 = !-[1,] && !window.XMLHttpRequest;
+	var meg = $(wrapPeak);
+	var ids =$(topPeak);
+	var scrolltop_top =  ids.offset().top-33;
+	var scrolltop_left =  ids.offset().left ;
+	var footer_top = $(btnPeak).offset().top-meg.height();
+		
+	$(window).scroll(function(){
+		var H = $(this).scrollTop();
+		var fl_left = scrolltop_left+747+ "px";
+		 if( H >= scrolltop_top){
+			 if(isIE6){
+				meg.css({position: "absolute","top":H+"px","left":fl_left});
+			 }else if(H >= footer_top){
+				meg.css({position: "absolute","top":footer_top+"px"});
+			 }else{
+				meg.css({"position":"fixed","top":"0","left":fl_left});
+			}
+		}
+		else{
+			meg.css({"position":"static"});
+		}
+	});
+}
+findDimensions('#loliboxsChangeWrap','#changeInventoryMeg','#footerMeg');
+window.onresize=findDimensions;						
+</script>
+<include file="public:footer.inc" />

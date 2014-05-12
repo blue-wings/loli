@@ -1,0 +1,402 @@
+<include file="Public:header" />
+<style>
+table{white-space:normal; word-break:break-all;overflow:hidden}
+</style>
+<link rel="stylesheet" href="__PUBLIC__/js/colorbox/colorbox.css">
+<script src="__PUBLIC__/js/colorbox/jquery.colorbox-min.js"></script>
+
+<div class="panel">
+<div align="left">			
+<fieldset class="fieldset">
+<legend>日志查询条件</legend>
+<form name="myform" id="myform" action="__ACTION__" method="GET">
+用户ID：<input id='userid' name='userid' type='text' value='{$Think.get.userid}'>  
+用户昵称：<input id='nickname' name='nickname' type='text' value='{$Think.get.nickname}'>
+评测日期: 
+<label for="from">From</label>
+<input type="text" id="from" name="from" value="{$Think.get.from}"  size="15"/>
+<label for="to">to</label>
+<input type="text" id="to" name="to" value="{$Think.get.to}" size="15"/>
+<br>
+日志ID：<input type="text"  name="blogid"  value="{$Think.get.blogid}">
+标题关键字：<input id='keywords' name='keywords' type='text' value='{$Think.get.keywords}'>
+分类名称: <select name="cateid">
+			<option value="">全部</option>
+			<volist name="li.blogtype" id="ls">
+				<option value="{$ls.cid}">{$ls.name}</option>
+			</volist>
+		 </select>
+用户来源：<select name="utype">
+			<option value="" selected>全部</option>
+			<volist name="li.userresour" id="re">
+				<option value="{$re.type}">{$re.type}</option>
+			</volist>
+		</select>
+<br>
+
+内容级别:<select name="contentlevel">
+		<option value="" selected>全部</option>
+		<option value="5">精华</option>
+		<option value="1">普通</option>
+		<option value="2">草稿</option>
+		</select>
+置顶状态:<select name="stickies">
+		<option value="" selected>全部</option><option value="1">置顶</option><option value="0">未置顶</option></select>
+日志类型:<select name="blog_type">
+		<option value="" selected>全部</option>
+		<option value="1">普通日志</option>
+		<option value="2">图片日志</option>
+		</select>
+终端类型:<select name="is_mobile">
+		<option value="" selected>全部</option>
+		<option value="0">网站</option>
+		<option value="1">手机</option>
+		</select>
+是否需要审核:<select name="is_check">
+		<option value="" selected>全部</option>
+		<option value="0">否</option>
+		<option value="1">是</option>
+		</select>
+		<br/>
+
+<input type='submit' name='search'>
+</form>
+</fieldset>
+		</div>
+	</div>
+<script>
+$("select[name='is_mobile']").val('{$Think.request.is_mobile}');
+$("select[name='is_check']").val('{$Think.request.is_check}');
+</script>
+<form name="listform" id="listform" onsubmit="return sub()" action="__URL__/delms" method="post">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">日志列表</span></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><table border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="60"></td>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif" height="26" align="center">
+            <td width="2%">	选择		</td>
+            <td width="3%">	日志ID	</td>
+			<td width="3%">	用户ID	</td>
+          	<td width="3%">	级别		</td>
+          	<td width="4%">	置顶		</td>
+            <td width="5%">	用户名	</td>
+            <td width="5%">	分类名称	</td>
+			<td width="5%">	类型		</td>
+            <td width="8%">	标题		</td>
+			<td width="4%">	内容IMG	</td>
+            <td width="12%">内容		</td>
+            <td width="2%">	回复数	</td>
+            <td width="4%">	状态		</td>
+           	<td width="3%">	终端		</td>
+            <td width="5%">	发布时间	</td>
+          </tr>
+          <volist name="list" id="bloglist" emtpy="这里一片空白" key="k">	
+			<tr style="text-align:center" height="26" bgcolor="#FFFFFF" align="center">
+         		<td>
+              		<input name="id[]" type="checkbox" style="border:0" class="STYLE2" value="{$bloglist.id}" />
+        		</td>
+        		<td>
+					<a href="/space/blog_detail/blogid/{$bloglist.id}/id/{$bloglist.userid}.html" target="_blank"
+					>{$bloglist.id}</a>
+				</td>
+				<td>
+					<a href="{:U('User/userList',array('userid'=>$bloglist['userid']))}">{$bloglist.userid}</a>
+					<br><b>{$bloglist.usertype}</b>
+				</td>
+				<td>
+					<input type="hidden" value="{$bloglist.contentlevel}" id="con_{$k}">
+					<if condition="$bloglist.contentlevel eq 5">
+						<a href="#" id="contentlevel_{$k}" onclick="changes('{$bloglist.id}','{$k}','contentlevel')">	<span  style='color:red'>精华</span>
+				    <elseif condition="$bloglist.contentlevel eq 0" />
+						<span  id="contentlevel_{$k}" style='color:#804040'>草稿</span>
+					<else />
+						<a href="#" id="contentlevel_{$k}" onclick="changes('{$bloglist.id}','{$k}','contentlevel')"><span  style='color:#06482A'>普通</span>
+					</if></a>
+				</td>
+				<td>
+					<input type="hidden" value="{$bloglist.toptime}" id="toptime_{$k}">
+					<a href="#" id="top_{$k}" onclick="changes('{$bloglist.id}','{$k}','toptime')">
+					<if condition="$bloglist.toptime gt 0"><span  style='color:red'>置顶</span><else /><span  style='color:#06482A'>未置顶</span></if>
+					</a>
+				</td>
+				<td>
+					<a href="{:U('User/userList',array('userid'=>$bloglist['userid']))}">{$bloglist.nickname}</a>
+				</td>
+		        <td>{$bloglist.name}</td>	
+				<td>
+					<if condition="$bloglist[type] eq 1">普通日志<else />图片日志</if>
+				</td>	
+		        <td>
+					<a href="/space/blog_detail/blogid/{$bloglist.id}/id/{$bloglist.userid}.html" target="_blank"
+					>{$bloglist.title}</a>
+				</td>		
+				<td>
+				  <if condition="$bloglist[img] neq '' AND $bloglist[img]  neq 'no image!'">
+					<div style='display:none'>
+						<div style='padding:10px; background:#fff;' id="img_{$k}" >
+							<img src="{$bloglist.img}" />
+						</div>
+					</div>
+					<a class='inline' href="#img_{$k}"><font color='red'>查看</font></a>
+				   <else />
+				   		无图片信息
+					</if>
+				</td>
+		        <td>
+		        	{/*内容隐藏*/}
+					<div style='display:none'>
+						<div style='padding:10px; background:#fff;' id="blog_content_{$bloglist.id}" >
+							{$bloglist.content}
+						</div>
+					</div>
+					{$bloglist.summary}
+		       		<a class='inline' href="#blog_content_{$bloglist.id}"><font color='red'>查看</font></a>
+		       	</td>				
+				<td>
+					<if condition="$bloglist['replynum'] gt 0">
+						<a href="{:U('UserBlog/showreply',array('id'=>$bloglist[id]))}">{$bloglist.replynum}</a>
+					<else />
+						{$bloglist.replynum}
+					</if>
+				</td>	
+				<td>
+					<input type="hidden" value="{$bloglist.status}" id="status_{$k}">
+					<a href="#" id="sts_{$k}" onclick="changes('{$bloglist.id}','{$k}','status')">
+						<if condition="$bloglist.status gt 0"><span  style='color:red'>显示</span><else /><span  style='color:#06482A'>不显示</span></if>
+					</a>
+				</td>
+				<td style="width:50px;" id="ptime_{$k}">
+					<eq name="bloglist.is_mobile"  value="1">手机
+					<else/>网站
+					</eq>
+				</td>	
+				<td style="width:50px;" id="ptime_{$k}">
+					{$bloglist.postdate|date="Y-m-d H:i:s",###}
+				</td>
+			</tr>
+		  </volist>
+        </table></td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr style="text-align:center">
+          	<if condition="$bloglist neq ''">            
+          		<td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+            	<td width="75%" class="STYLE1"><input type="button" id="sele" value="全选/全不选"> <input type="submit" id="delSelected" value="删除所有选定评测信息"></td>
+          	<else /><td>没有找到您搜索的数据!</td></if>
+            </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</form>
+
+<script>
+$(function(){
+	var contentlevel="{$Think.get.contentlevel}";
+	stickies="{$Think.get.stickies}";
+	cateid="{$Think.get.cateid}";
+
+	blog_type="{$Think.get.blog_type}";
+	utype="{$Think.get.utype}";
+
+	if(utype !=null){
+		$("select[name='utype']").val(utype);
+	}
+
+	if(contentlevel !=null){
+		$("select[name='contentlevel']").val(contentlevel);
+	}
+	if(stickies !=null){
+		$("select[name='stickies']").val(stickies);
+	}
+	if(cateid !=null){
+		$("select[name='cateid']").val(cateid);
+	}
+	if(blog_type !=null){
+		$("select[name='blog_type']").val(blog_type);
+	}
+
+	$(".inline").colorbox({inline:true, width:"50%"});
+})
+
+function changes(id,key,type){
+	
+	var tip1="是否确认要将内容级别升级为精华？";
+	var tip2="是否确认要将内容级别变成普通？";
+	var tip3="是否确认要将该内容置顶？";
+	var tip4="是否确认要将该内容变为不置顶？";
+	var tip5="是否确认要将该内容显示？";
+	var tip6="是否确认要将该内容变为不显示？";
+	var content=$("#con_"+key).val();
+	var top=$("#toptime_"+key).val();
+	var status=$("#status_"+key).val();
+
+	//contentlevel   toptime    status
+	if(type=='contentlevel'){
+		if(content=='1'){
+			if(confirm(tip1)){
+				sendstatus(id,key,type);
+			}
+		}else{
+			if(confirm(tip2)){
+				sendstatus(id,key,type);
+			}
+		}
+	}else if(type=='toptime'){
+		if(top=='0'){
+			if(confirm(tip3)){
+				sendstatus(id,key,type);
+			}
+		}
+	}else if(type='status'){
+		if(status=='0'){
+			if(confirm(tip5)){
+				sendstatus(id,key,type);
+			}
+		}else{
+			if(confirm(tip6)){
+				sendstatus(id,key,type);
+			}
+		}
+
+	}
+}
+
+function sendstatus(id,key,type){
+	$.ajax({
+		url:"{:U('UserBlog/setBlogMessage')}",
+		type:"post",
+		dataType:"json",
+		data:"id="+id+"&type="+type+"&m="+Math.random(),
+		success: function(chkresult){
+			if(parseInt(chkresult.status)==1){
+
+				var data=Number(chkresult.data);
+
+				if(type=='contentlevel'){
+					if(data==5){
+						$("#contentlevel_"+key).html("<span  style='color:red'>精华</span>");
+					}else{
+						$("#contentlevel_"+key).html("<span  style='color:#06482A'>普通</span>");
+					}
+
+					$("#con_"+key).val(data);
+				}else if(type=='toptime'){
+					if(data==1){
+						$("#top_"+key).html("<span  style='color:red'>置顶</span>");
+					}else{
+						$("#top_"+key).html("<span  style='color:#06482A'>未置顶</span>");
+					}
+
+					$("#toptime_"+key).val(data);
+				}else{
+					if(data==1){
+						$("#sts_"+key).html("<span  style='color:red'>显示</span>");
+					}else{
+						$("#sts_"+key).html("<span  style='color:#06482A'>不显示</span>");
+					}
+
+					$("#status_"+key).val(data);
+
+				}
+			}
+		}
+	})
+}
+
+function del(id){
+	if(confirm('确认将此信息删除吗?')){
+		$.ajax({
+			url:"{:U('UserBlog/delMessage')}",
+			type:"post",
+			dataType:"json",
+			data:"id="+id+"&m="+Math.random(),
+			success: function(chkresult){
+				if(parseInt(chkresult.status)==1){
+					alert("删除成功!");
+					location.reload();
+				}
+			}
+		})
+	}
+}
+
+function sub(){
+	alert('此功能暂时不可用哦!');
+	return false;
+}
+</script>
+<script>
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+$(function() {
+	$("#sele").toggle(function(){
+		$('[name=id[]]:checkbox').attr('checked',true);
+	},function(){
+		$('[name=id[]]:checkbox').attr('checked',false);
+	});
+
+	$( "#from" ).datepicker({
+		changeMonth: true,
+		defaultDate: "-1w",
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$( "#to" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$( "#to" ).datepicker({
+		changeMonth: true,
+		defaultDate: "1w",
+		numberOfMonths: 1,
+		onSelect: function( selectedDate ) {
+			$( "#from" ).datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+});
+</script>
+<include file="Public:footer" />

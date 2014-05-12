@@ -1,0 +1,41 @@
+                    <div class="domain_playboxs">
+						<!-- 	<i class="ico_ilite"></i> -->
+							<dl class="domain_playboxs_dl">
+								<dt>任务描述：</dt>
+			<dd>来到萝莉盒就先来签到吧！养成好习惯，积分天天送！</dd>
+			<dd>注：每天只能签到一次哦！</dd>
+							</dl>
+							<dl class="domain_playboxs_dl">
+								<dt>任务奖励：</dt>
+								<dd>1积分</dd>
+							</dl>
+							<p class="domain_playboxs_btn cfl">
+								<a href="javascript:void(0)" class="W_pin_b14"  onclick="checkusersign(this)">每日签到</a>
+							</p>
+				    </div>
+<script>
+function checkusersign(obj){
+	 var userid="<{$return[userinfo][userid]}>";
+	 if(!userid){
+		 dialog_login();return false;
+	 }
+		$.ajax({
+			url:"<{:u('home/user_sign')}>",
+			type:"post",
+			dataType:"json",
+			success:function(ret){
+				if(parseInt(ret.status)==1){
+					id_dialog("您已经签到成功，获得1个积分",obj,1,function(){
+						 location.href=location.href;
+					 },2);
+				}else{
+					if(parseInt(ret.data)==100){
+						id_dialog("今天已签到，明天继续哦~",obj,2,false,2);
+					}else{
+						id_dialog("签到失败",obj,2,false,2);
+					}
+				}
+			}
+		}) 
+} 
+</script>

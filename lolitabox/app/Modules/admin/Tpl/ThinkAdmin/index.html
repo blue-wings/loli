@@ -1,0 +1,74 @@
+<include file="Public:header" />
+<link href="__PUBLIC__/css/table.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/common.css" type="text/css" rel="stylesheet"/>
+<div class="list-div">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th align="left" scope="col" class="sectitle">后台用户列表</th>
+  </tr>
+  <tr height="20px;">
+  <td>&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+    	<input type="button" value="添加后台账号" onclick="window.location.href='__URL__/add/'"  name="addAmin"/>
+        <form action="__URL__/index/" method="post">
+        	<input type="text" value=""  name="account"  size="20"/>
+            <input type="submit" value="查询" />
+        </form>
+    </td>
+  </tr>
+</table>
+</div>
+<div class="list-div">
+<table border="0" cellspacing="1" cellpadding="2"  bordercolor="#c0de98" id="datatable">
+  <tr>
+    <th scope="col">编号</th>
+    <th scope="col">用户名</th>
+    <th scope="col">昵称</th>
+    <th scope="col">添加时间</th>
+    <th scope="col">上次登录</th>
+    <th scope="col">登录次数</th>
+    <th scope="col">状态</th>
+    <th scope="col">操作</th>
+  </tr>
+  
+  <volist name="list"  id="data">
+  <tr>
+    <td>{$data.id}</td>
+    <td>{$data.account}</td>
+    <td>{$data.nickname}</td>
+    <td>{$data.create_time|date="Y-m-d H:i:s",###}</td>
+    <td>{$data.last_login_time|date="Y-m-d H:i:s",###}</td>
+    <td>{$data.login_count}</td>
+    <td>{$data.status|getStatus}</td>
+    <td>
+     {$data.status|showStatus=###,$data['id']}
+     | <a href="__URL__/edit/id/{$data.id}">编辑</a>  | <a href="javascript:void(0);" onclick="return del({$data.id});">删除</a></td>
+  </tr>
+  </volist>
+  
+  <tr>
+ 	<td colspan="8" align="right">{$page}</td>
+  </tr>
+</table>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#datatable tr:gt(0)").hover(function() {
+		$(this).children("td").css({background:"#bcd4ec"});
+	}, function() {
+		$(this).children("td").css({background:"#F5F5F5"});
+	});
+})
+
+function del(id){
+	if(confirm("你确定要删除吗？")){
+		window.location.href="__URL__/delete/id/"+id;
+		return true;
+	}else{
+		return false;
+	}
+}
+</script>
+<include file="Public:footer" />

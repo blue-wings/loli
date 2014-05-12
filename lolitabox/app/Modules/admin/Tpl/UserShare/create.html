@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="/public/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/public/js/lolitaboxFace.js"></script>
+<script>
+function getFacediv(id){
+	$('.emotion').qqFace({
+		assign:''+id, //给那个控件赋值
+		path:'public/lolitabox/smilies/'	//表情存放的路径
+	});
+}
+$(function(){
+	getFacediv('sendReview_dialog');
+})
+</script>
+</head>
+<body>
+<iframe name="hidden_frame" id="hidden_frame" style="display:none" ></iframe>
+<div class="gl_tc_W590 tc_pop tc_seeDialogue_wrap"  style="padding:10px">
+      <div class="tc_send_disc">			
+					<div class="send_weibo cfl" id="post_share_div">
+						<div id="show"></div>
+						<div class="input cfl">
+						    <input type="hidden"  id="ac"  value="{$ac|default='create'}">
+						    用户ID：<input type="text"  id="userid"  value="{$info.userid}">&nbsp;&nbsp;<span id="userid_tip"  style="color:red"></span></br></br>
+						    定时：<input type="text"  id="sendtime"  value="<if condition="$info[sendtime] neq ''">{$info.sendtime|date='Y-m-d H:i:s',###}<else/><?php echo date('Y-m-d H:i:s');?></if>">&nbsp;&nbsp;格式为0000-00-00 00:00:00 </br></br>
+						    资源类型：<select id="resourcetype">
+						          <option value="0">不限</option>
+						           <option value="1">产品</option>
+						            <option value="2">品牌</option>
+						             <option value="3">解决方案</option>
+						             </select><br></br>
+						    资源ID：<input type="text"  id="resourceid" value="{$info.data.resourceid}">&nbsp;&nbsp;<span id="resourceid_tip"  style="color:red"></span><br></br>
+						    内容：<br>
+							<textarea class="input_detail"  style='line-height:18px; table-layout:fixed;word-break:break-all' title="分享输入框" id="sendReview_dialog"  cols="60" rows="6" >{$info.data.content}</textarea></br></br>
+							<!--a class="send_btn" href="#" target="_blank"></a-->
+							<!--class="send_btn"添加disable为灰色按钮-->
+						</div>
+						
+						<div class="func_area cfl">
+							
+							<div class="kind_detail">
+							<form id="imgform" action="{:u('index/common/UploadSharePic')}" enctype="multipart/form-data"  target="hidden_frame" method="POST">  	
+								<div class="kind_detail_ico"><a class="W_ico20 icon_sw_face emotion" title="添加表情"></a></div>
+								
+							<div class="kind_detail_ico"  id="file_pic" >
+								<a class="W_ico20 icon_sw_img" title="图片上传" >
+									图片：<input type="file" id="fileTuDialog" name="file_tu" onchange="previewImage()" />
+								</a>
+							</div>
+							<input type="hidden" value="{$info.data.img}" id="imgpathDialog" name="imgpath" />
+							
+							</form>	
+							</div>
+							
+						</div>
+						<!--图片上传区域----->
+						<div class="send_img_upload cfl"  id="sharePicDialog"  style="display:none;">
+							<div class="img_upload">
+								<img src="{$info.data.img}"  id="imgSharePicDialog"  width="350px"/>
+								<div class="close"><a href="javascript:void(0)" onclick="close_pic()" class="W_ico12 icon_close"></a></div>
+							</div>
+							
+						</div>	
+						<div class="func"  style='text-align:center'>
+								<!-- <a href="<{:u('user/sina_lock')}>" target="_blank">
+									<b class="icon25_qq"></b><span class="text_c">同步设置</span>
+								</a> -->
+								<!--a href="#" target="_blank" class="btn_report_a25 W_btn">
+									<span>发表</span>
+								</a>
+								<!--class="btn_report_a25"添加disable为灰色按钮-->								
+								<input type="button" id="write_share" value=" 保 存  ">
+							</div>
+					</div>
+	    </div>
+	</div>
+<style>
+#at_userslist{position: absolute; top:-999px; left:0; display: none; z-index: 9999; width: 180px; overflow: hidden; }
+#at_userslist ul{border: 1px solid #ccc; padding: 1px; background-color: #fff; border-radius: 2px;}
+#at_userslist ul li{width:180px; height: 24px; line-height: 24px; background-color: #fff; padding: 0 10px; overflow:hidden; white-space:nowrap; text-overflow: ellipsis; }
+#at_userslist ul li.tit{color: #999; border-bottom: 1px dashed #eee;}
+#at_userslist ul li.on{background-color: #e8e8e8; cursor: pointer; color: #000;}
+#at_textarea{position:absolute;overflow:hidden;z-index:-9999; top:-999px; left:0; }
+</style>
+<style>
+#at_textarea{white-space:pre-wrap; /* css3.0 */
+white-space:-moz-pre-wrap; /* Firefox */
+white-space:-pre-wrap; /* Opera 4-6 */
+white-space:-o-pre-wrap; /* Opera 7 */
+word-wrap:break-word; /* Internet Explorer 5.5+ */
+word-break:break-all;
+}
+#sendReview_dialog{
+word-break:break-all;
+}
+</style>
+<script type="text/javascript" src="/public/js/lolitaboxAt.js"></script>
+<script>
+var api = frameElement.api, W = api.opener;
+$(function(){
+	var ac="{$ac}";
+	if(ac=='edit'){
+		$("#resourcetype").val('{$info.data.resourcetype}');
+		if($("#imgSharePicDialog").attr("src")){
+			$("#sharePicDialog").css("display","block");
+		}
+	}
+	
+	$("textarea").showAtUsers("sendReview_dialog");
+})
+
+function previewImage()
+{
+	$("#imgform").submit();
+}
+	function close_pic(){
+		var id="sharePicDialog";
+		$("#file_pic").val("");
+		$("#"+id).hide();
+		$("#imgSharePicDialog").val("");
+		$("#imgpathDialog").val("");
+	}
+	
+$("#write_share").click(function(){
+	var userid = $("#userid").val();
+	var sendtime = $("#sendtime").val();
+	var share_info=$.trim($("#sendReview_dialog").val());
+	if(! userid ){
+		alert("用户ID不能为空");
+		$("#userid").focus();
+		return false;
+	}
+	if(! (sendtime)){
+		alert("定时不能为空");
+		$("#sendtime").focus();
+		return false;
+	}
+	if(! (share_info)){
+		alert("内容不能为空");
+		$("#sendReview_dialog").focus();
+		return false;
+	}
+	var imgpath=$("#imgpathDialog").val();
+	var resourceid = $("#resourceid").val() || 0;
+    var resourcetype = $("#resourcetype").val() || 0;
+ 	$.ajax({
+		url:"__ACTION__",
+		type:"post",
+		dataType:"json",
+		async:false,
+		data:"content="+share_info+"&img="+imgpath+"&resourceid="+resourceid+"&resourcetype="+resourcetype+"&userid="+userid+"&sendtime="+sendtime+"&ac="+$("#ac").val()+"&taskid={$Think.request.id}",
+		success:function(ret){
+			if(ret.status==1){
+			  alert("成功");
+			  W.reload();
+			}else if(parseInt(ret.status)==-1){
+			  alert("包含敏感词");
+			}else{
+			  alert("操作失败");
+			}
+		}
+	})
+	return false; 
+})
+$(function(){
+	var TextReview =  $('.send_weibo .input_detail');
+	//if(TextReview==null){return;}
+	TextReview.focus(function(){
+		$(this).closest('.send_weibo').addClass('send_weibo_focus');
+	})
+	TextReview.blur(function(){
+		$(this).closest('.send_weibo').removeClass('send_weibo_focus')
+	})
+
+})
+
+function imgload(img){
+		$("#imgSharePicDialog").attr("src",img);
+		$("#imgpathDialog").val(img);
+		$("#fileTuDialog").val("");
+		$("#sharePicDialog").css("display","block");
+}       
+
+$("#userid").on("keyup click",function(){
+	var a=$(this).val();
+	if(a){
+	   $.ajax({
+		   url:"__ACTION__/ac/find",
+		   data:"userid="+a+"&type=1",
+		   dataType:"text",
+		   type:"post",
+		   success:function(data){
+			   $("#userid_tip").html(data);
+		   }
+	   })
+	}
+})
+
+$("#resourceid").on("keyup click",function(){
+	var a = $(this).val();
+	var b = parseInt($("#resourcetype").val());
+	if(a && b){
+		  b = b+1;
+		  $.ajax({
+			   url:"__ACTION__/ac/find",
+			   data:"userid="+a+"&type="+b,
+			   dataType:"text",
+			   type:"post",
+			   success:function(data){
+				   $("#resourceid_tip").html(data);
+			   }
+		   })
+	}
+})
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<include file="Public:header" />
+<BR><BR><BR><BR><BR>
+<div style="text-align:center;">
+<h1>HI {$Think.session.loginUserName}，欢迎登录LOLITABOX网站管理平台，你是最棒的！</h1><br>
+登录时间：{$Think.now}<br><br>
+<if condition="$number gt 0">
+您有&nbsp;<font color="red">{$number}</font>&nbsp;个出库单需要审核，
+<a href="{:U('Inventory/outOrderEntry',array('ormstatus'=>0,'type'=>$type,'ifagree'=>0))}" style="font-size:14px;">点此进入</a>
+出库单列表审核。
+</if>
+</div>
+<include file="Public:footer" />

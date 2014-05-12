@@ -1,0 +1,59 @@
+<include file="Public:header" />
+<style>
+.cursor{
+cursor:pointer
+}
+
+</style>
+筛选:<input id="filterName"><br/><br/>
+
+<span style="color:#004000">订单号</span>
+<table style="width:90%;margin-left:50px;">
+<volist name="orderlist" id="list" key="k">
+<tr height="25">
+	<td class="ordernum">
+		<span class="cursor">{$k}=>{$list.orderid}</span>
+		<table style="margin-left:200px">
+		<volist name="list.pinfo" id="pinfo">
+			<tr>
+				<if condition="$_GET['pid'] eq $pinfo['productid']">
+					<td style="color:red">{$pinfo.productid}</td><td style="color:red">{$pinfo.pname}</td>
+				<else/>
+					<td>{$pinfo.productid}</td><td>{$pinfo.pname}</td>
+				</if>
+			</tr>	
+		</volist>
+		</table>
+	</td>
+</tr>
+</volist>
+</table>
+<script type="text/javascript">
+$(function(){
+	hideSecondTable();
+
+	$(".cursor").bind('click',function(){
+		if($(this).next("table").css("display")=='none'){
+			hideSecondTable()
+			$(this).next("table").slideDown();
+		}else{
+			$(this).next("table").slideUp();
+		}
+	})
+
+   $("#filterName").keyup(function(){
+	  $("td.ordernum")
+				.hide()
+				.filter(":contains('"+( $(this).val() )+"')")
+				.show();
+   }).keyup();
+})
+
+function hideSecondTable(){
+	$("td.ordernum").each(function(){
+		$(this).children("table").hide("fast");
+	})
+}
+
+</script>
+<include file="Public:footer" />
