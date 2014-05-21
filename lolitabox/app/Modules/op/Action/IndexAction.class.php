@@ -9,7 +9,7 @@ class IndexAction extends Action  {
 	
 	public function deploy(){
 		
-		$a = system("/home/op/deploy", $return);
+		system("/home/op/deploy", $return);
 		$this->assign($return);
 		
 	}
