@@ -1,8 +1,8 @@
 #--2014/5/18 
 
 #增加产品的投递开始和结束时间
-ALTER TABLE `products` ADD COLUMN start_time timestamp;
-ALTER TABLE `products` ADD COLUMN end_time timestamp;
+ALTER TABLE `products` ADD COLUMN start_time timestamp null;
+ALTER TABLE `products` ADD COLUMN end_time timestamp null;
 
 #增加用户订阅产品分类表
 CREATE TABLE `users_products_category_subscribe` (

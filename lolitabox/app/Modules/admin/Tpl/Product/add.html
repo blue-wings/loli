@@ -24,8 +24,8 @@
 			   主要成分:	<input type="text" name="maincomponent" value='{$productinfo.maincomponent}'><br><br>
 			   体验装规格:	<input type="text" name="trialsize"  value='{$productinfo.trialsize}'><br><br>
 			   体验装价格:	<input type="text" name="trialprice" value='{$productinfo.trialprice}'><br><br>
-			   投递开始日期:<input type="text" size="20" id="start_time" name="start_time" value=""><br><br>
-			   投递截止日期:	<input type="text" size="20" id="end_time" name="end_time" value=""><br><br>
+			   开始日期:<input type="text" size="20" id="start_time" name="start_time" value=""><br><br>
+			   截止日期:	<input type="text" size="20" id="end_time" name="end_time" value=""><br><br>
 			  <!-- 调查问卷ID：<input type="text" name="surveyid"  value='{$productinfo.surveyid}'/><br><br> --> 
 			  <!--  心水标签:	<input type="text" name="taglist" size="30"  value='{$productinfo.taglist}'><br><br> --> 
 			  适用肤质：<volist name="skin_list" id="skin"><input type="checkbox" name="for_skin[]" value="{$skin}"  <php>if(in_array($skin,$skin_list_selected)) echo " checked";</php>>{$skin} </volist>
