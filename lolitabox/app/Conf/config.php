@@ -10,7 +10,7 @@ $array = array(
 	/* 定义URL模式*/
 	'TMPL_CACHE_ON'=>false,
 	'SHOW_PAGE_TRACE'        =>true, //上线前删除
-    'APP_GROUP_LIST'            =>  'index,admin,api,m,wx',   //分组
+    'APP_GROUP_LIST'            =>  'index,admin,api,m,wx,op',   //分组
     'DEFAULT_GROUP'             =>  'index',
     'APP_GROUP_MODE'            =>  1,
 	'URL_MODEL' => '2', // 使用rewrite规则
