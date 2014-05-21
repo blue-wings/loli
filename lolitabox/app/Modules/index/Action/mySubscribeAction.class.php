@@ -20,11 +20,14 @@ class mySubscribeAction extends commonAction{
 		$productCount = $model->query($sql);
 		$p = new Page($count,8);
 		$pageSql = $p->firstRow.','.$p->listRows;
-		$productSql = "select * from products  as p, product_effect_relation as per where p.pid=per.pid and p.userType=" . $userType . " and per.effectcid in (" .$categoryIds .")" . $pageSql;
-		$prodcutList = $model->query($productSql);
+		$productSql = "select distinct(p.pid) from products  as p, product_effect_relation as per where p.pid=per.pid and p.userType=" . $userType . " and per.effectcid in (" .$categoryIds .")" . $pageSql ."order by p.pid";
+		$prodcutIdList = $model->query($productSql);
+		$productIdsStr = join($prodcutIdList, ",");
+		$where = array("in", $productIdsStr);
+		$products = D("Products")->where($where)->select();
 		$page=$p->show();
 		$this->assign('page',$page);
-		$this->assign("list",$prodcutList);
+		$this->assign("list",$products);
 		$this->display();
 	}
 	
