@@ -4,7 +4,6 @@ class mySubscribeAction extends commonAction{
 	public function productList(){
 		$userid = $this->userid;
 		$userType = $_GET("userType");
-		$pageNum = $_GET("pageNum");
 		import("ORG.Util.Page");
 		$usersProductsCategorySubscribe = D("UsersProductsCategorySubscribe");
 		$subscribes = $usersProductsCategorySubscribe->getByUserId($userid);
