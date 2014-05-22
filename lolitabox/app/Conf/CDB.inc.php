@@ -2,7 +2,7 @@
 return array(
     /* 数据库设置 */
     'DB_TYPE'               => 'mysql',     // 数据库类型
-	'DB_HOST'               => 'v6.lolitabox.com', // 服务器地址
+	'DB_HOST'               => '182.92.77.85', // 服务器地址
 	'DB_NAME'               => 'lolitabox',          // 数据库名
 	'DB_USER'               => 'lolitabox',      // 用户名
 	'DB_PWD'                => 'lolitabox2014',          // 密码
