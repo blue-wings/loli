@@ -1,7 +1,7 @@
 <?php
 class mySubscribeAction extends commonAction{
 	
-	public function productList(){
+	public function index(){
 		$userid = $this->userid;
 		$userType = $_GET("userType");
 		import("ORG.Util.Page");
