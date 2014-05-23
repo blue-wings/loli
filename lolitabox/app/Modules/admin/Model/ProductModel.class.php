@@ -42,7 +42,7 @@ class ProductModel extends Model {
 	}
 	
 	function getLevelList(){
-		$str=implode(",", $_POST["for_level"]);
+		$str=implode(",", $_POST["user_type"]);
 		return $str;
 	}
 	function getPeopleList(){
