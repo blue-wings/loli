@@ -26,9 +26,9 @@
 			   体验装价格:	<input type="text" name="trialprice" value='{$productinfo.trialprice}'><br><br>
 			   开始日期:<input type="text" size="20" id="start_time" name="start_time" value=""><br><br>
 			   截止日期:	<input type="text" size="20" id="end_time" name="end_time" value=""><br><br>
-			  产品对应的用户级别：<input type = checkbox value="0" name="user_type[]" <php>if(in_array(0,$level_list_selected)) echo " checked";</php>>普通会员</input>
-			  <input type = checkbox value="1" name="user_type[]" <php>if(in_array(1,$level_list_selected)) echo " checked";</php>>高级用户</input>
-			   <input type = checkbox value="3" name="user_type[]" <php>if(in_array(3,$level_list_selected)) echo " checked";</php>>新用户</input>
+			  产品对应的用户级别：<input type = checkbox value="0" name="user_type[]" <php>if(in_array(0,$usertype_list_selected)) echo " checked";</php>>普通会员</input>
+			  <input type = checkbox value="1" name="user_type[]" <php>if(in_array(1,$usertype_list_selected)) echo " checked";</php>>高级用户</input>
+			   <input type = checkbox value="3" name="user_type[]" <php>if(in_array(3,$usertype_list_selected)) echo " checked";</php>>新用户</input>
 			    <br><br>
 			  <!-- 调查问卷ID：<input type="text" name="surveyid"  value='{$productinfo.surveyid}'/><br><br> --> 
 			  <!--  心水标签:	<input type="text" name="taglist" size="30"  value='{$productinfo.taglist}'><br><br> --> 

@@ -33,7 +33,7 @@ class ProductModel extends Model {
 		array('for_skin','getSkinList',3,'callback'),
 		array('for_people','getPeopleList',3,'callback'),
 		array('for_hair','getHairList',3,'callback'),
-		array('user_type','getLevelList',3,'callback'),
+		array('user_type','getUserTypeList',3,'callback'),
 	);
 
 	function getSkinList(){
@@ -41,7 +41,7 @@ class ProductModel extends Model {
 		return $str;
 	}
 	
-	function getLevelList(){
+	function getUserTypeList(){
 		$str=implode(",", $_POST["user_type"]);
 		return $str;
 	}
