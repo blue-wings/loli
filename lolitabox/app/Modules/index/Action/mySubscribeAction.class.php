@@ -17,13 +17,13 @@ class mySubscribeAction extends commonAction{
 				$categoryIds .= ",";
 			}
 		}
-		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and p.user_type=" . $userType . " and per.effectcid in (" .$categoryIds .")";
+		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and per.effectcid in (" .$categoryIds .")";
 		$model= new Model();
 		$productCount = $model->query($sql);
 		$count = $productCount[0]['count'];
 		$p = new Page($count,8);
 		$pageSql = $p->firstRow.','.$p->listRows;
-		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and p.user_type=" . $userType . " and per.effectcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
+		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and per.effectcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
 		$prodcutIdList = $model->query($productSql);
 		$productIdsStr = "";
 		for($i=0; $i<count($prodcutIdList); $i++){
