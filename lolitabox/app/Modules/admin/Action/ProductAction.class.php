@@ -176,6 +176,8 @@ class ProductAction extends CommonAction{
 		$for_skin=$product_mod->getForSkinDefine();
 		$for_people=$product_mod->getForPeopleDefine();
 		$for_hair=$product_mod->getForHairDefine();
+		$for_level = $product_mod-> getForUserLevel();
+		$this->assign('level_list',$for_skin);
 		$this->assign('skin_list',$for_skin);
 		$this->assign('people_list',$for_people);
 		$this->assign('hair_list',$for_hair);
@@ -280,19 +282,23 @@ class ProductAction extends CommonAction{
 		while(list($k,$v)=each($producteffectlist)){
 			$tlist[]=$producteffectlist[$k]['effectcid'];
 		}
-		$producteffectcids=implode(",",$tlist);
-		
+		$producteffectcids=implode(",",$tlist);		
 		$product_mod=new ProductsModel();
 		$for_skin=$product_mod->getForSkinDefine();
 		$for_people=$product_mod->getForPeopleDefine();
 		$for_hair=$product_mod->getForHairDefine();
+
+		$for_level = $product_mod-> getForUserLevel();
 		$this->assign('skin_list',$for_skin);
 		$this->assign('skin_list_selected',explode(",",$productinfo["for_skin"]));
 		$this->assign('people_list',$for_people);
 		$this->assign('people_list_selected',explode(",",$productinfo["for_people"]));
 		$this->assign('hair_list',$for_hair);
 		$this->assign('hair_list_selected',explode(",",$productinfo["for_hair"]));
-		
+
+		$this->assign('level_list',$for_skin);
+	    $this->assign('level_list_selected',explode(",",$productinfo["for_level"]));
+	    		
 		$this->assign("productinfo",$productinfo);
 		$this->assign('clist',$clist);
 		$this->assign('elist',$elist);

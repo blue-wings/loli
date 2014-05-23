@@ -862,6 +862,14 @@ class ProductsModel extends Model {
 	}
 	
 	/**
+	 * 获取产品对应的用户等级列表
+	 * @author binxu
+	 */
+	public function getForUserLevel(){
+		$array_Level=array('新会员', '普通会员' , '高级会员');
+		return $array_Level;
+	}
+	/**
 	 * 获取产品适合发质属性列表
 	 * @author zhenghong
 	 */
