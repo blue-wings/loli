@@ -3,28 +3,38 @@ class mySubscribeAction extends commonAction{
 	
 	public function index(){
 		$userid = $this->userid;
-		$userType = $_GET("userType");
+		$userType = $_GET["userType"];
 		import("ORG.Util.Page");
 		$usersProductsCategorySubscribe = D("UsersProductsCategorySubscribe");
 		$subscribes = $usersProductsCategorySubscribe->getByUserId($userid);
 		if(count($subscribes) == 0){
 			$this->error("please subscribe prodcut category!");
 		}
-		$array = array(count($subscribes));
+		$categoryIds = "";
 		for($i=0; $i<count($subscribes); $i++){
-			$array[i] = $subscribes["product_category_id"];
+			$categoryIds .= $subscribes[$i]["product_category_id"];
+			if($i != count($subscribes)-1){
+				$categoryIds .= ",";
+			}
 		}
-		$categoryIds = join($array, ",");
-		$sql = "select count(distinct(p.pid)) from products  as p, product_effect_relation as per where p.pid=per.pid and p.userType=" . $userType . " and per.effectcid in (" .$categoryIds .")";
+		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and p.user_type=" . $userType . " and per.effectcid in (" .$categoryIds .")";
+		$model= new Model();
 		$productCount = $model->query($sql);
+		$count = $productCount[0]['count'];
 		$p = new Page($count,8);
 		$pageSql = $p->firstRow.','.$p->listRows;
-		$productSql = "select distinct(p.pid) from products  as p, product_effect_relation as per where p.pid=per.pid and p.userType=" . $userType . " and per.effectcid in (" .$categoryIds .")" . $pageSql ."order by p.pid";
+		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and p.user_type=" . $userType . " and per.effectcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
 		$prodcutIdList = $model->query($productSql);
-		$productIdsStr = join($prodcutIdList, ",");
+		$productIdsStr = "";
+		for($i=0; $i<count($prodcutIdList); $i++){
+			$productIdsStr .= $prodcutIdList[$i]["productIds"];
+			if($i != count($prodcutIdList)-1){
+				$productIdsStr .= ",";
+			}	
+		}
 		$where = array("in", $productIdsStr);
-		$products = D("Products")->where($where)->select();
-		$page=$p->show();
+		$products = D("Products")->where("pid in (".$productIdsStr.")")->select();
+		$page=$p->show();	
 		$this->assign('page',$page);
 		$this->assign("list",$products);
 		$this->display();
