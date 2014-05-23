@@ -291,7 +291,7 @@ class ProductAction extends CommonAction{
 		$this->assign('people_list_selected',explode(",",$productinfo["for_people"]));
 		$this->assign('hair_list',$for_hair);
 		$this->assign('hair_list_selected',explode(",",$productinfo["for_hair"]));
-	    $this->assign('level_list_selected',explode(",",$productinfo["for_level"]));
+	    $this->assign('level_list_selected',explode(",",$productinfo["user_type"]));
 	    		
 		$this->assign("productinfo",$productinfo);
 		$this->assign('clist',$clist);
