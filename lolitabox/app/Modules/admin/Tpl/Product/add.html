@@ -235,8 +235,9 @@ var img=$(this).val();
 if(img)$("#show_pic").html("<img src='"+img+"'>");
 });
 $(".record").colorbox({inline:true,height:"70%",width:"30%"});
-$("#start_time").datepicker({
-	timeFormat : "yyyy-MM-dd HH:mm:ss",
+$("#start_time").datetimepicker({
+	dateFormate: "yyyy-MM-dd",
+	timeFormat : "HH:mm:ss",
 	changeMonth: true,
 	numberOfMonths: 1,
 	onSelect: function( selectedDate ) {
@@ -244,7 +245,8 @@ $("#start_time").datepicker({
 	}
 });
 $("#end_time").datetimepicker({
-	timeFormat : "yyyy-MM-dd HH:mm:ss",
+	dateFormate: "yyyy-MM-dd",
+	timeFormat : "HH:mm:ss",
 	changeMonth: true,
 	numberOfMonths: 1,
 	onSelect: function( selectedDate ) {

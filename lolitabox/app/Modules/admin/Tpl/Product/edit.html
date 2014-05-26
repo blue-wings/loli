@@ -75,10 +75,10 @@
 					<td>主要成分:	<input type="text" name="maincomponent" value="{$productinfo[maincomponent]}"></td>
 				</tr>
 				<tr>
-					<td>投递开始日期: <input type="text" size="20" id="start_time" name="start_time" value="{$productinfo[start_time]}"></td>
+					<td>开始日期: <input type="text" size="20" id="start_time" name="start_time" value="{$productinfo[start_time]}"></td>
 				</tr>
 				<tr>
-					<td>投递截止日期:<input type="text" size="20" id="end_time" name="end_time" value="{$productinfo[end_time]}"></td>
+					<td>截止日期:<input type="text" size="20" id="end_time" name="end_time" value="{$productinfo[end_time]}"></td>
 				</tr>				
 				<tr>
 					<td>产品简介:<br/>	<textarea name="pintro" rows="10" cols="50">{$productinfo[pintro]}</textarea>	</td>
@@ -108,4 +108,24 @@
 	</td>
 </tr>
 </tbody></table>
+<script>
+$("#start_time").datetimepicker({
+	dateFormate: "yyyy-MM-dd",
+	timeFormat : "HH:mm:ss",
+	changeMonth: true,
+	numberOfMonths: 1,
+	onSelect: function( selectedDate ) {
+		$( "#end_time" ).datepicker( "option", "minDate", selectedDate );
+	}
+});
+$("#end_time").datetimepicker({
+	dateFormate: "yyyy-MM-dd",
+	timeFormat : "HH:mm:ss",
+	changeMonth: true,
+	numberOfMonths: 1,
+	onSelect: function( selectedDate ) {
+		$( "#start_time" ).datepicker( "option", "maxDate", selectedDate );
+	}
+});
+</script>
 <include file="Public:footer" />
