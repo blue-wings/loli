@@ -320,6 +320,7 @@ class ProductAction extends CommonAction{
 			die;
 		}
 		if($data=$product->create()){
+			
 
 			/**如果用户选择了新的图片，则进行图片重新上传**/
 			if(strlen($_FILES[pimg][name])>0) {

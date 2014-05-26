@@ -110,7 +110,7 @@
 </tbody></table>
 <script>
 $("#start_time").datetimepicker({
-	dateFormate: "yyyy-MM-dd",
+	dateFormat:"yy-mm-dd",
 	timeFormat : "HH:mm:ss",
 	changeMonth: true,
 	numberOfMonths: 1,
@@ -118,8 +118,9 @@ $("#start_time").datetimepicker({
 		$( "#end_time" ).datepicker( "option", "minDate", selectedDate );
 	}
 });
+
 $("#end_time").datetimepicker({
-	dateFormate: "yyyy-MM-dd",
+	dateFormat:"yy-mm-dd",
 	timeFormat : "HH:mm:ss",
 	changeMonth: true,
 	numberOfMonths: 1,

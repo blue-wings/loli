@@ -24,8 +24,8 @@
 			   主要成分:	<input type="text" name="maincomponent" value='{$productinfo.maincomponent}'><br><br>
 			   体验装规格:	<input type="text" name="trialsize"  value='{$productinfo.trialsize}'><br><br>
 			   体验装价格:	<input type="text" name="trialprice" value='{$productinfo.trialprice}'><br><br>
-			   开始日期:<input type="text" size="20" id="start_time" name="start_time" value=""><br><br>
-			   截止日期:	<input type="text" size="20" id="end_time" name="end_time" value=""><br><br>
+			   开始日期:<input type="text" size="20" id="start_time" name="start_time" value='{$productinfo.start_time}'><br><br>
+			   截止日期:	<input type="text" size="20" id="end_time" name="end_time" value='{$productinfo.end_time}'><br><br>
 			  产品对应的用户级别：<input type = checkbox value="0" name="user_type[]" <php>if(in_array(0,$usertype_list_selected)) echo " checked";</php>>普通会员</input>
 			  <input type = checkbox value="1" name="user_type[]" <php>if(in_array(1,$usertype_list_selected)) echo " checked";</php>>高级用户</input>
 			   <input type = checkbox value="3" name="user_type[]" <php>if(in_array(3,$usertype_list_selected)) echo " checked";</php>>新用户</input>
@@ -236,7 +236,7 @@ if(img)$("#show_pic").html("<img src='"+img+"'>");
 });
 $(".record").colorbox({inline:true,height:"70%",width:"30%"});
 $("#start_time").datetimepicker({
-	dateFormate: "yyyy-MM-dd",
+	dateFormat:"yy-mm-dd",
 	timeFormat : "HH:mm:ss",
 	changeMonth: true,
 	numberOfMonths: 1,
@@ -244,8 +244,9 @@ $("#start_time").datetimepicker({
 		$( "#end_time" ).datepicker( "option", "minDate", selectedDate );
 	}
 });
+
 $("#end_time").datetimepicker({
-	dateFormate: "yyyy-MM-dd",
+	dateFormat:"yy-mm-dd",
 	timeFormat : "HH:mm:ss",
 	changeMonth: true,
 	numberOfMonths: 1,
