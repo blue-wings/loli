@@ -92,6 +92,9 @@
 	
 	function countDown(){
 		$(".countDown").each(function(){
+			if(!$(this).attr("countDownSeconds")){
+				return true;
+			}
 			var countDownSeconds = parseInt($(this).attr("countDownSeconds"));
 			var nowSeconds = new Date().getTime()/1000;
 			var seconds = nowSeconds-countDownSeconds;
