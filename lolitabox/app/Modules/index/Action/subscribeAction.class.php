@@ -48,6 +48,9 @@ class subscribeAction extends commonAction{
 			$futureProducts[$i]["start_time_seconds"] = strtotime($futureProducts[$i]["start_time"]);	
 		}
 		$closedProducts = D("Products")->limit(6,4)->select();
+		for($i=0; $i<count($closedProducts); $i++){
+			$closedProducts[$i]["end_time_seconds"] = strtotime($closedProducts[$i]["end_time"]);	
+		}
 		$this->assign("futureProductFirst",$futureProductFirst);
 		$this->assign("futureProducts",$futureProducts);
 		$this->assign("closedProducts",$closedProducts);

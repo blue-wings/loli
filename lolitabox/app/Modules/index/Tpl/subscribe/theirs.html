@@ -74,7 +74,7 @@
 									<i class="<{$product.commend_tags_class}>"></i> 
 								</notempty>	
 							</dd>
-							<dd><{$product.end_time}></dd>
+							<dd class="closedCountDown" closedTimeInSeconds="<{$end_time_seconds}>"></dd>
 						</dl>
 					</div>
 				</div>
@@ -116,6 +116,20 @@
 		})	
 		setTimeout("countDown()", 1000);
 	}
+	
+	$(".closedCountDown").each(function(){
+		var closedTimeInSeconds = parseInt($(this).attr("closedTimeInSeconds"));
+		var nowSeconds = new Date().getTime()/1000;
+		var text;
+		if((nowSeconds -closedTimeInSeconds) > hourSeconds){
+			var date = new Date(closedTimeInSeconds*1000);
+			text = date.getFullYear()+"year "+date.getMonth()+"month "+date.getDate()"day closed";
+			
+		}else{
+			text = "closed just now"
+		}
+		$(this).text(text);
+	})
 	
 	
 	
