@@ -20,7 +20,7 @@
 								<i class="<{$futureProductFirst.commend_tags_class}>"></i> 
 							</notempty>	
 						</dd>
-						<dd><{$futureProductFirst.start_time}></dd>
+						<dd class="countDown" countDownSeconds="<{$futureProductFirst.start_time_seconds}>"><{$futureProductFirst.start_time}></dd>
 					</dl>
 				</div>
 			</div>
@@ -44,10 +44,10 @@
 									src="<{$product.pimg}>" width="185" height="185" alt="<{$product.pname}>">
 								</a>
 								<notempty name="$product.commend_tags_class"> 
-									<i class="<{$productt.commend_tags_class}>"></i> 
+									<i class="<{$product.commend_tags_class}>"></i> 
 								</notempty>	
 							</dd>
-							<dd>time</dd>
+							<dd class="countDown" countDownSeconds="<{$product.start_time_seconds}>"></dd>
 						</dl>
 					</div>
 				</div>
@@ -74,7 +74,7 @@
 									<i class="<{$product.commend_tags_class}>"></i> 
 								</notempty>	
 							</dd>
-							<dd>time</dd>
+							<dd><{$product.end_time}></dd>
 						</dl>
 					</div>
 				</div>
@@ -84,4 +84,41 @@
 	</div>
 
 </div>
+
+<script >
+	var minuteSeconds = 60;
+	var hourSeconds = 60 * minuteSeconds;
+	var daySeconds = 24*hourSeconds;
+	
+	function countDown(){
+		$(".countDown").each(function(){
+			var countDownSeconds = parseInt($(this).attr("countDownSeconds"));
+			var nowSeconds = new Date().getTime()/1000;
+			var seconds = nowSeconds-countDownSeconds;
+			var minutes = countDownSeconds / minuteSeconds;
+			var hours = countDownSeconds / hourSeconds;
+			var days = countDownSeconds/ daySeconds;
+			
+			var dayDisplay = days;
+			var hourDisplay = hours % 24;
+			var minuteDisplay = minutes % 60;
+			var secondDisplay = seconds % 60;
+			
+			var text;
+			if(countDownSeconds > daySeconds){
+				text = dayDisplay+"day "+hourDisplay+"hour "+minuteDisplay+"minute "+secondDisplay+"second deliver";	
+			}else if(countDownSeconds > hourSeconds){
+				text = hourDisplay+"hour "+minuteDisplay+"minute "+secondDisplay+"second deliver";;
+			}else {
+				text = "deliever very soon";
+			}
+			$(this).text(text);	
+		})	
+		setTimeout("countDown()", 1000);
+	}
+	
+	
+	
+	
+</script>
 

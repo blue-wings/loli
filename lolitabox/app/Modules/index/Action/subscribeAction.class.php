@@ -42,7 +42,11 @@ class subscribeAction extends commonAction{
 	
 	public function theirs(){
 		$futureProductFirst = D("Products")->limit(0,1)->find();
+		$futureProductFirst["start_time_seconds"] = strtotime($futureProductFirst["start_time"]);
 		$futureProducts = D("Products")->limit(1,5)->select();
+		for($i=0; $i<count($futureProducts); $i++){
+			$futureProducts[$i]["start_time_seconds"] = strtotime($futureProducts[$i]["start_time"]);	
+		}
 		$closedProducts = D("Products")->limit(6,4)->select();
 		$this->assign("futureProductFirst",$futureProductFirst);
 		$this->assign("futureProducts",$futureProducts);
