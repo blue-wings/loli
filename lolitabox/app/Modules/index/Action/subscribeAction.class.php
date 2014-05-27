@@ -40,6 +40,16 @@ class subscribeAction extends commonAction{
 		$this->display();
 	}
 	
+	public function theirs(){
+		$futureProductFirst = D("Products")->limit(0,1)->find();
+		$futureProducts = D("Products")->limit(1,5)->select();
+		$closedProducts = D("Products")->limit(6,4)->select();
+		$this->assign("futureProductFirst",$futureProductFirst);
+		$this->assign("futureProducts",$futureProducts);
+		$this->assign("closedProducts",$closedProducts);
+		$this->display();
+	}
+	
 	
 	
 }

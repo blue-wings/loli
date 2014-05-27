@@ -1,10 +1,87 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<include file="public:header_common.inc" />
 
-</body>
-</html>
+
+<div class="subscribe-theirs" style="with:100%;">
+	<div style="width:1300px; margin: 10px auto;">
+		<div class="future-product-first" style="width:100%;">
+			<div class="product" style="float:left">
+				<div  style="width:375px; margin-top: 90px;">
+					<dl>
+						<dt class="name">
+							<a href="javascript:void(0)" onclick="dialog_products('<{$futureProductFirst.pid}>')" class="A_line2">
+								<{$futureProductFirst.pname}>
+							</a>
+						</dt>
+						<dd>
+							<a href="javascript:void(0)" onclick="dialog_products('<{$futureProductFirst.pid}>')">
+								<img src="<{$futureProductFirst.pimg}>" width="375" height="375" alt="<{$futureProductFirst.pname}>">
+							</a>
+							<notempty name="futureProductFirst.commend_tags_class"> 
+								<i class="<{$futureProductFirst.commend_tags_class}>"></i> 
+							</notempty>	
+						</dd>
+						<dd><{$futureProductFirst.start_time}></dd>
+					</dl>
+				</div>
+			</div>
+			<div class="gift" style="float:left; height:640px; width:816px; border:1px solid">
+			</div>
+		</div>	
+		<div class="blank" style="clear:left;height:20px"></div>
+		
+		<div class="future-product-common" style="margin-top:10px; float:left; width:60%;  border:1px solid;border-radius: 0 20px 20px 0; ">
+			<volist name="futureProducts" id="product">
+				<div class="product">
+					<div class="fabric_list_cont list_col4 auto" onmouseover="see_btn(this)" onmouseout="hide_btn(this)">
+						<dl>
+							<dt class="name">
+								<a href="javascript:void(0)"
+									onclick="dialog_products('<{$product.pid}>')" class="A_line2"><{$product.pname}></a>
+							</dt>
+							<dd>
+								<a href="javascript:void(0)"
+									onclick="dialog_products('<{$product.pid}>')"><img
+									src="<{$product.pimg}>" width="185" height="185" alt="<{$product.pname}>">
+								</a>
+								<notempty name="$product.commend_tags_class"> 
+									<i class="<{$productt.commend_tags_class}>"></i> 
+								</notempty>	
+							</dd>
+							<dd>time</dd>
+						</dl>
+					</div>
+				</div>
+			</volist>
+		</div>
+		<div class="blank" style="clear:left;height:20px"></div>
+		
+		
+		<div class="closed-product-justnow" style="width:90%; border:1px solid; margin: 10px auto;">
+			<volist name="closedProducts" id="product">
+				<div class="product">
+					<div class="fabric_list_cont list_col4 auto" onmouseover="see_btn(this)" onmouseout="hide_btn(this)">
+						<dl>
+							<dt class="name">
+								<a href="javascript:void(0)"
+									onclick="dialog_products('<{$product.pid}>')" class="A_line2"><{$product.pname}></a>
+							</dt>
+							<dd>
+								<a href="javascript:void(0)"
+									onclick="dialog_products('<{$product.pid}>')"><img
+									src="<{$product.pimg}>" width="185" height="185" alt="<{$product.pname}>">
+								</a>
+								<notempty name="$product.commend_tags_class"> 
+									<i class="<{$product.commend_tags_class}>"></i> 
+								</notempty>	
+							</dd>
+							<dd>time</dd>
+						</dl>
+					</div>
+				</div>
+			</volist>
+		</div>
+	
+	</div>
+
+</div>
+
