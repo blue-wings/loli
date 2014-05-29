@@ -1,5 +1,62 @@
-		
-		
+
+<style>
+	*{ margin:0; padding:0;}
+body, ul, li {
+	margin:0;
+	padding:0;
+}
+body {
+	font:12px/1.5 Tahoma;
+}
+#outer {
+	width:736px;
+	margin:1px auto;
+}
+#tab {
+	overflow:hidden;
+	zoom:1;
+	background:#000;
+	border:1px solid #000;
+}
+#tab li {
+	float:left;
+	color:#fff;
+	height:30px;
+	cursor:pointer;
+	line-height:30px;
+	list-style-type:none;
+	padding:0 20px;
+}
+#tab li.current {
+	color:#000;
+	background:#ccc;
+}
+
+</style>
+<div id="outer">
+    <ul id="tab">
+        <li class="current">新会员区</li>
+        <li>普通会员区</li>
+        <li>高级会员区</li>
+    </ul>
+</div>
+<script>
+	$(function(){
+		window.onload = function()
+		{
+			var $li = $('#tab li');
+			var $ul = $('#content ul');
+			
+			$li.click(function(){
+				$li.removeClass();
+				var $t = $(this).index();
+				$(this).addClass('current');
+				$ul.css('display','none');
+				$ul.eq($t).css('display','block');
+			})
+		}
+	});
+</script>	
 		<div class="wp738 mb16">
 			<div class="hd_y">
 				<h3 class="i_tit l"><em class="t_tips_h">&nbsp;</em>温馨提醒：</h3>
