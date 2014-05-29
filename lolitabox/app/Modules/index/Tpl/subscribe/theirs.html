@@ -7,24 +7,21 @@ body {background-image:none}
    filter:progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);
    -moz-box-shadow: 2px 2px 10px #909090;
    -webkit-box-shadow: 2px 2px 10px #909090;
-   box-shadow:2px 2px 10px #909090;}
+   box-shadow:2px 2px 2px #909090;}
 -->
 </style>
 
 
 <div class="subscribe-theirs" style="with:100%;">
-	<div style="width:1400px; min-winth:900px; margin: 10px auto;">
+	<div style="width:1400px; min-winth:980px; margin: 10px auto;">
 		<div class="future-product-first" style="width:100%;">
-			<div class="product" style="float:left" style="">
+			<div class="product" style="float:left" style="margin-left:200px">
 				<div  style="width:375px; margin-top: 90px;" class="box">
 					<dl>
 						<dt class="name">
 							<a href="javascript:void(0)" onclick="dialog_products('<{$futureProductFirst.pid}>')">
 								<img src="<{$futureProductFirst.pimg}>" width="375" height="375" alt="<{$futureProductFirst.pname}>">
 							</a>
-							<notempty name="futureProductFirst.commend_tags_class"> 
-								<i class="<{$futureProductFirst.commend_tags_class}>"></i> 
-							</notempty>	
 						</dt>
 						<dd class="countDown" countDownSeconds="<{$futureProductFirst.start_time_seconds}>" style="background-color:#FF69B4;height:46px; text-align:center; font-size:22"></dd>
 						<dd style="color:grey;height:46px; text-align:center; font-size:20">
@@ -37,36 +34,38 @@ body {background-image:none}
 			<div class="gift" style="position:absolute; top:5px; right:0px; height:640px; width:816px;">
 			</div>
 		</div>	
-		<div class="blank" style="clear:left;height:20px"></div>
+		<div class="blank" style="clear:left;height:50px"></div>
 		
-		<div class="future-product-common" style="margin-top:10px; float:left; width:60%;border-radius: 0 20px 20px 0; ">
-			<volist name="futureProducts" id="product">
-				<div class="product" style="float:left" style="">
-					<div  style="width:375px; margin-top: 90px;" class="box">
-						<dl>
-							<dt class="name" style="height:46px; text-align:center; font-size:18">
-								<{$product.pname}>
-							</dt>
-							<dd>
-								<a href="javascript:void(0)" onclick="dialog_products('<{$product.pid}>')">
-									<img src="<{$product.pimg}>" width="160" height="230" alt="<{$product.pname}>">
-								</a>
-								<notempty name="product.commend_tags_class"> 
-									<i class="<{$product.commend_tags_class}>"></i> 
-								</notempty>	
-							</dd>
-							<dd class="countDown" countDownSeconds="<{$product.start_time_seconds}>" style="background-color:#FF69B4;height:30px; text-align:center; font-size:16"></dd>
-							<dd style="height:26px">
-							</dd>						
-						</dl>
+		<div class="future-product-common" style="float:left; width:1180px; height:653px; border-radius: 0 50px 50px 0; background-color:#fef4f5; ">
+			<div class="real-container" style="margin-left:200px">
+				<volist name="futureProducts" id="product">
+					<div class="product" style="float:left" style="">
+						<div  style="width:160px;margin-left:20px" class="box">
+							<dl>
+								<dt class="name" style="height:46px; text-align:center; font-size:18">
+									<{$product.pname}>
+								</dt>
+								<dd>
+									<a href="javascript:void(0)" onclick="dialog_products('<{$product.pid}>')">
+										<img src="<{$product.pimg}>" width="160" height="160" alt="<{$product.pname}>">
+									</a>
+									<notempty name="product.commend_tags_class"> 
+										<i class="<{$product.commend_tags_class}>"></i> 
+									</notempty>	
+								</dd>
+								<dd class="countDown" countDownSeconds="<{$product.start_time_seconds}>" style="background-color:#FF69B4;height:30px; text-align:center; font-size:16"></dd>
+								<dd style="height:26px">
+								</dd>						
+							</dl>
+						</div>
 					</div>
-				</div>
-			</volist>
+				</volist>
+			</div>
 		</div>
 		<div class="blank" style="clear:left;height:20px"></div>
 		
 		
-		<div class="closed-product-justnow" style="width:90%;  margin: 10px auto;">
+		<div class="closed-product-justnow" style="width:980px;  margin: 10px auto;">
 			<volist name="closedProducts" id="product">
 				<div class="product" style="float:left" style="">
 					<div  style="width:375px; margin-top: 90px;" class="box">
@@ -89,7 +88,11 @@ body {background-image:none}
 					</div>
 			</volist>
 		</div>
-	
+		
+		<div class="year-box" style="margin-top:10px; float:right; width:1180px;height:653px; border-radius:50px 0 0 50px; background-color:f1faff">
+			
+		</div>
+		<div class="blank" style="clear:left;height:20px"></div>
 	</div>
 
 </div>
