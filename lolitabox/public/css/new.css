@@ -1,2 +1,8 @@
-.subscribe-theirs .gift {background:url(../images/subscribe/gift.png) no-repeat }
-
+.subscribe-theirs .gift {background:url(../images/subscribe/gift.gif) no-repeat }
+.clock {background:url(../images/subscribe/clock.gif) no-repeat; width:50px; height:50px; display:inline-block; vertical-align:middle}
+.clock-min {background:url(../images/subscribe/clock-min.gif) no-repeat; width:32px; height:32px; display:inline-block; vertical-align:middle}
+.deliver-report {width:260px; height:104px; background:url(../images/subscribe/toudiyugao.gif) no-repeat; margin-left:222px; margin-top:-46px}
+.subscribe {width:115px; height:115px; background:url(../images/subscribe/lijidingyue.gif) no-repeat; float:left; margin-top: 68px;margin-left: 111px;}
+.closed-just-now {width:215px; height:33px; background:url(../images/subscribe/closed-just-now.gif) no-repeat; margin: 10px auto;}
+.year-box {width:436px; height:114px; background:url(../images/subscribe/year-box.gif) no-repeat; margin-left:37px; margin-top:-50px}
+.logo {width:481px; height:81px; background:url(../images/subscribe/logo.gif) no-repeat; margin-left:37px;}
