@@ -89,7 +89,7 @@ body {background-image:none}
 									<i class="<{$product.commend_tags_class}>"></i> 
 								</notempty>	
 							</dd>
-							<dd class="closedCountDown" clock="clock-min" closedTimeInSeconds="<{$end_time_seconds}>" style="background-color:#ec4982;height:32px; text-align:center; font-size:16"></dd>
+							<dd class="closedCountDown" clock="clock-min" closedTimeInSeconds="<{$product.end_time_seconds}>" style="background-color:#ec4982;height:32px; text-align:center; font-size:16"></dd>
 							<dd style="height:24px">
 							</dd>						
 						</dl>
@@ -152,6 +152,8 @@ body {background-image:none}
 	$(".closedCountDown").each(function(){
 		var closedTimeInSeconds = parseInt($(this).attr("closedTimeInSeconds"));
 		var nowSeconds = new Date().getTime()/1000;
+		console.log(closedTimeInSeconds)
+		console.log(nowSeconds)
 		var text;
 		var clock = $(this).attr("clock");
 		if((nowSeconds -closedTimeInSeconds) > hourSeconds){
@@ -159,9 +161,9 @@ body {background-image:none}
 			text = "<span class='"+clock+"'></span><span>"+date.getFullYear()+"年 "+date.getMonth()+"月 "+date.getDate()+"日 结束投递</span>";
 			
 		}else{
-			text = "刚刚结束投递"
+			text = "<span>刚刚结束投递</span>"
 		}
-		$(this).text(text);
+		$(text).appendTo($(this));
 	})
 	
 	
