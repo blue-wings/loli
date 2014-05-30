@@ -3,94 +3,104 @@
 <style>
 <!--
 body {background-image:none}
-.box {border:#909090 1px solid;background:#fff;color:#333;
-   filter:progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);
-   -moz-box-shadow: 2px 2px 10px #909090;
-   -webkit-box-shadow: 2px 2px 10px #909090;
-   box-shadow:2px 2px 2px #909090;}
+.box {border:#f4f4f4 1px solid;background:#fff;color:#333;
+   filter:progid:DXImageTransform.Microsoft.Shadow(color=#f2f2f2,direction=120,strength=4);
+   -moz-box-shadow: 2px 2px 10px #f4f4f4;
+   -webkit-box-shadow: 2px 2px 10px #f4f4f4;
+   box-shadow:5px 5px 5px #f4f4f4;}
 -->
 </style>
 
-
-<div class="subscribe-theirs" style="with:100%;">
-	<div style="width:1400px; min-winth:980px; margin: 10px auto;">
-		<div class="future-product-first" style="width:100%;">
-			<div class="product" style="float:left" style="margin-left:200px">
-				<div  style="width:375px; margin-top: 90px;" class="box">
+<div style="border: 2px solid #dad9de;">
+	<div class="logo"></div>
+</div>
+<div class="subscribe-theirs">
+	<div style="max-width:1400px; min-width:980px; margin: 10px auto;">
+		<div class="gift" style="position:absolute; top:83px; right:0px; height:640px; width:816px; z-index:-1">
+		</div>
+		
+		<div class="future-product-first" style="width:980px; float:left; z-index:1000; margin-left:44px">
+				<div  style="width:354px; margin-top: 90px;" class="box">
 					<dl>
 						<dt class="name">
 							<a href="javascript:void(0)" onclick="dialog_products('<{$futureProductFirst.pid}>')">
-								<img src="<{$futureProductFirst.pimg}>" width="375" height="375" alt="<{$futureProductFirst.pname}>">
+								<img src="<{$futureProductFirst.pimg}>" width="354" height="379"}>
 							</a>
 						</dt>
-						<dd class="countDown" countDownSeconds="<{$futureProductFirst.start_time_seconds}>" style="background-color:#FF69B4;height:46px; text-align:center; font-size:22"></dd>
+						<dd class="countDown" clock="clock" countDownSeconds="<{$futureProductFirst.start_time_seconds}>" style="background-color:#fa2d96;height:46px; text-align:center; font-size:22">
+						</dd>
 						<dd style="color:grey;height:46px; text-align:center; font-size:20">
+							<{$futureProductFirst.pname}>
+						</dd>
+						<dd style="color:grey;height:64px; text-align:center; font-size:14">
 							<{$futureProductFirst.pname}>
 						</dd>
 						
 					</dl>
 				</div>
-			</div>
-			<div class="gift" style="position:absolute; top:5px; right:0px; height:640px; width:816px;">
-			</div>
 		</div>	
-		<div class="blank" style="clear:left;height:50px"></div>
+		<div class="blank" style="clear:left;"></div>
 		
-		<div class="future-product-common" style="float:left; width:1180px; height:653px; border-radius: 0 50px 50px 0; background-color:#fef4f5; ">
-			<div class="real-container" style="margin-left:200px">
+		<div class="future-product-common" style="float:left; max-width:1180px; min-width:980px; height:653px; border-radius: 0 50px 50px 0; background-color:#fef4f5; margin-top:109px">
+			<div class="deliver-report"></div>
+			<div class="real-container" style="float:right; width:980px">
 				<volist name="futureProducts" id="product">
-					<div class="product" style="float:left" style="">
-						<div  style="width:160px;margin-left:20px" class="box">
+					<div class="product" style="float:left;margin-left:24px;margin-right:50px; margin-bottom:36px">
+						<div  style="width:230px;margin-left:20px" class="box">
 							<dl>
-								<dt class="name" style="height:46px; text-align:center; font-size:18">
+								<dt class="name" style="height:45px; width:230px; text-align:left; font-size:13">
 									<{$product.pname}>
 								</dt>
 								<dd>
 									<a href="javascript:void(0)" onclick="dialog_products('<{$product.pid}>')">
-										<img src="<{$product.pimg}>" width="160" height="160" alt="<{$product.pname}>">
+										<img src="<{$product.pimg}>" width="230" height="161">
 									</a>
 									<notempty name="product.commend_tags_class"> 
 										<i class="<{$product.commend_tags_class}>"></i> 
 									</notempty>	
 								</dd>
-								<dd class="countDown" countDownSeconds="<{$product.start_time_seconds}>" style="background-color:#FF69B4;height:30px; text-align:center; font-size:16"></dd>
+								<dd class="countDown" clock="clock-min" countDownSeconds="<{$product.start_time_seconds}>" style="background-color:#ec4982;height:32px; text-align:center; font-size:16"></dd>
 								<dd style="height:26px">
 								</dd>						
 							</dl>
 						</div>
 					</div>
 				</volist>
+				<div class="subscribe"></div>
 			</div>
 		</div>
 		<div class="blank" style="clear:left;height:20px"></div>
 		
 		
 		<div class="closed-product-justnow" style="width:980px;  margin: 10px auto;">
+			
+			<div class="closed-just-now"></div>
 			<volist name="closedProducts" id="product">
-				<div class="product" style="float:left" style="">
-					<div  style="width:375px; margin-top: 90px;" class="box">
+					<div  style="width:223px; float:left; margin-right:15px" class="box">
 						<dl>
-							<dt class="name" style="height:46px; text-align:center; font-size:18">
+							<dt class="name" style="height:46px; text-align:center; font-size:13">
 								<{$product.pname}>
 							</dt>
 							<dd>
 								<a href="javascript:void(0)" onclick="dialog_products('<{$product.pid}>')">
-									<img src="<{$product.pimg}>" width="160" height="230" alt="<{$product.pname}>">
+									<img src="<{$product.pimg}>" width="223" height="201">
 								</a>
 								<notempty name="product.commend_tags_class"> 
 									<i class="<{$product.commend_tags_class}>"></i> 
 								</notempty>	
 							</dd>
-							<dd class="closedCountDown" closedTimeInSeconds="<{$end_time_seconds}>" style="background-color:#FF69B4;height:30px; text-align:center; font-size:16"></dd>
-							<dd style="height:26px">
+							<dd class="closedCountDown" clock="clock-min" closedTimeInSeconds="<{$end_time_seconds}>" style="background-color:#ec4982;height:32px; text-align:center; font-size:16"></dd>
+							<dd style="height:24px">
 							</dd>						
 						</dl>
 					</div>
 			</volist>
 		</div>
 		
-		<div class="year-box" style="margin-top:10px; float:right; width:1180px;height:653px; border-radius:50px 0 0 50px; background-color:f1faff">
-			
+		<div style="margin-top:121px; float:right; max-width:1180px; min-width:980px;height:653px; border-radius:50px 0 0 50px; background-color:#f1faff">
+			<div class="year-box"></div>
+			<div class="real-container" style="float:left; width:980px">
+			</div>	
 		</div>
 		<div class="blank" style="clear:left;height:20px"></div>
 	</div>
@@ -123,14 +133,16 @@ body {background-image:none}
 			var secondDisplay = seconds % 60;
 			
 			var text;
+			var clock = $(this).attr("clock");
+			$(this).empty();
 			if(seconds > daySeconds){
-				text = dayDisplay+"天 "+hourDisplay+"小时 "+minuteDisplay+"分钟 "+secondDisplay+"秒 后投递";	
+				text = "<span class='"+clock+"'></span><span>"+dayDisplay+"天 "+hourDisplay+"小时 "+minuteDisplay+"分钟 "+secondDisplay+"秒</span>";	
 			}else if(countDownSeconds > hourSeconds){
-				text = hourDisplay+"小时 "+minuteDisplay+"分钟 "+secondDisplay+"秒 后投递";;
+				text = "<span class='"+clock+"'></span><span>"+hourDisplay+"小时 "+minuteDisplay+"分钟 "+secondDisplay+"秒</span>";;
 			}else {
-				text = "马上投递";
+				text = "<span>马上投递</span>";
 			}
-			$(this).text(text);	
+			$(text).appendTo($(this));	
 		})	
 		setTimeout("countDown()", 1000);
 	}
@@ -141,9 +153,10 @@ body {background-image:none}
 		var closedTimeInSeconds = parseInt($(this).attr("closedTimeInSeconds"));
 		var nowSeconds = new Date().getTime()/1000;
 		var text;
+		var clock = $(this).attr("clock");
 		if((nowSeconds -closedTimeInSeconds) > hourSeconds){
 			var date = new Date(closedTimeInSeconds*1000);
-			text = date.getFullYear()+"年 "+date.getMonth()+"月 "+date.getDate()+"日 结束投递";
+			text = "<span class='"+clock+"'></span><span>"+date.getFullYear()+"年 "+date.getMonth()+"月 "+date.getDate()+"日 结束投递</span>";
 			
 		}else{
 			text = "刚刚结束投递"
