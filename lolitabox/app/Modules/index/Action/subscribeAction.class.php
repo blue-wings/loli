@@ -41,13 +41,13 @@ class subscribeAction extends commonAction{
 	}
 	
 	public function theirs(){
-		$futureProductFirst = D("Products")->limit(0,1)->find();
+		$futureProductFirst = D("Products")->limit(0,1)->order("pid ASC")->find();
 		$futureProductFirst["start_time_seconds"] = strtotime($futureProductFirst["start_time"]);
-		$futureProducts = D("Products")->limit(1,5)->select();
+		$futureProducts = D("Products")->limit(1,5)->order("pid ASC")->select();
 		for($i=0; $i<count($futureProducts); $i++){
 			$futureProducts[$i]["start_time_seconds"] = strtotime($futureProducts[$i]["start_time"]);	
 		}
-		$closedProducts = D("Products")->limit(6,4)->select();
+		$closedProducts = D("Products")->limit(6,4)->order("pid ASC")->select();
 		for($i=0; $i<count($closedProducts); $i++){
 			$closedProducts[$i]["end_time_seconds"] = strtotime($closedProducts[$i]["end_time"]);	
 		}
