@@ -1,107 +1,222 @@
-<include file="public:header.inc" />
-<div class="fm1020 top_guide">
-	所在位置：<a href="/">网站首页</a> > <span class="g9">个人主页</span> 
+<include file="public:_header.inc" />
+<!--公用-头部-start-->
+<div id="header">
+        <div class="header">
+                <div class="uinfo fm1020 cfl">
+                        <!--logo-->
+                        <div class="logo_wrap l">
+                                <a href="/" class="logo" title="萝莉盒首页">首页</a>
+                        </div>
+                        <!--登录-->
+                        <div class="info_show r">
+                                <!--登录前状态-start
+               <ul class="login_no cfl r">
+                                        <li><em class="follow_bg">&nbsp;</em></li>
+                                        <li><a href="#" target="_blank" class="hd_btn">登录</a></li>
+                                        <li><a href="#" target="_blank" class="hd_btn">注册</a></li>
+                                </ul>-->
+                                <!--登录前状态-end-->
+                                <!--登录后态-start-->
+                                <ul class="login_yes cfl r">
+                                        <li class="mr20">
+                                                <a href="#" target="_blank" class="login_name selected"><{$Think.cookie.nickname}></a>
+                                        </li>
+                                        <li>
+                                                <a href="<{:u('user/logout')}>" target="_blank" class="hd_btn">注销</a>
+                                        </li>
+                                </ul>
+                                <!--登录后状态-end-->
+                        </div>
+                </div>
+        </div>
+        <div class="hd_bt">&nbsp;</div>
 </div>
-<!--个人中心--内容--start-------->
-<div class="fm1020_b cfl">
-	<!--左侧导航--->
-	<include file="left.inc" />
-	<!-- 左侧导航 -->
-	<!--右侧-内容-->
-	<div class="f738 r">
-		<!---tips-->
-			<include file="tips.inc" />
-		<!-- tips -->
-	<notempty name="return.recommendlist">	
-		<div class="f738 r">
-		<div class="wp738 mb16">
-			<div class="hd cfl">
-				<h3 class="i_tit l"><em class="t_pen">&nbsp;</em>编辑推荐</h3>
-			</div>
-			<div class="main">
-				<div class="buy_box_wrap">
-					<ul class="buy_box_item cfl">
-					<volist name="return[recommendlist]" id="vo" key="ikey">
-						<li class="fore<{$ikey}>"><a href="<{$vo[url]}>" target="_blank"><img src="<{$vo[img]}>" width="226" height="144" alt="<{$vo[title]}>"></a></li>
-					</volist>
-					</ul>
-				</div>
-			</div>
-			<div class="ft"></div>
-		</div>
-		</div>	
-	</notempty>
-		<!--我购买的萝莉盒--->
-		<div class="wp738 mb16">
-			<div class="hd">
-				<h3 class="i_tit l"><em class="t_brands">&nbsp;</em>我入手的萝莉盒</h3>
-				<a href="<{:u('home/box')}>" class="i_more r mt15">&nbsp;</a>
-			</div>
-			<div class="main">
-				<!--内容--->
-				<div class="My_personal_boxs">
-					<ul class="cfl">
-					<if condition="$return[orderlist] neq ''">
-						<volist name="return[orderlist]" id="vo">
-							<li>
-								<p class="product"><a href="<{$vo[boxurl]}>" target="_blank"><img src="<{$vo[pic]}>" width="160" height="160" alt="<{$vo.name}>" /></a></p>
-								<p class="names tc"><a href="<{$vo[boxurl]}>" target="_blank"><{$vo[name]}></a></p>
-								<p class="tc"><a class="W_pin_b" href="javascript:void(0)" onclick="dialog_share('<{$vo[orderid]}>',4)">晒盒</a></p>
-							</li>
-						</volist>
-					</if>	
-					<empty name="return[orderlist]">
-					<div id="nomessage"></div>
-					<script>
-					$(function(){
-						var content="我居然还没入手萝莉盒？绝不能掉队，现在就去【<a href=\"/buy/index.html\">挑选萝莉盒</a>】！";
-						 nodata("nomessage",content);
-					})
-					</script>
-					</empty>						
-					</ul>
-				</div>
-			</div>
-			<div class="ft"></div>
-		</div>
-		
-		<!--我的试用产品--->
-		<div class="wp738 index_fabric_show My_fabric_show mb16">
-			<div class="hd cfl">
-				<h3 class="i_tit l"><em class="t_arrows_btm">&nbsp;</em>我试用的美妆品</h3>
-				<a href="<{:u('home/try_products')}>" class="i_more r mt15">&nbsp;</a>
-			</div>
-			<div class="main" id="fabricS1">
-				<div class="cfl My_order_fabirc">
-						<!----页面1---->
-							<!----内容块1---->
-							<if condition="$return[productslist] neq ''">
-								<foreach name="return[productslist]" item="vo">
-									<include file="brand:public_productsinfo" />	
-								</foreach>
-						</if>	
-					<empty name="return[productslist]">	
-						<div id="no_try"></div>
-						<script>
-						$(function(){
-							var title="我居然一件产品都没试用过，是不是有点out了？>_<快去【<a href=\"/try/index.html\">我要试用</a>】挑挑！";
-							 nodata("no_try",title);
-						})
-						</script>		
-					</empty>						
-				</div>	
-		
-			</div>
-			<div class="ft"></div>
-		</div>
-		
-	</div>
-	
+<!--公用-头部-end-->
+
+<!--首页-内容-start-->
+<!--BANNER-->
+
+<!--BANNER-->
+<!--MAIN-->
+<div id="content">
+        <div class="fm1025">
+                <div class="wp1020 cfl">
+                        <!--左边导航-start-->
+                        <div class="f230 l">
+                                <div class="wp230 side">
+                                        <div class="side_con">
+                                                <div class="side_top">
+                                                        <dl>
+                                                                <dt class="img"><img src="<{$userface}>" width="230" height="203" alt="" /></dt>
+                                                                <dd class="name"><{$Think.cookie.nickname}></dd>
+                                                                <dd class="tips">
+                                                                        <p>普通订阅会员<a href="" target="_blank">（升级）</a></p>
+                                                                        <p>积分：<a href="" target="_blank"><{$datanum['score']}></a></p>
+                                                                        <p>账户余额：<a href="" target="_blank">¥102.00</a></p></dd>
+                                                                <dd class="btn cfl">
+                                                                        <a href="" target="_blank" class="l">修改收货地址</a>
+                                                                        <a href="" target="_blank" class="r">修改密码</a>
+                                                                </dd>
+                                                        </dl>
+                                                </div>
+                                                <div class="side_bar">
+                                                        <div class="hd">&nbsp;</div>
+                                                        <div class="main">
+                                                                <ul>
+                                                                        <li><em class="gz_book">&nbsp;</em><span>我的订阅</span></li>
+                                                                        <li><em class="gz_box">&nbsp;</em><span>我的保管箱</span></li>
+                                                                        <li><em class="gz_try">&nbsp;</em><span>我的试用</span></li>
+                                                                        <li><em class="gz_list">&nbsp;</em><span>我的订单</span></li>
+                                                                        <li><em class="gz_tip">&nbsp;</em><span>我的消息</span></li>
+                                                                        <li><em class="gz_host">&nbsp;</em><span>我的账户</span></li>
+                                                                </ul>
+                                                        </div>
+                                                        <div class="ft">&nbsp;</div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                        <!--左边导航-end-->
+                        <!--右边content-start-->
+                        <div class="f780 r">
+                                <div class="wp780 gz">
+                                        <div class="hd">&nbsp;</div>
+                                        <div class="main">
+                                                <ul class="gz_con">
+                                                        <li class="basic">
+                                                                <p class="title">基本情况</p>
+                                 <div class="con cfl">
+                                   <empty name="return.userinfo.if_super">
+                                   <em class="gz_pt l">&nbsp;</em>
+                                   <else />
+                                   <em class="gz_gj l">&nbsp;</em>
+                                   </empty>
+                                        <ul class="l cfl">
+                                          <empty name="return.userinfo.if_super">
+                                            <li>
+                                              <p class="tit">普通订阅会员</p>
+                                              <p class="f12"><a href="" target="_blank">升级高级订阅会员</a></p>
+                                            </li>
+                                            <else />
+                                            <li>
+                                              <p class="tit">高级订阅会员</p>
+                                              <p class="f12">剩余18天，<a href="" target="_blank">立即续费</a></p>
+                                            </li>
+
+                                          </empty>
+
+                                                <li>
+                                                        <p class="tit">积分</p>
+                                                        <p><a href="" target="_blank"><{$datanum['score']}></a></p>
+                                                </li>
+                                                <li>
+                                                        <p class="tit">账户余额</p>
+                                                        <p><a href="" target="_blank">￥120.20</a></p>
+                                                </li>
+                                                <li>
+                                                        <p class="tit">新消息</p>
+                                                        <p><a href="" target="_blank"><{$tips[msgnum]}></a></p>
+                                                </li>
+                                        </ul>
+                                 </div>
+                                                        </li>
+                                                        <li class="book">
+                                                                <p class="title">我的订阅</p>
+                                                                <div class="con">
+                                                                        <p>我们已经为您投递了<a href="" target="_blank">12</a>件试用品,快去看看吧！</p>
+                                                                </div>
+                                                                <p class="tr txt_link"><a href="">立即订阅</a></p>
+                                                        </li>
+                                                        <li class="box">
+                                                                <p class="title">我的保管箱</p>
+                                                                <div class="con">
+                                                                        <p>您的保管箱中一共有<a href="" target="_blank">3</a>件试用品未被提走，<a href="" target="_blank">2</a>件在自主提货区，<a href="" target="_blank">1</a>件在自动发货区<br/>自主提货区有<a href="" target="_blank">2</a>件试用品即将过期，请尽快提货。</p>
+                                                                </div>
+                                                                <p class="tr txt_link"><a href="">立即提货</a></p>
+                                                        </li>
+                                                        <li class="try">
+                                                                <p class="title">我的试用</p>
+                                                                <div class="con cfl">
+                                                                        <p>您已收到了<a href="" target="_blank">32</a>件试用品，其中还有<a href="" target="_blank">12</a>件试用品没有发表过试用分享哦。</p>
+                                                                </div>
+                                                                <p class="tr txt_link"><a href="">发表分享</a></p>
+                                                                <p class="show_img mt10"><a href=""><img src="/public/images/head_m.jpg" width="300" height="216" alt="" /></a><a href=""><img src="/public/images/head_m.jpg" width="300" height="216" alt="" /></a></p>
+                                                        </li>
+                                                </ul>
+                                        <div class="bg_yj">&nbsp;</div>
+                                        </div>
+                                        <div class="ft">&nbsp;</div>
+                                </div>
+                        </div>
+                        <!--右边content-end-->
+                </div>
+        </div>
 </div>
+<!--MAIN-->
 
-<!--个人中心--内容--end-------->
-
-<include file="public:masonry" />
-
-<!--标准底---end--->
-<include file="public:footer.inc" />
+<!--标准底-start-->
+<div id="foot_wrap">
+    <div class="footer">
+                <div class="fm1020 cfl foot_subhead">
+                        <div class="quick_links">
+                                <a href="" target="_blank">新丁</a>
+                                <a href="" target="_blank">常见问题</a>
+                                <a href="" target="_blank">video</a>
+                        </div>
+                        <div class="f_list">
+                                <h4>网站声明</h4>
+                                <ul>
+                                        <li><a href="#" target="_blank">隐私声明</a></li>
+                                        <li><a href="#" target="_blank">用户协议</a></li>
+                                <ul>
+                        </div>
+                        <div class="f_list">
+                                <h4>关注我们</h4>
+                                <ul>
+                                        <li><a href="#" target="_blank">新浪微博</a></li>
+                                        <li><a href="#" target="_blank">腾讯微博</a></li>
+                                <ul>
+                        </div>
+                        <div class="f_list f_list_wx">
+                                <h4>萝莉盒微信</h4>
+                                <div class="">
+                                        <img src="/public/images/foot_wx_v5.jpg" />
+                                </div>
+                        </div>
+                        <div class="f_list f_list_app">
+                                <h4>萝莉盒app</h4>
+                                <div class="">
+                                        <img src="/public/images/foot_wx_v5.jpg" />
+                                </div>
+                        </div>
+                        <div class="f_list f_list_help">
+                                <h4>服务支持</h4>
+                                <ul>
+                                        <li><a href="#" target="_blank">QQ客服</a></li>
+                                        <li>服务热线：4006-263-362</li>
+                                        <li>法定工作日9:30-18:30</li>
+                                <ul>
+                        </div>
+                        <div class="f_list f_list_bq">
+                                <h4>版权信息</h4>
+                                <ul>
+                                        <li>京ICP备12011669号-1</li>
+                                        <li>京公网安备 11010502019238</li>
+                                        <li>Copyright © 2012-2013 LOLITABOX</li>
+                                <ul>
+                        </div>
+                </div>
+        </div>
+</div>
+<!--标准底-end-->
+<script src="public/js/gzJs.js"></script>
+<script src="public/js/jquery.masonry.min.js" type="text/javascript"></script>
+<script src="public/js/jquery.lazyload.js"></script>
+<script>
+$(function () {
+        $("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
+});
+ </script>
+<!--标准底-end-->
+</body>
+</html>

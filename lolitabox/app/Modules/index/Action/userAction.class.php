@@ -1182,55 +1182,60 @@ class userAction extends commonAction {
      * 用户登录
      */
 	public function login(){
-		$username=$_REQUEST["usermail"]; //用户注册的邮箱地址
-		$userpassword=$_REQUEST["password"];
 
-		if(empty($username) || empty($userpassword)) {
-			if($this->isAjax()){
-				$this->ajaxReturn(0,'缺少登录信息!',0);
-			}
-			else {
-				$this->error("请填写用户名、密码");
-			}
-		}
-		$UserModel=M("users");
-		$userinfo=$UserModel->getByUsermail($username);
-		if($userinfo){
-			//用户名存在，则验证其密码是否与当前用户名中的密码相等
-			if($userinfo["password"]==md5($userpassword)){
-				//用户身份验证通过 后，注册其会话状态
-				$user_session=array(
-				"username"=>$userinfo["usermail"],
-				"nickname"=>$userinfo["nickname"],
-				"userid"=>$userinfo["userid"]
-				);
-				if($this->set_user_session($user_session)){
-					$this->loginBindUserOpenid($userinfo["userid"]);
-					if($this->isAjax()){
-						$this->ajaxReturn($user_session,'用户登录成功!',1);
-					}else {
-						$this->success("用户已经登录！");
-					}
-				}
-			}
-			else {
-				if($this->isAjax()){
-					$this->ajaxReturn(0,'密码错误!',0);
-				}
-				else {
-					$this->error("密码错误");
-				}
-			}
-		}
-		else {
-			if($this->isAjax()){
-				$this->ajaxReturn(0,'登录账号错误!',0);
-			}
-			else {
-				$this->error("登录账号错误");
-			}
-		}
+        if (IS_POST) {
+            $username=$_REQUEST["usermail"]; //用户注册的邮箱地址
+            $userpassword=$_REQUEST["password"];
 
+            if(empty($username) || empty($userpassword)) {
+                if($this->isAjax()){
+                    $this->ajaxReturn(0,'缺少登录信息!',0);
+                }
+                else {
+                    $this->error("请填写用户名、密码");
+                }
+            }
+            $UserModel=M("users");
+            $userinfo=$UserModel->getByUsermail($username);
+            if($userinfo){
+                //用户名存在，则验证其密码是否与当前用户名中的密码相等
+                if($userinfo["password"]==md5($userpassword)){
+                    //用户身份验证通过 后，注册其会话状态
+                    $user_session=array(
+                        "username"=>$userinfo["usermail"],
+                        "nickname"=>$userinfo["nickname"],
+                        "userid"=>$userinfo["userid"]
+                    );
+                    if($this->set_user_session($user_session)){
+                        $this->loginBindUserOpenid($userinfo["userid"]);
+                        if($this->isAjax()){
+                            $this->ajaxReturn($user_session,'用户登录成功!',1);
+                        }else {
+                            header('Location:/home');
+                            $this->success("用户已经登录！");
+                        }
+                    }
+                }
+                else {
+                    if($this->isAjax()){
+                        $this->ajaxReturn(0,'密码错误!',0);
+                    }
+                    else {
+                        $this->error("密码错误");
+                    }
+                }
+            }
+            else {
+                if($this->isAjax()){
+                    $this->ajaxReturn(0,'登录账号错误!',0);
+                }
+                else {
+                    $this->error("登录账号错误");
+                }
+            }
+        }
+
+        $this->display();
 	}
 
 	/**

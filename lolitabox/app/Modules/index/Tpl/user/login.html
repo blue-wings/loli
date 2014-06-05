@@ -1,0 +1,157 @@
+<include file="public:_header.inc" />
+<!--公用-头部-start-->
+<div id="header">
+  <div class="header">
+    <div class="uinfo fm1020 cfl">
+      <!--logo-->
+      <div class="logo_wrap l">
+        <a href="/" class="logo" title="萝莉盒首页">首页</a>
+      </div>
+      <!--登录-->
+      <div class="info_show r">
+        <!--登录前状态-start-->
+        <ul class="login_no cfl r">
+          <li><em class="follow_bg">&nbsp;</em></li>
+          <li><a href="#" target="_blank">登录</a></li>
+          <li class="nopr"><a href="#" target="_blank" class="hd_btn">注册</a></li>
+        </ul>
+        <!--登录前状态-end-->
+        <!--登录后态-start
+            <ul class="login_yes cfl r">
+              <li class="mr20">
+                <a href="#" target="_blank" class="login_name selected">巴黎阁那个小姑娘</a>
+              </li>
+              <li>
+                <a href="" target="_blank" class="hd_btn">注销</a>
+              </li>
+            </ul>-->
+        <!--登录后状态-end-->
+      </div>
+    </div>
+  </div>
+  <div class="hd_bt">&nbsp;</div>
+</div>
+<!--公用-头部-end-->
+
+<!--首页-内容-start-->
+<!--BANNER-->
+
+<!--BANNER-->
+<!--MAIN-->
+<div id="content_login">
+  <div class="fm1020">
+    <div class="wp1020 cfl">
+      <div class="main login_dl cfl">
+        <!--左边登陆框-start-->
+        <div class="fm400 login_l l">
+          <div class="con">
+            <div class="login_ways cfl">
+              <p class="cfl">
+                <a class="l"><em class="dz_sina">&nbsp;</em>微博登录</a>
+                <a class="r"><em class="dz_qq">&nbsp;</em>QQ登录</a>
+              </p>
+              <p class="ab_c"><em class="dz_or">&nbsp;</em></p>
+            </div>
+            <form id="loginform" action="<{:u('user/login')}>" method="post">
+            <div class="login_input">
+                <p>账号：<input type="text" name="usermail"  value="邮箱/手机号" onfocus="if(value =='邮箱/手机号'){value =''}" onblur="if(value ==''){value='邮箱/手机号'}"/></p>
+                <p>密码：<input type="password" name="password"  value=""/></p>
+                <p class="tc"><span><input type="checkbox" name="remember"/>记住我</span><span class="nobrder_r"><a href="" target="_blank">忘记密码</a></span></p>
+            </div>
+            <div class="login_btn">
+              <a href="" class="btn"><span class="l"></span><span class="c" id="login">登录</span><span class="r"></span></a>
+              <a href="" target="blank">还没账号？马上注册</a>
+            </div>
+            </form>
+          </div>
+        </div>
+        <script>
+          $(document).ready(function(){
+              $('#login').click(function(){
+                  $('#loginform').submit();
+                  return false;
+              });
+          })
+        </script>
+        <!--左边登陆框-end-->
+        <!--右边content-start-->
+        <div class="login_r l">
+          <div class="con">
+            <p><em class="dz_txt_dy ml_l">&nbsp;</em><span>随时投递、随心选用。萝莉盒想要为您投递的只有最新、最好用！</span></p>
+            <p><em class="dz_txt_sy ml_l_b">&nbsp;</em><span>100多个知名品牌的新品、明星品，不试用怎么知道哪个最适合?</span></p>
+            <p><em class="dz_txt_jf ml_l">&nbsp;</em><span>漫天飞舞着积分，萝莉盒的确很难得到，因为我们为您准备的兑换非常重磅。</span></p>
+          </div>
+        </div>
+        <!--右边content-end-->
+      </div>
+    </div>
+  </div>
+</div>
+<!--MAIN-->
+
+<!--标准底-start-->
+<div id="foot_wrap_b">
+  <div class="footer">
+    <div class="fm1020 cfl foot_subhead">
+      <div class="quick_links">
+        <a href="" target="_blank">新丁</a>
+        <a href="" target="_blank">常见问题</a>
+        <a href="" target="_blank">video</a>
+      </div>
+      <div class="f_list">
+        <h4>网站声明</h4>
+        <ul>
+          <li><a href="#" target="_blank">隐私声明</a></li>
+          <li><a href="#" target="_blank">用户协议</a></li>
+          <ul>
+      </div>
+      <div class="f_list">
+        <h4>关注我们</h4>
+        <ul>
+          <li><a href="#" target="_blank">新浪微博</a></li>
+          <li><a href="#" target="_blank">腾讯微博</a></li>
+          <ul>
+      </div>
+      <div class="f_list f_list_wx">
+        <h4>萝莉盒微信</h4>
+        <div class="">
+          <img src="public/images/foot_wx_v5.jpg" />
+        </div>
+      </div>
+      <div class="f_list f_list_app">
+        <h4>萝莉盒app</h4>
+        <div class="">
+          <img src="public/images/foot_wx_v5.jpg" />
+        </div>
+      </div>
+      <div class="f_list f_list_help">
+        <h4>服务支持</h4>
+        <ul>
+          <li><a href="#" target="_blank">QQ客服</a></li>
+          <li>服务热线：4006-263-362</li>
+          <li>法定工作日9:30-18:30</li>
+          <ul>
+      </div>
+      <div class="f_list f_list_bq">
+        <h4>版权信息</h4>
+        <ul>
+          <li>京ICP备12011669号-1</li>
+          <li>京公网安备 11010502019238</li>
+          <li>Copyright © 2012-2013 LOLITABOX</li>
+          <ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!--标准底-end-->
+<script src="public/js/gzJs.js"></script>
+<script src="public/js/jquery.masonry.min.js" type="text/javascript"></script>
+<script src="public/js/jquery.lazyload.js"></script>
+<script>
+  $(function () {
+  $("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
+  });
+</script>
+<!--标准底-end-->
+</body>
+</html>
