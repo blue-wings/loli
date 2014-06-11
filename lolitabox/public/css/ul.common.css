@@ -54,6 +54,8 @@
 .login_input input,.login_zcin input{ vertical-align: middle; color: #999;}
 .login_input input[type="text"]:focus{ border: 1px #fa3c91 solid; color: #333;}
 .login_input input[type="text"]{ width: 274px; border-radius: 3px; line-height: 18px; padding: 7px; border: 1px #999 solid;}
+.login_input input[type="password"]:focus{ border: 1px #fa3c91 solid; color: #333;}
+.login_input input[type="password"]{ width: 274px; border-radius: 3px; line-height: 18px; padding: 7px; border: 1px #999 solid;}
 .login_input span{ border-right: 1px #999 solid; padding: 0 15px;}
 .login_input span.nobrder_r{ border-right: none;}
 .login_btn{ line-height: 36px; text-align: center;}
