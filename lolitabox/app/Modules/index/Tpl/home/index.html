@@ -63,7 +63,7 @@
                                                         <div class="hd">&nbsp;</div>
                                                         <div class="main">
                                                                 <ul>
-                                                                        <li><em class="gz_book">&nbsp;</em><span>我的订阅</span></li>
+                                                                        <li><em class="gz_book">&nbsp;</em><span for-action="<{:u('subscribe/mine', 'userType=0')}>" class="menu-time">我的订阅</span></li>
                                                                         <li><em class="gz_box">&nbsp;</em><span>我的保管箱</span></li>
                                                                         <li><em class="gz_try">&nbsp;</em><span>我的试用</span></li>
                                                                         <li><em class="gz_list">&nbsp;</em><span>我的订单</span></li>
@@ -78,7 +78,7 @@
                         </div>
                         <!--左边导航-end-->
                         <!--右边content-start-->
-                        <div class="f780 r">
+                        <div class="f780 r" id="main-container">
                                 <div class="wp780 gz">
                                         <div class="hd">&nbsp;</div>
                                         <div class="main">
@@ -216,6 +216,13 @@
 $(function () {
         $("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
 });
+
+$(".menu-time").click(function(){
+	var url = $(this).attr("for-action");
+	if(url){
+		$("#main-container").load(url);		
+	}
+})
  </script>
 <!--标准底-end-->
 </body>
