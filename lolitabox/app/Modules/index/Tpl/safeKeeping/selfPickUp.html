@@ -1,10 +1,44 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+<!--右边content-start-->
+			<div class="f780 dy_wrap r">
+				<div class="dy_tab">
+					<div class="tab">
+						<div class="tad_li cfl">
+							<a href="javascript:;" class="select"><p><span class="txt">自主提货区</span><span class="on_bg"></span></p></a>
+							<a href="javascript:;"><p><span class="txt">自动发货区</span><span class="on_bg"></span></p></a>
+							<a href="javascript:;" class="nobr"><p><span class="txt"><em class="gz_help">HELP</em></span><span class="on_bg"></span></p></a>
+						</div>
+					</div>
+				</div>
+				<div class="wp780 th_con">
+					<div class="hd">&nbsp;</div>
+					<div class="con">
+						<div class="th_tit cfl"><p class="l">共有<span class="g1">13</span>种试用品需要您提货，请注意<span class="g2">有效期标红</span>的产品，尽快提货。</p><p class="r">客服热线：<span class="tel g3">4006-263-362</span></p></div>
+						<div class="th_list">
+							<p class="ab_a">&nbsp;</p>
+							<ul class="th_ul autoMain cfl">
+								<volist name="productDetails" id="productDetail">
+									<li class="th_li select">
+										<dl>
+											<dt><span class="check_bg"><input type="checkbox" name=""><i class="select">&nbsp;</i></span></dt>
+											<dd class="img"><a href="" target="_blank"><img src="<{$productDetail.product.pimg}>" width="150" height="150" alt="" /></a></dd>
+											<dd class="name"><a href="" target="_blank"><{$productDetail.product.pname}></a></dd>
+											<dd class="txt cfl"><span class="l">5ml</span><span class="r">数量：<{$productDetail.product.inventory}></span></dd>
+											<dd class="validite md">有效期至：2014.4.1</dd>
+										</dl>
+									</li>
+								</volist>
+								<!--[if IE 7]><li class="clear"></li> <![endif]--> 
+							</ul>
+							<p class="ab_b">&nbsp;</p> 
+						</div>
+				        <div class="th_sure cfl">
+				        	<p><span class="all_check" id="all_select"><input type="checkbox" name=""><i>&nbsp;</i>全部提走</span></p>
+				        	<p>您本次提走<span class="g4">0</span>件产品</p>
+				        	<p>总重量<span class="g4">0</span>kg</p>
+				        	<p class="r"><a href="javascript:;" class="ty_btn">选好确认</a></p>
+				        </div>
+					</div>
+					<div class="ft">&nbsp;</div>
+				</div>
+			</div>
+			<!--右边content-end-->

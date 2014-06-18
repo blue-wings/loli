@@ -10,10 +10,12 @@ class safeKeepingAction extends commonAction{
 		$productDetails = $userOrderSendProductDetail->where("status=0")->order("orderid DESC")->limit($p->firstRow.','.$p->listRows)->select();
 		$product = M("Products");
 		for($i=0; $i<count($productDetails); $i++){
-			$productId = $productDetails[$i]["productId"];
-			$productDetails[$i]["product"]=$product->where("pid=".$pid)->find();
+			$productId = $productDetails[$i]["productid"];
+			$productRecord = $product->where("pid=".$productId)->find();
+			$productDetails[$i]["product"]= $productRecord;
 		}
 		$this->assign("productDetails",$productDetails);
+		$this->display();
 	}
 
 	
