@@ -1,8 +1,8 @@
 #--2014/5/18 
 
 #增加产品的投递开始和结束时间
-ALTER TABLE `products` ADD COLUMN start_time timestamp null;
-ALTER TABLE `products` ADD COLUMN end_time timestamp null;
+ALTER TABLE `products` ADD COLUMN start_time timestamp null COMMENT '投递开始时间';
+ALTER TABLE `products` ADD COLUMN end_time timestamp null COMMENT '投递结束时间';
 
 #增加用户订阅产品分类表
 CREATE TABLE `users_products_category_subscribe` (
@@ -35,4 +35,7 @@ CREATE TABLE `user_order_self_package` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #buyed products add pay delivery fee status
-ALTER TABLE user_order_send_productdetail ADD COLUMN status tinyint(3) NULL NULL COMMENT '0未付邮费，1已付邮费';
+ALTER TABLE user_order_send_productdetail ADD COLUMN status tinyint(3) NULL COMMENT '0未付邮费，1已付邮费';
+
+#add expire date to product
+ALTER TABLE products ADD COLUMN expiration_date timestamp NULL COMMENT '保质期';
