@@ -23,7 +23,7 @@
 											<dd class="img"><a href="" target="_blank"><img src="<{$productDetail.product.pimg}>" width="150" height="150" alt="" /></a></dd>
 											<dd class="name"><a href="" target="_blank"><{$productDetail.product.pname}></a></dd>
 											<dd class="txt cfl"><span class="l">5ml</span><span class="r">数量：<{$productDetail.product.inventory}></span></dd>
-											<dd class="validite md">有效期至：2014.4.1</dd>
+											<dd class="md">有效期至：<p class="expiration"><{$productDetail.product.expiration_date}></p></dd>
 										</dl>
 									</li>
 								</volist>
@@ -42,3 +42,13 @@
 				</div>
 			</div>
 			<!--右边content-end-->
+			
+			<script>
+				$(".expiration").each(function(){
+					var todayStr = getTodayFormate();
+					if($(this).text()<todayStr){
+						$(this).css("color","red");
+					}
+				})
+			
+			</script>

@@ -24,6 +24,7 @@
 			   主要成分:	<input type="text" name="maincomponent" value='{$productinfo.maincomponent}'><br><br>
 			   体验装规格:	<input type="text" name="trialsize"  value='{$productinfo.trialsize}'><br><br>
 			   体验装价格:	<input type="text" name="trialprice" value='{$productinfo.trialprice}'><br><br>
+			   保质期:<input type="text" size="20" id="expiration_date" name="expiration_date" value='{$productinfo.expiration_date}'><br><br>
 			   开始日期:<input type="text" size="20" id="start_time" name="start_time" value='{$productinfo.start_time}'><br><br>
 			   截止日期:	<input type="text" size="20" id="end_time" name="end_time" value='{$productinfo.end_time}'><br><br>
 			  产品对应的用户级别：<input type = checkbox value="0" name="user_type[]" <php>if(in_array(0,$usertype_list_selected)) echo " checked";</php>>普通会员</input>
@@ -254,5 +255,11 @@ $("#end_time").datetimepicker({
 		$( "#start_time" ).datepicker( "option", "maxDate", selectedDate );
 	}
 });
+
+$("#expiration_date").datepicker({
+	dateFormat:"yy-mm-dd",
+	changeMonth: true,
+	numberOfMonths: 1
+})
 </script>
 <include file="Public:footer" />

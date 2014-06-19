@@ -38,4 +38,4 @@ CREATE TABLE `user_order_self_package` (
 ALTER TABLE user_order_send_productdetail ADD COLUMN status tinyint(3) NULL COMMENT '0未付邮费，1已付邮费';
 
 #add expire date to product
-ALTER TABLE products ADD COLUMN expiration_date timestamp NULL COMMENT '保质期';
+ALTER TABLE products ADD COLUMN expiration_date date NULL COMMENT '保质期';
