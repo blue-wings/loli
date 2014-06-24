@@ -19,12 +19,14 @@
 			   产品别名(亮点描述):<input type="text" name="product_alias" value="{$productinfo.product_alias}" size="50"></br> </br> 
 			   子产品列表:	<input type="text" size="30" name="productlist" value="{$productinfo.productlist}"><br><font color="red"> 以英文逗号分隔，如1,2,3,4</font></br> </br> 
 			  <!-- 精彩分享ID列表:<input type="text" size="30" name="sharelist" value="{$productinfo.sharelist}"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<font color="red"> 以英文逗号分隔，如1,2,3,4</font></br> </br>   --> 
+			   库存单品ID: <input type="text" name="inventory_item_id"  value="{$productinfo.inventory_item_id}"><br><br>
+			   产品发售库存: <input type="text" name="inventory"  value="{$productinfo.inventory}"><br><br>
+			   产品发售库存减少: <input type="text" name="inventoryreduced"  value="{$productinfo.inventoryreduced}" disabled="disabled"><br><br>
 			   正装规格:	<input type="text" name="goodssize"  value="{$productinfo.goodssize}"><br><br>
 			   正装价格:	<input type="text" name="goodsprice" value='{$productinfo.goodsprice}'><br><br>
 			   主要成分:	<input type="text" name="maincomponent" value='{$productinfo.maincomponent}'><br><br>
 			   体验装规格:	<input type="text" name="trialsize"  value='{$productinfo.trialsize}'><br><br>
 			   体验装价格:	<input type="text" name="trialprice" value='{$productinfo.trialprice}'><br><br>
-			   保质期:<input type="text" size="20" id="expiration_date" name="expiration_date" value='{$productinfo.expiration_date}'><br><br>
 			   开始日期:<input type="text" size="20" id="start_time" name="start_time" value='{$productinfo.start_time}'><br><br>
 			   截止日期:	<input type="text" size="20" id="end_time" name="end_time" value='{$productinfo.end_time}'><br><br>
 			  产品对应的用户级别：<input type = checkbox value="0" name="user_type[]" <php>if(in_array(0,$usertype_list_selected)) echo " checked";</php>>普通会员</input>
