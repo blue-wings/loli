@@ -285,6 +285,13 @@ class ProductAction extends CommonAction{
 		$for_skin=$product_mod->getForSkinDefine();
 		$for_people=$product_mod->getForPeopleDefine();
 		$for_hair=$product_mod->getForHairDefine();
+		
+		$invetoryItemId = $productinfo["inventory_item_id"];
+		if($invetoryItemId){
+			$inventoryItem = M("InventoryItem")->where("id=".$invetoryItemId)->find();
+			$productinfo["inventoryItem"]=$inventoryItem;
+		}
+		
 		$this->assign('skin_list',$for_skin);
 		$this->assign('skin_list_selected',explode(",",$productinfo["for_skin"]));
 		$this->assign('people_list',$for_people);

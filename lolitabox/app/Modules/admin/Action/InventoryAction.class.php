@@ -2063,5 +2063,15 @@ class InventoryAction extends CommonAction {
 // 		echo $info;		
 	}
 	
+	public function getInfo(){
+		$inventoryItemId = $_POST['inventoryItemId'];
+		$inventoryItem = M("InventoryItem")->where("id=".$inventoryItemId)->find();
+		if($inventoryItem){
+        	$this->ajaxReturn(1,$inventoryItem,1);
+        }else{
+        	$this->ajaxReturn(0,'未找到相关信息',0);
+        }
+	}
+	
 }
 ?>
