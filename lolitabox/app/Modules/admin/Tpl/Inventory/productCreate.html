@@ -12,7 +12,11 @@
 				<div  class="formstyle">
                    <form action='__ACTION__'  method='post'>
                      <input type='hidden'  name='id'  value="{$Think.request.id}">
-                      关联商品ID：<input type='text'  name='relation_id' value='{$info.relation_id}'><br><br>
+                      关联商品ID：
+                      	<volist name='products'  id='product'>
+                      		<span class="prodcutId">{$prodcut.pid}({$product.pname})</span>
+                         </volist>	
+                      <br><br>
                       单品名称：<input type="text" name='name'  value="{$info.name}" size="50"><br><br>
                       品牌名称：<input type='text'  name='brandname'>
                                <select name='brandid' onchange="setBrandV(this.options[this.options.selectedIndex].text)">

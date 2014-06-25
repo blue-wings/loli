@@ -237,6 +237,8 @@ class InventoryAction extends CommonAction {
 				$this->assign("brandlist",$brand_list);
 				$this->assign("clist",$clist);
 				$this->assign("info",$info);
+				$products = M("Products")->where('inventory_item_id='.$_REQUEST['id'])->select();
+				$this->assign("products",$products);
 				$this->display();
 			}
 			die;
