@@ -23,7 +23,7 @@
 											<dd class="img"><a href="" target="_blank"><img src="<{$productDetail.product.pimg}>" width="150" height="150" alt="" /></a></dd>
 											<dd class="name"><a href="" target="_blank"><{$productDetail.product.pname}></a></dd>
 											<dd class="txt cfl"><span class="l">5ml</span><span class="r">数量：<{$productDetail.product.inventory}></span></dd>
-											<dd class="md">有效期至：<p class="expiration"><{$productDetail.product.expiration_date}></p></dd>
+											<dd class="md">有效期至：<p class="expiration"><{$productDetail.inventoryItem.validdate}></p></dd>
 										</dl>
 									</li>
 								</volist>
@@ -31,6 +31,7 @@
 							</ul>
 							<p class="ab_b">&nbsp;</p> 
 						</div>
+						<div class="W_pages" id="page"><{$page}></div>
 				        <div class="th_sure cfl">
 				        	<p><span class="all_check" id="all_select"><input type="checkbox" name=""><i>&nbsp;</i>全部提走</span></p>
 				        	<p>您本次提走<span class="g4">0</span>件产品</p>
@@ -49,6 +50,12 @@
 					if($(this).text()<todayStr){
 						$(this).css("color","red");
 					}
+				})
+				
+				$("#page > a").click(function(){
+					url = $(this).attr("href");
+					$("#main-container").load(url);
+					return false;
 				})
 			
 			</script>
