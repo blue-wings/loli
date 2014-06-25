@@ -8,9 +8,9 @@ class IndexAction extends commonAction {
 	 */
 	public function index() {
 		if($this->userid){
-			$this->redirect('Index/home', null, 1, '页面跳转中...');	
+			$this->redirect('index/home', null, 1, '页面跳转中...');	
 		}
-		$this->redirect('Index/user/login', null, 1, '页面跳转中...');
+		$this->redirect('index/user/login', null, 1, '页面跳转中...');
 	}
 }
 
