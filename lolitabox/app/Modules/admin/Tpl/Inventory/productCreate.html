@@ -13,9 +13,11 @@
                    <form action='__ACTION__'  method='post'>
                      <input type='hidden'  name='id'  value="{$Think.request.id}">
                       关联商品ID：
+                      	<ul>
                       	<volist name='products'  id='product'>
-                      		<span class="prodcutId">{$prodcut.pid}({$product.pname})</span>
-                         </volist>	
+                      		<li><a class="productId" productId="{$product.pid}" style="cursor:pointer">{$product.pid}({$product.pname})</a></li>
+                         </volist>
+                         </ul>	
                       <br><br>
                       单品名称：<input type="text" name='name'  value="{$info.name}" size="50"><br><br>
                       品牌名称：<input type='text'  name='brandname'>
@@ -88,13 +90,17 @@
 						}
 					})	
 					
-					$(":text[name='relation_id']").keyup(function(){
-						showproinfo($(this).val().trim());
-					})	
+					$(".productId").click(function(){
+						showproinfo($(this).attr("productId"));
+					})
 					
-					
-					if("{$info.relation_id}"){
-						showproinfo("{$info.relation_id}");
+					var productIds = [];
+					$.each($(".productId"),function(){
+						var productId = $(this).attr("productId");
+						productIds.push(productId);
+					})
+					if(productIds.length){
+						showproinfo(productIds[0]);
 					}
 					
 					function  showproinfo(vl){
