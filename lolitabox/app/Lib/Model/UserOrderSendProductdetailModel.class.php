@@ -52,7 +52,7 @@ class UserOrderSendProductdetailModel extends Model{
         $where['uos.senddate'] = array('exp','is not null');
         $productNum = $this->join("left join user_order_send as uos on user_order_send_productdetail.orderid = uos.orderid")->where($where)->count();
         //跟别的拼单一起打包的产品
-        $productPackageNum = $this->where("self_package_order_id is not null")->count();
+        $productPackageNum = $this->join("left join user_order_send as uos on user_order_send_productdetail.self_package_order_id= uos.orderid")->where($where)->count();
 
         return $productNum + $productPackageNum;
     }
