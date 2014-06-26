@@ -237,6 +237,8 @@ class InventoryAction extends CommonAction {
 				$this->assign("brandlist",$brand_list);
 				$this->assign("clist",$clist);
 				$this->assign("info",$info);
+				$products = M("Products")->where('inventory_item_id='.$_REQUEST['id'])->select();
+				$this->assign("products",$products);
 				$this->display();
 			}
 			die;
@@ -2061,6 +2063,16 @@ class InventoryAction extends CommonAction {
 		$this->display();
 // 		$info=$this->fetch("exportOrderInfo");
 // 		echo $info;		
+	}
+	
+	public function getInfo(){
+		$inventoryItemId = $_POST['inventoryItemId'];
+		$inventoryItem = M("InventoryItem")->where("id=".$inventoryItemId)->find();
+		if($inventoryItem){
+        	$this->ajaxReturn(1,$inventoryItem,1);
+        }else{
+        	$this->ajaxReturn(0,'未找到相关信息',0);
+        }
 	}
 	
 }
