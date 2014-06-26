@@ -6,6 +6,7 @@
  */
 $config_db = require_once(CONFIG_DB_FILE); // 加载数据库配置参数
 $config_global=require_once(CONFIG_GLOBAL_FILE); //加载全局配置参数
+$constants = require_once(CONFIG_CONSTANTS_FILE);
 $array = array(
 	/* 定义URL模式*/
 	'TMPL_CACHE_ON'=>false,
@@ -27,5 +28,5 @@ $array = array(
 	'COOKIE_AUTHKEY' => 'AJSIFKJSI22AHSDHFALSKD', // [自定义]
 	'COOKIE_AUTHKEY_SPLIT' => '|||', // [自定义]
 );
-return array_merge ( $config_db,$config_global,$array);
+return array_merge ( $config_db,$config_global,$constants,$array);
 ?>
