@@ -41,13 +41,32 @@ class subscribeAction extends commonAction{
 	}
 	
 	public function theirs(){
-		$futureProductFirst = D("Products")->limit(0,1)->order("pid ASC")->find();
-		$futureProductFirst["start_time_seconds"] = strtotime($futureProductFirst["start_time"]);
-		$futureProducts = D("Products")->limit(1,5)->order("pid ASC")->select();
-		for($i=0; $i<count($futureProducts); $i++){
-			$futureProducts[$i]["start_time_seconds"] = strtotime($futureProducts[$i]["start_time"]);	
-		}
-		$closedProducts = D("Products")->limit(6,4)->order("pid ASC")->select();
+		
+        $productsModel = M("Products");
+        
+        $startTime = date("Y-m-d",time()+C('SUBSCRIBE_FUTURE_INC'));
+        $where["start_time"]=array('egt',$startTime);
+        $where["status"]=c('PRODUCT_STATUS_PUBLISHED');
+        $futureProdcutsList = $productsModel->where($where)->order("start_time ASC")->limit(6)->select();
+        $count = count($futureProdcutsList);
+        $futureProductFirst = NULL;
+        $futureProducts = array();
+        if($count){
+        	$futureProductFirst = $futureProdcutsList[0];	
+        	$futureProductFirst["start_time_seconds"] = strtotime($futureProductFirst["start_time"]);
+        }
+        if($count>1){
+	        for($i=1; $i<$count; $i++){
+	        	$num = $i-1;
+	        	$futureProducts[$num]=$futureProdcutsList[$i];
+				$futureProducts[$num]["start_time_seconds"] = strtotime($futureProducts[$num]["start_time"]);	
+			}	
+        }
+        
+        $endTime = date("Y-m-d");
+		$whereClosed["end_time"]=array('elt',$startTime);
+		$whereClosed["status"]=c('PRODUCT_STATUS_PUBLISHED');
+		$closedProducts = $productsModel->where($whereClosed)->order("end_time DESC")->limit(5)->select();
 		for($i=0; $i<count($closedProducts); $i++){
 			$closedProducts[$i]["end_time_seconds"] = strtotime($closedProducts[$i]["end_time"]);	
 		}
