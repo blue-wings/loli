@@ -30,10 +30,41 @@ class homeAction extends commonAction {
 		
 		$if_finished=D("UserVote")->getUserIfFinished($userid);
 		$return['if_finished']=$if_finished["finished"];
-		
-		$this->assign("tips",$tips);
-		$this->assign("return",$return);
-		$this->display();
+
+        //优惠券余额
+        $price=D("Giftcard")->getUserGiftcardPrice($userid);
+        $info['giftcard_price'] = $price;
+
+        //我的订阅
+        $model= new Model();
+        $productSql = "select count(distinct(p.pid)) as productNum  from products as p right join users_products_category_subscribe as upcs  ON p.effectcid = upcs.product_category_id WHERE upcs.user_id=".$userid." and p.end_time > NOW() and p.start_time < NOW()";
+        $productResult = $model->query($productSql);
+        $productTryNum = 0;
+        if(count($productResult) > 0){
+            $productTryNum = $productResult[0]["productNum"];
+        }
+        $info['productTryNum'] = $productTryNum;
+
+        //保管箱
+        $userOrderSendProductDetail = D("UserOrderSendProductdetail");
+        $selfPickUpProductCount = $userOrderSendProductDetail->getUserOrderNumByUserIdAndStatus($userid,0);
+        //fixme: add code for auto send area products
+        $autoSendProductCount = 0;//$userOrderSendProductDetail->getUserOrderNumByUserIdAndStatus($userid,1);
+        $willExpiredNum = $userOrderSendProductDetail->getWillExpiredNumInSelfPickupProduct($userid);
+
+        $info['selfPickUpProductCount'] = $selfPickUpProductCount;
+        $info['autoSendProductCount'] = $autoSendProductCount;
+        $info['totalProductCount'] = $selfPickUpProductCount + $autoSendProductCount;
+        $info['willExpiredNum'] = $willExpiredNum;
+
+        //我试用的产品
+        $receiveTryProductNum = $userOrderSendProductDetail->getReceiveTryProductNum($userid);
+        $info['receiveTryProductNum'] = $receiveTryProductNum;
+
+        $this->assign("info",$info);
+        $this->assign("tips",$tips);
+        $this->assign("return",$return);
+        $this->display();
 	}
 	
 
