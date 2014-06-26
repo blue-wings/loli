@@ -16,4 +16,9 @@ return array(
 	
 	//他们都在订阅什么，即将开始的产品时间延迟，以纠错系统返回到前台的时间
 	'SUBSCRIBE_FUTURE_INC'								=>5,
+
+	//category的ctype种类id
+	'CTYPE_PRODUCT'										=>1,
+	'CTYPE_EFFECT'										=>2,
+	'CTYPE_PRODUCT_BRAND'								=>3
 );
