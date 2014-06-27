@@ -22,7 +22,7 @@
 .gz_con .title{ font-size: 24px; padding-top: 20px;}
 .gz_con > li{border-bottom: 1px #999 dashed;}
 .gz_con > li.basic{border-bottom: 1px #fc4b9a dashed;}
-.gz_con .con{ padding: 20px 0 10px 40px;}
+.gz_con .con{ padding: 20px 0 10px 40px; height: auto; background: none; min-height: 0;}
 .gz_con .basic .con { padding-bottom: 40px; }
 .gz_con .basic .gz_gj,.gz_con .basic .gz_pt{ margin-top: 12px;}
 .gz_con .basic ul{ margin-left: 20px;}
@@ -76,27 +76,30 @@
 .login_zc .login_r p{ padding: 40px 0 0 0;}
 .login_zc .login_input{ margin-top: 0;}
 .login_zc .login_input input[type="text"]{width: 179px;}
-.login_zc .login_input p span{ border-right: none; width: 184px; color: #999; line-height: 18px; vertical-align: middle;}
+.login_zc .login_input p span,.user_message .login_input p span{ border-right: none; width: 184px; color: #999; line-height: 18px; vertical-align: middle;}
 .login_zc .login_input .login_code span{ width: auto;}
 .login_zc .btn{ margin: 0 auto;}
 .login_zc .login_input a,.login_zc .login_input p span.t_fen,.login_zcin .tips_con a{ color: #fc8fc0;}
-.login_zc .login_input .sure_pass input{ background: #feebf4; border: 1px #f5f5f5 solid;}
+.login_input .sure_pass input{ background: #feebf4; border: 1px #f5f5f5 solid;}
 .login_zcin .login_l{ width: 804px; margin: 0 auto; height: 370px; min-height: 370px; padding-top:80px; }
 .login_zcin .tips_ck{ font-size: 18px; color: #fc2c56; text-align: center;}
 .login_zcin .tips_con{ text-align: center; margin-top: 40px;}
 .login_zcin .tips_con p{ padding: 10px 0;}
-.check_bg{ position: relative; cursor: pointer;}
-.check_bg i{ display: inline-block; position: absolute; left: 0px; top: -3px;*left: 3px;*top: 2px; background:#fff url(../images/input_btn_bg.png) 0 0 no-repeat; width: 16px; height: 16px;}
-.check_bg i.select{background:#fff url(../images/input_btn_bg.png) 0 -16px no-repeat;}
+.check_bg,.all_check{ position: relative; cursor: pointer;display: inline-block;}
+.check_bg i,.all_check i{ display: inline-block; position: absolute; left: 0px; top: -2px;*left: 3px;*top: 2px; background:#fff url(../images/input_btn_bg.png) 0 0 no-repeat; width: 16px; height: 16px;}
+.check_bg i.select,.all_check i.select{background:#fff url(../images/input_btn_bg.png) 0 -16px no-repeat;}
 
 /*我的订阅*/
 .dy_tab{ height: 37px; background: #f4f4f4; width: 781px; margin-left: 2px; padding-top: 37px;}
 .dy_tab .tab{ background: #f82081; height: 37px; padding: 0 1px;}
 .dy_tab .tab a{ display: block; float: left; color: #fff; width: 152px; height: 37px; cursor: pointer; text-align: center;font-size: 18px;  line-height: 18px; position: relative; z-index: 2;}
 .dy_tab .tab a .txt{ display: block; border-right: 1px #fff solid; margin-top: 9px; position: relative; z-index: 2; }
-.dy_tab .tab a .on_bg{ position: absolute; z-index: 1;display: none; width: 157px; height: 54px; left:-3px; top: -17px; background: url(../images/dy_tab_bg.png) no-repeat;}
+.dy_tab .tab a .on_bg{ position: absolute; z-index: 1;display: none; width: 157px; height: 54px; left:-3px; top: -17px; background: url(../images/dy_tab_bg.png) 0 0 no-repeat;}
+.dy_tab .tab_x a .on_bg{ width: 157px; height: 54px; left:-3px; top: -17px; background: url(../images/dy_tab_bg.png) 0 -54px no-repeat; width: 116px;}
+.dy_tab .tab_x a.nobr .on_bg{background: url(../images/dy_tab_bg.png) 0 -108px no-repeat; width: 117px;}
 .dy_tab .tab a .gz_help{ vertical-align: middle; padding-left: 30px; line-height: 30px;}
 .dy_tab .tab a.nobr .txt{ border-right: none; margin: 4px 0 0 -8px;}
+.dy_tab .tab_x a.nobr .txt{ border-right: none; margin: 9px 0 0 0;}
 .dy_tab .tab a:hover,.dy_tab .tab a.select{ text-decoration: none; color: #333;}
 .dy_tab .tab a:hover .on_bg,.dy_tab .tab a.select .on_bg{ display: block;}
 .side_bar li:hover,.side_bar li.select{ background: #ff2686; color: #fff;}
@@ -125,7 +128,7 @@
 .dy_ul li .pt_price{ font-size: 18px; color: #ff2686;  line-height: 30px;padding-left: 20px;}
 .dy_ul li .gj_price{ background: #f6faff; line-height: 38px; padding: 0 9px 0 17px;}
 .dy_ul li .gj_price .r{ color: #999; font-size: 12px;}
-.dy_ul li input[type="button"]{ background: url(../images/dy_dg_btn.jpg) repeat-x; height: 30px; line-height: 30px; color: #fff; border: 0; padding: 0 20px;_padding: 0 10px;*padding: 0 10px; font-size: 14px;}
+.dy_ul li input[type="button"],.ty_btn{ background: url(../images/dy_dg_btn.jpg) repeat-x; height: 30px; line-height: 30px; color: #fff; border: 0; padding: 0 20px;_padding: 0 10px;*padding: 0 10px; font-size: 14px;}
 .pri_0,.time_wrap{ padding: 0 0 15px 20px;}
 .time_wrap{ display: none;}
 .xtime_tip{ padding: 10px;color: #fff; height: 110px; }
@@ -185,10 +188,115 @@
 .chart_list .num{ width:40px; border: none; background: #f4f4f4; text-align: center;}
 .fm1025.fm1025_m{ position: relative; top: -16px; *zoom:1; *margin-top: -16px;*top: 0; z-index: 5;}
 
+/*我的账户*/
+.dy_tab .tab_x a{ width: 111px;}
+.user_message .login_input span{ border-right: none;display: inline-block;}
+.login_input i{ display: inline-block; text-align: right; width: 200px; font-style: normal;}
+.ty_btn{ display: inline-block; width: 56px; text-align: center;}
+a.ty_btn:hover{ text-decoration: none;}
+.user_message .btn{ text-align: center;}
+.user_message .user_con{ margin: 45px 0;}
+.user_message .login_input input[type="text"]{ width: 230px;}
+.user_info_t{ margin: 38px 0; font-size: 18px;}
+.user_message .login_input i em{ color: #fa3c91; display: inline-block; margin: 0 5px;}
+.W_order_wrap {margin: 15px 0;}
+.order_tables, .order_tables td {border: 1px solid #CECECE;word-break: break-all;word-wrap: break-word;}
+.order_tables td {border-top: none;text-align: center;padding: 8px 12px;}
+.order_tables th { text-align: center; border: 1px solid #CECECE;border-bottom: none;background-color: #eee;color: #333;font-size: 14px;font-weight: normal;}
+.order_tables a,.user_message .login_input p span.t_fen,.user_location .login_input p span{color: #E7308C;}
+.loli_ps { color: #797979; line-height: 22px;}
+.loli_ps .tip_tit{ font-weight: bold; display: block; padding: 10px 0; color: #333;}
+.user_message{ padding: 0 30px;}
+.user_message .login_input s{ text-decoration: none;}
+.user_integral .user_info_t a,.user_balance .user_info_t a{ font-size: 14px; display: inline-block; margin-left: 40px;}
+.user_balance .gray_dashed{ padding-top: 20px; margin-bottom: 20px;}
+.user_balance i{ width: 140px;}
+.user_balance .btn{ margin:0 152px 45px 0;}
+.user_balance .recharge{ margin-left: 210px;}
+.user_invisit .loli_ps{ font-size: 14px; color: #333; padding-top: 20px;}
+.user_invisit .loli_ps p{ padding: 10px 0;}
+.user_invisit .way_con{ padding: 15px 0;}
+.user_invisit .way_con a{ display: inline-block; margin-right: 15px;}
+.user_invisit .way_con input[type="text"]{ width: 400px; padding: 5px 20px; vertical-align: middle; color: #E7308C; font-size: 14px; float: left;}
+.user_invisit .way_con .ty_btn{ margin: 2px 10px; position: relative;}
+#copy_btn{ position: absolute; left: 0; top: 0;}
+.user_dyset form p,.dy_info_con form p{ width: 93px; display: inline-block; margin: 10px 14px;}
+.dy_info_con form p{ margin:0 0 0 19px;}
+.user_dyset input[type="checkbox"],.dy_info_con input[type="checkbox"]{ vertical-align: middle; margin-right: 8px;}
+.user_dyset .check_bg i,.dy_info_con .check_bg i{ top: 1px; top\0:-12px; *top: 2px;}
+@-moz-document url-prefix(){.user_dyset .check_bg i,.dy_info_con .check_bg i{ top: -2px;}}
+.user_dyset form{ padding: 0 30px;}
+.user_information .user_info_t{ font-size: 24px; height: 37px;}
+.user_info_con { margin-bottom: 30px;}
+.user_info_con .head,.user_info_con .info_l,.user_info_con .info_r{ float: left;}
+.user_info_con .info_l,.user_info_con .info_r{ width: 250px; padding:0 20px;}
+.user_info_con .head{ width: 108px; text-align: center;}
+.user_info_con li,.user_fz li{ color: #666; line-height: 30px;}
+.user_info_con li span,.user_fz li span{ color: #333; font-size: 14px;}
+.user_information .user_info_t em{ vertical-align: middle; margin:10px 3px; float: left; *margin: 15px 3px;}
+.user_information .user_info_t a{ font-size: 14px; line-height: 36px;}
+.user_information .user_info_t a:hover,.dy_info_con .q_list a:hover{ text-decoration: none;}
+.user_information .edit_btn em{ display: none;}
+.user_information .base{ display: none;}
+.user_information .base i,.user_information .base_view i{ font-style: normal;}
+.user_information input[type="text"]{border: 1px #999 solid;border-radius: 3px; padding: 0 5px;}
+.user_information input[type="text"]:focus{ border: 1px #fa3c91 solid; color: #333;}
+.user_fz li{ float: left; width: 200px; padding-left: 29px;}
+.dy_info_con form p{ width: auto; float: left;}
+.dy_info_con li{ margin-bottom: 20px;}
+.dy_info_con .q_list{background: #efefef; vertical-align: bottom; 
+background: -moz-linear-gradient(top, #fff 0%, #efefef 100%); /* FF3.6+ */
+background: -webkit-gradient(linear,top, bottom, color-stop(0%,#fff), color-stop(100%,#efefef)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #fff 0%, #efefef 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #fff 0%, #efefef 100%); /* Opera11.10+ */
+background: -ms-linear-gradient(top, #fff 0%, #efefef 100%); /* IE10+ */
+background: linear-gradient(top, #fff 0%, #efefef 100%); /* W3C */
+border: 1px #e0e0e0 solid; padding: 10px; font-size: 14px;*padding: 0 10px;
+box-shadow: 0px 2px 2px #ddd;
+-moz-box-shadow:0px 2px 2px #ddd;
+-webkit-box-shadow:0px 2px 2px #ddd;}
+.dy_info_con .q_list a{ width: 18px; text-align: center;margin-right: 10px; font-size: 24px; line-height: 24px; float: left;}
+.dy_info_con .q_list i{ font-style: normal;}
+.dy_info_con .q_list input[type="button"]{ background: none; border: none; float: right; display: none; color: #E7308C;}
+.dy_info_con .s_list{ background: #fff; padding: 15px 20px; border: 1px #e0e0e0 solid; border-top: none;  display: none;
+box-shadow: 0px 6px 10px #ddd;
+-moz-box-shadow:0px 6px 10px #ddd;
+-webkit-box-shadow:0px 6px 10px #ddd;
+}
+.dy_info_con .q_list span{ display: block;float: left; line-height: 24px; *line-height: 36px; line-height\0: 30px;}
 
 
-
-
-
-
-
+/*我的保管箱*/
+.th_list{position: relative; margin: 0px 5px 0px 2px;}
+.th_tit{ font-size: 14px; padding: 20px 20px 10px 20px; border-bottom: 1px #e6e6e6 solid; margin:0 5px 0 2px;}
+.th_ul{height: 538px; *height:578px; overflow: hidden; overflow-y:auto; }
+.ab_a,.ab_b{ position: absolute; left: 0;  height: 10px; background: #fff; width: 765px; z-index: 10;}
+.ab_a{ top: 0px;}
+.ab_b{ bottom: 0px;}
+.th_ul li{ float: left; width: 152px; padding: 5px; margin: 10px 14px;}
+.th_ul li.select,.th_ul li:hover{ background: #fbeff5;}
+.th_ul li.select img,.th_ul li:hover img{ border: 1px #fc4597 solid;}
+.th_li dt{ text-align: right;}
+.th_li dt,.th_li dd{ margin: 5px 0;}
+.th_li img{ border:1px #fff solid;  font-size: 0; vertical-align: bottom;}
+.th_li .img{ text-align: center;}
+.th_li .validite.md{color: #fa4b00;}
+.th_li .name{ white-space: nowrap; text-overflow:ellipsis;}
+.th_li .name a{ color: #333;}
+.th_li .txt span{ display: inline-block;}
+.th_li .txt,.th_li .name,.th_li .validite{ padding: 0 10px;}
+.th_sure{ background: #f6faff; margin: 0 5px 0 2px; padding: 8px 0;}
+.th_sure p{ float: left; font-size: 14px;  margin: 0 35px; line-height: 30px;}
+.th_sure p.r{ float: right; margin-right: 50px;}
+.th_sure .g4{ font-size: 20px; display: inline-block; margin: 0 5px;}
+.th_sure input[type="button"]{ vertical-align: middle;}
+.th_sure .all_check input{margin-right: 5px;}
+.th_sure .all_check i{ top: 8px;}
+.th_li .check_bg i.select{background:#fbeff5 url(../images/input_btn_bg.png) 0 -16px no-repeat;}
+/*滚动条样式*/
+.th_list .mCS-dark-2>.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{  background: #e6e6e6;}
+.th_list .mCS-dark-2>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{ background: #e6e6e6; width: 16px;}
+.th_list .mCS-dark-2>.mCSB_scrollTools .mCSB_draggerRail{ width: 16px; background: #f5f5f5; *height: 578px;}
+.th_list .mCSB_container,.th_list .mCS-dark-2{*width: 781px;}
+.th_list:hover .mCSB_scrollTools{ right: 0px;}
+li.clear{ clear: both; margin-top: 0;}
