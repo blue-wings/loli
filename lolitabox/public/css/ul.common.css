@@ -94,12 +94,9 @@
 .dy_tab .tab{ background: #f82081; height: 37px; padding: 0 1px;}
 .dy_tab .tab a{ display: block; float: left; color: #fff; width: 152px; height: 37px; cursor: pointer; text-align: center;font-size: 18px;  line-height: 18px; position: relative; z-index: 2;}
 .dy_tab .tab a .txt{ display: block; border-right: 1px #fff solid; margin-top: 9px; position: relative; z-index: 2; }
-.dy_tab .tab a .on_bg{ position: absolute; z-index: 1;display: none; width: 157px; height: 54px; left:-3px; top: -17px; background: url(../images/dy_tab_bg.png) 0 0 no-repeat;}
-.dy_tab .tab_x a .on_bg{ width: 157px; height: 54px; left:-3px; top: -17px; background: url(../images/dy_tab_bg.png) 0 -54px no-repeat; width: 116px;}
-.dy_tab .tab_x a.nobr .on_bg{background: url(../images/dy_tab_bg.png) 0 -108px no-repeat; width: 117px;}
+.dy_tab .tab a .on_bg{ position: absolute; z-index: 1;display: none; width: 157px; height: 54px; left:-3px; top: -17px; background: url(../images/dy_tab_bg.png) no-repeat;}
 .dy_tab .tab a .gz_help{ vertical-align: middle; padding-left: 30px; line-height: 30px;}
 .dy_tab .tab a.nobr .txt{ border-right: none; margin: 4px 0 0 -8px;}
-.dy_tab .tab_x a.nobr .txt{ border-right: none; margin: 9px 0 0 0;}
 .dy_tab .tab a:hover,.dy_tab .tab a.select{ text-decoration: none; color: #333;}
 .dy_tab .tab a:hover .on_bg,.dy_tab .tab a.select .on_bg{ display: block;}
 .side_bar li:hover,.side_bar li.select{ background: #ff2686; color: #fff;}
@@ -128,7 +125,7 @@
 .dy_ul li .pt_price{ font-size: 18px; color: #ff2686;  line-height: 30px;padding-left: 20px;}
 .dy_ul li .gj_price{ background: #f6faff; line-height: 38px; padding: 0 9px 0 17px;}
 .dy_ul li .gj_price .r{ color: #999; font-size: 12px;}
-.dy_ul li input[type="button"],.ty_btn{ background: url(../images/dy_dg_btn.jpg) repeat-x; height: 30px; line-height: 30px; color: #fff; border: 0; padding: 0 20px;_padding: 0 10px;*padding: 0 10px; font-size: 14px;}
+.dy_ul li input[type="button"]{ background: url(../images/dy_dg_btn.jpg) repeat-x; height: 30px; line-height: 30px; color: #fff; border: 0; padding: 0 20px;_padding: 0 10px;*padding: 0 10px; font-size: 14px;}
 .pri_0,.time_wrap{ padding: 0 0 15px 20px;}
 .time_wrap{ display: none;}
 .xtime_tip{ padding: 10px;color: #fff; height: 110px; }
