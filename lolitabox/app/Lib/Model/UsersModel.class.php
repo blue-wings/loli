@@ -99,18 +99,18 @@ class UsersModel extends Model {
 		$userinfo = $this->field($field)->where("users.userid=".$userid)->join("user_profile on user_profile.userid=users.userid")->find();
 		if(!$userinfo) return false;
 		
-		
+		$array_userface;
+		$userface_path;
+		$end_num = substr ( $userid, "-1" );
+		if (( int ) $end_num == 0) {
+			$end_num = 10;
+		}
+		$system_userface = "/public/images/userface/" . $end_num . ".jpg";
 		if($userinfo['userface']){
 			$array_userface = explode ( ".", $userinfo ["userface"] );
 			$userface_path = $this->getUserfacePrefix ( $userid );
 		}
 		if (empty ( $userinfo ['userface'] ) || !file_exists ( $userface_path ["dir"] . $array_userface [0] . ".".$array_userface [1] )) {
-			$end_num = substr ( $userid, "-1" );
-			if (( int ) $end_num == 0) {
-				$end_num = 10;
-			}
-			$system_userface = "/public/images/userface/" . $end_num . ".jpg";
-			
 			$userinfo ["userface_180_180"] = $system_userface;
 			$userinfo ["userface_100_100"] = $system_userface;
 			$userinfo ["userface_85_85"] = $system_userface;
