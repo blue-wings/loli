@@ -43,7 +43,7 @@ class commonAction extends Action{
 				$unlogin_page = array();     //不需要登录的页面
 				$current_page = MODULE_NAME."_".ACTION_NAME;
 				if(!in_array($current_page, $unlogin_page)){    //如果此页面不需要则跳过，反之则header到首页
-					header("location:".U('user/reglogin'));    //未登录则跳转到登录页
+					header("location:".U('user/login'));    //未登录则跳转到登录页
 				}
 			}
 			if($this->userid){
