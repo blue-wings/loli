@@ -27,6 +27,7 @@ $array = array(
 	'COOKIE_PREFIX' => 'loli_', // Cookie前缀 避免冲突
 	'COOKIE_AUTHKEY' => 'AJSIFKJSI22AHSDHFALSKD', // [自定义]
 	'COOKIE_AUTHKEY_SPLIT' => '|||', // [自定义]
+	'ERROR_PAGE' =>'/error.html'
 );
 return array_merge ( $config_db,$config_global,$constants,$array);
 ?>
