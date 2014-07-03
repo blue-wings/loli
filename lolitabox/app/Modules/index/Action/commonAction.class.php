@@ -222,7 +222,16 @@ class commonAction extends Action{
 		}
 		$this->display("public:$templete");
 	}
-	
-	
+
+    /**
+     * 获取并解析loli_from cookie
+     * @return mixed $data,含有from_id和from_info等键值
+     */
+    public function getPromotionCookie(){
+        return getPromotionCookie();
+    }
+
+
+
 }
 ?>

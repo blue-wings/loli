@@ -9,3 +9,17 @@
 <script type="text/javascript" src="/public/js/glJs.js"></script>
 <script type="text/javascript" src="/public/js/util.js"></script>
 <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="/public/js/validform.js"></script>
+<link rel="stylesheet" type="text/css" href="/public/css/validform.css"/>
+
+<script>
+    var SITE_URL = 'http://<{$Think.server.SERVER_NAME}>/';
+    var DATA_URL = 'http://<{$Think.server.SERVER_NAME}>/data/';
+    var USER_ID = '<{$Think.cookie.userid}>';
+    var SITE_NAME = '萝莉盒';
+    var RESOURCE_TYPE ="<{$return.resourcetype|default=0}>";
+    var RESOURCE_ID = "<{$return.resourceid|default=0}>";
+    var BEAUTY_NAME ="<{$return.beauty_name}>";
+    var TRACK_URL='http://<{$Think.server.SERVER_NAME}><{$Think.const.__SELF__}>';
+</script>

@@ -1,32 +1,125 @@
-<include file="public:header.inc" />
-<!--公用---头部--end------->
-<i class="page_top"></i>
+<include file="public:_header.inc" />
 
-<div class="mb16">
-<div class="fm1024">
-	<div class="wp1020">
-		<div class="hd_t"></div>
-		<div class="main">
-			<!--注册成功--内容--start-->
-				<div class="login_bound_con">
-					<div class="login_bound_succend">
-						<h1 class="bound_succeed_con"><b class="W_ico45 icon_yes_45"></b>您成功注册了萝莉盒会员账户 </h1>
-						<p class="tc f14">
-						我们已经发送一封确认邮件到您注册的邮箱：  <span class="rd"><{$return.usermail}></span>，请及时查看并验证您的邮箱。<br/>(验证邮箱可以立即获得20积分，可以用来免费兑换试用装哦！)<br/><br/>
-						<a href="<{:u('task/index',array('id'=>3))}>" target="_blank">验证手机，马上获得10元优惠券！ </a><br/><br/>
-						<if condition="$FromTitle neq ''">
-						<a href="<{$FromUrl}>" > <b>点击这里，返回”<{$FromTitle}>“</b></a> <br/><br/>
-						</if>
-						<a href="/buy/index.html" class="W_pin_b mr5">挑选萝莉盒</a> 
-						<a href="/try/index.html" class="W_pin_b mr5">我要试用</a> 
-						<a href="/home/index.html" class="W_pin_b">进入个人中心</a>
-						</p>
-					</div>
-				</div>
-			<!--注册成功--内容--end-->
-		</div>
-		<div class="ft"></div>
-	</div>
+<!--公用-头部-start-->
+<div id="header">
+    <div class="header">
+        <div class="uinfo fm1020 cfl">
+            <!--logo-->
+            <div class="logo_wrap l">
+                <a href="/" class="logo" title="萝莉盒首页">首页</a>
+            </div>
+            <!--登录-->
+            <div class="info_show r">
+                <ul class="login_yes cfl r">
+                    <li class="mr20">
+                        <a href="<{:u('home/index')}>" target="_blank" class="login_name selected"><{$Think.cookie.nickname}></a>
+                    </li>
+                    <li>
+                        <a href="<{:u('user/logout')}>" class="hd_btn">注销</a>
+                    </li>
+                </ul>
+                <!--登录后状态-end-->
+            </div>
+        </div>
+    </div>
+    <div class="hd_bt">&nbsp;</div>
 </div>
+<!--公用-头部-end-->
+<!--MAIN-->
+<div id="content_login">
+    <div class="fm1020">
+        <div class="wp1020 cfl">
+            <div class="main login_zcin cfl">
+                <div class="f820 login_l">
+                    <div class="con">
+                        <p class="tips_ck"><i class="dz_in mr5"></i>您已经成功注册萝莉盒账号</p>
+                        <div class="tips_con tips_con_b">
+                            <p class="f16 cfl"><span>STEP 1</span>：选择喜欢的品类以便享受更丰富和需要的试用品；之后也可在<br/>&nbsp;&nbsp;【我的账户】-【订阅设置】中修改；<a href="" target="_blank">设置</a></p>
+                            <p class="f16 cfl"><span>STEP 2</span>：请完善萝莉档案，将能获得更多额外试用品种类；之后也可在<br/>&nbsp;&nbsp;【我的账户】-【 萝莉档案】 中修改；<a href="" target="_blank">去修改</a></p>
+                            <p class="f16 cfl"><span>STEP 3</span>：我们已经为您投递了免费的试用品，立即去【我的订阅】-【新会员专属】领取吧！<a href="" target="_blank">立即领取</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<include file="public:footer.inc" />
+<!--MAIN-->
+<script type="text/javascript">
+    $(function(){
+        $('.check_bg').click(function(){
+            $('i',this).toggleClass('select');
+            if($('i',this).hasClass('select')){
+                $('input',this).attr('checked',true);
+            }else{
+                $('input',this).attr('checked',false);
+            }
+        })
+    })
+</script>
+<!--标准底-start-->
+<div id="foot_wrap_b">
+    <div class="footer">
+        <div class="fm1020 cfl foot_subhead">
+            <div class="quick_links">
+                <a href="" target="_blank">新丁</a>
+                <a href="" target="_blank">常见问题</a>
+                <a href="" target="_blank">video</a>
+            </div>
+            <div class="f_list">
+                <h4>网站声明</h4>
+                <ul>
+                    <li><a href="#" target="_blank">隐私声明</a></li>
+                    <li><a href="#" target="_blank">用户协议</a></li>
+                    </ul>
+            </div>
+            <div class="f_list">
+                <h4>关注我们</h4>
+                <ul>
+                    <li><a href="#" target="_blank">新浪微博</a></li>
+                    <li><a href="#" target="_blank">腾讯微博</a></li>
+                    </ul>
+            </div>
+            <div class="f_list f_list_wx">
+                <h4>萝莉盒微信</h4>
+                <div class="">
+                    <img src="public/images/foot_wx_v5.jpg" />
+                </div>
+            </div>
+            <div class="f_list f_list_app">
+                <h4>萝莉盒app</h4>
+                <div class="">
+                    <img src="public/images/foot_wx_v5.jpg" />
+                </div>
+            </div>
+            <div class="f_list f_list_help">
+                <h4>服务支持</h4>
+                <ul>
+                    <li><a href="#" target="_blank">QQ客服</a></li>
+                    <li>服务热线：4006-263-362</li>
+                    <li>法定工作日9:30-18:30</li>
+                    </ul>
+            </div>
+            <div class="f_list f_list_bq">
+                <h4>版权信息</h4>
+                <ul>
+                    <li>京ICP备12011669号-1</li>
+                    <li>京公网安备 11010502019238</li>
+                    <li>Copyright © 2012-2013 LOLITABOX</li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--标准底-end-->
+<script src="public/js/gzJs.js"></script>
+<script src="public/js/jquery.masonry.min.js" type="text/javascript"></script>
+<script src="public/js/jquery.lazyload.js"></script>
+<script>
+    $(function () {
+        $("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
+    });
+</script>
+<!--标准底-end-->
+</body>
+</html>

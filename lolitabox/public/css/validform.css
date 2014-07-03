@@ -1,0 +1,27 @@
+/*验证表单*/
+
+/*tips*/
+.Validform_checktip{line-height:20px;height:20px;color:#999;font-size:12px;}
+.Validform_right{color:#999;padding-left:20px; background:url(../images/login/login_ico_yes.png) no-repeat; _background:url(../images/login/login_ico_yes.gif) no-repeat;  width:180px;}
+.Validform_wrong{color:#dd1471;padding-left:20px; background:url(../images/login/login_ico_no.png) no-repeat; _background:url(../images/login/login_ico_no.gif) no-repeat;  width:180px;}
+.Validform_loading{padding-left:20px;background:url(form/images/onLoad.gif) no-repeat left center;}
+.Validform_error{background-color:#ffe7e7;}
+
+#Validform_msg{color:#7d8289;font:12px/1.5 tahoma, arial, 5b8b4f53, sans-serif;width:280px;background:#fff;position:absolute;top:0px;right:50px;z-index:99999; display:none;  border:3px solid #e7308c; border-radius:6px;}
+#Validform_msg .iframe{position:absolute;left:0px;top:-1px;z-index:-1;}
+#Validform_msg .Validform_title{line-height:25px;height:25px;text-align:left;font-weight:bold;padding:0 8px;color:#333;position:relative;background-color:#f3f3f3;}
+
+#Validform_msg a.Validform_close:link,#Validform_msg a.Validform_close:visited{line-height:22px;position:absolute;right:8px;top:0px;color:#fff;text-decoration:none;}
+#Validform_msg a.Validform_close:hover{color:#cc0;}
+#Validform_msg .Validform_info{padding:8px; text-align:left;}
+#bridgehead{display:none;}
+
+
+
+
+.btn_a30 span  , .btn_sina_a30 span , .btn_qq_a30 span{background-position:right -595px; font-size:14px;}
+a.btn_a30:hover{background-position:0 -631px;}
+a.btn_a30:hover span ,a.btn_sina_a30:hover span ,a.btn_qq_a30:hover span{background-position:right -667px; text-decoration:none;}
+a.btn_sina_a30:hover{background-position:-9px -631px;}
+a.btn_qq_a30:hover{background-position:-53px -631px;}
+.btn_sina_a30 span , .btn_qq_a30 span{padding:0 14px 0 6px; cursor:pointer; }
