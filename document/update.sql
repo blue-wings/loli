@@ -15,7 +15,12 @@ CREATE TABLE `users_products_category_subscribe` (
 
 #增加产品匹配的用户类型
 ALTER TABLE `products`
-ADD COLUMN `user_type`  int NOT NULL DEFAULT 0 COMMENT '匹配的用户类型 0-普通用户 1-高级用户 3-新用户' AFTER `end_time`;
+ADD COLUMN `user_type`  int NOT NULL DEFAULT 0 COMMENT '匹配的用户类型 0-普通用户 1-高级用户 3-新用户' ;
+
+ALTER TABLE `products`
+MODIFY COLUMN `user_type`  set('3','1','2','0') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '匹配的用户类型 0-普通用户 1-高级用户 3-新用户 2-年度用户';
+
+
 
 #self package order 
 CREATE TABLE `user_order_self_package` (
