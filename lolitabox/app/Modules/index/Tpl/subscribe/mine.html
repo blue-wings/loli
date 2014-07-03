@@ -54,7 +54,15 @@
 					
 				</div>
 
-
+             <script>
+				
+				$("#page > a").click(function(){
+					url = $(this).attr("href");
+					$("#main-container").load(url);
+					return false;
+				})
+			
+			</script>
 
 
 
