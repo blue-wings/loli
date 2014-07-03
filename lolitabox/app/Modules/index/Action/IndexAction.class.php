@@ -7,6 +7,7 @@ class IndexAction extends commonAction {
 	 * 首页方法
 	 */
 	public function index() {
+		$postage = D("PostageStandard")->calculatePostage(array(63140), 0, 802);
 		if($this->userid){
 			$this->redirect('index/home', null, 1, '页面跳转中...');	
 		}
