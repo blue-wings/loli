@@ -20,5 +20,8 @@ return array(
 	//category的ctype种类id
 	'CTYPE_PRODUCT'										=>1,
 	'CTYPE_EFFECT'										=>2,
-	'CTYPE_PRODUCT_BRAND'								=>3
+	'CTYPE_PRODUCT_BRAND'								=>3,
+
+	'EXPRESS_SHENTONG_ID'								=>0,
+	'EXPRESS_SHUNFENG_ID'								=>1
 );

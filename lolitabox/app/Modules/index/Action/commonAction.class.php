@@ -223,17 +223,6 @@ class commonAction extends Action{
 		$this->display("public:$templete");
 	}
 	
-	/**
-	 * 计算邮费公共方法
-	 * @param unknown_type $userOrderId
-	 */
-	public function calculatePostage($productIds){
-		if(!$productIds || count($productIds)==0){
-			throw_exception("exception"); 	
-		}
-		return 0;
-	}
-	
 	
 }
 ?>
