@@ -63,6 +63,8 @@
 			   截止日期:	<input type="text" size="20" id="end_time" name="end_time" value='{$productinfo.end_time}'><br><br>
 			  产品对应的用户级别：<input type = checkbox value="0" name="user_type[]" <php>if(in_array(0,$usertype_list_selected)) echo " checked";</php>>普通会员</input>
 			  <input type = checkbox value="1" name="user_type[]" <php>if(in_array(1,$usertype_list_selected)) echo " checked";</php>>高级用户</input>
+			  <input type = checkbox value="2" name="user_type[]" <php>if(in_array(2,$usertype_list_selected)) echo " checked";</php>>年度用户</input>
+			  
 			   <input type = checkbox value="3" name="user_type[]" <php>if(in_array(3,$usertype_list_selected)) echo " checked";</php>>新用户</input>
 			    <br><br>
 			  <!-- 调查问卷ID：<input type="text" name="surveyid"  value='{$productinfo.surveyid}'/><br><br> --> 
