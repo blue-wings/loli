@@ -47,7 +47,7 @@ class homeAction extends commonAction {
 
         //保管箱
         $userOrderSendProductDetail = D("UserOrderSendProductdetail");
-        $selfPickUpProductCount = $userOrderSendProductDetail->getUserOrderNumByUserIdAndStatus($userid,0);
+        $selfPickUpProductCount = $userOrderSendProductDetail->getUserOrderNumByUserIdAndStatus($userid,C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_NOT_PAYED"));
         //fixme: add code for auto send area products
         $autoSendProductCount = 0;//$userOrderSendProductDetail->getUserOrderNumByUserIdAndStatus($userid,1);
         $willExpiredNum = $userOrderSendProductDetail->getWillExpiredNumInSelfPickupProduct($userid);

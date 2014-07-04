@@ -40,7 +40,7 @@ CREATE TABLE `user_order_self_package` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #buyed products add pay delivery fee status
-ALTER TABLE user_order_send_productdetail ADD COLUMN status tinyint(3) NULL COMMENT '0未付邮费，1已付邮费,2无邮费';
+ALTER TABLE user_order_send_productdetail ADD COLUMN status tinyint(3) NULL COMMENT '0未付费，1未付邮费，2已付邮费, 3无邮费';
 
 #邮费标准
 CREATE TABLE `postage_standard` (
