@@ -40,7 +40,17 @@ CREATE TABLE `user_order_self_package` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #buyed products add pay delivery fee status
-ALTER TABLE user_order_send_productdetail ADD COLUMN status tinyint(3) NULL COMMENT '0未付邮费，1已付邮费';
+ALTER TABLE user_order_send_productdetail ADD COLUMN status tinyint(3) NULL COMMENT '0未付邮费，1已付邮费,2无邮费';
 
-#add expire date to product
-ALTER TABLE products ADD COLUMN expiration_date date NULL COMMENT '保质期';
+#邮费标准
+CREATE TABLE `postage_standard` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `express_company_id` int(11) DEFAULT NULL,
+  `areaId` int(11) DEFAULT NULL,
+  `ori_first_heavy` bigint(20) DEFAULT NULL COMMENT '首重(1kg)价格(分)',
+  `ori_continued_heavy` bigint(20) DEFAULT NULL COMMENT '续重(1kg)价格(分)',
+  `first_heavy` bigint(20) DEFAULT NULL COMMENT '网站首重(1kg)价格(分)',
+  `continued_heavy` bigint(20) DEFAULT NULL COMMENT '网站续重(1kg)价格(分)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `area_company` (`express_company_id`,`areaId`)
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
