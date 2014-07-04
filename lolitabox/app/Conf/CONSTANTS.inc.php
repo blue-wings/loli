@@ -28,5 +28,12 @@ return array(
 	'CTYPE_PRODUCT_BRAND'								=>3,
 
 	'EXPRESS_SHENTONG_ID'								=>0,
-	'EXPRESS_SHUNFENG_ID'								=>1
+	'EXPRESS_SHUNFENG_ID'								=>1,
+
+	//订单的失效时间72小时
+	'order_valid_duration'								=>259200,
+	//有效
+	'order_ifavalid_valid'								=>1,
+	//失效
+	'order_ifavalid_overdue'							=>0,
 );

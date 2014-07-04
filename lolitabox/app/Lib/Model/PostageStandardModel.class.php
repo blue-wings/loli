@@ -8,14 +8,30 @@
 class PostageStandardModel extends Model {
 	
 	/**
+	 * 按订单计算邮费
+	 * @param unknown_type $orderId
+	 * @param unknown_type $expressCompanyId
+	 * @param unknown_type $areaId
+	 */
+	public function calculateOrderPostage($orderId, $expressCompanyId, $areaId){
+		if(!isset($orderId) || !isset($expressCompanyId) || !isset($areaId)){
+			throw_exception("参数不全，无法计算邮费");	
+		}
+		$userOrderSendProductDetailModel = D("UserOrderSendProductdetail");
+		$where["orderid"]=$orderId;
+		$productIds = $userOrderSendProductDetailModel->field("productid")->where($where)->select();
+		return $this->calculatePostage($productIds, $expressCompanyId, $areaId);
+	}
+	
+	/**
 	 * 计算邮费,传入最细的areaid，将根据area的层级关系向上找到第一个配置邮费的记录
 	 * @param $userOrderId
 	 * @param $expressType 见CONSTANTS中的定义
 	 * @param $areaId
 	 */
 	public function calculatePostage($productIds, $expressCompanyId, $areaId){
-		if(!$productIds || count($productIds)==0 || !isset($expressCompanyId)){
-			throw_exception("参数补全，无法计算邮费"); 	
+		if(!$productIds || count($productIds)==0 || !isset($expressCompanyId) || !isset($areaId)){
+			throw_exception("参不数全，无法计算邮费"); 	
 		}
 		$areaModel = M("Area");
 		$areaWhere["area_id"]=$areaId;
