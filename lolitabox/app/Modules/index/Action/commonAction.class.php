@@ -37,7 +37,7 @@ class commonAction extends Action{
 			$thirdurl=urlencode($thirdurl);
 			$this->assign("thirdurl",$thirdurl);
 		}
-		if(MODULE_NAME == 'task' || MODULE_NAME =='home'){
+		if(MODULE_NAME =='home'){
 			
 			if(empty($this->userid)){
 				$unlogin_page = array();     //不需要登录的页面
@@ -45,10 +45,6 @@ class commonAction extends Action{
 				if(!in_array($current_page, $unlogin_page)){    //如果此页面不需要则跳过，反之则header到首页
 					header("location:".U('user/login'));    //未登录则跳转到登录页
 				}
-			}
-			if($this->check_login()){
-				$datanum=D("Users")->getUserDataNum($this->userid);
-				$this->assign("datanum",$datanum);
 			}
 		}
 		$module_arr=array("buy","try","loli","brand");

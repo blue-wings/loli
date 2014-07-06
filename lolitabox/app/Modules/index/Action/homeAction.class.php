@@ -13,24 +13,9 @@ class homeAction extends commonAction {
 	 */
 	public function index(){
 		$userid=$this->userid;
-		//提示信息
-		$user_order_mod=D("UserOrder");
-		//订单列表
-		$return['orderlist']=$user_order_mod->getUserOrderList($userid);
-		//我的试用产品
-		$return['productslist']=D("Products")->getUserOrderProductsList($userid,6);
-		$where_share['userid']=$userid;
-		//我的试用分享列表
-// 		$return['sharelist']=D("UserShare")->getShareListByTry($where_share,6);
 		$return['userinfo']=$this->userinfo;
 		$return['title']=$return['userinfo']['nickname']."的主页-".C("SITE_NAME");
-		$return['products_class']="list_col4_addbtn";
-		$return['recommendlist']=D("Article")->getHomeRecommendList();
-		$tips=$this->get_index_msg($this->userid);
 		
-		$if_finished=D("UserVote")->getUserIfFinished($userid);
-		$return['if_finished']=$if_finished["finished"];
-
         //优惠券余额
         $price=D("Giftcard")->getUserGiftcardPrice($userid);
         $info['giftcard_price'] = $price;
@@ -2131,46 +2116,6 @@ class homeAction extends commonAction {
 	}
 	
 
-	/**
-	 * 个人中心首页提示信息
-	 * @author penglele
-	 */
-	public function get_index_msg($userid){
-		// 		$userid=3418;
-		//未支付订单
-		$time=strtotime("-3days",time());
-		$ndate=date("Y-m-d H:i:s",$time);
-	
-		$where_order=array();
-		$where_try=array();
-	
-		$data['userid']=$userid;
-		$data['state']=0;
-		$data['addtime']=array("exp",">='".$ndate."'");
-		$data['ifavalid']=1;
-	
-		//未支付订单
-		$where_order=$data;
-		$not_type=C("BOX_TYPE_EXCHANGE_PRODUCT").",".C("BOX_TYPE_PAYPOSTAGE").",".C("BOX_TYPE_FREEGET");
-		$where_order['type']=array("exp","not in($not_type)");
-		$return['ordernum']=D("UserOrder")->getOrderNum($where_order,0);
-	
-		//未支付付邮试用订单
-		$where_try=$data;
-		$type_id=C("BOX_TYPE_EXCHANGE_PRODUCT").",".C("BOX_TYPE_PAYPOSTAGE");
-		$where_try['type']=array("exp","in(".$type_id.")");
-		$return['trynum']=D("UserOrder")->getOrderNum($where_try,0);
-	
-		//未读私信数
-		$data = D("UserData")->getUserDatalistByUserid($userid);
-		$return['msgnum']=empty($data['newmsg_num']) ? 0: $data['newmsg_num'];
-	
-		//待分享产品数
-		$return['sharenum']=D("Products")->getOrderProductNumOfNotShare($userid);
-	
-		return $return;
-	
-	}
 	
 	/**
 	 * 我入手的萝莉盒
