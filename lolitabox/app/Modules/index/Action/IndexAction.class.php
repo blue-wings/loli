@@ -7,10 +7,12 @@ class IndexAction extends commonAction {
 	 * 首页方法
 	 */
 	public function index() {
-		if($this->userid){
-			$this->redirect('index/home', null, 1, '页面跳转中...');	
-		}
-		$this->redirect('index/user/login', null, 1, '页面跳转中...');
+
+        $this->display("index");
+//		if($this->userid){
+//			$this->redirect('index/home', null, 1, '页面跳转中...');
+//		}
+//		$this->redirect('index/user/login', null, 1, '页面跳转中...');
 	}
 }
 

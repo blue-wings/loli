@@ -27,6 +27,9 @@ return array(
 	'CTYPE_EFFECT'										=>2,
 	'CTYPE_PRODUCT_BRAND'								=>3,
 
+    //category的pcid根结点
+    'PCID_ROOT'                                         =>0,
+
 	'EXPRESS_SHENTONG_ID'								=>0,
 	'EXPRESS_SHUNFENG_ID'								=>1,
 

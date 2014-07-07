@@ -1,338 +1,145 @@
-<include file="public:header.inc" />
-<if condition="$return[if_guide] eq 1">
-	<include file="index.inc" />
-</if>
+<include file="public:_header.inc" />
 
-<style type="text/css">
-.wlc_bnr_wrap{height: 420px; position: relative; width: 100%; overflow: hidden; }
-.wlc_bnr_1{width: 1920px; height: 420px; position: absolute; left: 50%; margin-left: -960px;text-align:center;}
-</style>
-
-<div class="wlc_top">
-	<div class="wlc_bnr_wrap">
-	 <volist name="return.focus_list"  id="vo" key="ikey">
-			<div class="wlc_bnr_1">
-				  <a href="<{$vo.url}>"  target="_blank">
-				  	<img src="<{$vo.bigimg}>"  height="420" title="<{$vo.title}>" width="1920"  />
-				  </a>
-			  </div>
-	  </volist>
-	  </div>
+<!--首页-内容-start-->
+<!--BANNER-->
+<div class="banner banner_wrap">
+    <p class="bg"><img src="public/images/bannerv6.jpg" alt=""></p>
+    <div class="fm1020 main">
+        <!--<p class="banner_log"><img src="public/images/bannerlog.png" width="170" height="170" alt="" ></p>-->
+        <p class="brand_data mb30"><img src="public/images/banner_txt.png" width="493" height="90" alt=""><span>102</span></p>
+        <a href="javascript:void(0)"><img src="public/images/dy_btn.png" width="137" height="43"></a>
+        <!--<form>
+            <input type="text" id="email" autocomplete="off" onfocus="if(value =='输入你的电子邮箱创建免费订阅'){value =''}" onblur="if(value ==''){value='输入你的电子邮箱创建免费订阅'}" value="输入你的电子邮箱创建免费订阅">
+            <a href="javascript:void(0)" class="W_pin_b">注册</a>
+        </form>
+        <ul class="email_list" id="email_list">
+            <li class="first_li">请选择邮箱类型</li>
+        </ul>-->
+    </div>
 </div>
-<div class="mallMain">
-<!--新闻--->
-<div class="rec_attr">
-	<div class="rec_attr_wrap">
-		<div class="rec_help">
-			<!--TAB-萝莉公告--->
-			<div class="rec_help_news">
-				<p class="gl_tab_module">
-					<span class="select" id="helpTab1">号外！号外！</span>
-				</p>
-				<div class="news_cont">
-					<ul class="news_list helpTab1">
-					<volist name="return.notice_list"  id="vo">
-						<li><a href="<{$vo.url}>" target="_blank"><{$vo.title}></a></li>
-				    </volist>
-					</ul>
-					<ul class="news_img helpTab2">
-						<li><a href="<{$return.activity_list.0.url}>"  target="_blank"><img src="<{$return.activity_list.0.img}>" width="230" height="150" /></a></li>
-					</ul>
-				</div>
-				
-				<script>
-					$(document).ready(function() { 
-						$(".rec_help_news span:first").addClass("select"); //为第一个SPAN添加当前效果样式 
-						$(".rec_help_news ul:not(:first)").hide(); //隐藏其它的UL 
-						$(".rec_help_news span").mouseover(function() { 
-							$(".rec_help_news span").removeClass("select"); //去掉所有SPAN的样式 
-							$(this).addClass("select"); 
-							$(".rec_help_news ul").hide(); 
-							$("." + $(this).attr("id")).show(); 
-						}); 
-					}); 
-				</script>
-				
-			</div>
-			<!--帮助指南--->
-			<ul class="rec_help_wrap">
-				<li><a href="<{:u('special/llxty')}>" target="_blank"><b class="h_strategy">&nbsp;</b>新人独享</a></li>
-				<li><a href="<{:u('special/xszn')}>" target="_blank"><b class="h_compass">&nbsp;</b>萝莉指南</a></li>
-				<li><a href="<{:u('special/member')}>" target="_blank"><b class="h_integral">&nbsp;</b>特权会员</a></li>
-				<li><a href="<{:u('loli/index',array('ac'=>2))}>" target="_blank"><b class="h_survey">&nbsp;</b>活动推荐</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-</div>
-
-<!--盒子售卖专题推荐---start-->
-<div class="fm1020 cfl index_buy_box">
-	<!--左侧内容-->
-	<div class="f738 l">
-		<div class="wp738">
-			<div class="hd cfl">
-				<h3 class="i_tit l"><em class="t_pen">&nbsp;</em><php>echo (int)date("m");</php>月萝莉盒订阅推荐</h3>
-				<a href="<{:u('buy/index')}>" target="_blank" class="i_more r mt15">&nbsp;</a>
-			</div>
-			<div class="main">
-				<div class="buy_box_wrap buy_box_wrap_300 cfl">
-					<volist name="return[boxarticle_list]" id="vo" key="ikey">
-	                    <dl class="fore<{$ikey}>" value="<{$ikey}>">
-	                        <dt><a href="<{$vo[url]}>" target="_blank"><img src="<{$vo[img]}>" width="226" height="144" alt="<{$vo[title]}>" /></a>
-	                           <notempty name="vo[tag]"><i class="<{$vo[tag]}>"></i></notempty>
-	                        </dt>
-	                      <dd class="fore_pro"><{$vo[info]}></dd>
-	                        <dd class="dg_tbn">
-	                        <p class="buy_box_price l">￥<{$vo[boxprice]}></p>
-	                      <p class="r">
-	                      <eq name="vo.if_out" value="1">
-	                      	<a style="background:rgb(109,109,109);padding:4px 15px;font-size:16px;color:#fff;text-decoration:none;">已售罄</a>
-	                      <else />
-	                   	   <a href="<{$vo.boxurl}>" class="buy_box_btn" target="_blank">立即订购</a>
-	                      </eq>
-	                      </p>
-	                      </dd>
-	                    </dl>
-	                </volist>
-				</div>				
-			</div>
-			<div class="ft"></div>
-		</div>
-	</div>
 <script type="text/javascript">
-     $( document).ready(function(){
-		$('.buy_box_wrap').find('dl').mouseover(function(){ 
-		   var id=$(this).attr("value");	
-			$('.buy_box_wrap').find('dl.fore'+id).css({border:'2px solid #dd1471'});
-			$('dl.fore'+id).find('.buy_box_btn').css({background:'#fff',color: '#dd1471'})
-			$('dl.fore'+id).find('.dg_tbn').css({background:'#dd1471'})
-			$('dl.fore'+id).find('.buy_box_price').css({color:'#fff'})
-		   })
-		$('.buy_box_wrap').find('dl').mouseleave(function(){ 
-		   var id=$(this).attr("value");	
-			$('.buy_box_wrap').find('dl.fore'+id).css({border:'2px solid #e4e4e4'});
-			$('dl.fore'+id).find('.buy_box_btn').css({background:'#dd1471',color:'#fff'})
-			$('dl.fore'+id).find('.dg_tbn').css({background:'#f6f6f6'})
-			$('dl.fore'+id).find('.buy_box_price').css({color:'#dd1471'})
-		   })
-      })
-</script>	
-	
-	<!--右侧内容-->
-	<div class="f275 r wp275">
-		<div class="hd_t"></div>
-		<div class="main">
-			<div class="buy_box_banner buy_box_banner_300">
-			<if condition="$return[rightAD] neq ''">
-			<a href="<{$return[rightAD][url]}>" target="_blank">
-				<img src="<{$return[rightAD][img]}>" width="240" height="300" alt="<{$return[rightAD][title]}>"/>
-			</a>
-			</if>
-			</div>
-		</div>
-		<div class="ft"></div>
-	</div>
-</div>
-
-<!--首页---内容块1--start------->
-<div class="fm1020 cfl index_fabric_show">
-	<!--试是一种生活态度--->
-	<div class="f738 l">
-		<div class="wp738 fabric_left">
-			<div class="hd cfl">
-				<h3 class="i_tit l"><em class="t_arrows_btm">&nbsp;</em>美丽从试用开始</h3>
-				<a href="<{:u('brand/index')}>" class="i_more r mt15">&nbsp;</a>
-			</div>
-			<div class="main">
-				<a href="#" class="aleft" id="foo2_prev"></a>
-				<div class="imglist_w" >
-					<ul class="fabric_list cfl" id="foo2">
-						<!----页面1---->
-						<volist name="return.products_list"  id="vo"  key="offset" >
-						<if condition="$offset % 8  eq  1"><li class=" cfl"></if>
-						<div class="fabric_list_cont" style="width:135px;">
-								<dl>
-									<dt><a href="<{$vo.pid|getProductUrl=###}>" target="_blank"><img src="public/images/modbg_v5.jpg" data-original="<{$vo.pimg}>" width="135" height="135" alt="<{$vo.pname}>" /></a>
-									<notempty name="vo.commend_tags_class">	<i class="<{$vo.commend_tags_class}>"></i></notempty>
-									</dt>
-									<dd class="name" style="width:137px;"><a href="<{$vo.pid|getProductUrl=###}>" target="_blank"><{$vo.pname}></a></dd>
-									<dd>
-									<volist name="vo.sale_tags"    id="v">
-									<a href="javascript:void(0)" class="t_tips t_tips_0<{$i}>"><{$v}></a>
-									</volist>
-									</dd>
-									<dd>
-									<notempty name="vo[norms]">
-									试用规格：<{$vo.norms}>
-									<else />
-									正装规格：<{$vo[goodssize]}>
-									</notempty>
-									</dd>
-								</dl>
-					    </div>
-						<if condition="$offset %  8 eq 0 or ($offset eq $return['count_products'])"></li></if>
-						</volist>
-					</ul>
-				</div>	
-				<a href="javascript:void(0)" class="aright" id="foo2_next"></a>
-				<div class="pagination" id="foo2_pag"></div>
-			</div>
-			<div class="ft"></div>
-		</div>
-	</div>
-
-	<!--Lolitagirls最新动态--->
-	<div class="f275 r">
-		<div class="wp275 fabric_right">
-			<div class="hd cfl">
-				<h3 class="i_tit i_tit18 l"><em class="t_dynamic">&nbsp;</em>超值积分任务推荐</h3>
-			</div>
-			<div class="main" >
-				<div class="hei1"></div>
-					<ul class="cost_effective" >
-					<volist name="return[cheaplist]" id="vo">
-						<li><a href="<{$vo[url]}>" target="_blank" <eq name="vo[orig]" value="1">class="judge_login"</eq>><img src="<{$vo[img]}>" alt="<{$vo[title]}>" height="180" width="240"/></a></li>
-					</volist>
-					</ul>
-				<div class="hei1"></div>
-				</div>
-			<div class="ft"></div>
-		</div>
-	</div>
-</div>
-<div class="fm1020 cfl index_boxs_show">
-	<!--萝莉晒盒记--->
-	<div class="f738 l">
-		<div class="wp738 boxs_left">
-			<div class="hd cfl">
-				<h3 class="i_tit l"><em class="t_stars">&nbsp;</em>晒是萝莉的态度</h3>
-				<a href="<{:u('loli/index')}>"  target="_blank" class="i_more r mt15">&nbsp;</a>
-			</div>
-			<div class="main">
-				<ul class="boxs_share cfl" id="container">
-					<!--内容块1--->
-				<volist name="return.showbox_list"  id="vo">
-					<li>
-					    <div style="width:<{$vo.img_w}>px;height:<{$vo.img_h}>px">
-						<a href="<{$vo.id|getShareUrl=###}>" target="_blank">
-						 <img src="<{$vo.img}>"  width="<{$vo.img_w}>" height="<{$vo.img_h}>" alt="<{$vo[boxname]}>"/></a>
-						 </div>
-						<p class="i_divider">&nbsp;</p>
-						<p class="mb5" style="height:36px;overflow:hidden;"><a href="<{$vo[boxurl]}>" target="_blank" class="a_more"><{$vo[boxname]}></a></p>
-						<dl class="box_share_dl cfl">
-							<dt><a href="<{$vo.spaceurl}>"><img src="<{$vo.userface}>" width="30" height="30" /></a></dt>
-							<dd class="share_text"><a href="<{$vo.userid|getSpaceUrl=###}>" target="_blank" class="a_more"><{$vo.nickname}></a> <{$vo.content}><a href="<{$vo.id|getShareUrl=###}>" target="_blank" class="a_more">详情>></a></dd>
-						</dl>
-					</li>
-				</volist>	
-				</ul>
-			</div>
-			<div class="ft"></div>
-		</div>
-	</div>
-	<script src="public/js/jquery.masonry.min.js" type="text/javascript"></script>
-	<script>
-		var $container = $('#container');
-		$container.imagesLoaded(function(){
-			$container.masonry({
-				itemSelector: '#container > li',
-				columnWidth: 2 //每两列之间的间隙为5像素
-			});
-		});
-		 $("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
-	 </script>
-	<!--试用排行榜--->
-	<div class="f275 r">
-		<div class="wp275 boxs_right">
-			<div class="hd cfl">
-				<h3 class="i_tit l"><em class="t_ranking">&nbsp;</em>萝莉最长草</h3>
-				<a href="<{:u('brand/index')}>" target="_blank" class="i_more r mt15">&nbsp;</a>
-			</div>
-			<div class="main">
-				<ul class="ranking_list ranking_list_grass">
-				<volist name="return.try_list"  id="vo">
-					<li>
-						<dl class="ranking_state cfl">
-							<dt>
-								<a href="<{$vo[url]}>" target="_blank"><img src="<{$vo.pimg}>"  width="70" height="70" alt="<{$vo.pname}>" /></a>
-								<em class="<eq name='i'  value='1'>i_rankin_red<else/>i_rankin_black</eq>">Top<br /><span>0<{$i}></span></em>
-							</dt>
-							<dd>
-								<p>
-                                 <a href="<{$vo[url]}>" target="_blank"  title="<{$vo.pname}>"><{$vo.pname}></a></p>
-							</dd>
-						</dl>
-					</li>
-				</volist>
-				</ul>
-				<div class="list_grass_down">
-					<a href="<{$return[zhangcao][url]}>" target="_blank" >
-						<img src="<{$return[zhangcao][img]}>" alt="<{$return[zhangcao][title]}>" width="240" height="180"/>
-					</a>
-				</div>				
-			</div>
-			<div class="ft"></div>
-		</div>
-	</div>
-</div>
-<!--首页--合作品牌--start---->
-<div class="fm1024 cfl index_box_brand">
-	<div class="wp1020">
-		<div class="hd">
-			<h3 class="i_tit l"><em class="t_brand">&nbsp;</em>合作品牌</h3>
-			<a href="<{:u('brand/index',array('ac'=>2))}>" target="_blank" class="i_more r mt15">&nbsp;</a>
-		</div>
-		<div class="main">
-			<div class="brand_wrap cfl">
-				<a href="#" class="aleft shipLeft" id="foo3_prev"></a>
-				<div class="brand_ranking">
-					<ul class="brand_ranking_wrap" id="foo3">
-				    <volist name="return.brand_list"  id="vo">
-						<li><a href="<{$vo.id|getBrandUrl=###}>" target="_blank"><img src="<{$vo.logo_url}>" width="100" height="100" title="<{$vo.name}>" /></a></li>
-					</volist>					
-					</ul>
-				</div>
-				<a href="#" class="aright shipRig" id="foo3_next"></a>
-			</div>
-		</div>
-		<div class="ft"></div>
-	</div>
-</div>
-<!--首页--合作品牌--end---->
-	<script type="text/javascript" src="public/js/jquery.carouFredSel-6.2.1-packed.js"></script>
-	<script type="text/javascript">
-	$("#foo2").carouFredSel({
-	circular: false,
-	infinite: false,
-	auto 	: false,
-	prev	: {	
-		button	: "#foo2_prev",
-		key		: "left"
-	},
-	height	: 560,
-	next	: { 
-		button	: "#foo2_next",
-		key		: "right"
-	},
-	pagination	: "#foo2_pag"
-	});
-	
-	$("#foo3").carouFredSel({
-	circular: false,
-	infinite: false,
-	auto 	: false,
-	prev	: {	
-		button	: "#foo3_prev",
-		key		: "left"
-	},
-	height	: 560,
-	next	: { 
-		button	: "#foo3_next",
-		key		: "right"
-	}
-});
+    $(function(){
+        var oform = $('.banner_wrap').find('form');
+        var oInput = oform.find('input');
+        oInput.bind('input propertychange',function(){//监听input用户输入的值做出判断
+            if( oInput.val()!=="输入你的电子邮箱创建免费订阅" && oInput.val()!==""){
+                oform.find('a').addClass("W_pin_on");
+            }else{
+                oform.find('a').removeClass("W_pin_on");
+            }
+        })
+    })
 </script>
+<!--BANNER-->
+<!--MAIN-->
+<div class="fm1020_b mt16 cfl">
+    <div class="wp1020 wp1020_v6">
+        <div class="index_main">
+            <div class="hd">下一个最爱从试用中来！你可以</div>
+            <div class="main cfl">
+                <div class="f350 l">
+                    <div class="about_loli">
+                        <dl>
+                            <dt><a href="" target="_blank">看看她们都在订阅什么</a></dt>
+                            <dd>每个月随时查看“我的订阅”，在这里你可以看到我们为你<br/>投递的最新试用，<a href="" target="_blank">开始订阅</a></dd>
+                        </dl>
+                        <dl>
+                            <dt><a href="" target="_blank">升级为高级订阅会员</a></dt>
+                            <dd>知名品牌限量提供的试用品优先高级会员订阅，除此以外还<br/>有意想不到的折扣，<a href="" target="_blank">立即升级</a></dd>
+                        </dl>
+                        <dl>
+                            <dt><a href="" target="_blank">订阅年度试用</a></dt>
+                            <dd>订阅即赠送全年高级订阅会员，还有生日礼、双倍积分、礼<br/>品卡多种超值优惠，<a href="" target="_blank">马上订阅</a></dd>
+                        </dl>
+                        <dl>
+                            <dt><a href="" target="_blank">登记你收到的礼品卡</a></dt>
+                            <dd>输入礼品卡号，感受Ta对你的爱意关怀，这绝对是一种全新<br/>的生活体验，<a href="" target="_blank">赶快登记</a></dd>
+                        </dl>
+                        <dl class="mb0">
+                            <dt><a href="" target="_blank">加入贝玲妃俱乐部</a></dt>
+                            <dd>“会化妆，不如会伪装”，benefit和你“玩美”，各种精彩<br/>福利、活动只为爱她的你， <a href="" target="_blank">加入</a></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="f350 r">
+                    <ul class="contact_us cfl">
+                        <li>
+                            <a href="" target="_blank"><em class="lxUs">&nbsp;</em></a>
+                            <dl class="tr4">
+                                <dt><a href="" target="_blank">联系我们</a></dt>
+                                <dd><a href="" target="_blank">QQ客服</a></dd>
+                                <dd>客服热线：4006263362</dd>
+                                <dd>服务时间：周一至周五8:30-17:30</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <a href="" target="_blank"><em class="gzUs">&nbsp;</em></a>
+                            <dl class="tr4">
+                                <dt><a href="" target="_blank">关注我们</a></dt>
+                                <dd><a href="" target="_blank">官方微信</a></dd>
+                                <dd><a href="" target="_blank">官方微博</a></dd>
+                                <dd><a href="" target="_blank">下载App</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <a href="" target="_blank"><em class="jrUs">&nbsp;</em></a>
+                            <dl class="tr2">
+                                <dt><a href="" target="_blank">加入我们</a></dt>
+                                <dd>职位需求</dd>
+                                <dd>投递简历：hr@lolitabox.com</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <a href="" target="_blank"><em class="ceoUs">&nbsp;</em></a>
+                            <dl class="tr1">
+                                <dt><a href="" target="_blank">CEO专栏</a></dt>
+                                <dd><a href="" target="_blank">"萝莉盒"从这里开始……</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MAIN-->
+<!--首页-内容-end-->
 
+<!--标准底-start-->
+<div id="foot_wrap_a" class="footer">
+    <div class="fm1020 hei_ft">
+        <div class="hei_c l">&nbsp;</div>
+    </div>
+    <div class="fm1020 cfl">
+        <div class="ft_l">
+            <div class="quick_links">
+                <a href="" target="_blank">新丁</a>
+                <a href="" target="_blank">video</a>
+                <a href="" target="_blank">友情链接</a>
+            </div>
+            <div class="copyright">
+                <span>Copyright © 2012-2013 LOLITABOX</span><span>服务条款 ● 隐私条款 ●</span><span>京ICP备12011669号-1&nbsp;京公网安备&nbsp;11010502019238</span>
+            </div>
+        </div>
+    </div>
+</div>
 
-<include file="public:footer.inc" />
+<script src="/public/js/jquery.masonry.min.js" type="text/javascript"></script>
+<script src="/public/js/jquery.lazyload.js"></script>
+<script>
+    $(document).ready(function(){
+        var $container = $('#container');
+        $container.imagesLoaded(function(){
+            $container.masonry({
+                itemSelector: '#container > li',
+                columnWidth: 2 //每两列之间的间隙为5像素
+            });
+        });
+    })
+    $(function () {
+        $("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
+    });
+</script>
+<!--标准底-end-->
+</body>
+</html>

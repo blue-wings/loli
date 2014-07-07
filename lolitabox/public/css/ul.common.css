@@ -318,3 +318,30 @@ li.clear{ clear: both; margin-top: 0;}
 .register_info_list .login_code span{vertical-align: middle; border-right:0px;}
 .register_info_submit {line-height: 36px;text-align: center;}
 .register_info_submit .login_btn{display: block;width: 290px;background: url(../images/btn_bg_main.png) repeat-x;color: #fff;font-size: 20px;float: left;}
+
+/*v6首页*/
+.banner_wrap{ height: 510px; position: relative; width: 100%; overflow: hidden;}
+.banner_wrap .bg{width: 1920px; height: 510px; position: absolute; margin-left:0px;}
+.banner_wrap .main{ position: relative;width: 1020px; margin:0 auto; padding-top: 150px; text-align: center;}
+.banner_wrap .main input{width:300px;height:18px;display: inline-block;vertical-align: top;border:1px solid #ccc;padding:10px 6px;background:#fff;-moz-border-radius:2px;border-radius:2px; }
+.banner_wrap .main input:focus{ color:#000; }
+.email_list{width:312px;list-style:none;border:1px solid #ccc;-moz-border-radius:0 0 2px 2px;border-radius:2px;position:absolute;top:309px;left:318px;background:#fff;display:none;}
+.email_list li{width:100%;height:30px;line-height:30px;text-indent:10px;cursor:pointer;overflow:hidden;text-align: left;}
+.email_list li.first_li{cursor:default;}
+.email_list .current{background:#ccc;}
+.banner_wrap .main .W_pin_b,.banner_wrap .main .W_pin_on{ background: url(../images/login_bg.png) 0 0 no-repeat;  width: 66px; height: 41px; line-height: 41px; padding: 0; font-size: 18px;}
+.banner_wrap .main .W_pin_on{background: url(../images/login_bg.png) 0 -42px no-repeat;}
+.wp1020 .index_main .main{line-height: 24px; padding-top: 30px;}
+.index_main .hd{ font-size: 30px; text-align: center; padding: 10px 0px; background: none;}
+.index_main .main dt a{ font-size: 20px;color: #463e45; font-weight: bold; line-height: 44px; display: inline-block;}
+.index_main .main dt a:hover{ text-decoration: none;}
+.index_main .main dd a{color: #dd1471;}
+.index_main .main .about_loli dl{ margin-bottom: 12px;}
+.index_main .main .contact_us li{ clear: both; margin-bottom: 27px; height: 104px; }
+.index_main .main .contact_us li.mb0,.index_main .main .about_loli dl.mb0{ margin-bottom: 0px;}
+.index_main .main .contact_us li a{ color: #463e45;}
+.index_main .main .contact_us li>a{ float: left; margin: 16px 20px 0px 0px; font-size: 0;}
+.brand_data{ position: relative;}
+.brand_data span {display: inline-block;position: absolute;left: 393px;top: 54px;font-size: 26px;color: #463E45;text-align: center;width: 54px;font-weight: bold;}
+.index_main .main .contact_us .tr2{ padding-top: 12px;}
+.index_main .main .contact_us .tr1{ padding-top: 25px;}
