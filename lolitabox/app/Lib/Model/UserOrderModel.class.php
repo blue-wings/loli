@@ -28,7 +28,7 @@ class UserOrderModel extends Model {
 		if(!$order_info)
 			return false;
 		//判断用户未订单是否已失效
-		if($order_info['state']==0 && $order_info['ifavalid']==C("order_ifavalid_valid")){
+		if($order_info['state']==C("USER_ORDER_STATUS_NOT_PAYED") && $order_info['ifavalid']==C("order_ifavalid_valid")){
 			$order_time=strtotime($order_info['addtime']);
 			$now_time=time();
 			if($now_time-$order_time>C("order_valid_duration")){
@@ -55,20 +55,7 @@ class UserOrderModel extends Model {
 		$address_info['address']=$order_address_info['province'].$order_address_info['city'].$order_address_info['district'].$order_address_info['address'];
 		$address_info['postcode']=$order_address_info['postcode'];
 		$list['address_list']=$address_info;
-		$list['if_task']=-1;
 		if($order_info['state']==1){
-			//判断用户是否晒过单 start
-			if($list['ifavalid']==1){
-				$list['if_task']=D("Task")->ifTaskByOrderid($orderid);
-				//判断用户订单是否含有子订单
-				$if_boxorder=$this->getListByOrderID($orderid);
-				$list['if_mon']=(int)$if_boxorder['if_mon'];
-				if($list['if_mon']>0){
-					$list['mlist']=$if_boxorder['list'];
-				}
-			}
-			//判断用户是否晒过单 end
-			
 			/*--------已付款--------*/
 			//物流信息
 			$order_proxy_info=$this->getUserOrderProxyInfo($orderid);
@@ -78,106 +65,10 @@ class UserOrderModel extends Model {
 				$proxy_info=$order_proxy_info;
 			}
 			$list['proxyinfo']=$proxy_info;
-			//订单内的产品列表
-			//自选、主题盒、积分兑换、付邮
-			$type_arr=array(C("BOX_TYPE_ZIXUAN"),C("BOX_TYPE_SUIXUAN"),C("BOX_TYPE_EXCHANGE_PRODUCT"),C("BOX_TYPE_PAYPOSTAGE"));
-			if(in_array($order_info['type'], $type_arr)){
-				$product_list=$this->getOrderDetailList($orderid,$order_info['userid']);
-			}else{
-				//神秘盒
-				if($proxy_info){
-					$product_list=$this->getOrderDetailList($orderid,$order_info['userid']);
-				}else{
-					$product_list="";
-				}
-			}
-			
- 			if($product_list=="" && $order_info['type']==C("BOX_TYPE_SUIXUAN")){
-				//当已支付订单为主题盒，且订单发送详情内没有产品信息时，调取盒子产品列表
-				$box_detail=D("Box")->getZhutiDetails($order_info['boxid']);
-				if($box_detail) $product_list=$box_detail['productlist'];//随心所欲盒内产品列表
-			} 
-		}else{
-			/*--------未付款--------*/
-			if($order_info['type']==C("BOX_TYPE_SUIXUAN")){
-				/*--当盒子类型为随心所欲盒时--*/
-				$box_detail=D("Box")->getZhutiDetails($order_info['boxid']);
-				if($box_detail) $product_list=$box_detail['productlist'];//随心所欲盒内产品列表
-				//$list['product_list']=$box_detail['product_list'];
-			}else if($order_info['type']==C("BOX_TYPE_ZIXUAN") || $order_info['type']==C("BOX_TYPE_EXCHANGE_PRODUCT") || $order_info['type']==C("BOX_TYPE_PAYPOSTAGE")){
-				/*--当盒子类型为自选盒时--*/
-				$order_product_list=$this->getOrderDetailList($orderid,$order_info['userid']);
-				if($order_product_list) $product_list=$order_product_list;//自选盒已加入订单列表的产品列表
-				if($order_info['projectid']>0){
-					//如果存在加价购
-					$project_product_list=$this->getProjectProductList($order_info['projectid']);
-					if($project_product_list) $product_list=array_merge($product_list,$project_product_list);
-				}
-			}
 		}
-		if(!$product_list) $product_list="";
-		$list['product_list']=$product_list;
 		return $list;
 	}
     
-	/**
-	 * 通过用户ID获取订单列表
-	 * @param int  $userid
-	 * @param int $state 订单状态[0-未支付，1-己支付，2-己退款]
-	 * @param mixed $p 分页
-	 */
-	public function getOrderListByUserid($where,$p=null){
-		$list=$this->where($where)->order("ordernmb DESC")->limit($p)->select();
-		if($list){
-			$project_mod=M("BoxProject");
-			for($i=0;$i<count($list);$i++){
-				
-				if($list[$i]['type']==C("BOX_TYPE_PAYPOSTAGE")){
-					$list[$i]['boxstate']="付邮试用";
-				}elseif($list[$i]['type']==C("BOX_TYPE_EXCHANGE_PRODUCT")){
-					$list[$i]['boxstate']="积分试用";
-				}
-				
-				if($list[$i]['state']==1){
-					//判断订单是否已经发货
-					$proxy_info=$this->getUserOrderProxyInfo($list[$i]['ordernmb']);
-					if($proxy_info){
-						$list[$i]['status']="已完成";
-					}else{
-						$list[$i]['status']="未发货";
-					}
-				}
-				//订单已退款
-				if($list[$i]['state']==2){
-					$list[$i]['status']="已退款";
-				}
-
-				$list[$i]['price']=$list[$i]['boxprice']-$list[$i]['discount'];//获取订单实际支付金额
-				//获取订单的盒子信息
-				$boxinfo=M("box")->field("name")->getByBoxid($list[$i]['boxid']);
-				$list[$i]['boxname']=$boxinfo['name'];//盒子名称
-				//获取订单收货人信息
-				$order_u_name=$this->getUserOrderAddressList($list[$i]['ordernmb'],"linkman");
-				$list[$i]['linkman']=$order_u_name['linkman'];//收货人名称
-				if($list[$i]['state']==0 && $list[$i]['ifavalid']==1){
-					//如果当前订单为未支付订单，且为有效状态，再次检测该订单是否失效
-					$order_time=strtotime($list[$i]['addtime']);
-					$now_time=time();
-					if($now_time-$order_time>72*60*60){
-						$list[$i]['ifavalid']=0;
-					}
-				}
-				//如果用户选择了增值方案，获取增值方案的名称
-				if($list[$i]['projectid']!=0){
-					$project_info=$project_mod->where("id=".$list[$i]['projectid'])->find();
-					if($project_info){
-						$list[$i]['projectname']=$project_info['projectname'];
-					}
-				}
-			}			
-		}
-		return $list;
-	}
 	
 	/**
 	 * 订单物流信息
