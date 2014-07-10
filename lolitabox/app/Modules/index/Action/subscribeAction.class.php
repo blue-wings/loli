@@ -44,7 +44,7 @@ class subscribeAction extends commonAction{
 		
         $productsModel = M("Products");
         
-        $startTime = date("Y-m-d",time()+C('SUBSCRIBE_FUTURE_INC'));
+        $startTime = date("Y-m-d H:i:s",time()+C('SUBSCRIBE_FUTURE_INC'));
         $where["start_time"]=array('egt',$startTime);
         $where["status"]=c('PRODUCT_STATUS_PUBLISHED');
         $futureProdcutsList = $productsModel->where($where)->order("start_time ASC")->limit(6)->select();

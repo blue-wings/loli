@@ -108,7 +108,7 @@ class UserOrderModel extends Model {
 	 * 生成订单
 	 * 不做任何验证，需要调用方法做验证
 	 * @param unknown_type $userid
-	 * @param array $productIds
+	 * @param array $productIds 买多个 id重复
 	 * @param unknown_type $addressid
 	 * @param unknown_type $pay_bank
 	 * @param unknown_type $if_giftcard
@@ -145,6 +145,10 @@ class UserOrderModel extends Model {
 				$totalCost += $product["price"];	
 			}
 			$originalTotalCost += $product["price"];
+			
+			//减少可售数量
+			$productParam["inventoryreduced"] += 1;
+			$product->save($productParam); 
 		}
 		$data["ori_cost"]=$originalTotalCost;
 		$data["cost"] = $totalCost;

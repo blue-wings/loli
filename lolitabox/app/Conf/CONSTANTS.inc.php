@@ -38,5 +38,12 @@ return array(
 	//有效
 	'ORDER_IFAVALID_VALID'								=>1,
 	//失效
-	'ORDER_IFAVALID_OVERDUE'							=>0
+	'ORDER_IFAVALID_OVERDUE'							=>0,
+
+	//购物车中失效的商品状态
+	'SHOPPING_CART_STATUS_INVALID'						=>0,
+	//购物车中正常的商品状态
+	'SHOPPING_CART_STATUS_VALID'						=>1,
+	//购物车记录失效时间
+	'SHOPPING_CART_INVALID_DURATION'					=>3600
 );
