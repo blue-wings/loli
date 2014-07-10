@@ -194,4 +194,24 @@ class subscribeAction extends commonAction{
 		$this->assign("list",$products);
 		$this->display();
 	}
+
+    public function subscribeCategory(){
+        $categoryIds = $_POST["categoryIds"];
+        $userid = $this->userid;
+        $usersProductsCategorySubscribe = D("UsersProductsCategorySubscribe");
+        foreach($categoryIds as $id){
+            $subscribe  = $usersProductsCategorySubscribe->getByUserIdAndProductsCategoryId($userid,$id);
+            if(!is_null($subscribe)){
+                continue;
+            }
+            $data['product_category_id'] = $id;
+            $data['user_id'] = $userid;
+            $data['subscribe_time'] = date("Y-m-d H:i:s");
+            $result = $usersProductsCategorySubscribe->add($data);
+            if(!$result){
+                $this->ajaxReturn($result,'订阅失败',1);
+            }
+        }
+        $this->ajaxReturn(0,'订阅成功',1);
+    }
 }

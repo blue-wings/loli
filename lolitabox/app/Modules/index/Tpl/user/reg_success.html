@@ -9,7 +9,12 @@
                     <div class="con">
                         <p class="tips_ck"><i class="dz_in mr5"></i>您已经成功注册萝莉盒账号</p>
                         <div class="tips_con tips_con_b">
-                            <p class="f16 cfl"><span>STEP 1</span>：选择喜欢的品类以便享受更丰富和需要的试用品；之后也可在<br/>&nbsp;&nbsp;【我的账户】-【订阅设置】中修改；<a href="" target="_blank">设置</a></p>
+                            <p class="f16 cfl"><span>STEP 1</span>：选择喜欢的品类以便享受更丰富和需要的试用品；之后也可在<br/>&nbsp;&nbsp;【我的账户】-【订阅设置】中修改；<a href="javascript:void(0)" id="saveCategories" target="_blank">设置</a></p>
+                            <div id="categoriesDiv" class="register_category" style="display: none">
+                                <foreach name="categories" item="category">
+                                     <span><input type="checkbox" name="category" value="<{$category['cid']}>"><{$category['cname']}></span>
+                                </foreach>
+                            </div>
                             <p class="f16 cfl"><span>STEP 2</span>：请完善萝莉档案，将能获得更多额外试用品种类；之后也可在<br/>&nbsp;&nbsp;【我的账户】-【 萝莉档案】 中修改；<a href="" target="_blank">去修改</a></p>
                             <p class="f16 cfl"><span>STEP 3</span>：我们已经为您投递了免费的试用品，立即去【我的订阅】-【新会员专属】领取吧！<a href="" target="_blank">立即领取</a></p>
                         </div>
@@ -58,13 +63,13 @@
             <div class="f_list f_list_wx">
                 <h4>萝莉盒微信</h4>
                 <div class="">
-                    <img src="public/images/foot_wx_v5.jpg" />
+                    <img src="/public/images/foot_wx_v5.jpg" />
                 </div>
             </div>
             <div class="f_list f_list_app">
                 <h4>萝莉盒app</h4>
                 <div class="">
-                    <img src="public/images/foot_wx_v5.jpg" />
+                    <img src="/public/images/foot_wx_v5.jpg" />
                 </div>
             </div>
             <div class="f_list f_list_help">
@@ -87,12 +92,35 @@
     </div>
 </div>
 <!--标准底-end-->
-<script src="public/js/gzJs.js"></script>
-<script src="public/js/jquery.masonry.min.js" type="text/javascript"></script>
-<script src="public/js/jquery.lazyload.js"></script>
+<script src="/public/js/gzJs.js"></script>
+<script src="/public/js/jquery.masonry.min.js" type="text/javascript"></script>
+<script src="/public/js/jquery.lazyload.js"></script>
 <script>
     $(function () {
-        $("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
+        $("#saveCategories").on("click",function(){
+            if($(this).text() == "设置"){
+                $("#categoriesDiv").show('fast');
+                $(this).text("确定");
+            }else{
+                $("#categoriesDiv").hide('fast');
+
+                $(this).text("设置");
+                var checkedInputs = $(":checkbox[name='category'][checked]");
+                var categoryIds = new Array();
+                for(var i=0;i<checkedInputs.length;i++){
+                    categoryIds.push($(checkedInputs[i]).val())
+                }
+                $.ajax({
+                    type:"post",
+                    url :"<{:u('subscribe/subscribeCategory')}>",
+                    data:{"categoryIds" : categoryIds},
+                    dataType:"json",
+                    success:function(data){
+                        $(this).text("设置");
+                    }
+                })
+            }
+        });
     });
 </script>
 <!--标准底-end-->

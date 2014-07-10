@@ -862,7 +862,13 @@ class userAction extends commonAction {
 					$u_info=D("Users")->getUserInfo($new_userid,'userface');
 					$userface=$u_info['userface_40_40'];
 					$this->assign("userface",$userface);
-					
+
+
+                    $sql = "SELECT cid,cname from category WHERE ctype = ".C("CTYPE_PRODUCT")." and pcid = ".C("PCID_ROOT");
+                    $model= new Model();
+                    $categories = $model->query($sql);
+                    $this->assign('categories',$categories);
+
 					$this->assign('return',$return);
 					$this->display("reg_success");
 				}else{
@@ -1271,11 +1277,7 @@ class userAction extends commonAction {
 		cookie("nickname",null);
 		cookie("userid",null);
 		cookie("userauth",null);
-		$return = array(
-				'title'=>'退出萝莉盒-LOLITABOX萝莉盒',
-		);
-		$this->assign('return',$return);
-		$this->display();
+        $this->redirect('/index');
 	}
 
 	//忘记密码
