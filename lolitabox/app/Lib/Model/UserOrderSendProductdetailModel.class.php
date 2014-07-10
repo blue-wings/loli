@@ -56,4 +56,20 @@ class UserOrderSendProductdetailModel extends Model{
 
         return $productNum + $productPackageNum;
     }
+    
+/**
+	 * 生成订单产品详细信息
+	 * @param unknown_type $userid
+	 * @param unknown_type $products
+	 * @param unknown_type $orderId
+	 */
+	function addOrderSendProducts($userid,$products,$orderId){
+		foreach ($products as $product){
+			$data["orderid"]=$orderId;
+			$data["userid"]=$userid;
+			$data["productid"]=$product["pid"];
+			$data["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_NOT_PAYED");
+		}
+		$this->add($data);	
+	}
 }

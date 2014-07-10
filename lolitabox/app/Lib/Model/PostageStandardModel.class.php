@@ -7,6 +7,27 @@
  */
 class PostageStandardModel extends Model {
 	
+	
+	/**
+	 * 按产品算邮费
+	 * @param unknown_type $productIds
+	 * @param unknown_type $expressCompanyId
+	 * @param unknown_type $addressid
+	 */
+	public function calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressid){
+		$addresInfo=D("UserAddress")->getUserAddressInfo($addressid);
+		if($addresInfo["district"]){
+			return $this->calculatePostage($productIds, $expressCompanyId, $addresInfo["district"]);
+		}
+		if($addresInfo["city"]){
+			return $this->calculatePostage($productIds, $expressCompanyId, $addresInfo["district"]);
+		}
+		if($addresInfo["province"]){
+			return $this->calculatePostage($productIds, $expressCompanyId, $addresInfo["district"]);
+		}
+		return null;
+	}
+	
 	/**
 	 * 按订单计算邮费
 	 * @param unknown_type $orderId
