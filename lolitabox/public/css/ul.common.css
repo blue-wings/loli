@@ -318,6 +318,8 @@ li.clear{ clear: both; margin-top: 0;}
 .register_info_list .login_code span{vertical-align: middle; border-right:0px;}
 .register_info_submit {line-height: 36px;text-align: center;}
 .register_info_submit .login_btn{display: block;width: 290px;background: url(../images/btn_bg_main.png) repeat-x;color: #fff;font-size: 20px;float: left;}
+.register_category {display: table;margin-top: 6px;border: 1px solid;border-color: #808080;}
+.register_category span{margin-left: 12px;margin-bottom: -7px;font-size: 12px;}
 
 /*v6首页*/
 .banner_wrap{ height: 510px; position: relative; width: 100%; overflow: hidden;}

@@ -7,12 +7,10 @@ class IndexAction extends commonAction {
 	 * 首页方法
 	 */
 	public function index() {
-
+        $brand_count = D("ProductsBrand")->where("status=1")->count();
+        $return['brand_count'] = $brand_count + 1;
+        $this->assign("return",$return);
         $this->display("index");
-//		if($this->userid){
-//			$this->redirect('index/home', null, 1, '页面跳转中...');
-//		}
-//		$this->redirect('index/user/login', null, 1, '页面跳转中...');
 	}
 }
 
