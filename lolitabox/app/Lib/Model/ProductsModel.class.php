@@ -878,41 +878,44 @@ class ProductsModel extends Model {
 	 * @throws Exception
 	 */
 	public function minusInventoryReducedInDBLock($productId, $num){
-		try{
-			M()->startTrans();
-			$product = $productModel->lock(true)->getByPid($productId);
-			if($product["inventoryreduced"] >= $num){
+		M()->startTrans();
+		$product = $this->lock(true)->getByPid($productId);
+		if($product["inventoryreduced"] >= $num){
+			try{
+				$param["pid"]=$product["pid"];
 				$param["inventoryreduced"]= $product["inventoryreduced"] - $num;
-				$product->save($param);		
-				M()->commit();	
-			}else{
-				throw new Exception("inventoryReduced is less than num");
+				$this->save($param);
+				M()->commit();
+			}catch (Exception $e){
+				M()->rollback();
+				throw new Exception("数据库异常");
 			}
-		}catch (Exception $e){
-			M()->rollback();
-			throw_exception($e->getMessage());
+		}else{
+			throw new Exception("已经退货");
 		}
+
 	}
-	
+
 	/**
 	 * 在数据库锁的保护下增加已使用投放量
 	 * @param unknown_type $productId
 	 * @param unknown_type $num
 	 */
 	public function addInventoryReducedInDBLock($productId, $num){
-		try{
-			M()->startTrans();
-			$product = $productModel->lock(true)->getByPid($productId);
-			if(($product["inventory"] - $product["inventoryreduced"] - $num)>0){
+		M()->startTrans();
+		$product = $this->lock(true)->getByPid($productId);
+		if(($product["inventory"] - $product["inventoryreduced"] - $num)>0){
+			try{
+				$param["pid"]=$product["pid"];
 				$param["inventoryreduced"]= $product["inventoryreduced"] + $num;
-				$product->save($param);		
-				M()->commit();	
-			}else{
-				throw new Exception("inventory is less than sum of inventoryreduced and num");
+				$this->save($param);
+				M()->commit();
+			}catch (Exception $e){
+				M()->rollback();
+				throw new Exception("数据库异常");
 			}
-		}catch (Exception $e){
-			M()->rollback();
-			throw_exception($e->getMessage());
+		}else{
+			throw new Exception("库存不足");
 		}
 	}
 	
@@ -923,22 +926,24 @@ class ProductsModel extends Model {
 	 * @throws Exception
 	 */
 	public function minusInventoryInDBLock($productId, $num){
-		try{
-			M()->startTrans();
-			$product = $productModel->lock(true)->getByPid($productId);
-			if($product["inventory"]>$num){
+		M()->startTrans();
+		$product = $this->lock(true)->getByPid($productId);
+		if($product["inventory"]>$num){
+			try{
+				$param["pid"]=$product["pid"];
 				$param["inventory"]= $product["inventory"] - $num;
-				$product->save($param);		
+				$this->save($param);
 				M()->commit();
-			}else{
-				throw new Exception("inventory is less than num");
+			}catch (Exception $e){
+				M()->rollback();
+				throw new Exception("数据库异常");
 			}
-		}catch (Exception $e){
-			M()->rollback();
-			throw_exception($e->getMessage());
+		}else{
+			throw new Exception("库存不足");
 		}
+
 	}
-	
+
 	/**
 	 * 在数据库锁的保护下增加全部投放量
 	 * @param unknown_type $productId
@@ -947,61 +952,14 @@ class ProductsModel extends Model {
 	public function addInventoryInDBLock($productId, $num){
 		try{
 			M()->startTrans();
-			$product = $productModel->lock(true)->getByPid($productId);
+			$product = $this->lock(true)->getByPid($productId);
+			$param["pid"]=$product["pid"];
 			$param["inventory"]= $product["inventory"] + $num;
-			$product->save($param);		
+			$this->save($param);	
 			M()->commit();
 		}catch (Exception $e){
 			M()->rollback();
-			throw_exception($e->getMessage());
+			throw new Exception("数据库异常");
 		}
 	}
-	
-	/**
-	 * 在数据库锁的保护下增加购物车中预约量
-	 * @param unknown_type $productId
-	 * @param unknown_type $num
-	 * @throws Exception
-	 */
-	public function addCartNumInDBLock($productId, $num){
-		try{
-			M()->startTrans();
-			$product = $productModel->lock(true)->getByPid($productId);
-			if(($product["inventory"] - $product["inventoryreduced"] -$product["cart_num"] - $num)>0){
-				$param["cart_num"]= $product["cart_num"] + $num;
-				$product->save($param);		
-				M()->commit();	
-			}else{
-				throw new Exception("inventory is less than sum of inventoryreduced ,cart_num and num");
-			}
-		}catch (Exception $e){
-			M()->rollback();
-			throw_exception($e->getMessage());
-		}
-	}
-	
-	/**
-	 * 在数据库锁的保护下减小购物车中预约量
-	 * @param unknown_type $productId
-	 * @param unknown_type $num
-	 * @throws Exception
-	 */
-	public function minusCartNumInDBLock($productId, $num){
-		try{
-			M()->startTrans();
-			$product = $productModel->lock(true)->getByPid($productId);
-			if($product["cart_num"]>$num){
-				$param["cart_num"]= $product["cart_num"] - $num;
-				$product->save($param);		
-				M()->commit();
-			}else{
-				throw new Exception("cart_num is less than num");
-			}
-			
-		}catch (Exception $e){
-			M()->rollback();
-			throw_exception($e->getMessage());
-		}
-	}
-	
 }

@@ -34,7 +34,7 @@
 										</dl>
 									        <div class="pri">											<!--<input type="hidden" value="2014-06-12 12:00:00" data-type="00:00:00:00" data_id="1001"/>-->
 											<div class="price_wrap">
-											    <p class="price cfl"><span class="l">￥<{$vo.goodsprice}></span><input type="button" class="r" value="立即订购"></p>
+											    <p class="price cfl"><span class="l">￥<{$vo.goodsprice}></span><input type="button" class="r subscribe-button" value="立即订购" pid="<{$vo.pid}>"></p>
 											</div> 
 											<div class="time_wrap cfl">
 												<p class="timeDown l"><em class="gz_clock">&nbsp;</em><span>23:59:59</span></p>
@@ -60,6 +60,24 @@
 					url = $(this).attr("href");
 					$("#main-container").load(url);
 					return false;
+				})
+				console.log($(".subscribe-button"))
+				$(".subscribe-button").click(function(){
+					var pid = $(this).attr("pid");
+					$.ajax({
+						url:"<{:u('shoppingCart/addProduct2Cart')}>",
+						type:"POST",
+						datatype:"json",
+						data:{"pid":pid},
+						cache:false,
+						success:function(result){
+							console.log(result);	
+						},
+						error:function(result){
+							console.log(result);		
+						}
+					});
+					
 				})
 			
 			</script>

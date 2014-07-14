@@ -45,5 +45,5 @@ return array(
 	//购物车中正常的商品状态
 	'SHOPPING_CART_STATUS_VALID'						=>1,
 	//购物车记录失效时间
-	'SHOPPING_CART_INVALID_DURATION'					=>3600
+	'SHOPPING_CART_INVALID_DURATION'					=>30*24*3600
 );

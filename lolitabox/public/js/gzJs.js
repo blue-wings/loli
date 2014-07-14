@@ -33,9 +33,9 @@ if(dy_li && dy_txt){
 /**
   *footer位置控制
 */
-if($('.fm1025_m')){
-$('#foot_wrap .fm1020').css({'margin-top':'-24px'});
-}
+//if($('.fm1025_m')){
+//$('#foot_wrap .fm1020').css({'margin-top':'-24px'});
+//}
 
 /**
   *倒计时

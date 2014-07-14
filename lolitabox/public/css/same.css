@@ -135,7 +135,7 @@ img { border:0;}
 /*footer*/
 #foot_wrap_a .hei_c {width: 1020px;}
 .footer{ font-size:12px; min-width: 1024px; text-align: left;}
-.footer .fm1020{ background: #f3f3f3;position:relative;margin-top: -8px;margin-top: -10px\9; *zoom:1; z-index: 8;}
+.footer .fm1020{ background: #f3f3f3;position:relative;margin-top: 8px;margin-top: -10px\9; *zoom:1; z-index: 8;}
 #foot_wrap_b .footer .fm1020,#foot_wrap_a.footer .fm1020{ background: #fff; margin-top: 0;}
 .footer .f_list{float:left; padding:0 43px 20px 30px; _width:60px;}
 .footer .f_list h4{height:30px; }

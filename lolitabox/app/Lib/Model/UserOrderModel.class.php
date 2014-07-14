@@ -103,30 +103,32 @@ class UserOrderModel extends Model {
 		$orderAddressInfo=$orderAddressMod->field($field)->getByOrderid($orderid);
 		return $orderAddressInfo;
 	}
-
+	
 	/**
-	 * 生成订单
-	 * 不做任何验证，需要调用方法做验证
+	 * 减少单品发售量，创建订单
 	 * @param unknown_type $userid
-	 * @param array $productIds 买多个 id重复
-	 * @param unknown_type $addressid
-	 * @param unknown_type $pay_bank
-	 * @param unknown_type $if_giftcard
-	 * @param unknown_type $sendword
+	 * @param unknown_type $productIds
+	 * @param unknown_type $productNums
+	 * @throws Exception
 	 */
-	public function addOrder($userId,$productIds, $addressId,$payBank="",$ifGiftCard=0,$sendWord="", $expressCompanyId){
-		if(empty($userId) || empty($boxid) || empty($addressId) || $addressId==0)
-			return false;
-			
+	public function createOrder($userId, $productIds, $productNums){
+		$result = array();
+		if(count($productIds) != count($productNums)){
+			throw new Exception("未知错误");
+		}
+		$validProductIds = array();
+		for($i=0; $i<count($productIds); $i++){
+			$productId = $productIds[$i];
+			$productNum = $productNums[$i];
+			try {
+				$result[$productId]=null;
+				D("Products")->addInventoryReducedInDBLock($productId, $productNum);
+				array_push($validProductIds, $productId);
+			}catch (Exception $e){
+				$result[$productId]=$e->getMessage();
+			}
+		}
 		$data['ordernmb']=date("YmdHis").rand(100,999);
-		
-		$addresInfo=D("UserAddress")->getUserAddressInfo($addressId);
-		if($addresInfo==false)
-			return false;
-		$orderMod=M("userOrder");
-		
-		$data['sendword']=$sendWord;
-		
 		//因为增加特权会员，在此整理特权会员价格
 		$memberMod=D("Member");
 		$memberInfo=$memberMod->getUserMemberInfo($userId);
@@ -134,7 +136,7 @@ class UserOrderModel extends Model {
 		$totalCost=0;
 		$originalTotalCost=0;
 		$products = array();
-		foreach ($productIds as $productId){
+		foreach ($validProductIds as $productId){
 			$product = $productModel->getByPid($productId);
 			array_push($products, $product);
 			$productMemberPrice = $product["member_price"]?$product["price"]:$product["member_price"];
@@ -154,9 +156,36 @@ class UserOrderModel extends Model {
 		$data["cost"] = $totalCost;
 		//特权会员问题end
 		
-		
 		$data['userid']=$userId;
 		$data['addtime']=date("Y-m-d H:i:s");
+		//生成订单
+		$orderMod->add($data);
+		
+		D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$products,$data['ordernmb']);
+		
+		return $result;
+	}
+	/**
+	 * 用户补全订单其他信息
+	 * @param unknown_type $userId
+	 * @param unknown_type $orderId
+	 * @param unknown_type $addressId
+	 * @param unknown_type $payBank
+	 * @param unknown_type $ifGiftCard
+	 * @param unknown_type $sendWord
+	 * @param unknown_type $expressCompanyId
+	 */
+	public function complereOrder($userId,$orderId, $addressId,$payBank="",$ifGiftCard=0,$sendWord="", $expressCompanyId){
+		if(empty($userId) || empty($orderId) || empty($addressId) || $addressId==0)
+			return false;
+			
+		$data['ordernmb']=$orderId;
+		
+		$addresInfo=D("UserAddress")->getUserAddressInfo($addressId);
+		if($addresInfo==false)
+			return false;
+		
+		$data['sendword']=$sendWord;
 		$data['address_id']=$addressId;
 		$data['pay_bank']=$payBank;
 		
@@ -165,22 +194,15 @@ class UserOrderModel extends Model {
 			$giftcardPrice=D("Giftcard")->getUserGiftcardPrice($userId);
 			if($giftcardPrice>0){
 				if($giftcardPrice>=(int)$data['cost']){
-					$data['pay_bank']="none";//如果使用礼品卡余额全额支付，清楚支付方式
+					$data['pay_bank']=null;//如果使用礼品卡余额全额支付，清楚支付方式
 					$data['giftcard']=$data['cost'];
 				}else{
 					$data['giftcard']=$giftcardPrice;
 				}
 			}
 		}
-		
 		$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
 		$data["postage"]=$postage;
-		
-		//生成订单
-		$orderAddRst=$orderMod->add($data);
-		
-		D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$products,$data['ordernmb']);
-		
 		
 		//订单信息增加成功
 		if($orderAddRst){
