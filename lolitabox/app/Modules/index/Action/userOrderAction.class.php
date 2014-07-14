@@ -1,12 +1,39 @@
 <?php
 class UserOrderAction extends commonAction {
 	
-    public function generateOrder() {
-        $productIds = $_POST("productIds");
+    public function createOrder() {
         $userId = $this->userid;
-        D("ShoppingCart")->invalidUserShoppingCartProducts($userId);
-        $orderId = D("UserOrder")->addOrder($userId, $productIds, $addressId,$payBank,$ifUseGiftCard,$sendWord, $expressCompanyId);
-        return D("UserOrder")->getOrderDetail($orderId);
+        $shoppingCartIds = $_POST("shoppingCartIds");
+        if(!$shoppingCartIds){
+        	throw new Exception("unknow error");
+        }
+        $shoppingCartIdArray = split(",", $shoppingCartIds);
+        $shoppingCartModel = D("ShoppingCart");
+        $productIds = array();
+        $productNums = array();
+        
+        foreach ($shoppingCartIdArray as $shopingCartId){
+        	$shoppingCartItem = $shoppingCartModel->getById($shopingCartId);
+        	array_push($productIds, $shoppingCartItem["productid"]);
+        	array_push($productNums, $shoppingCartItem["product_num"]);
+        }
+        $result = D("UserOrder")->createOrder( $this->userid, $productIds, $productNums);
+        $orderId = $result["orderId"];
+        $productMsgResult = $result["msgResult"];
+        $errorProducts = array();
+        foreach ($productMsgResult as $productId=>$msg){
+        	if(!msg){
+        		$shoppingCartModel->invalidUserShoppingCartProduct($userId);	
+        	}else{
+        		$product = D("Products")->getByPid($productId);
+        		$product["errorMsg"]=$msg;
+        		array_push($errorProducts, $product);
+        	}
+        }
+        $order = D("UserOrder")->getOrderDetail($orderId);
+        $this->assign("order",$order);
+        $this->assign("errorProducts", $errorProducts);
+        $this->display();
     }
     
     
@@ -20,7 +47,19 @@ class UserOrderAction extends commonAction {
         $expressCompanyId = $_POST("expressCompanyId");
         $ifUseGiftCard = $_POST("ifUseGiftCard");
         $payBank = $_POST("payBank");
-         $addressId = $_POST("addressId");
+        $addressId = $_POST("addressId");
+        $ifGiftCard = $_POST("ifGiftCard");
+        $ifPayPostage = $_POST("ifPayPostage");
+        $result = D("UserOrder")->complereOrder($this->userid,$orderId, $addressId,$payBank,$ifGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
+        if($result){
+        	//TODO跳转到第三方支付	
+        }
+    }
+    
+ 	public function hasPayed(){
+    	$orderId = $_POST["orderId"];
+        $tradeNum = $_POST("tradeNum");
+        D("UserOrder")->hasPayed($orderId, $tradeNum);
     }
     
 }

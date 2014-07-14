@@ -57,7 +57,7 @@ class UserOrderSendProductdetailModel extends Model{
         return $productNum + $productPackageNum;
     }
     
-/**
+	/**
 	 * 生成订单产品详细信息
 	 * @param unknown_type $userid
 	 * @param unknown_type $products
@@ -71,5 +71,17 @@ class UserOrderSendProductdetailModel extends Model{
 			$data["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_NOT_PAYED");
 		}
 		$this->add($data);	
+	}
+	
+	function changeStatus2PostageNotPay($orderId){
+		$where["orderid"] = $orderId;
+		$data["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_NOT_PAYED");
+		$this->where($where)->save($data);
+	}
+	
+	function changeStatus2PostagePayed($orderId){
+		$where["orderid"] = $orderId;
+		$data["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_PAYED");
+		$this->where($where)->save($data);
 	}
 }

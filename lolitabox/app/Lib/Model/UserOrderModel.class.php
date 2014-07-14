@@ -112,7 +112,9 @@ class UserOrderModel extends Model {
 	 * @throws Exception
 	 */
 	public function createOrder($userId, $productIds, $productNums){
-		$result = array();
+		$resul = array();
+		$productMsgResult = array();
+		$resul["msgResult"]=$productMsgResult;
 		if(count($productIds) != count($productNums)){
 			throw new Exception("未知错误");
 		}
@@ -121,11 +123,11 @@ class UserOrderModel extends Model {
 			$productId = $productIds[$i];
 			$productNum = $productNums[$i];
 			try {
-				$result[$productId]=null;
+				$productMsgResult[$productId]=null;
 				D("Products")->addInventoryReducedInDBLock($productId, $productNum);
 				array_push($validProductIds, $productId);
 			}catch (Exception $e){
-				$result[$productId]=$e->getMessage();
+				$productMsgResult[$productId]=$e->getMessage();
 			}
 		}
 		$data['ordernmb']=date("YmdHis").rand(100,999);
@@ -156,11 +158,15 @@ class UserOrderModel extends Model {
 		$data["cost"] = $totalCost;
 		//特权会员问题end
 		
+		$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
+		$data["postage"]=$postage;
+		
 		$data['userid']=$userId;
 		$data['addtime']=date("Y-m-d H:i:s");
+		$data['state']=C("USER_ORDER_STATUS_NOT_PAYED");
 		//生成订单
 		$orderMod->add($data);
-		
+		$resul["orderId"]=$data['ordernmb'];
 		D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$products,$data['ordernmb']);
 		
 		return $result;
@@ -175,8 +181,8 @@ class UserOrderModel extends Model {
 	 * @param unknown_type $sendWord
 	 * @param unknown_type $expressCompanyId
 	 */
-	public function complereOrder($userId,$orderId, $addressId,$payBank="",$ifGiftCard=0,$sendWord="", $expressCompanyId){
-		if(empty($userId) || empty($orderId) || empty($addressId) || $addressId==0)
+	public function complereOrder($userId,$orderId, $addressId,$payBank="",$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
+		if(empty($userId) || empty($orderId) || empty($addressId) || $addressId==0 || empty($ifPayPostage))
 			return false;
 			
 		$data['ordernmb']=$orderId;
@@ -201,8 +207,8 @@ class UserOrderModel extends Model {
 				}
 			}
 		}
-		$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
-		$data["postage"]=$postage;
+		$data["ifPayPostage"] = $ifPayPostage;
+		$this->save($data);
 		
 		//订单信息增加成功
 		if($orderAddRst){
@@ -217,9 +223,29 @@ class UserOrderModel extends Model {
 			$orderAddressData['postcode']=$addresInfo['postcode'];
 			M("UserOrderAddress")->add($orderAddressData);
 			
-			return $data['ordernmb'];
+			return true;
 		}else{
 			return false;
+		}
+	}
+	
+	/**
+	 * 用户支付完毕
+	 * @param unknown_type $orderId
+	 * @param unknown_type $tradeNumber
+	 */
+	public function hasPayed($orderId, $tradeNumber){
+		$order = $this->getOrderInfo($orderId);
+		$data["ordernmb"]=$orderId;
+		$data["state"]=C("USER_ORDER_STATUS_PAYED");
+		$data["trade_no"]=$tradeNumber;
+		
+		$this->save($data);
+		if($order["pay_postage"]==C("USER_NOT_PAY_POSTAGE_ORDER")){
+			D("UserOrderSendProductdetail")->changeStatus2PostageNotPay($orderId);	
+		}else{
+			D("UserOrderSendProductdetail")->changeStatus2PostagePayed($orderId);
+			//@TODOcreate inventoryOut and orderSend record
 		}
 	}
 	

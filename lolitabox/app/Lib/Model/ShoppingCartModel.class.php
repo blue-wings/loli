@@ -26,15 +26,16 @@ class ShoppingCartModel extends ViewModel {
 	}
 	
 	/**
-	 * 获取用户购物车商品
+	 * 删除用户购物车中某个产品
 	 * @param unknown_type $userid
 	 */
-	public function invalidUserShoppingCartProducts($userid){
+	public function invalidUserShoppingCartProduct($userid, $productId){
 		if(!$userid){
 			return null;
 		}
 		$param["status"]=C("SHOPPING_CART_STATUS_INVALID");
 		$where["userid"]=$userid;
+		$where["productid"]=$productId;
 		$this->where($where)->save($param);
 	}
 	
