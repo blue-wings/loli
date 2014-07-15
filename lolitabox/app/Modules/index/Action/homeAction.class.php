@@ -15,14 +15,18 @@ class homeAction extends commonAction {
 		$userid=$this->userid;
 		$return['userinfo']=$this->userinfo;
 		$return['title']=$return['userinfo']['nickname']."的主页-".C("SITE_NAME");
-		
+
         //优惠券余额
         $price=D("Giftcard")->getUserGiftcardPrice($userid);
         $info['giftcard_price'] = $price;
 
         //我的订阅
         $model= new Model();
-        $productSql = "select count(distinct(p.pid)) as productNum  from products as p right join users_products_category_subscribe as upcs  ON p.effectcid = upcs.product_category_id WHERE upcs.user_id=".$userid." and p.end_time > NOW() and p.start_time < NOW()";
+        $dataOffset = time() - strtotime($return['userinfo']['addtime']);
+        $productSql = "select count(distinct(p.pid)) as productNum  from products as p right join users_products_category_subscribe as upcs  ON p.effectcid = upcs.product_category_id WHERE upcs.user_id=".$userid." and p.end_time > NOW()";
+        if($dataOffset/(3600 *24) > 7){
+            $productSql = $productSql." and p.user_type != '".C("PRODUCT_NEW_USER_TYPE") ."'";
+        }
         $productResult = $model->query($productSql);
         $productTryNum = 0;
         if(count($productResult) > 0){

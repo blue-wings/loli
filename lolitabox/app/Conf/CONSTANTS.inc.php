@@ -52,5 +52,11 @@ return array(
 	//购物车中正常的商品状态
 	'SHOPPING_CART_STATUS_VALID'						=>1,
 	//购物车记录失效时间
-	'SHOPPING_CART_INVALID_DURATION'					=>30*24*3600
+	'SHOPPING_CART_INVALID_DURATION'					=>30*24*3600,
+
+    //products表中的user_type类型
+    'PRODUCT_COMMON_USER_TYPE'                          =>"0",
+    'PRODUCT_ADVANCED_USER_TYPE'						=>"1",
+    'PRODUCT_NEW_USER_TYPE'						        =>"3",
+    'PRODUCT_YEAR_USER_TYPE'						    =>"2"
 );
