@@ -63,7 +63,7 @@ class UserOrderSendProductdetailModel extends Model{
 	 * @param unknown_type $products
 	 * @param unknown_type $orderId
 	 */
-	function addOrderSendProducts($userid,$products,$orderId){
+	public function addOrderSendProducts($userid,$products,$orderId){
 		foreach ($products as $product){
 			$data["orderid"]=$orderId;
 			$data["userid"]=$userid;
@@ -73,15 +73,32 @@ class UserOrderSendProductdetailModel extends Model{
 		$this->add($data);	
 	}
 	
-	function changeStatus2PostageNotPay($orderId){
+	public function changeStatus2PostageNotPay($orderId){
 		$where["orderid"] = $orderId;
 		$data["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_NOT_PAYED");
 		$this->where($where)->save($data);
 	}
 	
-	function changeStatus2PostagePayed($orderId){
+	public function changeStatus2PostagePayed($orderId){
 		$where["orderid"] = $orderId;
 		$data["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_PAYED");
 		$this->where($where)->save($data);
+	}
+	
+	public function getUserBuyProductNum($userId, $productId){
+		$where["userid"]=$userId;
+		$where["productid"]=$productId;
+		$where["status"]=array("in",array(C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_NOT_PAYED"),C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_PAYED")));
+		return $this->where($where)->count();	
+	}
+	
+	public function getUserOrderProducts($orderId){
+		$where["orderid"]=$orderId;
+		$shoppingCartItems = $this->where($where)->select();
+		$products = array();
+		foreach ($shoppingCartItems as $shoppingCartItem){
+			array_push($products, D("Products")->getByPid($shoppingCartItem["productid"]));
+		}
+		return $products;
 	}
 }

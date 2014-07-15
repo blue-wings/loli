@@ -1,0 +1,59 @@
+<div>
+	<form id="chart_form" action="<{:u('shoppingCart/update')}>" method="post">
+		<input type="hidden" name="shoppingCartIds" id="shoppingCartIds">
+		<input type="hidden" name="productNums" id="productNums">
+		<volist name="shoppingCartItems" id="shoppingCartItem">
+			<li class="th_li chart_item">
+				<dl>
+					<dt>
+						<span class="check_bg"><input type="checkbox" id="<{$shoppingCartItem.id}>" class="chart_id" value="<{$shoppingCartItem.id}>">
+							<i class="checker">&nbsp;</i>
+						</span>
+					</dt>
+					<dd class="img">
+						<a href="" target="_blank"><img
+							src="<{$shoppingCartItem.product.pimg}>" width="150" height="150"
+							alt="" style="display: inline-block" />
+						</a>
+					</dd>
+					<dd class="name" style="width: 140px; overflow: hidden">
+						<a href="" target="_blank"><{$shoppingCartItem.product.pname}></a>
+					</dd>
+					<dd class="txt cfl">
+						<span class="l">5ml</span><span class="r">
+							数量：
+						</span>
+						<input id="<{$shoppingCartItem.id}>" value="<{$shoppingCartItem.product_num}>" class="chart_product_num">
+					</dd>
+				</dl>
+			</li>
+		</volist>
+		<a type="button" id="submit">去结算</a>
+	</form>
+	<script>
+		$("#submit").click(function() {
+			$chartItems = $(".chart_item");
+			var chartIds = new Array();
+			var chartProductNums = new Array();
+			var hasError = false;
+			$.each($chartItems, function(){
+				var chartId = $(this).find(".chart_id");
+				var chartProductNum = $(this).find(".chart_product_num");
+				if(chartId && chartId.length && chartProductNum && chartProductNum.length){
+					chartIds.push($(chartId[0]).val());
+					chartProductNums.push($(chartProductNum[0]).val());
+				}else{
+					hasError = true;
+					return false;
+				}
+			})
+			if(!hasError){
+				$("#shoppingCartIds").val(chartIds.join(","));
+				$("#productNums").val(chartProductNums.join(","));
+				console.log($("#shoppingCartIds").val());
+				console.log($("#productNums").val());
+				$("#chart_form").submit();
+			}
+		})	
+	</script>
+</div>

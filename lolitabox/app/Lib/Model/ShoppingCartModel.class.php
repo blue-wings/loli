@@ -1,5 +1,5 @@
 <?php
-class ShoppingCartModel extends ViewModel {
+class ShoppingCartModel extends Model {
 	
 	/**
 	 * 减少产品可售数目，并添加购物车记录
@@ -12,6 +12,7 @@ class ShoppingCartModel extends ViewModel {
 		$param["productid"]=$productId;
 		$param["status"]=C("SHOPPING_CART_STATUS_VALID");
 		$cartProduct = $this->where($param)->find();
+		$sql = $this->getLastSql();
 		$time = date("Y-m-d H:i:s");
 		$param["update_time"]=$time;
 		if($cartProduct){
@@ -50,9 +51,10 @@ class ShoppingCartModel extends ViewModel {
 		$param["status"]=C("SHOPPING_CART_STATUS_VALID");
 		$param["userid"]=$userid;
 		$shoppingCartList = $this->where($param)->select();
-		foreach ($shoppingCartList as $shoppingCart){
+		foreach ($shoppingCartList as $key=>$shoppingCart){
 			$product = D("Products")->getByPid($shoppingCart["productid"]);
 			$shoppingCart["product"] = $product;
+			$shoppingCartList[$key]=$shoppingCart;
 		}
 		return $shoppingCartList;
 	}

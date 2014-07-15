@@ -112,9 +112,9 @@ class UserOrderModel extends Model {
 	 * @throws Exception
 	 */
 	public function createOrder($userId, $productIds, $productNums){
-		$resul = array();
+		$result = array();
 		$productMsgResult = array();
-		$resul["msgResult"]=$productMsgResult;
+		$productModel = D("Products");
 		if(count($productIds) != count($productNums)){
 			throw new Exception("未知错误");
 		}
@@ -124,17 +124,27 @@ class UserOrderModel extends Model {
 			$productNum = $productNums[$i];
 			try {
 				$productMsgResult[$productId]=null;
-				D("Products")->addInventoryReducedInDBLock($productId, $productNum);
-				array_push($validProductIds, $productId);
+				$product = $productModel->getByPid($productId);
+				if($product["status"]!=C("PRODUCT_STATUS_PUBLISHED")){
+					$productMsgResult[$productId]="产品处于下架状态";	
+				}else if(!D("Products")->checkProdcutNumPerUserOrder($userId, $productId)){
+					$productMsgResult[$productId]="购买超出限制";
+				}else{
+					D("Products")->addInventoryReducedInDBLock($productId, $productNum);
+					array_push($validProductIds, $productId);	
+				}
 			}catch (Exception $e){
 				$productMsgResult[$productId]=$e->getMessage();
 			}
+		}
+		$result["msgResult"]=$productMsgResult;
+		if(!count($validProductIds)){
+			return $resul; 
 		}
 		$data['ordernmb']=date("YmdHis").rand(100,999);
 		//因为增加特权会员，在此整理特权会员价格
 		$memberMod=D("Member");
 		$memberInfo=$memberMod->getUserMemberInfo($userId);
-		$productModel = D("Products");
 		$totalCost=0;
 		$originalTotalCost=0;
 		$products = array();
@@ -149,24 +159,17 @@ class UserOrderModel extends Model {
 				$totalCost += $product["price"];	
 			}
 			$originalTotalCost += $product["price"];
-			
-			//减少可售数量
-			$productParam["inventoryreduced"] += 1;
-			$product->save($productParam); 
 		}
 		$data["ori_cost"]=$originalTotalCost;
 		$data["cost"] = $totalCost;
 		//特权会员问题end
 		
-		$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
-		$data["postage"]=$postage;
-		
 		$data['userid']=$userId;
 		$data['addtime']=date("Y-m-d H:i:s");
 		$data['state']=C("USER_ORDER_STATUS_NOT_PAYED");
 		//生成订单
-		$orderMod->add($data);
-		$resul["orderId"]=$data['ordernmb'];
+		$this->add($data);
+		$result["orderId"]=$data['ordernmb'];
 		D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$products,$data['ordernmb']);
 		
 		return $result;
@@ -182,7 +185,7 @@ class UserOrderModel extends Model {
 	 * @param unknown_type $expressCompanyId
 	 */
 	public function complereOrder($userId,$orderId, $addressId,$payBank="",$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
-		if(empty($userId) || empty($orderId) || empty($addressId) || $addressId==0 || empty($ifPayPostage))
+		if(empty($userId) || empty($orderId) || empty($addressId) || $addressId==0 || empty($ifPayPostage) || empty($expressCompanyId))
 			return false;
 			
 		$data['ordernmb']=$orderId;
@@ -190,6 +193,17 @@ class UserOrderModel extends Model {
 		$addresInfo=D("UserAddress")->getUserAddressInfo($addressId);
 		if($addresInfo==false)
 			return false;
+		
+		if($ifPayPostage){
+			
+			$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
+			$data["postage"]=$postage;
+			$data["pay_postage"]=C("USER_PAY_POSTAGE_ORDER");
+		}else{
+			$data["pay_postage"]=C("USER_NOT_PAY_POSTAGE_ORDER");
+		}
+		
+		$data["cost"] += $postage;
 		
 		$data['sendword']=$sendWord;
 		$data['address_id']=$addressId;
@@ -200,7 +214,7 @@ class UserOrderModel extends Model {
 			$giftcardPrice=D("Giftcard")->getUserGiftcardPrice($userId);
 			if($giftcardPrice>0){
 				if($giftcardPrice>=(int)$data['cost']){
-					$data['pay_bank']=null;//如果使用礼品卡余额全额支付，清楚支付方式
+					$data['pay_bank']=null;//如果使用礼品卡余额全额支付，清除支付方式
 					$data['giftcard']=$data['cost'];
 				}else{
 					$data['giftcard']=$giftcardPrice;
@@ -208,7 +222,7 @@ class UserOrderModel extends Model {
 			}
 		}
 		$data["ifPayPostage"] = $ifPayPostage;
-		$this->save($data);
+		$orderAddRst = $this->save($data);
 		
 		//订单信息增加成功
 		if($orderAddRst){

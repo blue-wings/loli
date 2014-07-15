@@ -1,9 +1,9 @@
 <?php
-class UserOrderAction extends commonAction {
+class userOrderAction extends commonAction {
 	
     public function createOrder() {
         $userId = $this->userid;
-        $shoppingCartIds = $_POST("shoppingCartIds");
+        $shoppingCartIds = $_GET["shoppingCartIds"];
         if(!$shoppingCartIds){
         	throw new Exception("unknow error");
         }
@@ -22,8 +22,8 @@ class UserOrderAction extends commonAction {
         $productMsgResult = $result["msgResult"];
         $errorProducts = array();
         foreach ($productMsgResult as $productId=>$msg){
-        	if(!msg){
-        		$shoppingCartModel->invalidUserShoppingCartProduct($userId);	
+        	if(!$msg){
+        		$shoppingCartModel->invalidUserShoppingCartProduct($userId, $productId);	
         	}else{
         		$product = D("Products")->getByPid($productId);
         		$product["errorMsg"]=$msg;
@@ -34,6 +34,20 @@ class UserOrderAction extends commonAction {
         $this->assign("order",$order);
         $this->assign("errorProducts", $errorProducts);
         $this->display();
+    }
+    
+    public function ajaxGetPostage(){
+    	$orderId = $_POST["orderId"];
+    	$expressCompanyId = $_POST("expressCompanyId");
+    	$addressId = $_POST("addressId");
+    	$products = UserOrderSendProductdetail($orderId);
+    	$productIds = array();
+    	foreach ($products as $product){
+    		array_push($productIds, $product["pid"]);
+    	}
+    	$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
+    	$data["postage"]=$postage;
+		$this->ajaxReturn($data, "JSON");    	
     }
     
     
@@ -51,7 +65,7 @@ class UserOrderAction extends commonAction {
         $ifGiftCard = $_POST("ifGiftCard");
         $ifPayPostage = $_POST("ifPayPostage");
         $result = D("UserOrder")->complereOrder($this->userid,$orderId, $addressId,$payBank,$ifGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
-        if($result){
+    	if($result){
         	//TODO跳转到第三方支付	
         }
     }

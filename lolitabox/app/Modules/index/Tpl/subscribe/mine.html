@@ -53,6 +53,8 @@
 					<div class="ft">&nbsp;</div>
 					
 				</div>
+				
+				<div id="shopping-cart"></div>
 
              <script>
 				
@@ -68,10 +70,10 @@
 						url:"<{:u('shoppingCart/addProduct2Cart')}>",
 						type:"POST",
 						datatype:"json",
-						data:{"pid":pid},
+						data:{"pid":pid,"pNum":1},
 						cache:false,
 						success:function(result){
-							console.log(result);	
+							$("#shopping-cart").load("<{:u('shoppingCart/detail')}>");
 						},
 						error:function(result){
 							console.log(result);		

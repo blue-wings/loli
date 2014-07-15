@@ -962,4 +962,22 @@ class ProductsModel extends Model {
 			throw new Exception("数据库异常");
 		}
 	}
+	
+	/**
+	 * 检测是否超出购买限制
+	 * @param unknown_type $productId
+	 * @param unknown_type $userId
+	 */
+	public function checkProdcutNumPerUserOrder($productId, $userId){
+		$product = $this->getByPid($productId);
+		$maxPerUser = $product["max_peruser"];	
+		if(!$maxPerUser){
+			return true;
+		}	
+		$hasBuyNum = D("UserOrderSendProductdetail")->getUserBuyProductNum($userId, $productId);
+		if($hasBuyNum >= $maxPerUser){
+			return false;
+		} 
+		return true;
+	}
 }

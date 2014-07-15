@@ -97,7 +97,7 @@ class PostageStandardModel extends Model {
 			$continuedHeavyUnit = bcdiv($totalWeight, 1000, 0);
 			$postage = $postageStandard["first_heavy"] + $postageStandard["continued_heavy"]* (intval($continuedHeavyUnit));	
 		}
-		return round($postage/100);
+		return $postage;
 	}
 	
 	
