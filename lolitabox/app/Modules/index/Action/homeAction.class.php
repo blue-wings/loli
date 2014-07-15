@@ -24,6 +24,7 @@ class homeAction extends commonAction {
         $model= new Model();
         $dataOffset = time() - strtotime($return['userinfo']['addtime']);
         $productSql = "select count(distinct(p.pid)) as productNum  from products as p right join users_products_category_subscribe as upcs  ON p.effectcid = upcs.product_category_id WHERE upcs.user_id=".$userid." and p.end_time > NOW()";
+        //如果注册大于7天，则不是新用户，不在推送products表中user_type等于3的订阅
         if($dataOffset/(3600 *24) > 7){
             $productSql = $productSql." and p.user_type != '".C("PRODUCT_NEW_USER_TYPE") ."'";
         }
