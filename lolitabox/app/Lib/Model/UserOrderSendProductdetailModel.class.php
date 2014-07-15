@@ -63,14 +63,16 @@ class UserOrderSendProductdetailModel extends Model{
 	 * @param unknown_type $products
 	 * @param unknown_type $orderId
 	 */
-	public function addOrderSendProducts($userid,$products,$orderId){
-		foreach ($products as $product){
+	public function addOrderSendProducts($userid,$products,$productNums, $orderId){
+		for($i=0; $i<count($products); $i++){
+			$product = $products[$i];
 			$data["orderid"]=$orderId;
 			$data["userid"]=$userid;
 			$data["productid"]=$product["pid"];
+			$data["product_num"]=$productNums[$i];
 			$data["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_NOT_PAYED");
+			$this->add($data);	
 		}
-		$this->add($data);	
 	}
 	
 	public function changeStatus2PostageNotPay($orderId){
@@ -85,6 +87,12 @@ class UserOrderSendProductdetailModel extends Model{
 		$this->where($where)->save($data);
 	}
 	
+	public function changeStatus2PostagePayedBySelfPackageOrderId($selfPackageOrderId){
+		$where["self_package_order_id"] = $selfPackageOrderId;
+		$data["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_PAYED");
+		$this->where($where)->save($data);
+	}
+	
 	public function getUserBuyProductNum($userId, $productId){
 		$where["userid"]=$userId;
 		$where["productid"]=$productId;
@@ -94,10 +102,20 @@ class UserOrderSendProductdetailModel extends Model{
 	
 	public function getUserOrderProducts($orderId){
 		$where["orderid"]=$orderId;
-		$shoppingCartItems = $this->where($where)->select();
+		$details = $this->where($where)->select();
 		$products = array();
-		foreach ($shoppingCartItems as $shoppingCartItem){
-			array_push($products, D("Products")->getByPid($shoppingCartItem["productid"]));
+		foreach ($details as $detail){
+			array_push($products, D("Products")->getByPid($detail["productid"]));
+		}
+		return $products;
+	}
+	
+	public function getUserSelfPackageOrderProducts($userSelfPackageOrderId){
+		$where["self_package_order_id"]=$userSelfPackageOrderId;
+		$details = $this->where($where)->select();
+		$products = array();
+		foreach ($details as $detail){
+			array_push($products, D("Products")->getByPid($detail["productid"]));
 		}
 		return $products;
 	}

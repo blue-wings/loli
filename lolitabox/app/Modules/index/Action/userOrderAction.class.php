@@ -14,8 +14,10 @@ class userOrderAction extends commonAction {
         
         foreach ($shoppingCartIdArray as $shopingCartId){
         	$shoppingCartItem = $shoppingCartModel->getById($shopingCartId);
-        	array_push($productIds, $shoppingCartItem["productid"]);
-        	array_push($productNums, $shoppingCartItem["product_num"]);
+        	if($shoppingCartItem["status"]==C("SHOPPING_CART_STATUS_VALID")){
+				array_push($productIds, $shoppingCartItem["productid"]);
+        		array_push($productNums, $shoppingCartItem["product_num"]);        	
+        	}
         }
         $result = D("UserOrder")->createOrder( $this->userid, $productIds, $productNums);
         $orderId = $result["orderId"];
@@ -40,7 +42,7 @@ class userOrderAction extends commonAction {
     	$orderId = $_POST["orderId"];
     	$expressCompanyId = $_POST("expressCompanyId");
     	$addressId = $_POST("addressId");
-    	$products = UserOrderSendProductdetail($orderId);
+    	$products = D("UserOrderSendProductdetail")->getUserOrderProducts($orderId);
     	$productIds = array();
     	foreach ($products as $product){
     		array_push($productIds, $product["pid"]);

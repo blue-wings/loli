@@ -119,6 +119,7 @@ class UserOrderModel extends Model {
 			throw new Exception("未知错误");
 		}
 		$validProductIds = array();
+		$validProductNums = array();
 		for($i=0; $i<count($productIds); $i++){
 			$productId = $productIds[$i];
 			$productNum = $productNums[$i];
@@ -131,7 +132,8 @@ class UserOrderModel extends Model {
 					$productMsgResult[$productId]="购买超出限制";
 				}else{
 					D("Products")->addInventoryReducedInDBLock($productId, $productNum);
-					array_push($validProductIds, $productId);	
+					array_push($validProductIds, $productId);
+					array_push($validProductNums, $productNum);	
 				}
 			}catch (Exception $e){
 				$productMsgResult[$productId]=$e->getMessage();
@@ -170,7 +172,7 @@ class UserOrderModel extends Model {
 		//生成订单
 		$this->add($data);
 		$result["orderId"]=$data['ordernmb'];
-		D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$products,$data['ordernmb']);
+		D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$products,$validProductNums, $data['ordernmb']);
 		
 		return $result;
 	}
@@ -193,9 +195,14 @@ class UserOrderModel extends Model {
 		$addresInfo=D("UserAddress")->getUserAddressInfo($addressId);
 		if($addresInfo==false)
 			return false;
+			
+		$products = D("UserOrderSendProductdetail")->getUserOrderProducts($orderId);
+    	$productIds = array();
+    	foreach ($products as $product){
+    		array_push($productIds, $product["pid"]);
+    	}
 		
 		if($ifPayPostage){
-			
 			$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
 			$data["postage"]=$postage;
 			$data["pay_postage"]=C("USER_PAY_POSTAGE_ORDER");
