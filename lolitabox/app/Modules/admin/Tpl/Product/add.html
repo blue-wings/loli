@@ -42,11 +42,7 @@
 			   			<span id="inventoryItemReal">{$productinfo.inventoryItem.inventory_real}</span>
 			   		</div>
 			   		<div>
-			   			<span>理论库存</span>
-			   			<span id="inventoryItemEstimated">{$productinfo.inventoryItem.inventory_estimated}</span>
-			   		</div>
-			   		<div>
-			   			最多投递 {$productinfo.inventoryItem.inventory_estimated} 份到此产品
+			   			最多投递 <span id="max_delivery">{$productinfo.inventoryItem.inventory_real}</span> 份到此产品
 			   		</div>
 			   		<div>
 			   			投递<input type="text" name="inventoryInc">份
@@ -54,12 +50,13 @@
 			   </div>
 			   产品发售库存: <input type="text" name="inventory"  value="{$productinfo.inventory}" disabled="disabled"><br><br>
 			   产品发售库存减少: <input type="text" name="inventoryreduced"  value="{$productinfo.inventoryreduced}" disabled="disabled"><br><br>
-			   购物车中预定: <input type="text" name="inventoryreduced"  value="{$productinfo.cart_num}" disabled="disabled"><br><br>
 			   正装规格:	<input type="text" name="goodssize"  value="{$productinfo.goodssize}"><br><br>
-			   正装价格:	<input type="text" name="goodsprice" value='{$productinfo.goodsprice}'><br><br>
+			   正装价格:	<input type="text" name="goodsprice" value='{$productinfo.goodsprice}'>(分)<br><br>
+			   本站普通会员价:	<input type="text" name="price" value='{$productinfo.price}'>(分)<br><br>
+			   本站高级会员价:	<input type="text" name="member_price" value='{$productinfo.member_price}'>(分)<br><br>
+			   每人限购:	<input type="text" name="max_peruser" value='{$productinfo.max_peruser}'>(个)<br><br>
 			   主要成分:	<input type="text" name="maincomponent" value='{$productinfo.maincomponent}'><br><br>
 			   体验装规格:	<input type="text" name="trialsize"  value='{$productinfo.trialsize}'><br><br>
-			   体验装价格:	<input type="text" name="trialprice" value='{$productinfo.trialprice}'><br><br>
 			   开始日期:<input type="text" size="20" id="start_time" name="start_time" value='{$productinfo.start_time}'><br><br>
 			   截止日期:	<input type="text" size="20" id="end_time" name="end_time" value='{$productinfo.end_time}'><br><br>
 			  产品对应的用户级别：<input type = checkbox value="0" name="user_type[]" <php>if(in_array(0,$usertype_list_selected)) echo " checked";</php>>普通会员</input>
@@ -325,6 +322,7 @@ $("#inventory_item_id").keyup(function(){
 			$("#inventoryItemOut").text(inventoryOut);
 			$("#inventoryItemReal").text(real);
 			$("#inventoryItemEstimated").text(estimated);
+			$("#max_delivery").text(real);
 		})
 	}
 })	
