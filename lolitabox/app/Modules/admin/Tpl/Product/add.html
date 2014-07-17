@@ -15,6 +15,21 @@
 			<legend>添加</legend>
 					
 			<div style='width:50%;float:left'>
+			   是否发布:
+			   上架
+			   <if condition="$productinfo.status eq 1">
+			   		<input type="radio" name="status" value="1" checked="checked"/>
+			   <else />
+			   		<input type="radio" name="status" value="1"/>
+			   </if>
+			   &nbsp;&nbsp;&nbsp;&nbsp;
+			   下架
+			   <if condition="$productinfo.status eq 0">
+			   		<input type="radio" name="status" value="0" checked="checked"/>
+			   <else />
+			   		<input type="radio" name="status" value="0"/>
+			   </if>
+			   </br> </br>
 			   产品标题(前台):<input type="text" size="30" name="pname" value="{$productinfo.pname}">  </br> </br> 
 			   产品别名(亮点描述):<input type="text" name="product_alias" value="{$productinfo.product_alias}" size="50"></br> </br> 
 			   子产品列表:	<input type="text" size="30" name="productlist" value="{$productinfo.productlist}"><br><font color="red"> 以英文逗号分隔，如1,2,3,4</font></br> </br> 
