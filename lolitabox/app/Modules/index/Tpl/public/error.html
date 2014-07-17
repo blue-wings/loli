@@ -1,18 +1,18 @@
-<include file="public:header.inc" />
+<include file="public:_header.inc" />
 <script language="javascript" type="text/javascript">
-       var i = <{$waitSecond}>;
-        var intervalid;
-        intervalid = setInterval(function(){
-        	location.href = "<{$jumpUrl}>";
-        }, 1000*i);
-      /*   function fun() {
-            if (i == 0) {
-                window.location.href = "<{$jumpUrl}>";
-                clearInterval(intervalid);
-            }
-            document.getElementById("mes").innerHTML = i;
-            i--; 
-        } */
+    var i = <{$waitSecond}>;
+    var intervalid;
+    intervalid = setInterval(function(){
+        location.href = "<{$jumpUrl}>";
+    }, 1000*i);
+    /*   function fun() {
+     if (i == 0) {
+     window.location.href = "<{$jumpUrl}>";
+     clearInterval(intervalid);
+     }
+     document.getElementById("mes").innerHTML = i;
+     i--;
+     } */
     </script>
 <i class="page_top"></i>
 <div class="mb16">
@@ -33,4 +33,6 @@
 	</div>
 </div>
 </div>
-<include file="public:footer.inc" />
+<div class="foot_center">
+<include file="public:footer_simple.inc" />
+</div>

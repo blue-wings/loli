@@ -603,3 +603,8 @@ li.clear{ clear: both; margin-top: 0;}
     font-size: 14px;
     text-align: center
 }
+.foot_center {
+    bottom: 0px;
+    position: absolute;
+    width: 100%;
+}
