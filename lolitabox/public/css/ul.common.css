@@ -347,3 +347,259 @@ li.clear{ clear: both; margin-top: 0;}
 .brand_data span {display: inline-block;position: absolute;left: 393px;top: 54px;font-size: 26px;color: #463E45;text-align: center;width: 54px;font-weight: bold;}
 .index_main .main .contact_us .tr2{ padding-top: 12px;}
 .index_main .main .contact_us .tr1{ padding-top: 25px;}
+
+.login_wrap {
+    min-height: 485px;
+    _height: 485px
+}
+
+.login_wrap .W_reg_form {
+    float: left;
+    width: 530px;
+    padding: 0 35px 0 50px;
+    overflow: hidden;
+    border-right: 1px solid #edeff1
+}
+
+.login_wrap h1 {
+    height: 45px;
+    line-height: 45px;
+    color: #dd1471;
+    font-size: 24px;
+    text-align: center
+}
+
+.login_wrap .min_t {
+    font-size: 14px;
+    margin-left: 5px
+}
+
+.login_wrap .reg_shortcut {
+    padding: 12px 0;
+    text-align: center;
+    font-size: 14px
+}
+
+.W_login_wrap .reg_shortcut {
+    padding-bottom: 20px
+}
+
+.login_wrap .reg_shortcut a.W_btn {
+    margin: 0 10px
+}
+
+.login_wrap .reg_divide {
+    height: 20px;
+    line-height: 20px;
+    background: url(../images/tc_login_x.gif) center center no-repeat;
+    text-align: center;
+    font-size: 14px;
+    margin: 8px 0
+}
+
+.login_wrap .info_wrap {
+    margin-top: 30px
+}
+
+.login_wrap .info_list {
+    margin: 0 0 20px 0;
+    position: relative
+}
+
+.login_wrap .info_list .tit {
+    float: left;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: right
+}
+
+.login_wrap  .info_list .tit {
+    width: 150px
+}
+
+.login_wrap  .info_list .inp , .login_wrap .info_list .checked  , .login_wrap .info_submit .inp {
+    margin-left: 150px;
+    text-align: left
+}
+
+.login_wrap .info_wrap .W_input_ws {
+    width: 160px
+}
+
+.login_wrap .info_submit .W_fix_w84 {
+    color: #333;
+    background: #ffe2f1;
+    border-radius: 3px
+}
+
+.login_wrap .info_submit .W_fix_w84:hover {
+    text-decoration: none
+}
+
+.login_wrap .info_submit .inp .W_fix_w84 {
+    float: left
+}
+
+.login_wrap .info_submit .inp .loading {
+    float: left;
+    margin-left: 5px
+}
+
+.login_wrap .W_input {
+    width: 170px
+}
+
+.login_wrap .tips {
+    position: absolute;
+    left: 330px;
+    top: 3px;
+    width: 200px
+}
+
+.login_wrap .info_submit {
+    margin: 10px 0 20px 0
+}
+
+.login_wrap .info_submit_enroll {
+    float: left;
+    margin-left: 8px;
+    line-height: 30px
+}
+
+.login_wrap .info_list .checked input {
+    vertical-align: middle
+}
+
+.login_wrap .info_list .checked .href {
+    padding: 0 5px
+}
+
+.login_wrap .info_list .checked .href a {
+    color: #333
+}
+
+.zc_hd_register {
+    height: 6px;
+    width: 100%;
+    background: #000;
+    clear: both;
+    display: block;
+    margin-bottom: 15px
+}
+
+.W_reg_info .W_reg_form {
+    float: left;
+    width: 530px;
+    padding: 0 35px 0 50px;
+    overflow: hidden;
+    border-right: 1px solid #edeff1;
+    min-height: 480px
+}
+.W_reg_info .W_reg_sidebar {
+    width: 368px;
+    float: left;
+    overflow: hidden
+}
+
+.W_reg_info .W_reg_sidebar .sidebar_title {
+    padding-top: 120px;
+    text-align: center
+}
+
+.W_reg_info .W_reg_sidebar .sidebar_title p {
+    line-height: 72px
+}
+
+.W_reg_info .W_reg_sidebar .sidebar_title .tit {
+    font-size: 26px;
+    color: #e7308c
+}
+
+.W_reg_info .sidebar_title .W_pin_b1 {
+    margin: 0 auto
+}
+
+.forget_pass_wrao h1 {
+    text-align: left;
+    margin-bottom: 16px
+}
+
+.forget_pass_wrao .pass_tips {
+    margin-bottom: 30px
+}
+.forget_pass_wrao .info_wrap {
+    display: block
+}
+.forget_pass_wrao  .info_list {
+    margin-bottom: 10px
+}
+.forget_pass_wrao  .info_list_con {
+    margin-bottom: 60px
+}
+.forget_pass_wrao .info_wrap .tit {
+    width: 75px
+}
+.forget_pass_wrao .info_wrap .inp {
+    margin-left: 85px
+}
+.forget_pass_wrao .info_wrap .tips {
+    left: 277px;
+    top: 0
+}
+.forget_pass_wrao .info_wrap .tiwps {
+    padding-bottom: 80px;
+    margin-left: 84px
+}
+.forget_pass_wrao h4 {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px
+}
+.forget_pass_wrao .info_list_t {
+    padding: 12px 0;
+    text-align: center
+}
+.forget_pass_wrao .login_pass_dl {
+    margin-top: 70px
+}
+.wp738 .hd ,.wp738 .hd_y ,.wp738 .ft ,.wp738 .main ,.wp275 .hd ,.wp275.hd_t ,.wp275 .ft ,.wp275 .main ,.wp1020_forgetpwd .hd ,.wp1020_forgetpwd .hd_t ,.wp1020_forgetpwd .ft ,.wp1020_forgetpwd .main,.wp480 .ft ,.wp480 .hd,.wp339 .ft ,.wp339 .hd {
+    background: url(../images/top_title_v5.png) no-repeat
+}
+.wp1020_forgetpwd .hd_t {
+    background-position: 0 -190px;
+    height: 7px;
+    overflow: hidden
+}
+.wp1020_forgetpwd .ft {
+    background-position: 0 -176px;
+    height: 8px;
+    overflow: hidden
+}
+.wp1020_forgetpwd .main {background: url(../images/wp1020_x.png) repeat-y;zoom: 1; padding: 0px 20px }
+.login_state_dl a {
+    color: #e7308c
+}
+
+.login_state_dl {
+    color: #999;
+    line-height: 22px
+}
+
+.login_state_dl dt {
+    color: #333;
+    font-size: 14px
+}
+
+.login_state_dl a {
+    color: #e7308c
+}
+.foot_register {
+    line-height: 50px;
+    text-align: center;
+    color: #999
+}
+
+.forget_pass_wrao .pass_list_t {
+    font-size: 14px;
+    text-align: center
+}

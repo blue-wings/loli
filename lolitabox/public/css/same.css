@@ -87,6 +87,8 @@ img { border:0;}
 .di { display:inline;}
 .thd{text-overflow:ellipsis; white-space:nowrap; overflow:hidden; }
 .fm1020{width:1020px; margin:0 auto;}
+.fm1024 {width: 1024px;margin: 0 auto}
+
 .fm1025{width:1025px; margin:0 auto; padding-left:5px; }
 .fm1020_b {width: 1020px;margin: 16px auto;}
 .f230{ width: 230px;}
@@ -204,4 +206,172 @@ img { border:0;}
 #content_login{ background: #000 url(../images/login_bgs.jpg) center top no-repeat; min-height: 620px;}
 
 
+.W_pin_b ,.W_pin_fb2,.W_pin_b14 ,.W_pin_bl14 ,.W_pin_b1 ,.W_pin_p14 ,.W_pin_grey ,.W_pin_orange ,.W_pin_green ,.W_pin_blue,.W_whi_b14 {
+    line-height: 24px;
+    border: 0 none;
+    cursor: pointer;
+    border-radius: 3px;
+    display: inline-block;
+    text-align: center
+}
 
+.W_pin_b ,.W_pin_b14 ,.W_pin_bl14 {
+    color: #fff;
+    background: #e7308c
+}
+
+.W_pin_fb2 {
+    color: #fff;
+    background: #c90962
+}
+
+.W_whi_b14 {
+    color: #dd1471;
+    background: #fff;
+    font-weight: bold
+}
+
+.W_pin_b:hover ,.W_pin_fb2:hover,.W_pin_b14:hover ,.W_pin_b1:hover ,.W_pin_bl14:hover ,.W_pin_p14:hover ,.W_pin_grey14:hover ,.W_pin_grey:hover,.W_pin_fb:hover,.W_whi_b14:hover {
+    text-decoration: none
+}
+
+.W_whi_b14 {
+    padding: 3px 8px;
+    font-size: 14px
+}
+
+.W_pin_b,.W_pin_fb2 {
+    padding: 1px 15px;
+    font-size: 12px
+}
+
+.W_pin_b14 {
+    padding: 3px 16px;
+    font-size: 14px
+}
+
+.W_pin_bl14 {
+    padding: 4px 22px;
+    font-size: 14px
+}
+
+.W_pin_b1 ,.W_pin_p14 {
+    color: #333;
+    background: #ffe2f1
+}
+
+.W_pin_b1 {
+    padding: 1px 15px;
+    font-size: 12px
+}
+
+.W_pin_p14 {
+    padding: 3px 16px;
+    font-size: 14px
+}
+
+.W_pin_grey ,.W_pin_grey14 {
+    color: #333;
+    background: #f1f3f5
+}
+
+.W_pin_grey {
+    padding: 1px 10px;
+    font-size: 12px
+}
+
+.W_pin_grey14 {
+    padding: 3px 16px;
+    font-size: 14px
+}
+
+.W_pin_orange ,.W_pin_green ,.W_pin_blue {
+    padding: 1px 15px;
+    font-size: 12px
+}
+
+.W_pin_blue {
+    background-color: #02c4d5;
+    color: #fff
+}
+
+.W_pin_orange {
+    background-color: #fb8e00;
+    color: #fff
+}
+
+.W_pin_green {
+    background-color: #418e03;
+    color: #fff
+}
+
+.W_pin_fb {
+    background: #e7308c;
+    line-height: 24px;
+    border: 0 none;
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    padding: 1px 5px;
+    font-size: 12px
+}
+.W_input_ws {
+    border: 1px solid #ebebec;
+    border-radius: 2px;
+    height: 18px;
+    padding: 3px 5px;
+    vertical-align: middle;
+    color: #999
+}
+.W_ico45 {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    background-image: url(../images/icon45.png);
+    background-repeat: no-repeat
+}
+
+.icon_yes_45 {
+    background-position: 0 0
+}
+.icon_no_45 {
+    background-position: 0 -45px
+}
+.login_bound_con .W_ico45 ,.forget_pass_wrao .W_ico45 {
+    vertical-align: -14px;
+    _vertical-align: 0
+}
+
+.login_bound_con .login_bound_succend {
+    margin-top: 135px
+}
+
+.login_bound_con .login_fail {
+    margin: 80px 0 40px
+}
+
+.login_bound_con .login_fail h1 {
+    margin: 0;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 30px
+}
+
+.login_bound_con .fail_speak {
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    font-size: 14px
+}
+
+.login_bound_con .fail_speak a {
+    margin-left: 8px
+}
+
+.login_bound_con .login_fail .title {
+    margin-bottom: 40px
+}
+
+.login_bound_con .login_fail .fail_text {
+    margin-left: 234px
+}
