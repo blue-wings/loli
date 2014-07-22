@@ -275,6 +275,15 @@ var Loli = Loli || {};
 				}
 				//chartlist可滚动显示
 
+			},
+			
+			hide : function(){
+				$("#"+this.options.selfId).hide();
+				
+			},
+			
+			show : function(){
+				$("#"+this.options.selfId).show();
 			}
 	}
 

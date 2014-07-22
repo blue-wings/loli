@@ -30,7 +30,7 @@
                                                         <div class="hd">&nbsp;</div>
                                                         <div class="main">
                                                                 <ul>
-                                                                        <li><em class="gz_book">&nbsp;</em><span for-action="<{:u('subscribe/mine', 'userType=0')}>" class="menu-time">我的订阅</span></li>
+                                                                        <li><em class="gz_book">&nbsp;</em><span for-action="<{:u('subscribe/mine', 'userType=0')}>" class="menu-time" showShoppingCart="true">我的订阅</span></li>
                                                                         <li><em class="gz_box">&nbsp;</em><span for-action="<{:u('safeKeeping/selfPickUp')}>" class="menu-time">我的保管箱</span></li>
                                                                         <!--<li><em class="gz_try">&nbsp;</em><span>我的试用</span></li>-->
                                                                         <!--<li><em class="gz_list">&nbsp;</em><span>我的订单</span></li>-->
@@ -187,9 +187,20 @@ $(function () {
 
 $(".menu-time").click(function(){
 	var url = $(this).attr("for-action");
+	var me = this;
 	if(url){
 		$("#main-container").load(url, function(){
-			$("#menu-content").css("height",$(this).css("height"));	
+			$("#menu-content").css("height",$(this).css("height"));
+			var ifShowShoppingCart = $(me).attr("showShoppingCart");
+			if(ifShowShoppingCart == "true"){
+				if(window.shoppingCart){
+					window.shoppingCart.show();	
+				}else{
+					window.shoppingCart = new Loli.shoppingCart({addProduct2CartUrl:"<{:u('shoppingCart/addProduct2Cart')}>",getShoppingCartDetailUrl:"<{:u('shoppingCart/detail')}>"});	
+				}
+			}else{
+				window.shoppingCart.hide();	
+			}
 			
 		});		
 	}
