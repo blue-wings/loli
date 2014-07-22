@@ -14,7 +14,7 @@
 					<div class="hd">&nbsp;</div>
 					<div class="con">
 					  <div class="xtime_tip">
-							<div class="time_down" id="cn_timeDown">离订阅结束仅剩：<p><span>{$dataOffset}</span></p><input type="hidden" value="2014-06-11 12:00:00" data-type="00天00时00分00秒"></div>
+							<div class="time_down" id="cn_timeDown">离订阅结束仅剩：<p><span id="show_time"><{$dayOffset}>天<{$hourOffset}>时<{$minOffset}>分</span></p><input type="hidden" value="2014-06-11 12:00:00" data-type="00天00时00分00秒"></div>
 							<p class="x_tip">新会员专属优惠只能<br>在您注册<span>7</span>天之内享受，<br>错过就没有啦！</p>
 						</div>
 						<p class="td_h_btn"><a href="" target="">投递记录</a></p>
@@ -65,6 +65,34 @@
 					$("#main-container").load(url);
 					return false;
 				})
+				
+				setInterval("time_controller()",1000);
+				function time_controller(){
+
+				   show_time("show_time",<{$endTime}>*1000-new Date().getTime());	
+				   		    
+				}
+				function show_time(id,timestamp)
+				{
+				    var timer = document.getElementById(id);
+				    var str_time,int_day,int_hour,int_minute,int_second;
+				    var time_distance = timestamp;
+				    if(time_distance>0)
+				    {
+				          int_day=Math.floor(time_distance/86400000)
+				          time_distance-=int_day*86400000;
+				          int_hour=Math.floor(time_distance/3600000)
+				          time_distance-=int_hour*3600000;
+				          int_minute=Math.floor(time_distance/60000)
+				          time_distance-=int_minute*60000;
+				          int_second=Math.floor(time_distance/1000)
+				
+				          str_time=int_day+"天"+int_hour+"时"+int_minute+"分";
+				          timer.innerHTML=str_time;
+				    }else{
+				          timer.innerHTML="0天0时0分";
+				    }
+				}
 			
 			</script>
 

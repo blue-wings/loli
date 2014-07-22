@@ -2,7 +2,9 @@
 class subscribeAction extends commonAction{
 	
 	public function mine(){
-		$dataOffset = time() - strtotime($return['userinfo']['addtime']);
+		$userinfo=D("Users")->getUserInfo($this->userid);
+		$registerTime = strtotime($userinfo['addtime']);
+		$dataOffset = time() - $registerTime;
 		$displayNewUserItem = true;
 		if($dataOffset/(3600 *24) > 7){
 			$displayNewUserItem = false;
@@ -23,13 +25,13 @@ class subscribeAction extends commonAction{
 				$categoryIds .= ",";
 			}
 		}
-		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and per.firstcid in (" .$categoryIds .")";
+		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and p.firstcid in (" .$categoryIds .")";
 		$model= new Model();
 		$productCount = $model->query($sql);
 		$count = $productCount[0]['count'];
 		$p = new Page($count,8);
 		$pageSql = $p->firstRow.','.$p->listRows;
-		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and per.firtstcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
+		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and p.firstcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
 		$prodcutIdList = $model->query($productSql);
 		$productIdsStr = "";
 		for($i=0; $i<count($prodcutIdList); $i++){
@@ -46,46 +48,13 @@ class subscribeAction extends commonAction{
 		$this->display();
 	}
 	
-	public function theirs(){
-		
-        $productsModel = M("Products");
-        
-        $startTime = date("Y-m-d H:i:s",time()+C('SUBSCRIBE_FUTURE_INC'));
-        $where["start_time"]=array('egt',$startTime);
-        $where["status"]=c('PRODUCT_STATUS_PUBLISHED');
-        $futureProdcutsList = $productsModel->where($where)->order("start_time ASC")->limit(6)->select();
-        $count = count($futureProdcutsList);
-        $futureProductFirst = NULL;
-        $futureProducts = array();
-        if($count){
-        	$futureProductFirst = $futureProdcutsList[0];	
-        	$futureProductFirst["start_time_seconds"] = strtotime($futureProductFirst["start_time"]);
-        }
-        if($count>1){
-	        for($i=1; $i<$count; $i++){
-	        	$num = $i-1;
-	        	$futureProducts[$num]=$futureProdcutsList[$i];
-				$futureProducts[$num]["start_time_seconds"] = strtotime($futureProducts[$num]["start_time"]);	
-			}	
-        }
-        
-        $endTime = date("Y-m-d");
-		$whereClosed["end_time"]=array('elt',$startTime);
-		$whereClosed["status"]=c('PRODUCT_STATUS_PUBLISHED');
-		$closedProducts = $productsModel->where($whereClosed)->order("end_time DESC")->limit(5)->select();
-		for($i=0; $i<count($closedProducts); $i++){
-			$closedProducts[$i]["end_time_seconds"] = strtotime($closedProducts[$i]["end_time"]);	
-		}
-		$this->assign("futureProductFirst",$futureProductFirst);
-		$this->assign("futureProducts",$futureProducts);
-		$this->assign("closedProducts",$closedProducts);
-		$this->display();
-	}
 	
 	
 	
 	public function year(){
-		$dataOffset = time() - strtotime($return['userinfo']['addtime']);
+		$userinfo=D("Users")->getUserInfo($_COOKIE['loli_userid']);
+		$registerTime = strtotime($userinfo['addtime']);
+		$dataOffset = time() - $registerTime;
 		$displayNewUserItem = true;
 		if($dataOffset/(3600 *24) > 7){
 			$displayNewUserItem = false;
@@ -106,13 +75,13 @@ class subscribeAction extends commonAction{
 				$categoryIds .= ",";
 			}
 		}
-		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and per.firtstcid in (" .$categoryIds .")";
+		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and p.firtstcid in (" .$categoryIds .")";
 		$model= new Model();
 		$productCount = $model->query($sql);
 		$count = $productCount[0]['count'];
 		$p = new Page($count,8);
 		$pageSql = $p->firstRow.','.$p->listRows;
-		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and per.firtstcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
+		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and p.firtstcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
 		$prodcutIdList = $model->query($productSql);
 		$productIdsStr = "";
 		for($i=0; $i<count($prodcutIdList); $i++){
@@ -130,9 +99,13 @@ class subscribeAction extends commonAction{
 	}
 	
 	public function newuser(){
-		$dataOffset = time() - strtotime($return['userinfo']['addtime']);
-
-		
+		$userinfo=D("Users")->getUserInfo($this->userid);
+		$registerTime = strtotime($userinfo['addtime']);
+		$endTime = $registerTime + 3600 *24 *7;
+		$dataOffset = $endTime - time();
+		$dayOffSet = floor($dataOffset/(3600 *24));
+		$hourOffSet = floor(($dataOffset - $dayOffSet*24*3600)/3600);
+		$minOffSet = floor(($dataOffset - $dayOffSet*24*3600 - $hourOffSet*3600)/60);
 		$userid = $this->userid;
 		$userType = "3";
 		import("ORG.Util.Page");
@@ -148,13 +121,13 @@ class subscribeAction extends commonAction{
 				$categoryIds .= ",";
 			}
 		}
-		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and per.firtstcid in (" .$categoryIds .")";
+		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and p.firstcid in (" .$categoryIds .")";
 		$model= new Model();
 		$productCount = $model->query($sql);
 		$count = $productCount[0]['count'];
 		$p = new Page($count,8);
 		$pageSql = $p->firstRow.','.$p->listRows;
-		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and per.firtstcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
+		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and p.firstcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
 		$prodcutIdList = $model->query($productSql);
 		$productIdsStr = "";
 		for($i=0; $i<count($prodcutIdList); $i++){
@@ -166,21 +139,24 @@ class subscribeAction extends commonAction{
 		$where = array("in", $productIdsStr);
 		$products = D("Products")->where("pid in (".$productIdsStr.")")->select();
 		$page=$p->show();	
-		
-		$this->assign('dateOffset',"abc");
+		$this->assign("endTime",$endTime);
+		$this->assign("dayOffset",$dayOffSet);
+		$this->assign("hourOffset",$hourOffSet);
+		$this->assign("minOffset",$minOffSet);
 		$this->assign('page',$page);
 		$this->assign("list",$products);
 		$this->display();
 	}	
 	
 	public function advance(){
-		$dataOffset = time() - strtotime($return['userinfo']['addtime']);
+		$userinfo=D("Users")->getUserInfo($this->userid);
+		$registerTime = strtotime($userinfo['addtime']);
+		$dataOffset = time() - $registerTime;
 		$displayNewUserItem = true;
 		if($dataOffset/(3600 *24) > 7){
 			$displayNewUserItem = false;
 		}
-		$this->assign("displayNewUserItem",$displayNewUserItem);
-		$userid = $this->userid;
+		$this->assign("displayNewUserItem",$displayNewUserItem);		$userid = $this->userid;
 		$userType = "1";
 		import("ORG.Util.Page");
 		$usersProductsCategorySubscribe = D("UsersProductsCategorySubscribe");
@@ -195,13 +171,13 @@ class subscribeAction extends commonAction{
 				$categoryIds .= ",";
 			}
 		}
-		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and per.firtstcid in (" .$categoryIds .")";
+		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and p.firstcid in (" .$categoryIds .")";
 		$model= new Model();
 		$productCount = $model->query($sql);
 		$count = $productCount[0]['count'];
 		$p = new Page($count,8);
 		$pageSql = $p->firstRow.','.$p->listRows;
-		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and per.firtstcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
+		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$userType.",p.user_type) and p.firstcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
 		$prodcutIdList = $model->query($productSql);
 		$productIdsStr = "";
 		for($i=0; $i<count($prodcutIdList); $i++){
