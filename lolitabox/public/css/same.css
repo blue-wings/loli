@@ -186,6 +186,19 @@ img { border:0;}
 .gz_null_box,.gz_null_try{background: url(../images/gz_null_icon.png) no-repeat; width: 85px; height: 62px; vertical-align: middle; display: inline-block;}
 .gz_null_box{ background-position: 0px 0px;}
 .gz_null_try{ background-position: 0px -62px;}
+.gz_help,.gz_clock{ background: url(../images/grzx_i_icn.png) no-repeat; width: 30px; height: 30px; display: inline-block; }
+.gz_help{ background-position: 0 0;}
+.gz_clock{ background-position: -5px -30px; width: 21px; height: 21px;}
+.gz_arrow_up,.gz_arrow_down,.gz_arrow_r,.gz_arrow_l,.gz_close{ width: 24px; height: 24px;}
+.gz_arrow_up{ width: 30px; background-position: 0px -175px;}
+.gz_arrow_down{ width: 30px; background-position: 0px -247px;}
+.gz_arrow_r{ background-position: -30px -175px;}
+.gz_arrow_l{ background-position: -30px -199px;}
+.gz_close{ width: 30px; background-position: 0px -199px;}
+.gz_plus,.gz_reduce{ width: 17px; height: 16px;}
+.gz_plus{ background-position: -23px -229px;}
+.gz_reduce{background-position: -6px -229px;}
+
 /*登录注册icon*/
 .dz_sina,.dz_qq,.dz_or,.dz_in{ background: url(../images/login_icon.png) no-repeat; display: block; width: 46px; height: 38px;}
 .dz_sina{ background-position: 0 0;}
