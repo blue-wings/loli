@@ -4,6 +4,7 @@ class subscribeAction extends commonAction{
 	public function mine(){
 		$userinfo=D("Users")->getUserInfo($this->userid);
 		$registerTime = strtotime($userinfo['addtime']);
+		$is_member = $this->userinfo['if_member'];
 		$dataOffset = time() - $registerTime;
 		$displayNewUserItem = true;
 		if($dataOffset/(3600 *24) > 7){
@@ -45,6 +46,7 @@ class subscribeAction extends commonAction{
 		$page=$p->show();	
 		$this->assign('page',$page);
 		$this->assign("list",$products);
+		$this->assign("ismember",$is_member);
 		$this->display();
 	}
 	
@@ -101,6 +103,7 @@ class subscribeAction extends commonAction{
 	public function newuser(){
 		$userinfo=D("Users")->getUserInfo($this->userid);
 		$registerTime = strtotime($userinfo['addtime']);
+		$is_member = $this->userinfo['if_member'];
 		$endTime = $registerTime + 3600 *24 *7;
 		$dataOffset = $endTime - time();
 		$dayOffSet = floor($dataOffset/(3600 *24));
@@ -140,17 +143,30 @@ class subscribeAction extends commonAction{
 		$products = D("Products")->where("pid in (".$productIdsStr.")")->select();
 		$page=$p->show();	
 		$this->assign("endTime",$endTime);
-		$this->assign("dayOffset",$dayOffSet);
-		$this->assign("hourOffset",$hourOffSet);
-		$this->assign("minOffset",$minOffSet);
+		$dayOffSetStr=$dayOffSet;
+		$hourOffSetStr=$hourOffSet;
+		$minOffSetStr=$minOffSet;
+
+		if($hourOffSet<10){
+			$hourOffSetStr = "0".$hourOffSetStr;
+		}
+		if($minOffSetStr<10){
+			$minOffSetStr = "0".$minOffSetStr;
+		}
+		$this->assign("dayOffset",$dayOffSetStr);
+		$this->assign("hourOffset",$hourOffSetStr);
+		$this->assign("minOffset",$minOffSetStr);
 		$this->assign('page',$page);
 		$this->assign("list",$products);
+		$this->assign("ismember",$is_member);
+		
 		$this->display();
 	}	
 	
 	public function advance(){
 		$userinfo=D("Users")->getUserInfo($this->userid);
 		$registerTime = strtotime($userinfo['addtime']);
+		$is_member = $this->userinfo['if_member'];
 		$dataOffset = time() - $registerTime;
 		$displayNewUserItem = true;
 		if($dataOffset/(3600 *24) > 7){
@@ -191,6 +207,7 @@ class subscribeAction extends commonAction{
 		$page=$p->show();	
 		$this->assign('page',$page);
 		$this->assign("list",$products);
+		$this->assign("ismember",$is_member);
 		$this->display();
 	}
 

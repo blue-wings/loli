@@ -117,16 +117,14 @@
 .dy_ul li dl{ padding: 0 12px;}
 .dy_ul li dt{ width: 100%; position: absolute; text-align: center; top: 10px; left: 0px; font-size: 14px; font-weight: bold;}
 .dy_ul li .mask{ background: #666; width: 224px; height: 210px; filter:alpha(opacity=80); -moz-opacity:0.8;-wekit-opacity: 0.8;opacity: 0.8;  }
-
 .dy_ul li .txt{ position: absolute; left: 3px; top: 0px; display: none;}
-.dy_ul li:hover .txt {display: block;}
 .dy_ul li .txt_con{ position: absolute; left: 0px; top: 0px; color: #fff; font-size: 14px; padding: 50px 20px;}
 .dy_ul li .txt_con .tit{ font-size: 18px; margin-bottom: 5px;}
 .dy_ul li .img{ margin-bottom: 15px;}
 .dy_ul li .price{ line-height: 30px;}
 .dy_ul li .gj_price .l,.pri_0 .price,.pri_gj .price .gj_price{ font-weight: bold;}
 .dy_ul li .price.gj_price,.dy_ul li .price{ font-size: 24px; color: #ff1627;}
-.dy_ul li .pt_price{ font-size: 18px; color: #ff2686;  line-height: 30px;padding-left: 20px;}
+.dy_ul li .pt_price{ font-size: 18px; color: #ff2686;  line-height: 30px; padding-left: 20px;}
 .dy_ul li .gj_price{ background: #f6faff; line-height: 38px; padding: 0 9px 0 17px;}
 .dy_ul li .gj_price .r{ color: #999; font-size: 12px;}
 .dy_ul li input[type="button"]{ background: url(../images/dy_dg_btn.jpg) repeat-x; height: 30px; line-height: 30px; color: #fff; border: 0; padding: 0 20px;_padding: 0 10px;*padding: 0 10px; font-size: 14px;}
@@ -143,6 +141,7 @@
 .pri_gj .price .pt_price .overline{ width: 46px; height: 17px; background: url(../images/overline_x.png) no-repeat; position: absolute; left: 24px; top: 6px;}
 .pri_gj input[type="button"]{ margin-top: 24px;}
 .dy_ul .time_wrap .gz_clock{ vertical-align: middle; margin: -4px 3px 0 0;}
+.dy_ul .time_wrap .time_title{ font-size:12px; height:21px; line-height:21px;vertical-align: middle;margin: -4px 3px 0px 0px;}
 .dy_ul .time_wrap .l{ font-size:18px; color: #999;}
 .dy_ul .time_wrap input[type="button"]{ background: #9a9a9a;}
 /*chart*/

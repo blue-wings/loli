@@ -34,14 +34,29 @@
 												</div>
 											</dd>
 										</dl>
-									        <div class="pri">											<!--<input type="hidden" value="2014-06-12 12:00:00" data-type="00:00:00:00" data_id="1001"/>-->
-											<div class="price_wrap">
-											    <p class="price cfl"><span class="l">￥<{$vo.goodsprice}></span><input type="button" class="r subscribe-button" value="立即订购" pid="<{$vo.pid}>"></p>
-											</div> 
+										
+									        <if condition="$ismember eq 0">
+									        <div class="pri">
+									        <div class="price_wrap">
+												<p class="price pt_price cfl"><span class="l">￥<{$vo.price}></span><input type="button" class="r" value="立即订购"></p>
+												<p class="price gj_price cfl"><span class="l">￥<{$vo.member_price}></span><span class="r">高级订阅专享</span></p>
+											</div>																			            <!--<input type="hidden" value="2014-06-12 12:00:00" data-type="00:00:00:00" data_id="1001"/>-->
+											<div class="time_wrap cfl">
+												<p class="timeDown l"><em class="gz_clock">&nbsp;</em><span>23:59:59</span></p>
+												<p class="r"><input type="button" class="r" value="立即订购"></p>
+											</div>		
+											<else/>
+											<div class="pri pri_gj cfl">
+									        <div class="price_wrap">
+												<p class="price l"><span class="gj_price">￥<{$vo.member_price}></span><span class="pt_price">￥<{$vo.price}><i class="overline">&nbsp;</i></span></p>
+												<p class="r"><input type="button" value="立即订购"></p>
+											</div>
+								            <!--<input type="hidden" value="2014-06-12 12:00:00" data-type="00:00:00:00" data_id="1001"/>-->
 											<div class="time_wrap cfl">
 												<p class="timeDown l"><em class="gz_clock">&nbsp;</em><span>23:59:59</span></p>
 												<p class="r"><input type="button" class="r" value="立即订购"></p>
 											</div>
+										    </if>	
 										</div>
 									</div>
 									<p class="ft">&nbsp;</p>
