@@ -193,13 +193,13 @@ $(".menu-time").click(function(){
 			$("#menu-content").css("height",$(this).css("height"));
 			var ifShowShoppingCart = $(me).attr("showShoppingCart");
 			if(ifShowShoppingCart == "true"){
-				if(window.shoppingCart){
-					window.shoppingCart.show();	
+				if(Loli.shoppingCartObj){
+					Loli.shoppingCartObj.show();	
 				}else{
-					window.shoppingCart = new Loli.shoppingCart({addProduct2CartUrl:"<{:u('shoppingCart/addProduct2Cart')}>",getShoppingCartDetailUrl:"<{:u('shoppingCart/detail')}>"});	
+					Loli.shoppingCartObj = new Loli.shoppingCart({addProduct2CartUrl:"<{:u('shoppingCart/addProduct2Cart')}>",getShoppingCartDetailUrl:"<{:u('shoppingCart/detail')}>"});	
 				}
 			}else{
-				window.shoppingCart.hide();	
+				Loli.shoppingCartObj.hide();	
 			}
 			
 		});		
