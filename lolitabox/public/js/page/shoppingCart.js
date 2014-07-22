@@ -3,7 +3,6 @@ var Loli = Loli || {};
 (function(){
 	Loli.shoppingCart = function(options){
 		this.options = $.extend({}, this.options, options);
-		console.log(this.options);
 		this.init();
 		//new Loli.shoppingCart({addProduct2CartUrl:"<{:u('shoppingCart/addProduct2Cart')}>",getShoppingCartDetailUrl:"<{:u('shoppingCart/detail')}>"});
 		return this;
@@ -11,7 +10,7 @@ var Loli = Loli || {};
 
 	Loli.shoppingCart.prototype={
 			options : {
-				parentContainerId : "main-container",
+				parentContainerId : "center-box",
 				selfId : "ids",
 				subscribeButtonClass : "subscribe-button",
 				addProduct2CartUrl:null,
@@ -94,7 +93,7 @@ var Loli = Loli || {};
 				"<div class='ft'>&nbsp;</div>"+
 				"</div>"+
 				"</div>";
-				var parentContainer = $(this.options.parentContainerId);
+				var parentContainer = $("#"+this.options.parentContainerId);
 				if(parentContainer.children().length){
 					var firstChild = $(parentContainer.children()[0]);
 					$(html).insertBefore(firstChild);
