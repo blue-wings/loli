@@ -38,8 +38,8 @@
 									        <if condition="$ismember eq 0">
 									        <div class="pri">
 									        <div class="price_wrap">
-												<p class="price pt_price cfl"><span class="l">￥<{$vo.price}></span><input type="button" class="r" value="立即订购"></p>
-												<p class="price gj_price cfl"><span class="l">￥<{$vo.member_price}></span><span class="r">高级订阅专享</span></p>
+												<p class="price pt_price cfl"><span class="l">￥<{$vo.price|number_format=###, 1, '.', ''}></span><input type="button" class="r" value="立即订购"></p>
+												<p class="price gj_price cfl"><span class="l">￥<{$vo.member_price|number_format=###, 1, '.', '' }></span><span class="r">高级订阅专享</span></p>
 											</div>																			            <!--<input type="hidden" value="2014-06-12 12:00:00" data-type="00:00:00:00" data_id="1001"/>-->
 											<div  class="time_wrap cfl">
 												<p class="timeDown l"><em class="gz_clock">&nbsp;</em><span class="time_title" id ="time_title">距投递开始</span><span>23:21:51</span></p>
@@ -47,7 +47,7 @@
 											<else/>
 											<div class="pri pri_gj cfl">
 									        <div class="price_wrap">
-												<p class="price l"><span class="gj_price">￥<{$vo.member_price}></span><span class="pt_price">￥<{$vo.price}><i class="overline">&nbsp;</i></span></p>
+												<p class="price l"><span class="gj_price">￥<{$vo.member_price|number_format=###, 1, '.', ''}></span><span class="pt_price">￥<{$vo.price|number_format=###, 1, '.', ''}><i class="overline">&nbsp;</i></span></p>
 												<p class="r"><input type="button" value="立即订购"></p>
 											</div>
 								            <!--<input type="hidden" value="2014-06-12 12:00:00" data-type="00:00:00:00" data_id="1001"/>-->
