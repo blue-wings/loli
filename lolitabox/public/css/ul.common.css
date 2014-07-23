@@ -120,6 +120,7 @@
 .dy_ul li .txt{ position: absolute; left: 3px; top: 0px; display: none;}
 .dy_ul li .txt_con{ position: absolute; left: 0px; top: 0px; color: #fff; font-size: 14px; padding: 50px 20px;}
 .dy_ul li .txt_con .tit{ font-size: 18px; margin-bottom: 5px;}
+.dy_ul li:hover .txt {display: block;}
 .dy_ul li .img{ margin-bottom: 15px;}
 .dy_ul li .price{ line-height: 30px;}
 .dy_ul li .gj_price .l,.pri_0 .price,.pri_gj .price .gj_price{ font-weight: bold;}
