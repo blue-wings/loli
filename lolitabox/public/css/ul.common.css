@@ -187,7 +187,7 @@
 .chart_list .num_up{ background-position: -31px -229px;}
 .chart_list .num_down{ background-position: -6px -229px;}
 .chart_list .num{ width:40px; border: none; background: #f4f4f4; text-align: center;}
-.fm1025.fm1025_m{ position: relative; top: -16px; *zoom:1; *margin-top: -16px;*top: 0; z-index: 5;}
+.fm1025.fm1025_m{ position: relative; *zoom:1; *margin-top: -16px;*top: 0; z-index: 5;}
 
 /*我的账户*/
 .dy_tab .tab_x a{ width: 111px;}
