@@ -10,7 +10,7 @@ var Loli = Loli || {};
 
 	Loli.shoppingCart.prototype={
 			options : {
-				parentContainerId : "center-box",
+				parentContainerId : "content",
 				selfId : "ids",
 				subscribeButtonClass : "subscribe-button",
 				addProduct2CartUrl:null,
