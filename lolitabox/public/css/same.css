@@ -22,6 +22,7 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,su
 .tdn, .tdn:hover { text-decoration:none;}
 .l { float:left;}
 .r { float:right;}
+.upgrade{ padding:0px 5px;}
 .cl { clear:both;}
 img { border:0;}
 .tc { text-align:center;}
@@ -87,12 +88,8 @@ img { border:0;}
 .di { display:inline;}
 .thd{text-overflow:ellipsis; white-space:nowrap; overflow:hidden; }
 .fm1020{width:1020px; margin:0 auto;}
-.fm1024 {width: 1024px;margin: 0 auto}
-
 .fm1025{width:1025px; margin:0 auto; padding-left:5px; }
-.fm1020_b {width: 1020px;margin: 16px auto;}
 .f230{ width: 230px;}
-.f350 {width: 350px;}
 .f780{ width: 788px;}
 .f820{ width: 820px;}
 .hei1{height:1px; clear:both; width:100%; overflow:hidden; display:block;}
@@ -135,17 +132,16 @@ img { border:0;}
 .login_no li.nopr{ padding-right: 0;}
 
 /*footer*/
-#foot_wrap_a .hei_c {width: 1020px;}
 .footer{ font-size:12px; min-width: 1024px; text-align: left;}
-.footer .fm1020{ background: #f3f3f3;position:relative;margin-top: 8px;margin-top: -10px\9; *zoom:1; z-index: 8;}
-#foot_wrap_b .footer .fm1020,#foot_wrap_a.footer .fm1020{ background: #fff; margin-top: 0;}
+.footer .fm1020{ background: #f3f3f3;position:relative;margin-top: -8px; *zoom:1; z-index: 8;}
+#foot_wrap_b .footer .fm1020{ background: #fff;}
 .footer .f_list{float:left; padding:0 43px 20px 30px; _width:60px;}
 .footer .f_list h4{height:30px; }
 .footer .f_list ul{float:left; line-height:24px; color:#999; zoom:1;}
 .footer .f_list ul a{color:#999;}
 .footer .f_list_help{ _width:140px;}
 .footer .f_list_wx{_width:67px;}
-.footer .foot_subhead{height:150px; overflow:hidden;}
+.footer .foot_subhead{height:200px;}
 .footer .f_list_bq{_width:185px;}
 .footer .foot_friends_con{ float: left; width: 960px;}
 .footer .foot_friends{padding-top:3px; line-height:22px; color:#999; height:auto;}
@@ -156,21 +152,23 @@ img { border:0;}
 .footer_ad_1025{margin: 0 auto 15px;}
 .footer .quick_links{ margin-left: 30px; font-size: 16px;}
 .footer .quick_links a{ color: #333; display: inline-block; line-height: 42px; width: 115px;}
-#foot_wrap_a .quick_links{ margin: 0 0 0 17px; font-size: 14px; padding: 0;}
-#foot_wrap_a .quick_links a{ width: auto; margin: 0 10px;}
-#foot_wrap_a .copyright{ margin: 0 auto;width: 682px; color: #c3c3c3;}
-#foot_wrap_a .copyright span{ padding: 0 10px;  }
 
 /*icon*/
 .follow_bg, .My_personal_nav .item_hd s, .pbl_praise, .pbl_step, .pbl_review, .pbl_forwarding, .lg_email, .lg_style, .lg_close, .lg_pull, .i_face, .i_giftcat, .i_giftbox, .i_serve, .i_phone, .i_sw_img, .lg_pull_on, .lg_put, .i_starblack, .lg_pull_on_w {background-image: url(../images/welcome_ico_v5.png);background-repeat: no-repeat;display: inline-block; vertical-align: middle;}
 .follow_bg {background-position: -5px -38px; }
 
-/*联系我们头像*/
-.lxUs,.gzUs,.jrUs,.ceoUs{background:url(../images/lxus.png) no-repeat; display: block; width: 104px; height: 104px;}
-.lxUs{ background-position: 0px 0px;}
-.gzUs{ background-position: 0px -104px;}
-.jrUs{ background-position: 0px -208px;}
-.ceoUs{ background-position: 0px -312px;}
+
+
+/*登录注册icon*/
+.dz_sina,.dz_qq,.dz_or,.dz_in,.gz_arrow_up,.gz_arrow_down,.gz_arrow_r,.gz_arrow_l,.gz_close,.gz_plus,.gz_redu{ background: url(../images/login_icon.png) no-repeat; display: block; width: 46px; height: 38px;}
+.dz_sina{ background-position: 0 0;}
+.dz_qq{ background-position: 0 -38px;}
+.dz_or{ background-position: 0 -76px; height: 46px;}
+.dz_in{ background-position: 0 -121px; height:54px; width: 54px; display: inline-block; vertical-align: middle;}
+.dz_txt_dy,.dz_txt_sy,.dz_txt_jf{ background: url(../images/login_txt.png) no-repeat; display: block; width: 76px; height: 40px;}
+.dz_txt_dy{ background-position: -6px 0px;}
+.dz_txt_sy{ background-position: -88px 0px;}
+.dz_txt_jf{ background-position: -174px 0px;}
 
 /*个人中心icon*/
 .gz_book,.gz_box,.gz_try,.gz_list,.gz_tip,.gz_host{ vertical-align: middle; background: url(../images/grzx_icn.png) no-repeat; width: 30px; height: 25px; display: inline-block;}
@@ -180,9 +178,11 @@ img { border:0;}
 .gz_list{ background-position: 0px -75px;}
 .gz_tip{ background-position: 0px -100px;}
 .gz_host{ background-position: 0px -125px;}
-.gz_gj,.gz_pt{ background: url(../images/grzx_m_icon.png) no-repeat; width: 68px; height: 57px; vertical-align: middle; display: inline-block;}
+.gz_gj,.gz_pt,.gz_chart_i,.gz_chart_m{ background: url(../images/grzx_m_icon.png) no-repeat; width: 68px; height: 57px; vertical-align: middle; display: inline-block;}
 .gz_gj{ background-position: 0px 0px;}
 .gz_pt{ background-position: 0px -57px;}
+.gz_chart_i{ background-position: 0px -116px;}
+.gz_chart_m{ background-position: -97px 0px; width: 152px; height: 141px;}
 .gz_null_box,.gz_null_try{background: url(../images/gz_null_icon.png) no-repeat; width: 85px; height: 62px; vertical-align: middle; display: inline-block;}
 .gz_null_box{ background-position: 0px 0px;}
 .gz_null_try{ background-position: 0px -62px;}
@@ -199,24 +199,17 @@ img { border:0;}
 .gz_plus{ background-position: -23px -229px;}
 .gz_reduce{background-position: -6px -229px;}
 
-/*登录注册icon*/
-.dz_sina,.dz_qq,.dz_or,.dz_in{ background: url(../images/login_icon.png) no-repeat; display: block; width: 46px; height: 38px;}
-.dz_sina{ background-position: 0 0;}
-.dz_qq{ background-position: 0 -38px;}
-.dz_or{ background-position: 0 -76px; height: 46px;}
-.dz_in{ background-position: 0 -121px; height:54px; width: 54px; display: inline-block; vertical-align: middle;}
-.dz_txt_dy,.dz_txt_sy,.dz_txt_jf{ background: url(../images/login_txt.png) no-repeat; display: block; width: 76px; height: 40px;}
-.dz_txt_dy{ background-position: -6px 0px;}
-.dz_txt_sy{ background-position: -88px 0px;}
-.dz_txt_jf{ background-position: -174px 0px;}
-
 /*按钮*/
 .hd_btn{ background: url(../images/hd_btn.png) no-repeat; width: 72px; height: 32px; text-align: center; line-height: 32px; vertical-align: middle;}
 
 /*背景色*/
-#foot_wrap{ background:#fc3e93;margin-top: -8px; *zoom:1;position:relative;}
+#foot_wrap{ background:#fc3e93;}
 #content{ background:#fc3e93 url(../images/content_bg.jpg) center top no-repeat; min-height:750px; }
 #content_login{ background: #000 url(../images/login_bgs.jpg) center top no-repeat; min-height: 620px;}
+
+
+
+
 
 
 .W_pin_b ,.W_pin_fb2,.W_pin_b14 ,.W_pin_bl14 ,.W_pin_b1 ,.W_pin_p14 ,.W_pin_grey ,.W_pin_orange ,.W_pin_green ,.W_pin_blue,.W_whi_b14 {
