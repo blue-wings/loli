@@ -58,5 +58,7 @@ return array(
     'PRODUCT_COMMON_USER_TYPE'                          =>"0",
     'PRODUCT_ADVANCED_USER_TYPE'						=>"1",
     'PRODUCT_NEW_USER_TYPE'						        =>"3",
-    'PRODUCT_YEAR_USER_TYPE'						    =>"2"
+    'PRODUCT_YEAR_USER_TYPE'						    =>"2",
+
+	'PRODUCT_MAX_PER_USER_MAX'						    =>999
 );

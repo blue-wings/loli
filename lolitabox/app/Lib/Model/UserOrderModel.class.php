@@ -128,7 +128,7 @@ class UserOrderModel extends Model {
 				$product = $productModel->getByPid($productId);
 				if($product["status"]!=C("PRODUCT_STATUS_PUBLISHED")){
 					$productMsgResult[$productId]="产品处于下架状态";	
-				}else if(!D("Products")->checkProdcutNumPerUserOrder($userId, $productId)){
+				}else if(!D("Products")->checkProdcutNumPerUserOrder($productId, $productNum, $userId)){
 					$productMsgResult[$productId]="购买超出限制";
 				}else{
 					D("Products")->addInventoryReducedInDBLock($productId, $productNum);
@@ -141,7 +141,7 @@ class UserOrderModel extends Model {
 		}
 		$result["msgResult"]=$productMsgResult;
 		if(!count($validProductIds)){
-			return $resul; 
+			return $result; 
 		}
 		$data['ordernmb']=date("YmdHis").rand(100,999);
 		//因为增加特权会员，在此整理特权会员价格

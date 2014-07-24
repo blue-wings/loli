@@ -88,7 +88,7 @@ class PostageStandardModel extends Model {
 			}
 			$whereInventoryItem["id"] = $product["inventory_item_id"];
 			$inventoryItem = $inventoryItemModel->where($whereInventoryItem)->find();
-			$totalWeight += bcadd($totalWeight, $inventoryItem["weight"]);
+			$totalWeight = bcadd($totalWeight, $inventoryItem["weight"]);
 		}
 		$postage = null;
 		if(bccomp($totalWeight, 1000) <= 0){

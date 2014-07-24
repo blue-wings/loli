@@ -1,35 +1,88 @@
-<div>
-	<form id="chart_form" action="<{:u('shoppingCart/update')}>" method="post">
-		<input type="hidden" name="shoppingCartIds" id="shoppingCartIds">
-		<input type="hidden" name="productNums" id="productNums">
-		<volist name="shoppingCartItems" id="shoppingCartItem">
-			<li class="th_li chart_item">
-				<dl>
-					<dt>
-						<span class="check_bg"><input type="checkbox" id="<{$shoppingCartItem.id}>" class="chart_id" value="<{$shoppingCartItem.id}>">
-							<i class="checker">&nbsp;</i>
-						</span>
-					</dt>
-					<dd class="img">
-						<a href="" target="_blank"><img
-							src="<{$shoppingCartItem.product.pimg}>" width="150" height="150"
-							alt="" style="display: inline-block" />
-						</a>
-					</dd>
-					<dd class="name" style="width: 140px; overflow: hidden">
-						<a href="" target="_blank"><{$shoppingCartItem.product.pname}></a>
-					</dd>
-					<dd class="txt cfl">
-						<span class="l">5ml</span><span class="r">
-							数量：
-						</span>
-						<input id="<{$shoppingCartItem.id}>" value="<{$shoppingCartItem.product_num}>" class="chart_product_num">
-					</dd>
-				</dl>
-			</li>
-		</volist>
-		<a type="button" id="submit">去结算</a>
-	</form>
+
+<div class='wp1020 chart' id='meg'>
+	<div class='hd'>&nbsp;</div>
+	<div class='mn'>
+		<div class='con'>
+			<!--chart展开-start-->
+			<div class='chart_list cfl' id='sider_wrap'>
+				<a href='javascript:;' class='a_arrow aleft agray l'><em
+					class='gz_arrow_l'>&nbsp;</em>
+				</a>
+				<div class='chart_div'>
+					<ul class='chart_ul cfl' id='product-list'>
+						<form id="chart_form" action="<{:u('shoppingCart/update')}>"
+							method="post">
+							<input type="hidden" name="shoppingCartIds" id="shoppingCartIds">
+							<input type="hidden" name="productNums" id="productNums">
+							<volist name="shoppingCartItems" id="shoppingCartItem">
+							<li class="chart_item">
+								<dl>
+									<dt>
+										<span class="check_bg"><input type="checkbox"
+											id="<{$shoppingCartItem.id}>" class="chart_id"
+											value="<{$shoppingCartItem.id}>"> <i class="checker">&nbsp;</i>
+										</span>
+									</dt>
+									<dt class="img">
+										<img src="<{$shoppingCartItem.product.pimg}>" alt="" />
+									</dt>
+									<dd class="name"><{$shoppingCartItem.product.pname}></dd>
+									<dd class="price">￥<{$shoppingCartItem.product.realPrice|number_format=###,
+										1, '.', ''}></dd>
+									<dd class="num_ctrl">
+										<input type="button" class="num_down" /> 
+										<input type="text"
+											class="num chart_product_num"
+											max_num="<{$shoppingCartItem.product.userCanBuyNum}>"
+											id="<{$shoppingCartItem.id}>"
+											value="<{$shoppingCartItem.product_num}>" /> 
+										<input type="button" class="num_up" />
+									</dd>
+								</dl></li>
+							</volist>
+						</form>
+					</ul>
+				</div>
+				<a href='javascript:;' class='a_arrow aright agray l'><em
+					class='gz_arrow_r'>&nbsp;</em>
+				</a>
+			</div>
+			<!--chart展开-end-->
+			<div class='chart_info cfl'>
+				<p class='info l tr'>
+					<span>您选择了<i><{$productTotalNum}></i>件商品</span> <span>重量：<i><{$weight}>kg</i>
+					</span> <span>订阅金额(不含运费）：<i class='gz_t_red'>￥ <{$totalCost|number_format=###,
+										1, '.', ''}></i>
+					</span>
+				</p>
+				<p class='btn r'>
+					<a href='javascript:;' id="submit">订阅结算</a>
+				</p>
+			</div>
+		</div>
+		<p class='open_chart'>
+			<a href='javascript:;'> <span class='gz_arrow_down'>&nbsp;</span>
+				<span>展开</span> </a>
+		</p>
+		<p class='close_chart'>
+			<a href='javascript:;''> <span class='gz_arrow_up'>&nbsp;</span>
+				<span>收起</span> </a>
+		</p>
+		<!--未展开chart icon-->
+		<p class='chart_ico_i'>
+			<em class='gz_chart_i'>&nbsp;</em>
+		</p>
+		<!--未展开chart icon-->
+		<!--展开chart icon-->
+		<p class='chart_ico_m'>
+			<em class='gz_chart_m'>&nbsp;</em>
+		</p>
+		<!--展开chart icon-->
+	</div>
+	<div class='ft'>&nbsp;</div>
+</div>
+
+
 	<script>
 		$("#submit").click(function() {
 			$chartItems = $(".chart_item");
@@ -56,4 +109,3 @@
 			}
 		})	
 	</script>
-</div>

@@ -168,7 +168,7 @@
 .chart .chart_info .info i{ font-size: 18px; display: inline-block; margin: 0 5px; font-style: normal;}
 .chart .chart_info .info i.gz_t_red{ color: #ff1627;}
 .chart_list{ padding: 0 29px; margin: 20px 0 10px 0; display: none;}
-.chart_list .chart_div{ width: 883px; height: 195px; overflow: hidden; position: relative; float: left;}
+.chart_list .chart_div{ width: 883px; height: 220px; overflow-x: hidden; position: relative; float: left;}
 .chart_list .chart_div .chart_ul{ position: absolute; width: 99999px; }
 .chart_list a.aleft,.chart_list a.aright{ display: inline-block;  margin-top: 50px;}
 .chart_list a.aleft.agrayleft,.chart_list a.aright.agrayright{ visibility: hidden;}

@@ -968,16 +968,34 @@ class ProductsModel extends Model {
 	 * @param unknown_type $productId
 	 * @param unknown_type $userId
 	 */
-	public function checkProdcutNumPerUserOrder($productId, $userId){
+	public function checkProdcutNumPerUserOrder($productId, $productNum, $userId){
 		$product = $this->getByPid($productId);
 		$maxPerUser = $product["max_peruser"];	
 		if(!$maxPerUser){
 			return true;
 		}	
 		$hasBuyNum = D("UserOrderSendProductdetail")->getUserBuyProductNum($userId, $productId);
-		if($hasBuyNum >= $maxPerUser){
+		if(($hasBuyNum + $productNum) > $maxPerUser){
 			return false;
 		} 
 		return true;
+	}
+	
+/**
+	 * 获得用户可以购买产品的数量
+	 * @param unknown_type $productId
+	 * @param unknown_type $userId
+	 */
+	public function getRemainProdcutNumPerUserOrder($productId, $userId){
+		$product = $this->getByPid($productId);
+		$maxPerUser = $product["max_peruser"];	
+		if(!$maxPerUser){
+			return C("PRODUCT_MAX_PER_USER_MAX");
+		}	
+		$hasBuyNum = D("UserOrderSendProductdetail")->getUserBuyProductNum($userId, $productId);
+		if($hasBuyNum >= $maxPerUser){
+			return 0;
+		} 
+		return $maxPerUser - $hasBuyNum;
 	}
 }
