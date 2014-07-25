@@ -21,10 +21,22 @@ class ShoppingCartAction extends commonAction {
 		}else if($product["inventory"] < $product["inventoryreduced"]){
 			$data["result"]=false;
 			$data["msg"]="商品已售空";	
-		}else if(!$data["result"]){
+		}
+		$remainNum = D("Products")->getRemainProdcutNumPerUserOrder($productId, $this->userid);
+		$shoppingCartModel = D("ShoppingCart");
+		$shoppingCart = $shoppingCartModel->get($this->userid, $productId);
+		$shoppingCartProductNum = 0;
+		if($shoppingCart){
+			$shoppingCartProductNum = $shoppingCart["product_num"];
+		}
+		if(($shoppingCartProductNum+ intval($_POST["pNum"]))>$remainNum){
+			$data["result"]=false;
+			$data["msg"]="购买受限";		
+		}
+		if(!$data["result"]){
 			$this->ajaxReturn($data, "JSON");
 		}
-		$shoppingCartModel = D("ShoppingCart");
+		
 		try{
 			$shoppingCartModel->addProdcutToCart($userid, $productId, $_POST["pNum"]);
 		}catch (Exception $e){
@@ -40,19 +52,45 @@ class ShoppingCartAction extends commonAction {
 	public function update(){
 		$shoppingCartIds = $_POST["shoppingCartIds"];
 		$shoppingCartProductNums = $_POST["productNums"];
+		$data["result"]=true;
 		if(!$shoppingCartIds ||!$shoppingCartProductNums || count($shoppingCartIds) != count($shoppingCartProductNums)){
-			$this->error("购物车异常");exit;
+			$data["result"]=false;
+			$data["msg"]="购物车异常,请刷新页面后重新提交";	
 		}
-		$shoppingCartIdArray = split(",", $shoppingCartIds);
-		$shoppingCartProductNumArray = split(",", $shoppingCartProductNums);
-		for($i=0; $i<count($shoppingCartIdArray); $i++){
-			$shoppingCartId = $shoppingCartIdArray[$i];
-			$shoppingCartProductNum = $shoppingCartProductNumArray[$i];
-			$data["id"]=$shoppingCartId;
-			$data["product_num"]=$shoppingCartProductNum;
-			D("ShoppingCart")->save($data);	
+		try{
+			$shoppingCartIdArray = split(",", $shoppingCartIds);
+			$shoppingCartProductNumArray = split(",", $shoppingCartProductNums);
+			
+			for($i=0; $i<count($shoppingCartIdArray); $i++){
+				$shoppingCartId = $shoppingCartIdArray[$i];
+				$shoppingCart = D("ShoppingCart")->getById($shoppingCartId);
+				if(!$shoppingCart){
+					$data["result"]=false;
+					$data["msg"]="购物车异常,请刷新页面后重新提交";	
+				}
+				$shoppingCartProductNum = $shoppingCartProductNumArray[$i];
+				$shopingCartProductId = $shoppingCart["productid"];
+				$remainNum = D("Products")->getRemainProdcutNumPerUserOrder($shopingCartProductId, $this->userid);
+				if(($shoppingCartProductNum+$shoppingCart["productNum"])>$remainNum){
+					$product = D("Products").getByPid($shopingCartProductId);
+					$data["result"]=false;
+					$data["msg"]="购买受限";
+					if($remainNum){
+						$data["msg"]=$data["msg"].",".$product["pname"]."还能购买".$remainNum;
+					}
+				}
+				$paramData["id"]=$shoppingCartId;
+				$paramData["product_num"]=$shoppingCartProductNum;
+				D("ShoppingCart")->save($$paramData);	
+			}
+		}catch (Exception $e){
+			$data["result"]=false;
+			$data["msg"]="购物车异常,请刷新页面后重新提交";	
 		}
-		$this->redirect("userOrder/createOrder",array("shoppingCartIds"=>$shoppingCartIds));		
+		if($data["result"]){
+			$data["shoppingCartIds"]=$shoppingCartIds;
+		}
+		$this->ajaxReturn($data, "JSON");
 	}
 	
 	public function detail(){

@@ -12,7 +12,6 @@ class ShoppingCartModel extends Model {
 		$param["productid"]=$productId;
 		$param["status"]=C("SHOPPING_CART_STATUS_VALID");
 		$cartProduct = $this->where($param)->find();
-		$sql = $this->getLastSql();
 		$time = date("Y-m-d H:i:s");
 		$param["update_time"]=$time;
 		if($cartProduct){
@@ -60,6 +59,24 @@ class ShoppingCartModel extends Model {
 	}
 	
 	/**
+	 * 获取用户购物车商品
+	 * @param unknown_type $userid
+	 */
+	public function get($userid, $productId){
+		if(!$userid){
+			return null;
+		}
+		$param["status"]=C("SHOPPING_CART_STATUS_VALID");
+		$param["userid"]=$userid;
+		$param["productid"]=$productId;
+		$shoppingCartList = $this->where($param)->select();
+		if(count($shoppingCartList)){
+			return $shoppingCartList[0];
+		}
+		return null;
+	}
+	
+	/**
 	 * 将购物车中超市未购买的产品记录置为无效，回收购物车中的预定，重新供用户订阅
 	 * 可能被后台cron调用
 	 */
@@ -75,4 +92,5 @@ class ShoppingCartModel extends Model {
 			$this->save($cartParam);
 		}
 	}
+	
 } 

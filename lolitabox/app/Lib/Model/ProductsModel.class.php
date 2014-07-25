@@ -981,7 +981,7 @@ class ProductsModel extends Model {
 		return true;
 	}
 	
-/**
+	/**
 	 * 获得用户可以购买产品的数量
 	 * @param unknown_type $productId
 	 * @param unknown_type $userId

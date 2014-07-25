@@ -3,11 +3,15 @@ class userOrderAction extends commonAction {
 	
     public function createOrder() {
         $userId = $this->userid;
-        $shoppingCartIds = $_GET["shoppingCartIds"];
+        $shoppingCartIds = $_POST["shoppingCartIds"];
         if(!$shoppingCartIds){
-        	throw new Exception("unknow error");
+        	$this->error("创建订单失败");
         }
         $shoppingCartIdArray = split(",", $shoppingCartIds);
+    	if(!$shoppingCartIdArray || !count($shoppingCartIdArray)){
+        	$this->error("创建订单失败");
+        }
+        
         $shoppingCartModel = D("ShoppingCart");
         $productIds = array();
         $productNums = array();
@@ -17,6 +21,8 @@ class userOrderAction extends commonAction {
         	if($shoppingCartItem["status"]==C("SHOPPING_CART_STATUS_VALID")){
 				array_push($productIds, $shoppingCartItem["productid"]);
         		array_push($productNums, $shoppingCartItem["product_num"]);        	
+        	}else{
+        		$this->error("创建订单失败");
         	}
         }
         $result = D("UserOrder")->createOrder( $this->userid, $productIds, $productNums);

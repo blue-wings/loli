@@ -59,6 +59,7 @@
 					<a href='javascript:;' id="submit">订阅结算</a>
 				</p>
 			</div>
+			<div id="error-msg"></div>
 		</div>
 		<p class='open_chart'>
 			<a href='javascript:;'> <span class='gz_arrow_down'>&nbsp;</span>
@@ -80,6 +81,9 @@
 		<!--展开chart icon-->
 	</div>
 	<div class='ft'>&nbsp;</div>
+	<form id="create-order-form" action="<{:u('userOrder/createOrder')}>" method="post">
+		<input type="hidden" id="shopping-cart-ids" name="shoppingCartIds">
+	</form>
 </div>
 
 
@@ -105,7 +109,20 @@
 				$("#productNums").val(chartProductNums.join(","));
 				console.log($("#shoppingCartIds").val());
 				console.log($("#productNums").val());
-				$("#chart_form").submit();
+				$("#chart_form").ajaxSubmit({
+					type:"post",
+					datatype:"json",
+					url:"<{:u('shoppingCart/update')}>",
+					success:function(data){
+						if(data.result){
+							$("#error-msg").empty();
+							$("#shopping-cart-ids").val(data.shoppingCartIds);
+							$("#create-order-form").submit();
+						}else{
+							$("#error-msg").text(data.msg);
+						}
+					}
+				});
 			}
 		})	
 	</script>
