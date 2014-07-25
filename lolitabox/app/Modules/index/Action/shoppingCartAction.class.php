@@ -72,16 +72,16 @@ class ShoppingCartAction extends commonAction {
 				$shopingCartProductId = $shoppingCart["productid"];
 				$remainNum = D("Products")->getRemainProdcutNumPerUserOrder($shopingCartProductId, $this->userid);
 				if(($shoppingCartProductNum+$shoppingCart["productNum"])>$remainNum){
-					$product = D("Products").getByPid($shopingCartProductId);
+					$product = D("Products")->getByPid($shopingCartProductId);
 					$data["result"]=false;
 					$data["msg"]="购买受限";
 					if($remainNum){
-						$data["msg"]=$data["msg"].",".$product["pname"]."还能购买".$remainNum;
+						$data["msg"]=$data["msg"].",".$product["pname"]."还能购买".$remainNum."件";
 					}
 				}
 				$paramData["id"]=$shoppingCartId;
 				$paramData["product_num"]=$shoppingCartProductNum;
-				D("ShoppingCart")->save($$paramData);	
+				D("ShoppingCart")->save($paramData);	
 			}
 		}catch (Exception $e){
 			$data["result"]=false;

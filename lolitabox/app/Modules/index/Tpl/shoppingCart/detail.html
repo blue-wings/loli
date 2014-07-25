@@ -35,7 +35,7 @@
 											class="num chart_product_num"
 											max_num="<{$shoppingCartItem.product.userCanBuyNum}>"
 											id="<{$shoppingCartItem.id}>"
-											value="<{$shoppingCartItem.product_num}>" /> 
+											value="<{$shoppingCartItem.product_num}>" old-value="<{$shoppingCartItem.product_num}>"/> 
 										<input type="button" class="num_up" />
 									</dd>
 								</dl></li>
@@ -84,44 +84,3 @@
 		<input type="hidden" id="shopping-cart-ids" name="shoppingCartIds">
 	</form>
 </div>
-
-
-	<script>
-		$("#submit").click(function() {
-			$chartItems = $(".chart_item");
-			var chartIds = new Array();
-			var chartProductNums = new Array();
-			var hasError = false;
-			$.each($chartItems, function(){
-				var chartId = $(this).find(".chart_id");
-				var chartProductNum = $(this).find(".chart_product_num");
-				if(chartId && chartId.length && chartProductNum && chartProductNum.length){
-					chartIds.push($(chartId[0]).val());
-					chartProductNums.push($(chartProductNum[0]).val());
-				}else{
-					hasError = true;
-					return false;
-				}
-			})
-			if(!hasError){
-				$("#shoppingCartIds").val(chartIds.join(","));
-				$("#productNums").val(chartProductNums.join(","));
-				console.log($("#shoppingCartIds").val());
-				console.log($("#productNums").val());
-				$("#chart_form").ajaxSubmit({
-					type:"post",
-					datatype:"json",
-					url:"<{:u('shoppingCart/update')}>",
-					success:function(data){
-						if(data.result){
-							$("#error-msg").empty();
-							$("#shopping-cart-ids").val(data.shoppingCartIds);
-							$("#create-order-form").submit();
-						}else{
-							noty({'text':data.msg,'layout':'topLeft','type':'error'});
-						}
-					}
-				});
-			}
-		})	
-	</script>

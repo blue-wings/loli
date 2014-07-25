@@ -15,6 +15,7 @@ var Loli = Loli || {};
 				subscribeButtonClass : "subscribe-button",
 				addProduct2CartUrl:null,
 				getShoppingCartDetailUrl :null,
+				submitButtonId:"submit"
 			},
 
 			init : function(){
@@ -169,9 +170,11 @@ var Loli = Loli || {};
 				//实现数量的控制
 				$(".num_down").live("click",function(){    
 					numControl($(this),"-");
+					me.updateOnly();
 				})
 				$(".num_up").live("click",function(){
 					numControl($(this),"+");
+					me.updateOnly();
 				})
 
 				//关于点击时数量变化方法
@@ -209,6 +212,7 @@ var Loli = Loli || {};
 				//直接修改数量时对输入字符的控制
 				$(".num").live("change",function(){
 					check($(this),$(this).val());
+					me.updateOnly();
 				})
 
 				//直接修改数量,对输入的字符的控制
@@ -229,9 +233,12 @@ var Loli = Loli || {};
 						proId.parent().find('.num_up').attr('disabled',false);
 						proId.parent().find('.num_up').attr('disabled',false);
 					}
-					
 				}
 				//chartlist可滚动显示
+				
+				$("#"+me.options.submitButtonId).click(function(){
+					me.updateAndcreateOrder();
+					});	
 
 			},
 			
@@ -242,6 +249,58 @@ var Loli = Loli || {};
 			
 			show : function(){
 				$("#"+this.options.selfId).show();
+			},
+			
+			updateOnly : function(){
+				this._update()	
+			},
+			
+			updateAndcreateOrder : function(){
+				this._update(function(data){
+					$("#shopping-cart-ids").val(data.shoppingCartIds);
+					$("#create-order-form").submit();	
+				})	
+			},
+			
+			_update : function(func) {
+				$chartItems = $(".chart_item");
+				var chartIds = new Array();
+				var chartProductNums = new Array();
+				var hasError = false;
+				$.each($chartItems, function(){
+					var chartId = $(this).find(".chart_id");
+					var chartProductNum = $(this).find(".chart_product_num");
+					if(chartId && chartId.length && chartProductNum && chartProductNum.length){
+						var oldValue = $(chartId[0]).attr("old-value");
+						var value = $(chartProductNum[0]).val();
+						if(oldValue != value){
+							chartIds.push($(chartId[0]).val());
+							chartProductNums.push($(chartProductNum[0]).val());
+						}
+					}else{
+						hasError = true;
+						return false;
+					}
+				})
+				if(!hasError && !chartIds.length){
+					$("#shoppingCartIds").val(chartIds.join(","));
+					$("#productNums").val(chartProductNums.join(","));
+					$("#chart_form").ajaxSubmit({
+						type:"post",
+						datatype:"json",
+						success:function(data){
+							if(data.result){
+								if(func){
+									func(data);
+								}else{
+									noty({'text':"更新购物车成功",'layout':'topLeft','type':'success'});	
+								}
+							}else{
+								noty({'text':data.msg,'layout':'topLeft','type':'error'});
+							}
+						}
+					});
+				}
 			}
 	}
 
