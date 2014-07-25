@@ -121,12 +121,12 @@ var Loli = Loli || {};
 									}
 								});
 							}else{
-								alert(result.msg);
+								noty({'text':result.msg,'layout':'topCenter','type':'error'});
 							}
 
 						},
 						error:function(result){
-							alert("添加到购物车失败!");		
+							noty({'text':"添加到购物车失败!",'layout':'topLeft','type':'error'});
 						}
 					});
 
@@ -181,26 +181,27 @@ var Loli = Loli || {};
 					if(state == '-'){
 						if(num == 1){
 							proId.attr('disabled',true);
+							noty({'text':"已到达最小值!",'layout':'topLeft','type':'error'});
 						}else{
-							var num_d = proId.parent().find('.num').val(num-1).stop().val();
-							if(num_d <= 1){
-								proId.attr('disabled',true);
-							}else if(num_d > 1 && num_d < maxNum){
-								proId.attr('disabled',false);
+							if((num-1)<maxNum){
+								proId.parent().find('.num').val(num-1);
 								proId.parent().find('.num_up').attr('disabled',false);
+							}else{
+								proId.parent().find('.num').val(maxNum);
+								noty({'text':"最多可添加"+maxNum+"件!",'layout':'topLeft','type':'error'});
 							}
 						}
 
 					}
 					if(state == '+'){
-						var num_u = proId.parent().find('.num').val(num+1).stop().val();
-						if(num_u >= maxNum){
+						if(num >=maxNum ){
 							proId.attr('disabled',true);
-						}else if(num_u >= 1 && num_u < maxNum){
-							proId.attr('disabled',false);
+							proId.parent().find('.num').val(maxNum);
+							noty({'text':"最多可添加"+maxNum+"件!",'layout':'topLeft','type':'error'});
+						}else{
+							proId.parent().find('.num').val(num+1);
 							proId.parent().find('.num_down').attr('disabled',false);
 						}
-
 					}
 				}
 
@@ -218,6 +219,17 @@ var Loli = Loli || {};
 						alert("请输入1~"+m_num+"的整数");
 						proId.val(1);
 					}   
+					if( c == m_num){
+						proId.parent().find('.num_up').attr('disabled',true);
+						noty({'text':"最多可添加"+m_num+"件!",'layout':'topLeft','type':'error'});
+					}else if (c == 1){
+						proId.parent().find('.num_up').attr('disabled',true);
+						noty({'text':"已到达最小值!",'layout':'topLeft','type':'error'});
+					}else{
+						proId.parent().find('.num_up').attr('disabled',false);
+						proId.parent().find('.num_up').attr('disabled',false);
+					}
+					
 				}
 				//chartlist可滚动显示
 

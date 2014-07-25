@@ -59,7 +59,6 @@
 					<a href='javascript:;' id="submit">订阅结算</a>
 				</p>
 			</div>
-			<div id="error-msg"></div>
 		</div>
 		<p class='open_chart'>
 			<a href='javascript:;'> <span class='gz_arrow_down'>&nbsp;</span>
@@ -119,7 +118,7 @@
 							$("#shopping-cart-ids").val(data.shoppingCartIds);
 							$("#create-order-form").submit();
 						}else{
-							$("#error-msg").text(data.msg);
+							noty({'text':data.msg,'layout':'topLeft','type':'error'});
 						}
 					}
 				});
