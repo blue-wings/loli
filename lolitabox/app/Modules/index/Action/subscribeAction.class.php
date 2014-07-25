@@ -4,7 +4,8 @@ class subscribeAction extends commonAction{
 
 		$this->assign("displayNewUserItem",$this->isNewMember());
         $products = $this->getAllProductsAndShowPage("0");
-		$products = $this->formatAllProductPrice($products); 
+		$products = $this->formatProductPrice($products); 
+		$products = $this->formatProductCountdown($products);	
 		$this->assign("list",$products);
 		$this->assign("ismember",$this->userinfo['if_member']);
 		$this->display();
@@ -17,7 +18,8 @@ class subscribeAction extends commonAction{
 		
 		$products = $this->getAllProductsAndShowPage("3");
 		
-		$products = $this->formatAllProductPrice($products);
+		$products = $this->formatProductPrice($products);
+			
 	    $this->showCountDown();
 		$this->assign("list",$products);
 		$this->assign("ismember",$this->userinfo['if_member']);
@@ -28,9 +30,11 @@ class subscribeAction extends commonAction{
 	public function advance(){
 		$this->assign("displayNewUserItem",$this->isNewMember());		
 		$products = $this->getAllProductsAndShowPage("1");		
-		$products = $this->formatAllProductPrice($products);			
+		$products = $this->formatProductPrice($products);
+		$products = $this->formatProductCountdown($products);			
 		$this->assign("list",$products);
 		$this->assign("ismember",$this->userinfo['if_member']);
+		
 		$this->display();
 	}
 	
@@ -41,7 +45,7 @@ class subscribeAction extends commonAction{
 		$this->assign("displayNewUserItem",$this->isNewMember());
 		$userid = $this->userid;
         $products = $this->getAllProductsAndShowPage("2");        
-		$products = $this->formatAllProductPrice($products);
+		$products = $this->formatProductPrice($products);
 		$this->assign("ismember",$this->userinfo['if_member']);
 		$this->assign("list",$products);
 		$this->display();
@@ -103,7 +107,7 @@ class subscribeAction extends commonAction{
 		$this->assign("hourOffset",$hourOffSetStr);
 		$this->assign("minOffset",$minOffSetStr);
     }
-	private function formatProductPrice($productsArray,$func) {
+	private function formatProduct($productsArray,$func) {
 	     $productsResult = array(); 
 	     foreach($productsArray as $product) {
 	         if($productResult = $func($product)) {
@@ -112,9 +116,16 @@ class subscribeAction extends commonAction{
 	     }
 	     return $productsResult;
 	}
-	 private function formatAllProductPrice($products) {
+	 private function formatProductPrice($products) {
 	 	  $func1 = '$product["price"]= $product["price"]/100; $product["member_price"] = $product["member_price"]/100; return $product;';
-		  return $this->formatProductPrice($products,create_function('$product',$func1));
+		  return $this->formatProduct($products,create_function('$product',$func1));
+	
+	}
+	
+	 private function formatProductCountdown($products) {
+	 	 $func1 = '$dateOffset= strtotime($product["start_time"]) - time(); if($dateOffset<0){$product["start"]=true; }else{$product["start"]=false; $product["end_day"]= floor($dateOffset/3600/24); $product["end_hour"]= floor(($dateOffset-$product["end_day"]*3600*24)/3600); $product["end_min"] = floor(($dateOffset-$product["end_day"]*3600*24-3600* $product["end_hour"])/60); $product["end_sec"] = floor($dateOffset-$product["end_day"]*3600*24-3600* $product["end_hour"]- $product["end_min"]*60);if($product["end_day"]<10){$product["end_day"]="0".$product["end_day"];} if($product["end_hour"]<10){$product["end_hour"]="0".$product["end_hour"];}if($product["end_min"]<10){$product["end_min"]="0".$product["end_min"];}if($product["end_sec"]<10){$product["end_sec"]="0".$product["end_sec"];}}  return $product;';
+	 	 // $func1 = '$dateOffset= strtotime($product["start_time"]) - time(); if($dateOffset<0){$product["start"]=true; }else{$product["start"]=false; $product["end_hour"]= floor($dateOffset/3600); $product["end_min"] = floor(($dateOffset-3600* $product["end_hour"])/60); $product["end_sec"] = floor($dateOffset-3600* $product["end_hour"]- $product["end_min"]*60); if($product["end_hour"]<10){$product["end_hour"]="0".$product["end_hour"];}if($product["end_min"]<10){$product["end_min"]="0".$product["end_min"];}if($product["end_sec"]<10){$product["end_sec"]="0".$product["end_sec"];}}  return $product;';
+		  return $this->formatProduct($products,create_function('$product',$func1));
 	
 	}
 	

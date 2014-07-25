@@ -381,3 +381,8 @@ img { border:0;}
 .login_bound_con .login_fail .fail_text {
     margin-left: 234px
 }
+
+/*列表*/
+.W_pages{padding:10px 0; text-align:center; }
+.W_pages a{padding:3px 12px; margin-right:6px; background-color:#f1f3f5; font-size:14px; color:#333;}
+.W_pages a:hover ,.W_pages a.select{background-color:#dd1471; color:#fff; text-decoration:none;}
