@@ -232,7 +232,6 @@ var Loli = Loli || {};
 						proId.parent().find('.num_up').attr('disabled',false);
 					}
 				}
-				//chartlist可滚动显示
 				
 				$("#"+me.options.submitButtonId).click(function(){
 					me.updateAllShoppingCartsAndcreateOrder();
