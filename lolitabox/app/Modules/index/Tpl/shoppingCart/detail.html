@@ -17,6 +17,7 @@
 							<volist name="shoppingCartItems" id="shoppingCartItem">
 							<li class="chart_item">
 								<dl>
+									<input type="hidden" class="chart_id" value="<{$shoppingCartItem.id}>">
 									<dt class="img">
 										<img src="<{$shoppingCartItem.product.pimg}>" alt="" />
 									</dt>
@@ -44,8 +45,8 @@
 			<!--chart展开-end-->
 			<div class='chart_info cfl'>
 				<p class='info l tr'>
-					<span>您选择了<i><{$productTotalNum}></i>件商品</span> <span>重量：<i><{$weight}>kg</i>
-					</span> <span>订阅金额(不含运费）：<i class='gz_t_red'>￥ <{$totalCost|number_format=###,
+					<span>您选择了<i id="productNum"><{$productTotalNum}></i>件商品</span> <span>重量：<i id="productWeight"><{$weight}>kg</i>
+					</span> <span>订阅金额(不含运费）：<i class='gz_t_red' id="totalCost">￥ <{$totalCost|number_format=###,
 										1, '.', ''}></i>
 					</span>
 				</p>

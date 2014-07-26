@@ -89,11 +89,25 @@ class ShoppingCartAction extends commonAction {
 		}
 		if($data["result"]){
 			$data["shoppingCartIds"]=$shoppingCartIds;
+			$result = $this->getDetail();
+			$data["shoppingCartItems"] = $result["shoppingCartItems"];
+			$data["productTotalNum"] = $result["productTotalNum"];
+			$data["weight"] = $result["weight"];
+			$data["totalCost"] = $result["totalCost"];
 		}
 		$this->ajaxReturn($data, "JSON");
 	}
 	
 	public function detail(){
+		$result = $this->getDetail();
+		$this->assign("shoppingCartItems", $result["shoppingCartItems"]);
+		$this->assign("productTotalNum", $result["productTotalNum"]);
+		$this->assign("weight", $result["weight"]);
+		$this->assign("totalCost", $result["totalCost"]);
+		$this->display();
+	}
+	
+	private function getDetail(){
 		$shoppingCartItems = D("ShoppingCart")->getProductList($this->userid);
 		$weight=0;
 		$productTotalNum = 0;
@@ -118,11 +132,11 @@ class ShoppingCartAction extends commonAction {
 		}
 		$weight = bcdiv($weight, 1000, 3);
 		$totalCost = bcdiv($totalCost, 100, 1);
-		$this->assign("shoppingCartItems", $shoppingCartItems);
-		$this->assign("productTotalNum", $productTotalNum);
-		$this->assign("weight", $weight);
-		$this->assign("totalCost", $totalCost);
-		$this->display();
+		$result["shoppingCartItems"]=$shoppingCartItems;
+		$result["productTotalNum"]=$productTotalNum;
+		$result["weight"]=$weight;
+		$result["totalCost"]=$totalCost;
+		return $result;
 	}
 	
 	/**
