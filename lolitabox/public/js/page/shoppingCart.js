@@ -168,13 +168,13 @@ var Loli = Loli || {};
 				}
 
 				//实现数量的控制
-				$(".num_down").live("click",function(){    
+				$(".num_down").live("click",function(){
 					numControl($(this),"-");
-					me.updateOnly();
+					me.updateOneShoppingCart($(this).parent().find('.num'));
 				})
 				$(".num_up").live("click",function(){
 					numControl($(this),"+");
-					me.updateOnly();
+					me.updateOneShoppingCart($(this).parent().find('.num'));
 				})
 
 				//关于点击时数量变化方法
@@ -212,22 +212,20 @@ var Loli = Loli || {};
 				//直接修改数量时对输入字符的控制
 				$(".num").live("change",function(){
 					check($(this),$(this).val());
-					me.updateOnly();
+					me.updateOneShoppingCart($(this));
 				})
 
 				//直接修改数量,对输入的字符的控制
 				function check(proId,num){
 					var m_num = proId.attr('max_num');
 					var c = Number(num);
-					if(!c || c < 1 || c > m_num){
-						alert("请输入1~"+m_num+"的整数");
-						proId.val(1);
-					}   
-					if( c == m_num){
+					if( c > m_num){
 						proId.parent().find('.num_up').attr('disabled',true);
+						proId.val(m_num);
 						noty({'text':"最多可添加"+m_num+"件!",'layout':'topLeft','type':'error'});
-					}else if (c == 1){
+					}else if (c < 1){
 						proId.parent().find('.num_up').attr('disabled',true);
+						proId.val(1);
 						noty({'text':"已到达最小值!",'layout':'topLeft','type':'error'});
 					}else{
 						proId.parent().find('.num_up').attr('disabled',false);
@@ -237,7 +235,7 @@ var Loli = Loli || {};
 				//chartlist可滚动显示
 				
 				$("#"+me.options.submitButtonId).click(function(){
-					me.updateAndcreateOrder();
+					me.updateAllShoppingCartsAndcreateOrder();
 					});	
 
 			},
@@ -251,18 +249,23 @@ var Loli = Loli || {};
 				$("#"+this.options.selfId).show();
 			},
 			
-			updateOnly : function(){
-				this._update()	
+			updateOneShoppingCart : function(productNumEle){
+				var chartId = productNumEle.attr("id");
+				var productNum = productNumEle.val();
+				var productOldNum = productNumEle.attr("old-value");
+				if(productNum != productOldNum){
+					var chartIds = new Array();
+					var chartProductNums = new Array();
+					chartIds.push(chartId);
+					chartProductNums.push(productNum);
+					this._update(chartIds, chartProductNums, function(){
+						productNumEle.attr("old-value",productNum);
+						noty({'text':"更新购物车成功",'layout':'topLeft','type':'success'});	
+					});
+				}
 			},
 			
-			updateAndcreateOrder : function(){
-				this._update(function(data){
-					$("#shopping-cart-ids").val(data.shoppingCartIds);
-					$("#create-order-form").submit();	
-				})	
-			},
-			
-			_update : function(func) {
+			updateAllShoppingCartsAndcreateOrder : function(){
 				$chartItems = $(".chart_item");
 				var chartIds = new Array();
 				var chartProductNums = new Array();
@@ -283,24 +286,29 @@ var Loli = Loli || {};
 					}
 				})
 				if(!hasError && !chartIds.length){
-					$("#shoppingCartIds").val(chartIds.join(","));
-					$("#productNums").val(chartProductNums.join(","));
-					$("#chart_form").ajaxSubmit({
-						type:"post",
-						datatype:"json",
-						success:function(data){
-							if(data.result){
-								if(func){
-									func(data);
-								}else{
-									noty({'text':"更新购物车成功",'layout':'topLeft','type':'success'});	
-								}
-							}else{
-								noty({'text':data.msg,'layout':'topLeft','type':'error'});
-							}
-						}
-					});
+					this._update(chartIds, chartProductNums, function(data){
+						$("#shopping-cart-ids").val(data.shoppingCartIds);
+						$("#create-order-form").submit();	
+					})	
 				}
+			},
+			
+			_update : function(chartIds, chartProductNums, func) {
+				$("#shoppingCartIds").val(chartIds.join(","));
+				$("#productNums").val(chartProductNums.join(","));
+				$("#chart_form").ajaxSubmit({
+					type:"post",
+					datatype:"json",
+					success:function(data){
+						if(data.result){
+							if(func){
+								func(data);
+							}
+						}else{
+							noty({'text':data.msg,'layout':'topLeft','type':'error'});
+						}
+					}
+				});
 			}
 	}
 
