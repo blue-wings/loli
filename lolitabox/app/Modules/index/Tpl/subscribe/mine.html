@@ -35,21 +35,21 @@
 											</dd>
 										</dl>
 										<if condition="$vo.start eq false">
-										    <input type="hidden" class="date_time" value="<{$vo.start_time}>" data-type="00:00:00:00" data_id="time<{$k}>"/>
+										    <input type="hidden" class="date_time" value="<{$vo.start_time}>" data_value="<{$vo.start_time|strtotime=###}>" data-type="00:00:00:00" id="time<{$k}>"/>
 										</if>	
-										<div  class="time_wrap cfl" <if condition="$vo.start eq false"> style="display:block" </if>>
+										<div  class="time_wrap cfl" id= "countdown_time<{$k}>" <if condition="$vo.start eq false"> style="display:block" </if>>
 											<p class="timeDown l"><em class="gz_clock">&nbsp;</em><span class="time_title" >距投递开始</span><span id ="time<{$k}>_title"><{$vo.end_day}>:<{$vo.end_hour}>:<{$vo.end_min}>:<{$vo.end_sec}></span></p>
 										</div>
 									 
 								        <if condition="$ismember eq 0">
-									        <div class="pri" <if condition="$vo.start eq false"> style="display:none" </if>>
+									        <div class="pri"  id= "price_time<{$k}>"  <if condition="$vo.start eq false"> style="display:none" </if>>
 										        <div class="price_wrap">
 													<p class="price pt_price cfl"><span class="l">￥<{$vo.price|number_format=###, 1, '.', ''}></span><input type="button" class="r" value="立即订购" pid="<{$vo.pid}>"></p>
 													<p class="price gj_price cfl"><span class="l">￥<{$vo.member_price|number_format=###, 1, '.', '' }></span><span class="r">高级订阅专享</span></p>
 												</div>												
 								             </div>
 										<else/>
-											<div class="pri pri_gj cfl" <if condition="$vo.start eq false"> style="display:none" </if>>											
+											<div class="pri pri_gj cfl"  id= "price_time<{$k}>"  <if condition="$vo.start eq false"> style="display:none" </if>>											
 										        <div class="price_wrap">
 													<p class="price l"><span class="gj_price">￥<{$vo.member_price|number_format=###, 1, '.', ''}></span><span class="pt_price">￥<{$vo.price|number_format=###, 1, '.', ''}><i class="overline">&nbsp;</i></span></p>
 													<p class="r"><input type="button" value="立即订购" pid="<{$vo.pid}>"></p>
@@ -73,12 +73,74 @@
 				<div id="shopping-cart"></div>
 
              <script>
-				
+			
+             $(".date_time").each(function(){
+                 var time_id= $(this).attr('id');
+                 timerForOrder(time_id);
+             });
+           
+              //倒计时
+             var timerForOrder = function(timeId){
+               var timeDown = $('#'+timeId);
+               var time_wrap = $('#countdown_'+timeId);
+               var price_wrap = $('#price_'+timeId);
+               var timeSpan = $('#'+timeId+"_title");
+               var hiInput = timeDown.attr("value"); 
+               var hiInput_b = timeDown.attr('data-type'); 
+
+                //获得时间
+                var reg = /[\:\-\s+]/; //用:或者*或者是空格将时间分割
+
+                var time = hiInput.split(reg); 
+                var timeType = hiInput_b.split(/\d+/);
+
+              //时间差的计算
+              var timerSub = function(){
+                  var ts = (new Date(time[0]-0, time[1]-1, time[2]-0, time[3]-0, time[4]-0, time[5]-0)).getTime() - (new Date()).getTime();//计算剩余的毫秒数 
+                  var leave1=ts%(24*3600*1000); 
+                  var leave2=leave1%(3600*1000);
+                  var leave3=leave2%(60*1000); 
+                  var dd = Math.floor(ts/(24*3600*1000)) ;//计算剩余的天数  
+                  var hh = Math.floor(leave1/(3600*1000));//计算剩余的小时数  
+                  var mm = Math.floor(leave2/(60*1000));//计算剩余的分钟数  
+                  var ss = Math.round(leave3/1000);//计算剩余的秒数  
+                  var ta = [checkTime(dd),checkTime(hh),checkTime(mm),checkTime(ss)];
+                  var countdownText = ta[0]+timeType[1]+ta[1]+timeType[2]+ta[2]+timeType[3]+ta[3];
+                
+                  timeSpan.html(countdownText);
+                  function checkTime(t){    
+                     if (t < 10 && t >= 0) {    
+                         t = "0" + t;    
+                      } else if(t < 0){
+                        t = "00";//这个是为了防止当上线的时候已经在订阅状态了，这样显示的时间就不会是负的
+                      }  
+                     return t;    
+                 }
+                //当时间截止的时候就clear
+                 if(animation){
+                    if(ts<=0){
+                      clearInterval(animation);
+                      time_wrap.show();
+                      price_wrap.hide();
+                    }else if(ts > 0){
+                      time_wrap.show();
+                      price_wrap.hide();
+                      
+                    }else{
+                      time_wrap.hide();
+                      price_wrap.show();
+                    }
+                 }
+                }
+                var animation = setInterval(timerSub,1000);
+
+             }  
 				$("#page > a").click(function(){
 					url = $(this).attr("href");
 					$("#main-container").load(url);
 					return false;
 				})
+
 			</script>
 
 
