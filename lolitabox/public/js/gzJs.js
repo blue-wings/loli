@@ -1,5 +1,6 @@
 (function(){
 
+	 
 /**
    *高度一致
 */
@@ -108,6 +109,9 @@ var timer = function(timeId){
     var animation = setInterval(timerSub,1000);
 
 }  
+
+
+
 //产品列表加上id
 var timeIdAdd = function(){
   for(var i = 0; i < $('.dy_li').length; i++){
