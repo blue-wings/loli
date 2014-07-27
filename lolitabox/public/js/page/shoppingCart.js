@@ -311,7 +311,7 @@ var Loli = Loli || {};
 					success:function(data){
 						if(data.result){
 							$("#productNum").text(data.productTotalNum);
-							$("#productWeight").text(data.weight);
+							$("#productWeight").text(data.weight+"kg");
 							$("#totalCost").text("￥"+data.totalCost);
 							if(func){
 								func(data);

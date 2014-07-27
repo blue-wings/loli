@@ -36,7 +36,7 @@
 										</dl>
 										<if condition="$vo.start eq false">
 											<div  class="time_wrap cfl" id= "countdown_time<{$k}>"  style="display:block" >
-												<p class="timeDown l countDown" clock="gz_clock" countDownSeconds="<{$vo.start_time_seconds}>"></p>
+												<p class="timeDown l countDown" clock="gz_clock" countDownSeconds="<{$vo.start_time_seconds}>" key="<{$k}>"></p>
 											</div>
 										</if>
 									 
@@ -73,7 +73,7 @@
 
 	var callback = function(countDownEle){
 		var key = countDownEle.attr("key");
-		countDownELe.remove();
+		countDownEle.parent().remove();
 		$("#price_time"+key).show();
 	};
     

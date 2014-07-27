@@ -108,6 +108,7 @@ body {background-image:none}
 <script >
 
 	var callback = function(countDownEle){
+		countDownEle.empty();
 		$("<span>").text("已经投递").appendTo($(countDownEle));		
 	};
 
