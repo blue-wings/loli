@@ -1,5 +1,6 @@
 <include file="public:_header.inc" />
 <link rel="stylesheet" type="text/css" href="/public/css/new.css"/>
+<script type="text/javascript" src="/public/js/countDownTimer.js"></script>
 <style>
 <!--
 body {background-image:none}
@@ -105,52 +106,16 @@ body {background-image:none}
 </div>
 
 <script >
-	var minuteSeconds = 60;
-	var hourSeconds = 60 * minuteSeconds;
-	var daySeconds = 24*hourSeconds;
-	
-	function countDown(){
-		$(".countDown").each(function(){
-			if(!$(this).attr("countDownSeconds")){
-				return true;
-			}
-			var countDownSeconds = parseInt($(this).attr("countDownSeconds"));
-			var nowSeconds = Math.floor(new Date().getTime()/1000);
-			var seconds = countDownSeconds - nowSeconds;
-			if(seconds < 0){
-				window.location.reload();
-			}
-			var minutes = Math.floor(seconds / minuteSeconds);
-			var hours = Math.floor(seconds / hourSeconds);
-			var days = Math.floor(seconds/ daySeconds);
-			
-			var dayDisplay = days;
-			var hourDisplay = hours % 24;
-			var minuteDisplay = minutes % 60;
-			var secondDisplay = seconds % 60;
-			
-			var text;
-			var clock = $(this).attr("clock");
-			$(this).empty();
-			if(seconds > daySeconds){
-				text = "<span class='"+clock+"'></span><span>"+dayDisplay+"天 "+hourDisplay+"小时 "+minuteDisplay+"分钟 "+secondDisplay+"秒</span>";	
-			}else if(seconds > hourSeconds){
-				text = "<span class='"+clock+"'></span><span>"+hourDisplay+"小时 "+minuteDisplay+"分钟 "+secondDisplay+"秒</span>";;
-			}else {
-				text = "<span>马上投递</span>";
-			}
-			$(text).appendTo($(this));	
-		})	
-		setTimeout("countDown()", 1000);
-	}
-	
-	countDown();
-	
+
+	var callback = function(countDownEle){
+		$("<span>").text("已经投递").appendTo($(countDownEle));		
+	};
+
+	Loli.countDownTimer(callback);
+
 	$(".closedCountDown").each(function(){
 		var closedTimeInSeconds = parseInt($(this).attr("closedTimeInSeconds"));
 		var nowSeconds = new Date().getTime()/1000;
-		console.log(closedTimeInSeconds)
-		console.log(nowSeconds)
 		var text;
 		var clock = $(this).attr("clock");
 		if((nowSeconds -closedTimeInSeconds) > hourSeconds){
@@ -162,9 +127,5 @@ body {background-image:none}
 		}
 		$(text).appendTo($(this));
 	})
-	
-	
-	
-	
 </script>
 

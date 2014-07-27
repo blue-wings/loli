@@ -1,7 +1,6 @@
 <?php
 class subscribeAction extends commonAction{
 	public function mine(){
-
 		$this->assign("displayNewUserItem",$this->isNewMember());
         $products = $this->getAllProductsAndShowPage("0");
 		$products = $this->formatProductPrice($products); 
@@ -107,26 +106,30 @@ class subscribeAction extends commonAction{
 		$this->assign("hourOffset",$hourOffSetStr);
 		$this->assign("minOffset",$minOffSetStr);
     }
-	private function formatProduct($productsArray,$func) {
-	     $productsResult = array(); 
-	     foreach($productsArray as $product) {
-	         if($productResult = $func($product)) {
-	             $productsResult[] = $productResult;
-	         }
-	     }
-	     return $productsResult;
-	}
 	 private function formatProductPrice($products) {
-	 	  $func1 = '$product["price"]= $product["price"]/100; $product["member_price"] = $product["member_price"]/100; return $product;';
-		  return $this->formatProduct($products,create_function('$product',$func1));
-	
+	 	$productArray = array();
+	 	foreach ($products as $product){
+	 		$product["price"]= $product["price"]/100; 
+	 		$product["member_price"] = $product["member_price"]/100;
+	 		array_push($productArray, $product);
+	 	}
+		return $productArray;	
 	}
 	
-	 private function formatProductCountdown($products) {
-	 	 $func1 = '$dateOffset= strtotime($product["start_time"]) - time(); if($dateOffset<0){$product["start"]=true; }else{$product["start"]=false; $product["end_day"]= floor($dateOffset/3600/24); $product["end_hour"]= floor(($dateOffset-$product["end_day"]*3600*24)/3600); $product["end_min"] = floor(($dateOffset-$product["end_day"]*3600*24-3600* $product["end_hour"])/60); $product["end_sec"] = floor($dateOffset-$product["end_day"]*3600*24-3600* $product["end_hour"]- $product["end_min"]*60);if($product["end_day"]<10){$product["end_day"]="0".$product["end_day"];} if($product["end_hour"]<10){$product["end_hour"]="0".$product["end_hour"];}if($product["end_min"]<10){$product["end_min"]="0".$product["end_min"];}if($product["end_sec"]<10){$product["end_sec"]="0".$product["end_sec"];}}  return $product;';
-	 	 // $func1 = '$dateOffset= strtotime($product["start_time"]) - time(); if($dateOffset<0){$product["start"]=true; }else{$product["start"]=false; $product["end_hour"]= floor($dateOffset/3600); $product["end_min"] = floor(($dateOffset-3600* $product["end_hour"])/60); $product["end_sec"] = floor($dateOffset-3600* $product["end_hour"]- $product["end_min"]*60); if($product["end_hour"]<10){$product["end_hour"]="0".$product["end_hour"];}if($product["end_min"]<10){$product["end_min"]="0".$product["end_min"];}if($product["end_sec"]<10){$product["end_sec"]="0".$product["end_sec"];}}  return $product;';
-		  return $this->formatProduct($products,create_function('$product',$func1));
-	
+	private function formatProductCountdown($products) {
+		$productsResult = array();
+		foreach($products as $product) {
+			$dateOffset= strtotime($product["start_time"])-time()-C("SUBSCRIBE_FUTURE_INC");
+			if($dateOffset<0){
+				$product["start"]=true;
+			}else{
+				$product["start"]=false;
+				$product["start_time_seconds"]=strtotime($product["start_time"])-C("SUBSCRIBE_FUTURE_INC");
+
+			}
+			array_push($productsResult, $product);
+		}
+		return $productsResult;
 	}
 	
 	private function getAllProductsAndShowPage($productType){
