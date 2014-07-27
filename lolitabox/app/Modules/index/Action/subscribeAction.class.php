@@ -166,5 +166,41 @@ class subscribeAction extends commonAction{
 		return $products;
 	}
 	
+	public function theirs(){
+
+        $productsModel = M("Products");
+        
+        $startTime = date("Y-m-d H:i:s",time()+C('SUBSCRIBE_FUTURE_INC'));
+        $where["start_time"]=array('egt',$startTime);
+        $where["status"]=c('PRODUCT_STATUS_PUBLISHED');
+        $futureProdcutsList = $productsModel->where($where)->order("start_time ASC")->limit(6)->select();
+        $count = count($futureProdcutsList);
+        $futureProductFirst = NULL;
+        $futureProducts = array();
+        if($count){
+        	$futureProductFirst = $futureProdcutsList[0];	
+        	$futureProductFirst["start_time_seconds"] = strtotime($futureProductFirst["start_time"]);
+        }
+        if($count>1){
+	        for($i=1; $i<$count; $i++){
+	        	$num = $i-1;
+	        	$futureProducts[$num]=$futureProdcutsList[$i];
+				$futureProducts[$num]["start_time_seconds"] = strtotime($futureProducts[$num]["start_time"]);	
+			}	
+        }
+        
+        $endTime = date("Y-m-d");
+		$whereClosed["end_time"]=array('elt',$startTime);
+		$whereClosed["status"]=c('PRODUCT_STATUS_PUBLISHED');
+		$closedProducts = $productsModel->where($whereClosed)->order("end_time DESC")->limit(5)->select();
+		for($i=0; $i<count($closedProducts); $i++){
+			$closedProducts[$i]["end_time_seconds"] = strtotime($closedProducts[$i]["end_time"]);	
+		}
+		$this->assign("futureProductFirst",$futureProductFirst);
+		$this->assign("futureProducts",$futureProducts);
+		$this->assign("closedProducts",$closedProducts);
+		$this->display();
+	}
+	
 	
 }
