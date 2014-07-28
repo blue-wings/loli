@@ -173,7 +173,6 @@ class UserOrderModel extends Model {
 		$this->add($data);
 		$result["orderId"]=$data['ordernmb'];
 		D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$products,$validProductNums, $data['ordernmb']);
-		
 		return $result;
 	}
 	/**
@@ -266,9 +265,51 @@ class UserOrderModel extends Model {
 			D("UserOrderSendProductdetail")->changeStatus2PostageNotPay($orderId);	
 		}else{
 			D("UserOrderSendProductdetail")->changeStatus2PostagePayed($orderId);
-			//@TODOcreate inventoryOut and orderSend record
-		}
-	}
+            //@TODOcreate inventoryOut and orderSend record
+            //todo不用付邮费订单是否也有可能会生成出库单？
+            self::createSystemOutInventory($orderId);
+        }
+    }
+    private function createSystemOutInventory($orderId){
+        //generate inventory out record
+        $out_mod=M('inventoryOut');
+        $data=array(
+            'type'=> C("INVENTORY_OUT_TYPE_SYSTEM"),
+            'title'=>'出库单'.date("m.d"),
+            'outdate'=>date("Y-m-d").' 00:00:00', //todo 今天？或者过一定时间变成明天？
+            'description'=>'系统出库单'.date("m.d"),
+            'cdatetime'=>date('Y-m-d H:i:s'),
+            'operator'=>'system',
+            'status'=>1,
+            'ifagree'=>0,
+            'agreeoperator'=>'',
+            'agreedatetime'=>'',
+            'ifconfirm'=>0,
+            'confirmoperator'=>'',
+            'confirmdatetime'=>''
+        );
+        $in_out_id=$out_mod->add($data);
+
+        //get product detail
+        //todo 是否需要检查库存
+        $detail_mod=M("userOrderSendProductdetail");
+        $info=$detail_mod->where(array('orderid'=>$orderId))->field('productid,product_num')->select();
+        $stat_mod=M("inventoryStat");
+        foreach ($info AS $k => $val){
+            if(!empty($val['productid'])){
+                $data1=array(
+                    'itemid'=>$val['productid'],
+                    'message'=>'',
+                    'operator'=>'',
+                    'quantity'=>-$val['product_num'],
+                    'add_time'=>'',
+                    'status'=>0,
+                    'in_out_id'=>$in_out_id
+                );
+                $stat_mod->add($data1);
+            }
+        }
+    }
 	
 	/**
 	 * 获取未支付订单的有效状态

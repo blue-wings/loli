@@ -57,5 +57,10 @@ return array(
     'PRODUCT_NEW_USER_TYPE'						        =>"3",
     'PRODUCT_YEAR_USER_TYPE'						    =>"2",
 
-	'PRODUCT_MAX_PER_USER_MAX'						    =>999
+	'PRODUCT_MAX_PER_USER_MAX'						    =>999,
+
+    //出库单类型
+    'INVENTORY_OUT_TYPE_SYSTEM'                         => 1,
+    'INVENTORY_OUT_TYPE_HUMAN'                          => 2,
+    'INVENTORY_OUT_TYPE_VIRTUAL'                        => 3,
 );
