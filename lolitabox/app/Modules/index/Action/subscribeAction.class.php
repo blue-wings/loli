@@ -119,13 +119,12 @@ class subscribeAction extends commonAction{
 	private function formatProductCountdown($products) {
 		$productsResult = array();
 		foreach($products as $product) {
-			$dateOffset= strtotime($product["start_time"])-time()-C("SUBSCRIBE_FUTURE_INC");
+			$dateOffset= strtotime($product["start_time"])-time();
 			if($dateOffset<0){
 				$product["start"]=true;
 			}else{
 				$product["start"]=false;
-				$product["start_time_seconds"]=strtotime($product["start_time"])-C("SUBSCRIBE_FUTURE_INC");
-
+				$product["start_time_seconds"]=strtotime($product["start_time"]);
 			}
 			array_push($productsResult, $product);
 		}
@@ -173,7 +172,7 @@ class subscribeAction extends commonAction{
 
         $productsModel = M("Products");
         
-        $startTime = date("Y-m-d H:i:s",time()+C('SUBSCRIBE_FUTURE_INC'));
+        $startTime = date("Y-m-d H:i:s",time());
         $where["start_time"]=array('egt',$startTime);
         $where["status"]=c('PRODUCT_STATUS_PUBLISHED');
         $futureProdcutsList = $productsModel->where($where)->order("start_time ASC")->limit(6)->select();
