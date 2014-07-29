@@ -6,10 +6,12 @@ class safeKeepingAction extends commonAction{
 		$inventoryItem = M("InventoryItem");
 		$userid = $this->userid;
 		import("ORG.Util.Page");
- 		$productDetailsCount = $userOrderSendProductDetail->where("status=0 and userid=".$userid)->count();
+		$where["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_NOT_PAYED");
+		$where["userid"]=$userid;
+ 		$productDetailsCount = $userOrderSendProductDetail->where($where)->count();
  		$p = new Page($productDetailsCount,12);
  		if($productDetailsCount){
- 			$productDetails = $userOrderSendProductDetail->where("status=0 and userid=".$userid)->order("orderid DESC")->limit($p->firstRow.','.$p->listRows)->select();
+ 			$productDetails = $userOrderSendProductDetail->where($where)->order("orderid DESC")->limit($p->firstRow.','.$p->listRows)->select();
  			$product = M("Products");
  			for($i=0; $i<count($productDetails); $i++){
  				$productId = $productDetails[$i]["productid"];
