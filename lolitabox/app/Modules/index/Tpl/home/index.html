@@ -30,8 +30,8 @@
                                                         <div class="hd">&nbsp;</div>
                                                         <div class="main">
                                                                 <ul>
-                                                                        <li><em class="gz_book">&nbsp;</em><span for-action="<{:u('subscribe/mine', 'userType=0')}>" class="menu-time" showShoppingCart="true">我的订阅</span></li>
-                                                                        <li><em class="gz_box">&nbsp;</em><span for-action="<{:u('safeKeeping/selfPickUp')}>" class="menu-time">我的保管箱</span></li>
+                                                                        <li><em class="gz_book">&nbsp;</em><span for-action="<{:u('subscribe/mine', 'userType=0')}>" class="menu-time" showShoppingCart="true" hashcode="mysubscribe">我的订阅</span></li>
+                                                                        <li><em class="gz_box">&nbsp;</em><span for-action="<{:u('safeKeeping/selfPickUp')}>" class="menu-time" hashcode="safekeeping">我的保管箱</span></li>
                                                                         <!--<li><em class="gz_try">&nbsp;</em><span>我的试用</span></li>-->
                                                                         <!--<li><em class="gz_list">&nbsp;</em><span>我的订单</span></li>-->
                                                                         <li><em class="gz_tip">&nbsp;</em><span>我的消息</span></li>
@@ -184,9 +184,15 @@ $(function () {
         $("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
 });
 
-$(".menu-time").click(function(){
-	var url = $(this).attr("for-action");
-	var me = this;
+function contentLoad(hashcode){
+	var menu = $("span[hashcode="+hashcode+"]");
+	if(menu.length){
+		menu = menu[0];
+	}else{
+		return;
+	}
+	var url = $(menu).attr("for-action");
+	var me = menu;
 	if(url){
 		$("#main-container").load(url, function(){
 			$("#menu-content").css("height",$(this).css("height"));
@@ -203,7 +209,32 @@ $(".menu-time").click(function(){
 			
 		});		
 	}
+}
+
+var listenHashCodes = [];
+$.each($(".menu-time"), function(index, ele){
+	listenHashCodes[index]=$(this).attr("hashcode");
 })
+$(".menu-time").click(function(){
+	window.location.hash="#!"+$(this).attr("hashcode");
+	$(".menu-time").parent().removeClass("select");
+	$(this).parent().addClass("select");
+})
+
+var options = [];
+$.each(listenHashCodes, function(index, hashcode){
+	var seg = {
+            hash: "#!"+hashcode,
+            onSet: function () {
+                contentLoad(hashcode);
+            },
+            onRemove: function () {
+            }
+        }
+	options[index]=seg;
+})
+
+$(window).hashchange(options)
  </script>
 <!--标准底-end-->
 </body>
