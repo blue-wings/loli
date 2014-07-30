@@ -65,5 +65,9 @@ return array(
     'INVENTORY_OUT_TYPE_VIRTUAL'                        => 3,
 
 	'INVENTORY_STAT_STATUS_INVALID'						=>0,
-    'INVENTORY_STAT_STATUS_VALID'						=>1
+    'INVENTORY_STAT_STATUS_VALID'						=>1,
+
+    //出库单出库状态
+    'INVENTORY_OUT_STATUS_FINISHED'						=>1,
+    'INVENTORY_OUT_STATUS_UNFINISHED'					=>0,
 );
