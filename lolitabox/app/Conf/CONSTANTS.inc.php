@@ -63,4 +63,7 @@ return array(
     'INVENTORY_OUT_TYPE_SYSTEM'                         => 1,
     'INVENTORY_OUT_TYPE_HUMAN'                          => 2,
     'INVENTORY_OUT_TYPE_VIRTUAL'                        => 3,
+
+	'INVENTORY_STAT_STATUS_INVALID'						=>0,
+    'INVENTORY_STAT_STATUS_VALID'						=>1
 );

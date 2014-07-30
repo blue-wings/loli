@@ -701,7 +701,7 @@ class InventoryAction extends CommonAction {
 	function orderParticular(){
 		$in_mod=M("inventoryIn");
 		$stat_mod=M("inventoryStat");
-		$item_mod=M("inventoryItem");
+		$item_mod=D("InventoryItem");
 
 		if($this->_get('id')){
 			$result=$in_mod->where(array('id'=>$this->_get('id')))->find();
@@ -755,12 +755,11 @@ class InventoryAction extends CommonAction {
 						if((strtotime($maxtime[$key])  < $vdata) || empty($vdata)){
 							$result2[]=$item_mod->where(array('id'=>$value))->setField('validdate',$maxtime[$key]);
 						}
+						$item_mod->IncInventoryInLock($value, $quantity[$key]);
 					}else{
 						$this->error($stat_mod->getError());
 					}
 				}
-
-				$this->updateInventory();
 				$this->assign("jumpUrl","inOrderEntry");
 				$this->success('操作完成,返回列表页!');
 			}else{

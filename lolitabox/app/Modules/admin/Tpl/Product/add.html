@@ -49,18 +49,14 @@
 			   			<span id="inventoryItemIn">{$productinfo.inventoryItem.inventory_in}</span>
 			   		</div>
 			   		<div>
-			   			<span>出库总数</span>
-			   			<span id="inventoryItemOut">{$productinfo.inventoryItem.inventory_out}</span>
-			   		</div>
-			   		<div>
 			   			<span>实际库存</span>
 			   			<span id="inventoryItemReal">{$productinfo.inventoryItem.inventory_real}</span>
 			   		</div>
 			   		<div>
-			   			最多投递 <span id="max_delivery">{$productinfo.inventoryItem.inventory_real}</span> 份到此产品
+			   			最多投递 <span id="max_delivery">{$productinfo.inventoryItem.inventory_estimated}</span> 份到此产品
 			   		</div>
 			   		<div>
-			   			投递<input type="text" name="inventoryInc">份
+			   			再投递<input type="text" name="inventoryInc">份
 			   		</div>
 			   </div>
 			   产品发售库存: <input type="text" name="inventory"  value="{$productinfo.inventory}" disabled="disabled"><br><br>
@@ -327,17 +323,15 @@ $("#inventory_item_id").keyup(function(){
 				id=info.id;
 				name=info.name;
 				inventoryIn=info.inventory_in;
-				inventoryOut=info.inventory_out;
 				real=info.inventory_real;
 				estimated=info.inventory_estimated;
 			}
 			$("#inventoryItemId").text(id);
 			$("#inventoryItemName").text(name);
 			$("#inventoryItemIn").text(inventoryIn);
-			$("#inventoryItemOut").text(inventoryOut);
 			$("#inventoryItemReal").text(real);
 			$("#inventoryItemEstimated").text(estimated);
-			$("#max_delivery").text(real);
+			$("#max_delivery").text(estimated);
 		})
 	}
 })	

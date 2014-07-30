@@ -2,39 +2,49 @@
 
 class InventoryItemModel extends model{
 	
-	/**
-	 * 根据库存单品ID统计理论库存数
-	 * @param string $ids  库存单品ID列表
-	 * @author litingting
+    /**
+	 * 入库单审核后，更新对应库存的各个指标
 	 */
-	public function updateInventoryByIds($ids=null){
-		 $sql="SELECT productid,count(productid) AS T  FROM `user_order_send_productdetail` WHERE orderid IN (SELECT A.orderid FROM `user_order_send` AS A,user_order AS B WHERE (A.orderid=B.ordernmb) AND (A.productnum>0 AND A.senddate IS NULL AND A.proxysender IS NULL AND A.proxyorderid IS NULL) AND (B.state=1 AND B.ifavalid=1 AND B.inventory_out_status=0)) ";
-		 if($ids)
-		 	$sql.=" AND productid IN($ids) ";
-		 $sql.=" GROUP BY productid ORDER BY NULL";
-		 $list = $this->db->query ( $sql );
-		 while ( list ( $key, $item ) = each ( $list ) ) {
-			if ($item ['productid']) {
-				$updatesql = "UPDATE inventory_item SET relation_out_quantity=" . $item ['T'] . " WHERE id=" . $item ['productid'];
-				$this->db->execute ( $updatesql );
-			}
+	public function IncInventoryInLock($inventoryItemId, $quantity){
+		try{
+			M()->startTrans();
+			$this->lock(true)->getById($inventoryItemId);
+			$param["id"]=$inventoryItemId;
+			$this->where($param)->setInc("inventory_in", $quantity);
+			$sql= "UPDATE `inventory_item` SET inventory_real=inventory_in-inventory_abnormal_out-product_shelved_inventory_out,inventory_estimated=inventory_in-inventory_abnormal_out-product_shelved_inventory_in WHERE id=".$inventoryItemId;
+			$this->db->execute ( $sql );
+			M()->commit();
+		}catch (Exception $e){
+			M()->rollback();
+			throw new Exception("入库失败");
 		}
-		
-		$sql= "UPDATE `inventory_item` SET inventory_estimated=inventory_in+inventory_out-relation_out_quantity WHERE 1 ";
-		if($ids) 
-			$sql.=" AND id IN($ids)";
-// 		echo $sql;
-		$this->db->execute ( $sql );
 	}
 	
-    /**
-	 * 统计系统出库入库数及实际库存数和理论库存数
-	 * @author litingting
+	/**
+	 * 从库存上架到前台产品
+	 * @param unknown_type $pid 上架到前台的产品id
+	 * @param unknown_type $inventoryItemId  库存id
+	 * @param unknown_type $quantity 本次上架的增量库存
+	 * @throws Exception
 	 */
-	public function updateInventoryByInOut(){
-		$sql = "UPDATE `inventory_item` SET inventory_in=(SELECT SUM(quantity) FROM inventory_stat WHERE inventory_item.id=itemid AND quantity>0 AND  status=1) ,inventory_out=(SELECT SUM(quantity) FROM inventory_stat WHERE inventory_item.id=itemid AND quantity<0 AND  status=1)";
-		$this->db->execute ( $sql );
-		$sql= "UPDATE `inventory_item` SET inventory_real=inventory_in+inventory_out,inventory_estimated=inventory_in+inventory_out-relation_out_quantity WHERE 1";
-		$this->db->execute ( $sql );
+	public function shelveProductInventory($pid, $inventoryItemId, $quantity){
+		$productMod = D("Product");
+		try{
+			$inventoryItem = $this->getById($inventoryItemId);
+			if($inventoryItem["inventory_estimated"] < $quantity){
+				throw new Exception("");
+			}
+			$params["id"]=$inventoryItemId;	
+			$this->where($params)->setInc("product_shelved_inventory_in", $quantity);
+			$sql= "UPDATE `inventory_item` SET inventory_real=inventory_in-inventory_abnormal_out-product_shelved_inventory_out,inventory_estimated=inventory_in-inventory_abnormal_out-product_shelved_inventory_in WHERE id=".$inventoryItemId;
+			$this->db->execute ( $sql );
+			$productParams["pid"]=$pid;
+			$productMod->where($productParams)->setInc("inventory", $quantity);
+			M()->commit();
+		}catch (Exception $e){
+			M()->rollback();
+			throw new Exception("库存上架到商品失败");
+		}
 	}
+	
 }

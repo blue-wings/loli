@@ -202,25 +202,31 @@ class ProductAction extends CommonAction{
 			$data['readme'] = R('Article/remoteimg',array($_POST['readme']));
 			$data['sort_num']=$_POST['sort_num'] ? $_POST['sort_num'] : 0 ;
 			
-			$result=$product->add($data);
+			$pid=$product->add($data);
 
-			if(false!==$result){
-				$lastid=$product->getLastInsID();
+			if(pid){
 				//建立产品ID与功效ID对应关系
 				$product_effect=new ProductEffectModel();
 				$effectcid=$_REQUEST["effectcid"];
 				$acount=count($effectcid);
 				for($i=0;$i<$acount;$i++){
 					$adata[$i]=array(
-					"pid"=>$lastid,
+					"pid"=>$pid,
 					"effectcid"=>$effectcid[$i]
 					);
 				}
 				$rss=$product_effect->addALL($adata);
 				if($acount==$rss){
-					$this->success("产品添加成功!ID为:{$lastid}",U("Product/index"));
+					$this->success("产品添加成功!ID为:{$pid}",U("Product/index"));
 				}else{
 					$this->error("产品功效表,未完整填充!请联系管理员检查");
+				}
+				if($data["inventory_item_id"] && $data["inventory"]){
+					try {
+						D("InventoryItem")->shelveProductInventory($pid, $data["inventory_item_id"], $data["inventory"]);	
+					}catch(Exception $e){
+						$this->error($e->getMessage());	
+					}
 				}
 			}else{
 				$this->error("产品添加失败：".$product->getDbError());
@@ -349,7 +355,12 @@ class ProductAction extends CommonAction{
 					);
 				}
 				$product_effect->addALL($adata);
-
+				
+				try {
+					D("InventoryItem")->shelveProductInventory($pid, $data["inventory_item_id"], $_POST["inventoryInc"]);
+				}catch(Exception $e){
+					$this->error($e->getMessage());
+				}
 				$this->success('操作成功');
 			}
 			else{
