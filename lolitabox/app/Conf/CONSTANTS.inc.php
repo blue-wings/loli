@@ -73,7 +73,9 @@ return array(
 	'MSG_TO_STATUS_VALID'								=>1,
 	'MSG_TO_STATUS_INVALID'								=>0,
 	'MSG_FROM_STATUS_VALID'								=>1,
-	'MSG_FROM_STATUS_INVALID'							=>0
-  
+	'MSG_FROM_STATUS_INVALID'							=>0,
   	
+    //出库单出库状态
+    'INVENTORY_OUT_STATUS_FINISHED'						=>1,
+    'INVENTORY_OUT_STATUS_UNFINISHED'					=>0,
 );

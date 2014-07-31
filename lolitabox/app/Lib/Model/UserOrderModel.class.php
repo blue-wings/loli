@@ -173,6 +173,20 @@ class UserOrderModel extends Model {
 		$this->add($data);
 		$result["orderId"]=$data['ordernmb'];
 		D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$products,$validProductNums, $data['ordernmb']);
+
+        //todo 创建订单时需要需要选择邮寄地址，并将addressid传到后台
+        //将订单的收获地址信息增加到user_order_address表中
+//        $addres_info=D("UserAddress")->getUserAddressInfo($addressid);
+//        $order_address_data['orderid']=$data['ordernmb'];
+//        $order_address_data['linkman']=$addres_info['linkman'];
+//        $order_address_data['telphone']=$addres_info['telphone'];
+//        $order_address_data['province']=$addres_info['province'];
+//        $order_address_data['city']=$addres_info['city'];
+//        $order_address_data['district']=$addres_info['district'];
+//        $order_address_data['address']=$addres_info['address'];
+//        $order_address_data['postcode']=$addres_info['postcode'];
+//        M("UserOrderAddress")->add($order_address_data);
+
 		return $result;
 	}
 	/**
@@ -267,7 +281,7 @@ class UserOrderModel extends Model {
 			D("UserOrderSendProductdetail")->changeStatus2PostagePayed($orderId);
             //@TODOcreate inventoryOut and orderSend record
             //todo不用付邮费订单是否也有可能会生成出库单？
-            self::createSystemOutInventory($orderId);
+            $this->createSystemOutInventory($orderId);
         }
     }
     private function createSystemOutInventory($orderId){
@@ -290,25 +304,43 @@ class UserOrderModel extends Model {
         );
         $in_out_id=$out_mod->add($data);
 
+        $total_num=0;//当前订单内商品总数
+
         //get product detail
-        //todo 是否需要检查库存
         $detail_mod=M("userOrderSendProductdetail");
         $info=$detail_mod->where(array('orderid'=>$orderId))->field('productid,product_num')->select();
         $stat_mod=M("inventoryStat");
+        $product_mod = M("products");
         foreach ($info AS $k => $val){
-            if(!empty($val['productid'])){
-                $data1=array(
-                    'itemid'=>$val['productid'],
-                    'message'=>'',
-                    'operator'=>'',
-                    'quantity'=>-$val['product_num'],
-                    'add_time'=>'',
-                    'status'=>0,
-                    'in_out_id'=>$in_out_id
-                );
-                $stat_mod->add($data1);
-            }
+            $product = $product_mod->field("inventory_item_id")->getByPid($val['productid']);
+            $data1=array(
+                'itemid'=>$product['inventory_item_id'],
+                'message'=>'',
+                'operator'=>'',
+                'quantity'=>-$val['product_num'],
+                'add_time'=>'',
+                'status'=>0,
+                'in_out_id'=>$in_out_id
+            );
+            $stat_mod->add($data1);
+            $total_num = $total_num + $val['product_num'];
         }
+        $order = $this->getOrderInfo($orderId,"userid,cost");
+
+        //generate order send
+        $order_send_mod=M("UserOrderSend");
+        $orderSendData['orderid'] = $orderId;
+        $orderSendData['userid'] = $order['userid'];
+        $orderSendData['productnum'] = $total_num;
+        $orderSendData['productprice'] = $order['cost']; //todo ??
+        $orderSendData['inventory_out_id'] = $in_out_id;
+        $orderSendData['inventory_out_status'] = C("INVENTORY_OUT_STATUS_UNFINISHED");
+        $order_send_mod->add($orderSendData);
+
+        //关联user_order
+        $orderData['inventory_out_id'] = $in_out_id;
+        $orderData['inventory_out_status'] = C("INVENTORY_OUT_STATUS_UNFINISHED");
+        $this->where(array('ordernmb'=>$orderId))->setField($orderData);
     }
 	
 	/**

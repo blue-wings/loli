@@ -2013,25 +2013,25 @@ class InventoryAction extends CommonAction {
 			$get_tips=D("Article")->getArticleList(773,1);
 			$tips=$get_tips[0];
 			foreach($orderList as $key=>$val){
-				$itemid_list=$order_send_mod->field("productid")->distinct(true)->where("orderid=".$val['orderid']." AND child_id=".$val['child_id'])->select();
+				$itemid_list=$order_send_mod->field("productid")->distinct(true)->where("orderid=".$val['orderid'])->select();
 				if($itemid_list){
 					$info=array();
 					$per_arr=array();
 					$price=0;
 					foreach($itemid_list as $ikey=>$ival){
 						$product_arr=array();
-						$item_info=$item_mod->where("id=".$ival['productid'])->find();
+                        $proinfo = $pro_mod->getByPid($ival['productid']);
+						$item_info=$item_mod->where("id=".$proinfo['inventory_item_id'])->find();
 						$product_arr['price']=$item_info['price'];
 						$product_arr['pname']=$item_info['name'];
 						$product_arr['norms']=$item_info['norms'];
 						$product_arr['enddate']=(empty($item_info['validdate']) || $item_info['validdate']=="0000-00-00") ? "" : $item_info['validdate'] ;
-						$proinfo=$pro_mod->where("pid=".$item_info['relation_id'])->find();
 						$product_arr['cname']=$brand_mod->where("id=".$proinfo['brandcid'])->getField("name");
-						$effect_arr=$productmod->getProductsEffectByPid($item_info['relation_id']);
+						$effect_arr=$productmod->getProductsEffectByPid($ival['productid']);
 						$product_arr['effect']=$effect_arr[2];
-						$type=$category_mod->where("cid=".$proinfo['secondcid'])->getfield("cname");
-						$product_arr['type']= $type ? $type : "" ;
-						$product_arr['num']=$order_send_mod->where("orderid=".$val['orderid']." AND child_id=".$val['child_id']." AND productid=".$ival['productid'])->count();
+						//$type=$category_mod->where("cid=".$proinfo['secondcid'])->getfield("cname");
+						//$product_arr['type']= $type ? $type : "" ;
+						$product_arr['num']=$order_send_mod->where("orderid=".$val['orderid']." AND productid=".$ival['productid'])->count();
 						$price=$price+($item_info['price']*$product_arr['num']);
 						$per_arr[]=$product_arr;
 					}
