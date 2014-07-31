@@ -17,11 +17,6 @@
 				$data['dataid']=$dataid;
 				$data["addtime"]=time();
 				if($this->add($data)){
-					if($fromuid==C("LOLITABOX_ID")){
-						D("UserData")->addUserData($touserid,'notice_num');
-					}else{
-						D("UserData")->addUserData($touserid,'newmsg_num');
-					}
 					return true;
 				}else{
 					return false;
@@ -31,35 +26,6 @@
 			return false;
 		} 
 		
-		/**
-		 * 对收录的分享作者发私信
-		 * @param int $userid
-		 * @author litingting
-		 */
-		public function addMsgByCollect($userid,$id){
-			$msg ="您的分享很精彩，已被收录！并且获得了积分奖励。<a href='/home/score.html' class='WB_info' target='_blank'>【查看我的积分】</a> <a href='".getShareUrl($id)."' class='WB_info'>【分享详情】</a>";
-			$dataid=M("MsgData")->where("content=".$msg)->getField("id");
-			if($dataid){
-				$msg_id = $dataid;
-			}else{
-				$msg_id = M("MsgData")->add(array("content" =>$msg));
-			}
-			if($msg_id){
-				$data['from_uid'] = C("LOLITABOX_ID");
-				$data['to_uid'] = $userid;
-				$data['k'] = abs($data['from_uid']-$data['to_uid']);
-				$data['dataid'] = $msg_id;
-				$data['addtime'] = time();
-				if($this->add($data)){
-					D("UserData")->addUserData($userid,'notice_num');
-					return true;
-				}else{
-					return false;
-				}
-			}else{
-				return false;
-			}
-		}
 
 		/**
 		 * 给指定用户ID发送私信
@@ -85,7 +51,6 @@
 				$data['dataid'] = $msg_id;
 				$data['addtime'] = time();
 				if($this->add($data)){
-					D("UserData")->addUserData($userid,'notice_num');
 					return true;
 				}else{
 					return false;
@@ -111,7 +76,7 @@
 			}
 			if(empty($where)){
 				$data["from_uid"]=$fromid;
-				$data["to_uid"]=0;
+				$data["to_uid"]=C("MSG_TO_ALL_USER_ID");
 				$data['k'] = abs($data["from_uid"]-$data["to_uid"]);
 				$data['dataid']=$dataid;
 				$data["addtime"]=time();
@@ -128,8 +93,7 @@
 						$data['k'] = abs($data["from_uid"]-$data["to_uid"]);
 						$data['dataid']=$dataid;
 						$data["addtime"]=time();
-						if($this->add($data))
-				    		$user_data_mod -> addUserData($data['to_uid'],'newmsg_num');
+						$this->add($data);
 					}
 				}else{
 					return false;
@@ -148,7 +112,7 @@
 				return false;
 			if($p)
 				$limit = " LIMIT ".$p;
-			$sql = "SELECT * FROM (select * from msg WHERE ( from_uid=".$userid." AND from_status=1 OR (to_uid=".$userid." AND to_status=1) ) order by addtime desc ) temp GROUP BY k  ORDER BY addtime desc ".$limit; 
+			$sql = "SELECT * FROM (select * from msg WHERE ( from_uid=".$userid." AND from_status=".C("MSG_FROM_STATUS_VALID")." OR (to_uid=".$userid." AND to_status=".C("MSG_TO_STATUS_VALID").") ) order by addtime desc ) temp GROUP BY k  ORDER BY addtime desc ".$limit; 
 			$list = $this->query($sql);
 			foreach($list as $key =>$val){
 					$to_userid = $val['from_uid']==$userid ? $val['to_uid']:$val['from_uid'];
@@ -173,7 +137,7 @@
 		public  function getMsgCountByUserid($userid){
 			if(!$userid)
 				return false;
-			$list = $this->field("k")->where("from_uid=".$userid." AND from_status=1 OR (to_uid=$userid AND to_status=1)")->group("k")->order("id desc")->select();
+			$list = $this->field("k")->where("from_uid=".$userid." AND from_status=".C("MSG_FROM_STATUS_VALID")." OR (to_uid=$userid AND to_status=".C("MSG_TO_STATUS_VALID").")")->group("k")->order("id desc")->select();
 			return count($list);
 		}
 		
@@ -183,7 +147,7 @@
 		 * @param int $to_userid
 		 */
 		public function getMsgDialogue($from_userid,$to_userid,$limit="10"){
-			 $list = $this->where("from_uid=".$from_userid." AND to_uid=$to_userid AND from_status=1 OR (to_uid=$from_userid AND from_uid=$to_userid AND to_status=1)")->limit($limit)->order("id desc")->select();
+			 $list = $this->where("from_uid=".$from_userid." AND to_uid=$to_userid AND from_status=".C("MSG_FROM_STATUS_VALID")." OR (to_uid=$from_userid AND from_uid=$to_userid AND to_status=".C("MSG_TO_STATUS_VALID").")")->limit($limit)->order("id desc")->select();
 			 foreach($list as $key=>$val){
 			 	 $userinfo = D("Users")->getUserInfo($val['from_uid']);
 			 	 $list[$key]['nickname']=$userinfo['nickname'];
@@ -234,7 +198,7 @@
 		 * @author lit
 		 */
 		public function getReceverMsgListByUserid($userid,$p=null){
-			$where['_string'] = "(to_uid=$userid OR to_uid=0)";
+			$where['_string'] = "(to_uid=$userid OR to_uid=".C("MSG_TO_ALL_USER_ID").")";
 			$where['to_status'] = 1;
 			$where['addtime'] = array("egt",strtotime(M("Users")->where("userid=".$userid)->getField("addtime")));
 			$where['from_uid']=array("exp","!=".C("LOLITABOX_ID")."");
@@ -262,7 +226,7 @@
 		 */
 		public function getPostMsgListByUserid($userid,$p=null){
 			$where['_string'] = "(from_uid=$userid)";
-			$where['from_status'] = 1;
+			$where['from_status'] = C("MSG_FROM_STATUS_VALID");
 			$list = $this->where($where)->order("addtime DESC")->limit($p)->select();
 			foreach($list as $key =>$val){
 				$userinfo = D("Users")->getUserInfo($val['to_uid'],"userface,nickname");
@@ -283,7 +247,7 @@
 		 */
 		public function getPostMsgCount($userid){
 			$where['_string'] = "(from_uid=$userid)";
-			$where['from_status'] = 1;
+			$where['from_status'] = C("MSG_FROM_STATUS_VALID");
 			return $this->where($where)->count();
 		}
 		
@@ -294,7 +258,7 @@
 		 */
 		public function getReceverMsgCount($userid){	
 			$where['_string'] = "(to_uid=$userid OR to_uid=0)";
-			$where['to_status'] = 1;
+			$where['to_status'] = C("MSG_TO_STATUS_VALID");
 			$where['addtime'] = array("egt",strtotime(M("Users")->where("userid=".$userid)->getField("addtime")));
 			$where['from_uid']=array("exp","!=".C("LOLITABOX_ID")."");
 			return $this->where($where)->count();
@@ -308,8 +272,8 @@
 		public function getMsgListByLolitabox($userid,$limit=""){
 			if(!$userid)
 				return false;
-			$where['_string'] = "(to_uid=$userid OR to_uid=0)";
-			$where['to_status'] = 1;
+			$where['_string'] = "(to_uid=$userid OR to_uid=".C("MSG_TO_ALL_USER_ID").")";
+			$where['to_status'] = C("MSG_TO_STATUS_VALID");
 			$where['addtime'] = array("egt",strtotime(M("Users")->where("userid=".$userid)->getField("addtime")));
 			$where['from_uid']=C("LOLITABOX_ID");
 			$list = $this->where($where)->order("addtime DESC")->limit($limit)->select();
@@ -332,8 +296,8 @@
 		 * @author penglele
 		 */
 		public function getMsgCountByLolitabox($userid){
-			$where['_string'] = "(to_uid=$userid OR to_uid=0)";
-			$where['to_status'] = 1;
+			$where['_string'] = "(to_uid=$userid OR to_uid=".C("MSG_TO_ALL_USER_ID").")";
+			$where['to_status'] = C("MSG_TO_STATUS_VALID");
 			$where['addtime'] = array("egt",strtotime(M("Users")->where("userid=".$userid)->getField("addtime")));
 			$where['from_uid']=C("LOLITABOX_ID");
 			return $this->where($where)->count();

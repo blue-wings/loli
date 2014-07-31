@@ -167,7 +167,7 @@ class commonAction extends Action{
      +----------------------------------------------------------
      * @author litingting
      */
-    public function page($param) {
+    public function page($param, $isAjax) {
     	extract ( $param );
     	import ( "@.ORG.Util.Page" );
     	// 总记录数
@@ -192,7 +192,7 @@ class commonAction extends Action{
     	$this->assign ("total",$total);
     	$this->assign ( $listvar, $result );
     	$this->assign ( "page", $page );
-    	if ($this->isAjax ()) { // 判断ajax请求
+    	if ($isAjax && $this->isAjax ()) { // 判断ajax请求
     		$p = $_REQUEST['VAR_PAGE'];
     		if($task && empty($_REQUEST['p'])){
     			return $voList;

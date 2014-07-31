@@ -65,5 +65,15 @@ return array(
     'INVENTORY_OUT_TYPE_VIRTUAL'                        => 3,
 
 	'INVENTORY_STAT_STATUS_INVALID'						=>0,
-    'INVENTORY_STAT_STATUS_VALID'						=>1
+    'INVENTORY_STAT_STATUS_VALID'						=>1,
+
+	//我的消息，萝莉盒官方消息发出方ID
+	'LOLITABOX_ID' 										=>2375,
+	'MSG_TO_ALL_USER_ID'								=>0,
+	'MSG_TO_STATUS_VALID'								=>1,
+	'MSG_TO_STATUS_INVALID'								=>0,
+	'MSG_FROM_STATUS_VALID'								=>1,
+	'MSG_FROM_STATUS_INVALID'							=>0
+  
+  	
 );
