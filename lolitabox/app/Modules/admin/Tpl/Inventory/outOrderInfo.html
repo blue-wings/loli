@@ -247,6 +247,25 @@ input{
 	</div>
 </div>
 <div class="p10">
+    <div class="flt2">
+        <span>快递单填写</span>
+    </div>
+    <div class="flg2">
+        <table width="50%" cellpadding="0" cellspacing="0" style="padding:5px;">
+            <tr>
+                <td colspan="3" class="confrim">
+                    <if condition="$alonemessage['status'] eq 0">已删除
+                        <elseif  condition="$alonemessage['ifconfirm'] eq 1"/>
+                        已确认&nbsp;&nbsp;{$alonemessage.confirmoperator}&nbsp;&nbsp;{$alonemessage.confirmdatetime}
+                        <else/>
+                        <input type="button" value="填写快递信息" name="confrim" onclick="editSendInfo('{$alonemessage.id}')" style="margin:5px;">
+                    </if>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="p10">
 	<div class="flt2">
 		<span>出库</span>
 	</div>
@@ -267,6 +286,16 @@ input{
 </div>
 <input type="hidden" value="{$alonemessage.ifagree|default=0}" name="flag">
 <script type="text/javascript">
+function editSendInfo(orderid){
+    $.dialog({title:'订单发送信息管理',content: 'url:/admin/Inventory/editOrderSendInfo/outid/'+orderid,width:'500px',height:'400px',
+        close: function(){
+            this.reload();
+        },
+        ok: function(){
+            this.reload();
+        }
+    });
+}
 function laidUp(id,key,type){
 
 	var d='';

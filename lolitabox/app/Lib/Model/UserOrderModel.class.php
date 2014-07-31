@@ -173,20 +173,6 @@ class UserOrderModel extends Model {
 		$this->add($data);
 		$result["orderId"]=$data['ordernmb'];
 		D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$products,$validProductNums, $data['ordernmb']);
-
-        //todo 创建订单时需要需要选择邮寄地址，并将addressid传到后台
-        //将订单的收获地址信息增加到user_order_address表中
-//        $addres_info=D("UserAddress")->getUserAddressInfo($addressid);
-//        $order_address_data['orderid']=$data['ordernmb'];
-//        $order_address_data['linkman']=$addres_info['linkman'];
-//        $order_address_data['telphone']=$addres_info['telphone'];
-//        $order_address_data['province']=$addres_info['province'];
-//        $order_address_data['city']=$addres_info['city'];
-//        $order_address_data['district']=$addres_info['district'];
-//        $order_address_data['address']=$addres_info['address'];
-//        $order_address_data['postcode']=$addres_info['postcode'];
-//        M("UserOrderAddress")->add($order_address_data);
-
 		return $result;
 	}
 	/**
@@ -280,7 +266,6 @@ class UserOrderModel extends Model {
 		}else{
 			D("UserOrderSendProductdetail")->changeStatus2PostagePayed($orderId);
             //@TODOcreate inventoryOut and orderSend record
-            //todo不用付邮费订单是否也有可能会生成出库单？
             $this->createSystemOutInventory($orderId);
         }
     }

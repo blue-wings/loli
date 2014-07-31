@@ -2073,6 +2073,59 @@ class InventoryAction extends CommonAction {
         	$this->ajaxReturn(0,'未找到相关信息',0);
         }
 	}
-	
+
+    /**
+    +----------------------------------------------------------
+     * 修改订单发送信息
+    +----------------------------------------------------------
+     * @access  publiv
+    +----------------------------------------------------------
+     * @param   outid    出库单id
+    +-----------------------------------------------------------
+     * @update zhaoxiang 2013.1.25
+     */
+    public function editOrderSendInfo() {
+        $outid = $_REQUEST ["outid"];
+
+        if (!isset( $outid )){
+            return false;
+        }else{
+            $order = M("UserSend")->where("inventory_out_id="+$outid)->field("ordernmb")->find();
+            $userorderinfo=M("UserOrderSend")->where("orderid=".$order['ordernmb'])->find();
+            $userorderinfo['linkman']=M("UserOrderAddress")->where("orderid=".$order['ordernmb'])->getfield("linkman");
+            $userorderinfo['orderid']=$order['ordernmb'];
+            $this->assign ( 'userorderinfo', $userorderinfo ); // 用户订单详细数据
+            $this->display ( 'editordersendinfo' ); // 指定模板文件
+        }
+    }
+    /**
+    +----------------------------------------------------------
+     * 执行修改的动作
+    +----------------------------------------------------------
+     * @access  publiv
+    +----------------------------------------------------------
+     * @param   orderid    		订单号
+     * @param   proxysender    	快递公司名称
+     * @param   proxyorderid      快递单号
+     * @param   senddate    		发送日期
+    +-----------------------------------------------------------
+     * @update zhaoxiang 2013.1.25
+     */
+    public function editSendPostInfo() {
+        $orderid= $_POST ["orderid"];
+        $where['orderid']=$orderid;
+
+        $data ["proxysender"] = $_POST ["proxysender"];
+        $data ["proxyorderid"] = $_POST ["proxyorderid"];
+        $send_data=$data;
+        $send_data ["senddate"] = $_POST ["senddate"];
+        $ordersend=M ( "UserOrderSend" );
+        if (false !==$ordersend->where ( $where )->save ( $send_data )) {
+            M("UserOrderProxy")->where($where)->save($data);
+            $this->success ( '操作成功' );
+        } else {
+            $this->error ( '操作失败' . $ordersend->getDbError () );
+        }
+    }
 }
 ?>
