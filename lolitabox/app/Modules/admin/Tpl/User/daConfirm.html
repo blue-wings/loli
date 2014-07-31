@@ -1,0 +1,335 @@
+<include file="Public:header" />
+<style>
+tr{
+	text-align:center;
+}
+.f_width{
+	display:block;
+	width:120px;
+	float:left;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+}
+
+</style>
+	<div class="panel">
+		<div align="left">
+<fieldset class="fieldset">
+<legend>查询条件</legend>
+<form name="myform" id="myform" action="__ACTION__" method="GET">
+用户账号：<input id=email name=email type='text' value='{$Think.get.email}'>
+用户ID：<input id=userid name=userid type='text' value='{$Think.get.userid}'>
+昵称：<input id=nickname name=nickname type='text' value='{$Think.get.nickname}'>
+<br>
+申请时间: 
+<label for="from">From</label>
+<input type="text" id="from" name="from" value="{$Think.get.from}"/>
+<label for="to">to</label>
+<input type="text" id="to" name="to" value="{$Think.get.to}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+审核状态:<select name="status">
+			<option  selected>全部</option>
+			<option value="0">未审核</option>
+			<option value="1">已通过</option>
+			<option value="2">已拒绝</option>
+		</select>
+<br>
+<input type='submit' name='search' value=" 查 询 " >
+</form>
+			</fieldset>
+			
+		</div>
+	</div>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />达人申请列表</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+        {$page}
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <form name="orderlist" id="orderlist" method="POST" action="{:U('User/changeCheckbox')}" >
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            <td width="1%" height="26"><div align="center" class="STYLE2 STYLE1">全选</div></td>
+            <td width="3%" height="26"><div align="center" class="STYLE2 STYLE1">用户ID</div></td>
+	    <td width="5%" height="26"><div align="center" class="STYLE2 STYLE1">邮箱</div></td>
+            <td width="8%" height="18"><div align="center" class="STYLE2 STYLE1">昵称</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">达人资料明细</div></td>  
+             <td width="8%" height="18"><div align="center" class="STYLE2">申请时间</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">审核管理</div></td>
+            <td width="3%" height="18"><div align="center" class="STYLE2">审核结果</div></td>          
+            <td width="5%" height="18"><div align="center" class="STYLE2">功能</div></td>
+          </tr>
+          <volist name="list" id="da"  key="k">
+          <tr height="30px">
+             <td bgcolor="#FFFFFF" height="18">
+				<input type="checkbox" value="{$da.uid}"  name="listcheckbox[]" >
+			 </td>
+             <td bgcolor="#FFFFFF" height="18">
+				 <a href="{:U('User/userList',array('userid'=>$da['uid']))}">{$da.uid}</a>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18">{$da.usermail}</td>
+			 <td bgcolor="#FFFFFF" height="18">
+			 <a href="/space/{$da.uid}" target="_blank">{$da.nickname}</a>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18">
+				<a href="#" onclick="return daren_show('{$da.blog_url}','{$da.weibo_url}','{$da.qq}','{$da.expert}','{$da.update_current}')" >查看</a>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18">{$da.apply_datetime}</td>
+			 <td bgcolor="#FFFFFF" height="18">
+				<a href="#" onclick="return changelevel('{$k}','{$da.uid}','{$da.status}')">
+				<input type='hidden' id="{$k}_level" value="{$da.status}">
+				<if condition="$da['status'] eq 0">开始审核
+				<elseif condition="$da['status'] eq 11" /><span style='color:#FF0000'>转为拒绝</span>
+				<else /><span style='color:#800000'>转为通过</span>
+				</if>
+				</a>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18"><span id='{$k}_stat'>
+				<if condition="$da['status'] eq 0">未审核
+				<elseif condition="$da['status'] eq 11" /><span style='color:#800000'>已通过</span>
+				<else /><span style='color:#FF0000'>已拒绝</span>
+				</if></span>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18"><a href="#" onclick="return deleapply('{$da.uid}')">删除</td>
+          </tr>
+		</volist>
+        </table>
+        </form>
+        <div id="sendPersonalMess_div"  style="display:none;">
+          <form action="__ACTION__" method="get" id="sendPersonalMess_form">
+            <input type="hidden"  name="ac"  value="sendPersonalMess" />
+            标题：<input type="text" name="title"  size='30' value=""><br>
+            内容：<textarea name="content"  cols='50' rows='10'></textarea><br>
+            <input type="button" value="提交"  onclick="sendPersonalMess()">
+          </form>
+        </div>
+	<script>
+	jQuery(function($){
+		$.datepicker.regional['zh-CN'] = {
+			closeText: '关闭',
+			prevText: '&#x3c;上月',
+			nextText: '下月&#x3e;',
+			currentText: '今天',
+			monthNames: ['一月','二月','三月','四月','五月','六月',
+			'七月','八月','九月','十月','十一月','十二月'],
+			monthNamesShort: ['一','二','三','四','五','六',
+			'七','八','九','十','十一','十二'],
+			dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+			dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+			dayNamesMin: ['日','一','二','三','四','五','六'],
+			weekHeader: '周',
+			dateFormat: 'yy-mm-dd',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: true,
+			yearSuffix: '年'};
+			$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+	});
+</script>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+	<if condition="$list neq ''">
+	<td width="50%" height="29" nowrap="nowrap" colspan='8'>
+		<input type='button' value='全选/取消' name='boxselect'>
+		<input type='button' value='批量通过' onclick="subselect('through')">
+		<input type='button' value='批量拒绝' onclick="subselect('refused')">
+		{$page}
+	</td>
+	<else />
+	<td  colspan='8'><b>无数据</b></td>	
+	</if>
+  </tr>
+</table>
+<script type="text/javascript">
+/*
+*burl:博客地址
+*wurl:微博地址
+*qq:qq
+*expert:擅长
+*current:当前频率
+*plan:将来频率
+*/
+function daren_show(burl,wurl,qq,expert,current){
+
+	var str='';
+	str+='<div style="width:300px;">';
+	str+='<p><span class="f_width">博客地址:</span><a target="_blank" href="'+burl+'">'+burl+'</a></p>';
+	str+='<p><span class="f_width">微博地址:</span><a target="_blank" href="'+wurl+'">'+wurl+'</a></p>';
+	str+='<p><span class="f_width">QQ:</span>'+qq+'</p>';
+	str+='<p><span class="f_width">擅长方向:</span>'+expert+'</p>';
+	str+='<p><span class="f_width">当前更新频率:</span>'+current+'</p>';
+	str+='</div>';
+	$.dialog({
+		width:'500px',
+		height:300,
+		title:'详细信息',
+		content: str,
+		cancel: true
+	});
+}
+
+function deleapply(uid){
+	if(typeof uid != undefined)
+	{
+		$.dialog({
+			content:'<b>确定删除么?</b>',
+			width:'300px',
+			height:100,
+			button: [
+			{
+				name: '确定',
+				callback: function(){
+					$.ajax({
+						url:"{:u('User/dele_darenApply')}",
+						type:"post",
+						dataType:"json",
+						data:"userid="+uid+'&n='+Math.random(),
+						success: function(chkresult){
+							console.log(chkresult);
+							if(parseInt(chkresult.status)==1){
+								alert('删除成功');
+								location.reload();
+							}else{
+								alert('删除失败,请联系管理员检查问题!');
+							}
+						}
+					})
+				},
+				focus: true
+			}
+			]
+		})
+	}
+}
+
+function  changelevel(k,uid,sup){
+
+	if(sup == 0){
+		$.dialog({
+			width:'500px',
+			height:150,
+			content:'<b>升级为达人?</b>',
+			button: [
+			{
+				name: '确定',
+				callback: function(){
+					senddata(k,uid,11);
+				},
+				focus: true
+			},
+			{
+				name: '拒绝',
+				callback: function(){
+					senddata(k,uid,10);
+				}
+			}
+			]
+		});
+	}else if(sup==11){
+		$.dialog({
+			width:'500px',
+			height:150,
+			content:'<b>确定转为拒绝么?</b>',
+			button: [
+			{
+				name: '确定',
+				callback: function(){
+					senddata(k,uid,10);
+				},
+				focus: true
+			}
+			]
+		});
+	}else{
+		$.dialog({
+			width:'500px',
+			height:150,
+			content:'<b>确定转为通过么?</b>',
+			button: [
+			{
+				name: '确定',
+				callback: function(){
+					senddata(k,uid,11);
+				},
+				focus: true
+			}
+			]
+		});
+	}
+}
+
+function senddata(key,userid,sta){
+	$.ajax({
+		url:"{:u('User/changeSuperLevel')}",
+		type:"post",
+		dataType:"json",
+		data:"userid="+userid+'&super='+sta+'&n='+Math.random(),
+		success: function(chkresult){
+			if(chkresult.status==1){
+				location.reload();
+			}
+		}
+	})
+}
+
+$(function() {
+	$( "#from" ).datepicker({
+		defaultDate: "-1w",
+		changeMonth: true,
+		numberOfMonths: 2,
+		onSelect: function( selectedDate ) {
+			$( "#to" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$( "#to" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 2,
+		onSelect: function( selectedDate ) {
+			$( "#from" ).datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+
+	if("{$Think.get.status}"){
+		$("select[name=status]").val("{$Think.get.status}");
+	}
+})
+
+
+$(":button[name='boxselect']").toggle(
+	function(){
+		$(":checkbox[name='listcheckbox[]']").attr('checked',true);
+	},function(){
+		$(":checkbox[name='listcheckbox[]']").attr('checked',false);
+	}
+);
+
+
+function subselect(way){
+	var  $str="<input type='hidden' name='way' value='"+way+"'>";
+	if($(":hidden[name=way]").val()==undefined){
+		$("form[name='orderlist']").append($str);
+	}else{
+		$(":hidden[name='way']").replaceWith($str);
+	}
+
+	$("form[name='orderlist']").submit();
+}
+</script>
+<include file="Public:footer" />

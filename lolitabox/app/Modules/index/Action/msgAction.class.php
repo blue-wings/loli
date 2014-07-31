@@ -4,7 +4,7 @@
  */
 class msgAction extends commonAction {
 
-public function msg(){
+	public function msg(){
 		$userid=$this->userid;
 		$type= $_REQUEST['type'] ? $_REQUEST['type']:1;
 		if($type>3){
@@ -41,7 +41,7 @@ public function msg(){
 		$this->display();
 	}
 	
-/**
+	/**
 	 * 个人中心--私信详情
 	 */
 	public function mymsg_detail(){
@@ -91,6 +91,33 @@ public function msg(){
 		$this->ajaxreturn(0,"操作失败",0);
 		else
 		$this->ajaxreturn(1,"success",1);
+	}
+	
+	/**
+	 * 发私信
+	 */
+	public function write_user_msg(){
+		$userid=$this->userid;
+		$to_nick=trim($_POST['to_nick']);
+		if(empty($userid) || empty($to_nick)){
+			$this->ajaxReturn(0,"非法操作",0);
+		}
+		$userinfo=D("Users")->getUserInfoByData(array("nickname"=>"$to_nick"),'userid');
+		if($userinfo==false){
+			$this->ajaxReturn(0,"接收对象不存在",0);
+		}
+		$to_userid=$userinfo[0]['userid'];
+		$msg_content=trim($_POST['msg_content']);
+		$msg_content=htmlspecialchars($msg_content);
+		if(empty($msg_content)){
+			$this->ajaxReturn(0,"私信内容不能为空",0);
+		}
+		$res=D("Msg")->addMsg($userid,$to_userid,$msg_content);
+		if($res==false){
+			$this->ajaxReturn(0,"操作失败",0);
+		}else{
+			$this->ajaxReturn(1,"success",1);
+		}
 	}
 	
 	

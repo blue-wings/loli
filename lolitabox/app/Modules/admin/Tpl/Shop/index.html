@@ -1,0 +1,411 @@
+<include file="Public:header" />
+<style>
+tr{
+	width:100%;
+	text-align:left;
+}
+td{
+	border:0;
+}
+.f_width{
+	display:block;
+	width:120px;
+	float:left;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+}
+input,select{
+	border-color:#008080;
+}
+.createmakt,.particular{
+	display:none;
+}
+.show{
+	display:none;
+}
+.ntitle{
+	font-size:16px;
+	color:#004040;
+}
+.left{
+	padding:10px  50px;
+}
+.fo{
+	font-size:14px;
+	color:#004040;
+}
+.createshop{
+	display:none;
+	font-size:16px;
+	color:#808080;
+}
+.wh{
+	width:90%;
+	border:0;
+	padding:20px 100px;
+}
+.crshop{
+	width:100px;
+}
+.red{
+	color:red;
+}
+td.left{
+	float:left;
+}
+td.tdwidth{
+	width:20%;
+	padding-left:50px;
+}
+.maxwidth{
+	width:90%;
+}
+.site{
+	display:block;
+	margin:10px 150px;
+	border:#91C351;
+}
+</style>
+<div class="panel">
+	<div align="left">
+		<fieldset class="fieldset"><legend>查询条件</legend>
+			<form name="myform" id="myform" action="__ACTION__" method="GET" onsubmit="return csdf()">
+			<p>
+				商家名称：<input name='sname' type='text' value='{$Think.get.sname}'>&nbsp;&nbsp;&nbsp;
+				品牌筛选:<input type="text" value='{$Think.get.pname}' name="pname"  onkeyup="tips(this.value,'blist')">
+				<input type="hidden" value=''  name="bid">
+				<select id="blist" name="blist" onchange="setBrandV(this.value,this.options[this.options.selectedIndex].text,1)">
+				<option value="0">请选择品牌</option>
+				 <volist name="products" id="pro">
+					<option value="{$pro.id}">{$pro.name}</option>
+				 </volist>
+				</select>
+			</p>
+			<p>
+				<select name="province"  onchange="getcity('p2',this.value)" id="p1">
+					<option value="0">请选择省份</option>
+					<volist name="provice" id="pro">
+						<option value="{$pro.area_id}">{$pro.title}</option>
+					</volist>
+				</select>
+				<select name="city" id="p2"  onchange="getcity('p3',this.value)">
+					<option value="0">请选择市</option>
+				</select>
+				<select name="county" id="p3">
+					<option value="0">请选择区县</option>
+				</select>
+				<input type='submit' name='search' value=" 查 询">
+				<input type='submit' name='export' value="导出">
+				
+			</form>
+			<p class="cea"><input type="button" value="创建新商家信息" name="cshop"></p>
+			<p class="ntitle">{$message['name']}</p>
+			<a href="__ACTION__" class="show">返回上级</a>
+		</fieldset>			
+	</div>
+</div>
+
+<div class="showcontents">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="text-align:left">
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" />商家信息管理</td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+        {$page}
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            <td width="2%" height="26"><div align="center" class="STYLE2 STYLE1" id="changename">id</div></td>
+	    	<td width="10%" height="26"><div align="center" class="STYLE2 STYLE1">商家名称</div></td>
+            <td width="10%" height="18"><div align="center" class="STYLE2 STYLE1">省市</div></td>
+            <td width="15%" height="18"><div align="center" class="STYLE2">品牌</div></td>  
+            <td width="5%" height="18"><div align="center" class="STYLE2">优惠信息</div></td>
+            <td width="5%" height="18"><div align="center" class="STYLE2">显示</div></td>
+            <td width="8%" height="18"><div align="center" class="STYLE2">功能</div></td>
+          </tr>
+          <volist name="slist" id="shop"  key="k">
+          <tr height="30px">
+             <td bgcolor="#FFFFFF" height="18" align="center">{$shop.id}</td>
+             <td bgcolor="#FFFFFF" height="18" align="center">{$shop.name}</td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">{$shop.title}-{$shop.stitle}-{$shop.ttitle}</td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">{$shop.pname}</td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">
+			 	<a href="#" onclick="dialogmeseeage('__URL__/manageShop/shopid/{$shop.id}/shopname/{$shop.name}','商铺管理')">管理</a>
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">
+			<span onclick="changeStatus('{$shop.id}','{$k}')" id='img_{$k}'>
+				<if condition="$shop.status eq 1">
+					<img src='/admin/Public/images/status_1.gif' height='15' width='15'  id="status" style="cursor: pointer">
+				<else />
+					<img src='/admin/Public/images/010.gif' height='15' width='15'  id="status" style="cursor: pointer">
+				</if>
+			</span>
+			 <input type="hidden" value="{$shop.status}" name="sta_{$k}">
+			 </td>
+			 <td bgcolor="#FFFFFF" height="18" align="center">
+			 	<a href="#" onclick="editShop('{$shop.id}')">编辑</a>/
+			 	<a href="__ACTION__/del/{$shop.id}">删除</a>		 
+			 </td>
+          </tr>
+		</volist>
+        </table>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr >
+	<if condition="$slist eq ''">
+	<td  colspan='7' align="center"><b>无数据</b></td>
+	<else />
+	<td  colspan='7' align="center">{$page}</td>
+	</if>
+  </tr>
+</table>
+</div>
+<div class="createshop">
+<form action="__ACTION__" method="POST" name="csdn">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="300" background="__PUBLIC__/images/tab_05.gif">
+        	<img src="__PUBLIC__/images/311.gif" width="16" height="16" />商家管理 > 创建商家
+        <a href="__ACTION__" style="padding-left:15px;">返回商家列表</a></td>
+        </td>
+        <td width="1000" background="__PUBLIC__/images/tab_05.gif" align="right"></td>
+  </tr>
+</table>
+<table border="1" class="wh" align="left">
+<tr>
+	<td class="tdwidth">商家名称<span class="red">*</span></td>
+	<td class="left"><input type="text" value="" name="name"></td>
+<tr>
+<tr>
+	<td class="tdwidth">所属品牌<span class="red">*</span></td>
+	<td class="left">
+	<input type="text" value=""  name="brandtxt"  onkeyup="tips(this.value,'brandlist')">
+	<input type="hidden" value="" name="brandid">
+	<select name="brandlist" onchange="setBrandV(this.value,this.options[this.options.selectedIndex].text,0)">
+	<option value="0">请选择品牌</option>
+	 <volist name="products" id="pro">
+		<option value="{$pro.id}">{$pro.name}</option>
+	 </volist>
+	</select>
+	</td>
+<tr>
+<tr>
+	<td class="tdwidth">地址<span class="red">*</span></td>
+	<td class="left maxwidth" style="text-align:left">
+		<select name="province_areaid"  onchange="getcity('s2',this.value)" id="s1">
+			<option value="0">请选择省份</option>
+			<volist name="provice" id="pro">
+			<option value="{$pro.area_id}">{$pro.title}</option>
+			</volist>
+		</select>
+		
+		<select name="city_areaid" id="s2" onchange="getcity('s3',this.value)">
+			<option value="0">请选择市</option>
+		</select>
+		<select name="county_areaid" id="s3">
+			<option value="0">请选择区县</option>
+		</select>
+	</td>
+<tr>
+<tr>
+	<td class="tdwidth">详细地址<span class="red">*</span></td>
+	<td class="left"><input type="text" name="address" value=""></td>
+<tr>
+<tr>
+	<td class="tdwidth">位置经度<span class="red">*</span></td>
+	<td class="left"><input type="text" name="longitude" value=""></td>
+<tr>
+<tr>
+	<td class="tdwidth">位置纬度<span class="red">*</span></td>
+	<td class="left"><input type="text" name="latitude" value=""></td>
+<tr>
+<tr>
+	<td class="tdwidth">联系人</td>
+	<td class="left"><input type="text" name="linkman" value=""></td>
+<tr>
+<tr>
+	<td class="tdwidth">联系电话</td>
+	<td class="left"><input type="text" name="telphone" value=""></td>
+<tr>
+<tr>
+	<td colspan="2"><input type="submit" value="提交" class="site" name="crshop"></td>
+</tr>
+</table>
+</form>
+</div>
+<script type="text/javascript">
+var search1='';
+
+	$(":button[name='cshop']").bind('click',function(){
+		var $str=$(".createshop").html();
+			$.dialog({
+			title:'商铺管理',
+			content: $str,
+			width:'900px',
+			height:'350px',
+			ok:function(){
+				location.reload();
+			}
+		});
+	})
+
+$(function(){
+
+
+	if("{$Think.get.cit_c}"){
+		$("select[name='city']").append("<option>"+"{$Think.get.cit_c}"+"</option>");
+		$("select[name='city'] option:eq(1)").attr('selected','true');
+	}	
+	
+	if("{$Think.get.cou_c}"){
+		$("select[name='county']").append("<option>"+"{$Think.get.cou_c}"+"</option>");
+		$("select[name='county'] option:eq(1)").attr('selected','true');
+	}
+
+})
+
+function getcity(id,value){
+	$.ajax({
+		url:"__ACTION__",
+		type:"post",
+		dataType:"json",
+		data:'aid='+value+'&n='+Math.random(),
+		success: function(chkresult){
+			if(parseInt(chkresult.status)==1){
+				var data=chkresult['data'];
+				var i=0;
+				$("#"+id).empty();
+				if(id == 's2'){
+					var info=chkresult['info'];
+					$("#s3").empty();
+					for(i in info){
+						$("#s3").append("<option value='"+info[i].area_id+"'>"+info[i].title+"</option>");
+					}
+				}else if(id == 'p2'){
+					var info=chkresult['info'];
+					$("#p3").empty();
+					for(i in info){
+						$("#p3").append("<option value='"+info[i].area_id+"'>"+info[i].title+"</option>");
+					}
+				}
+				for(i in data){
+					$("#"+id).append("<option value='"+data[i].area_id+"'>"+data[i].title+"</option>");
+				}
+			}
+		}
+	})
+}
+
+function tips(v,name){
+	if(v != search1){
+		$.ajax({
+			url:"__ACTION__",
+			type:"post",
+			dataType:"json",
+			data:"brandname="+v+'&n='+Math.random(),
+			success: function(chkresult){
+				if(parseInt(chkresult.status)==1){
+					var data=chkresult.data;
+					$("select[name='"+name+"']").empty();
+					var i=0;
+					for(i in data){
+						$("select[name='"+name+"']").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
+					}
+				}
+			}
+		})
+	}
+}
+
+function clearem(name){
+	$("input[name='"+name+"']").attr('value','');
+}
+
+function setBrandV(val,txt,num){
+	if(num==0){
+		$("input[name='brandid']").val(val);
+		$("input[name='brandtxt']").val(txt);
+	}else{
+		$("input[name='bid']").val(val);
+		$("input[name='pname']").val(txt);
+	}
+}
+function changeStatus(id,key){
+	var sta=$(":hidden[name='sta_"+key+"']").val();
+	if(sta==1){sta=0}else{sta=1}
+	if(id != undefined){
+		$.ajax({
+			url:"{:U('Shop/changeShopSta')}",
+			type:"post",
+			dataType:"json",
+			data:"sid="+id+'&sta='+sta+'&type=shop&n='+Math.random(),
+			success: function(chkresult){
+				if(parseInt(chkresult.status)==1){
+					$(":hidden[name='sta_"+key+"']").val(sta);
+					if(sta==1){
+						$("#img_"+key+">img").attr('src','/admin/Public/images/status_1.gif');
+					}else{
+						$("#img_"+key+">img").attr('src','/admin/Public/images/010.gif');
+					}
+				}
+			}
+		})
+	}
+}
+function editShop(sid){
+	$.ajax({
+		url:"__ACTION__",
+		type:"post",
+		dataType:"json",
+		data:"sid="+sid+'&n='+Math.random(),
+		success: function(chkresult){
+			if(parseInt(chkresult.status)==1){
+				var data=chkresult.data;
+
+				$("form[name='csdn']").prepend("<input type='hidden' name='editid' value='"+data.id+"'/>");
+				$("input[name='name']").val(data.name);
+				$("input[name='brandtxt']").val(data.pname);
+				$("input[name='brandid']").val(data.brandid);
+				$("select[name='province_areaid'] option[value='"+data.province_areaid+"']").attr('selected','true')
+				$("select[name='city_areaid']").append('<option value="'+data.city_areaid+'">'+data.stitle+'</option>');
+				$("select[name='county_areaid']").append('<option value="'+data.county_areaid+'">'+data.ttitle+'</option>');
+				$("select[name='city_areaid']>option:eq(1)").attr('selected','true');
+				$("select[name='county_areaid']>option:eq(1)").attr('selected','true');
+				$("input[name='address']").val(data.address);
+				$("input[name='longitude']").val(data.longitude);
+				$("input[name='latitude']").val(data.latitude);
+				$("input[name='linkman']").val(data.linkman);
+				$("input[name='telphone']").val(data.telphone);
+
+				$(".panel").hide();
+				$(".showcontents").hide();
+				$(".createshop").show('fast');
+				$('input').each (function(){this.onfocus="";});
+			}
+		}
+	})
+}
+
+function csdf(){
+	$("form[name='myform']").append("<input type='hidden' name='pri_c' value='"+$("select[name='province'] option[value='"+$("select[name='province']").val()+"']").text()+"'>");
+	$("form[name='myform']").append("<input type='hidden' name='cit_c' value='"+$("select[name='city'] option[value='"+$("select[name='city']").val()+"']").text()+"'>");
+	$("form[name='myform']").append("<input type='hidden' name='cou_c' value='"+$("select[name='county'] option[value='"+$("select[name='county']").val()+"']").text()+"'>");
+}
+</script>
+<include file="Public:footer" />

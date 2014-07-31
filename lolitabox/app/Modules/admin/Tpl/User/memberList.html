@@ -1,0 +1,221 @@
+<include file="Public:header" />
+<div class="panel">
+	<div align="left">
+		<fieldset class="fieldset">
+			<legend>查询条件</legend>
+			<form name="myform" id="myform" action="__ACTION__" method="GET">
+				用户ID：<input id='userid' name='userid' type='text' value='{$Think.get.userid}'>&nbsp;&nbsp;
+				会员特权：<input type="radio" name="if_member" value="1" />有效&nbsp;&nbsp;<input type="radio" name="if_member" value="2" />已过期
+				<br />
+					<input type="button" name="resetpage" value="重置">
+					<input type='submit' name='search' value=" 查 询 " >
+			</form>
+		</fieldset>
+	</div>
+</div>
+
+<p align="right">			
+   <input type="button" name="activateEmail" value="导出特权会员列表">
+</p>
+<script>
+$(function(){
+	$("input[name='activateEmail']").click(function(){
+		location.href="__ACTION__/type/exportList";
+	})
+})
+
+</script>
+
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">用户列表</span></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">
+        {$page}
+        </td>
+        <td width="14"><img src="__PUBLIC__/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <form name="orderlist" id="orderlist" >
+         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif" align="center" height="26" id="awarp">
+            <td width="1%"> 全选  	</td>
+            <td width="3%"> 用户ID	</td>
+            <td width="10%">邮箱	</td>
+            <td width="5%"> 昵称	</td>
+            <td width="3%"> 邮件激活 </td>            
+            <td width="3%"> 订单数	</td>  
+            <td width="3%">关注数	</td>
+            <td width="3%"> 粉丝数	</td>
+            <td width="3%"> 积分	</td>          
+            <td width="3%"> 经验值	</td> 
+			<td width="3%"> 分享数	</td>
+            <!--td width="4%"> 达人级别 </td-->
+            <td width="8%"> 截止时间</td>
+          </tr>
+          <volist name="return.list" id="userlist" empty="暂时没有匹配的数据" key="k">
+          <tr height="26" align="center" bgcolor="#FFFFFF">
+            <td>
+            	<input type="checkbox" value="{$userlist.userid}"  id="listcheckbox" name="listcheckbox[]" >
+            </td>
+            <td>
+            	<a href="/space/{$userlist[userid]}" target="_blank">{$userlist[userid]}</a><br/>
+            </td>
+            <td>{$userlist[usermail]}</td>
+            <td>
+            	{$userlist.nickname}
+            </td>
+            <td>
+            	<span onclick="changeEmailStatus('{$userlist['userid']}','{$k}')" id='email_{$k}'>
+					<if condition="$userlist['state'] eq 2">
+						<img src='__PUBLIC__/images/status_1.gif' height='15' width='15'  id="status" style="cursor: pointer">
+					<else />
+						<img src='__PUBLIC__/images/010.gif' height='15' width='15'  id="status" style="cursor: pointer">
+					</if>
+				</span>
+				<input type="hidden" value="{$userlist['state']}"  id='email_s_{$k}'>
+			</td>
+						
+            <td>
+            	<if  condition="$userlist[order_num] neq '0'">
+            		<a href="{:u('BoxSend/orderList',array('userid'=>$userlist[userid]))}">
+            			{$userlist[order_num]}
+            		</a>
+            	<else/>
+            		{$userlist[order_num]}
+            	</if>
+            </td>
+            <td>
+           		<a href="{:U('User/fansList',array('userid'=>$userlist[userid],'type'=>2))}">{$userlist.follow_num}</a>
+            </td>
+            <td>
+            	<a href="{:U('User/fansList',array('userid'=>$userlist[userid],'type'=>1))}">{$userlist[fans_num]}</a>
+            </td>
+            <td>
+            	<a href="{:U('UserCredit/creditStat',array('userid'=>$userlist[userid],'credit_type'=>'1'))}">{$userlist[score]}</a>
+            </td>
+
+            <td>
+            	<a href="{:U('UserCredit/creditStat',array('userid'=>$userlist[userid],'credit_type'=>'2'))}">{$userlist[experience]}</a>
+            </td>
+			<td>
+				<a href="{:U('UserShare/index',array('search'=>1,'userid'=>$userlist['userid']))}">{$userlist[blog_num]}</a>
+			</td>
+            <td>
+            	{$userlist[endtime]}
+            </td>
+          </tr>
+		</volist>
+        </table>
+        </form>
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29" colspan="18" style="background:url(__PUBLIC__/images/tab_21.gif)" >
+    	<div style="float:left;padding-left:20px;">{$page}</div>
+	</td>
+  </tr>
+</table>
+<script type="text/javascript">
+if("{$Think.get.if_member}"){
+	$(":radio[name='if_member'][value="+"{$Think.get.if_member}"+"]").attr("checked",true);
+}
+
+function changeEmailStatus(userid,key){
+	var v=$("#email_s_"+key);
+	if(userid != undefined){
+		$.ajax({
+			url:"{:U('User/changeUserEmailStatus')}",
+			type:"post",
+			dataType:"json",
+			data:"userid="+userid+'&status='+v.val(),
+			success: function(chkresult){
+				if(parseInt(chkresult.status)==1){
+					if(v.val()==0){
+						$("#email_"+key+">img").attr('src','__PUBLIC__/images/status_1.gif');
+						v.val('2');
+					}else{
+						$("#email_"+key+">img").attr('src','__PUBLIC__/images/010.gif');
+						v.val('0');
+					}
+				}else{
+					alert(chkresult.info);
+				}
+			}
+		})
+	}
+}
+
+$(":button[name='activateEmail']").bind('click',function(){
+	location.href="__ACTION__/exportemail/activateEmail";
+})
+
+jQuery(function($){
+	$.datepicker.regional['zh-CN'] = {
+		closeText: '关闭',
+		prevText: '&#x3c;上月',
+		nextText: '下月&#x3e;',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月',
+		'七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一','二','三','四','五','六',
+		'七','八','九','十','十一','十二'],
+		dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		dayNamesMin: ['日','一','二','三','四','五','六'],
+		weekHeader: '周',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: '年'};
+		$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+});
+
+change("{$Think.get.resour}", "{$Think.get.param}");
+
+function change(value,param){
+
+	if(value != ''){
+		$.ajax({
+			url:"{:U('EdmMarketing/returnPromotionOrderNum')}",
+			type:"post",
+			dataType:"json",
+			data:'changeCode='+value,
+			success: function(chkresult){
+				if(parseInt(chkresult.status)==1){
+					var data = chkresult.data;
+					$("select[name='param'] option:gt(0)").remove();
+					if(data != null){
+						for(var i in data){
+							$("select[name='param']").append("<option value='"+data[i].frominfo+"'>"+data[i].frominfo+"</option>");
+						}
+					}
+
+					if(param != '' || param != 'undefined'){
+						$("select[name='param']").val(param);
+					}
+				}
+			}
+		})
+	}else{
+		$("select[name='param'] option:gt(0)").remove();
+	}
+}
+
+pregpattern({
+"endtime":"截止时间"
+},"__ACTION__");
+</script>
+<include file="Public:footer" />
