@@ -25,43 +25,60 @@ class userOrderAction extends commonAction {
         		$this->error("创建订单失败");exit;
         	}
         }
-        $result = D("UserOrder")->createOrder( $this->userid, $productIds, $productNums);
-        $orderId = $result["orderId"];
-        $productMsgResult = $result["msgResult"];
-        $errorProducts = array();
-        foreach ($productMsgResult as $productId=>$msg){
-        	if(!$msg){
-        		$shoppingCartModel->invalidUserShoppingCartProduct($userId, $productId);	
-        	}else{
-        		$product = D("Products")->getByPid($productId);
-        		$product["errorMsg"]=$msg;
-        		array_push($errorProducts, $product);
-        	}
-        }
-        $order = D("UserOrder")->getOrderDetail($orderId);
-        $this->assign("order",$order);
-        $this->assign("errorProducts", $errorProducts);
-        $this->display();
+        $orderId = D("UserOrder")->createOrder( $this->userid, $productIds, $productNums);
+        $this->redirect("userOrder/getOrder2Complete", array("orderId"=>$orderId));
+    }
+    
+    public function getOrder2Complete(){
+    	$orderId = $_GET["orderId"];	
+    	if(!$orderId){
+    		$this->error("获取订单信息失败");
+    	}
+    	$order = D("UserOrder")->getOrderDetail($orderId);
+    	if($order["userid"] != $this->userid){
+    		$this->error("非法获取订单信息");
+    	}
+    	$this->assign("order", $order);
+    	$this->assign("ExpressCompanies", array(C("EXPRESS_SHENTONG_ID"), C("EXPRESS_SHUNFENG_ID")));
+    	$userOrderAddresses = M("UserOrderAddress")->where(array("userid"=>$this->userid))->order("id DESC")->select();
+    	if($userOrderAddresses){
+	    	foreach ($userOrderAddresses as $key=>$userOrderAddress){
+	    		$userOrderAddress["provinceName"]=M("area")->field("title")->getByAreaId($userOrderAddress["province_area_id"]);
+	    		$userOrderAddress["provinceName"]=$userOrderAddress["provinceName"]["title"];	
+	    		$userOrderAddress["cityName"]=M("area")->field("title")->getByAreaId($userOrderAddress["city_area_id"]);
+	    		$userOrderAddress["cityName"]=$userOrderAddress["cityName"]["title"];
+	    		$userOrderAddress["districtName"]=M("area")->field("title")->getByAreaId($userOrderAddress["district_area_id"]);	
+	    		$userOrderAddress["districtName"]=$userOrderAddress["districtName"]["title"];
+	    		$userOrderAddresses[$key]=$userOrderAddress;
+	    	}
+    	}
+    	if(count($userOrderAddresses)){
+    		$this->assign("oldAdresses", $userOrderAddresses);
+    		$firstExpressCompany = C("EXPRESS_SHENTONG_ID");
+    		$postage =$this->getPostage($orderId, $firstExpressCompany["id"], $userOrderAddresses[0]["district_area_id"]);
+    		$this->assign("postage", bcdiv($postage, 100, 2));
+    		$this->assign("totalCost", bcdiv(($order["cost"]+$postage), 100 , 2));
+    	}
+    	$this->display();
     }
     
     public function ajaxGetPostage(){
     	$orderId = $_POST["orderId"];
     	$expressCompanyId = $_POST("expressCompanyId");
-    	$addressId = $_POST("addressId");
-    	$products = D("UserOrderSendProductdetail")->getUserOrderProducts($orderId);
-    	$productIds = array();
-    	foreach ($products as $product){
-    		array_push($productIds, $product["pid"]);
-    	}
-    	$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
-    	$data["postage"]=$postage;
+    	$areaId = $_POST("areaId");
+    	$data["postage"]=$this->getPostage($orderId, $expressCompanyId, $areaId);
 		$this->ajaxReturn($data, "JSON");    	
+    }
+    
+    private function getPostage($orderId, $expressCompanyId, $addressId){
+    	$postage = D("PostageStandard")->calculateOrderPostage($orderId, $expressCompanyId, $addressId);
+    	return $postage;
     }
     
     
     public function completeOrderAnd2Pay(){
     	$orderId = $_POST["orderId"];
-        $sendWord = $_POST("send_word");
+        $sendWord = $_POST["send_word"];
         import("ORG.Util.String");
         if(mb_strlen($sendWord,"utf8") > 200){
             $sendWord=String::msubstr($sendWord ,0,200,'utf-8',false);

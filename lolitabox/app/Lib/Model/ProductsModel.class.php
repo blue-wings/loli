@@ -915,7 +915,7 @@ class ProductsModel extends Model {
 				throw new Exception("数据库异常");
 			}
 		}else{
-			throw new Exception("库存不足");
+			throw new Exception($product["pname"]."库存不足");
 		}
 	}
 	
@@ -988,6 +988,9 @@ class ProductsModel extends Model {
 	 */
 	public function getRemainProdcutNumPerUserOrder($productId, $userId){
 		$product = $this->getByPid($productId);
+		if(!$product){
+			throw new Exception("商品不存在");
+		}
 		$maxPerUser = $product["max_peruser"];	
 		if(!$maxPerUser){
 			return C("PRODUCT_MAX_PER_USER_MAX");

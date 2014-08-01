@@ -9,26 +9,6 @@ class PostageStandardModel extends Model {
 	
 	
 	/**
-	 * 按产品算邮费
-	 * @param unknown_type $productIds
-	 * @param unknown_type $expressCompanyId
-	 * @param unknown_type $addressid
-	 */
-	public function calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressid){
-		$addresInfo=D("UserAddress")->getUserAddressInfo($addressid);
-		if($addresInfo["district"]){
-			return $this->calculatePostage($productIds, $expressCompanyId, $addresInfo["district"]);
-		}
-		if($addresInfo["city"]){
-			return $this->calculatePostage($productIds, $expressCompanyId, $addresInfo["district"]);
-		}
-		if($addresInfo["province"]){
-			return $this->calculatePostage($productIds, $expressCompanyId, $addresInfo["district"]);
-		}
-		return null;
-	}
-	
-	/**
 	 * 按订单计算邮费
 	 * @param unknown_type $orderId
 	 * @param unknown_type $expressCompanyId
@@ -40,18 +20,18 @@ class PostageStandardModel extends Model {
 		}
 		$userOrderSendProductDetailModel = D("UserOrderSendProductdetail");
 		$where["orderid"]=$orderId;
-		$productIds = $userOrderSendProductDetailModel->field("productid")->where($where)->select();
-		return $this->calculatePostage($productIds, $expressCompanyId, $areaId);
+		$userOrderprductDetails = $userOrderSendProductDetailModel->where($where)->select();
+		return $this->calculatePostage($userOrderprductDetails, $expressCompanyId, $areaId);
 	}
 	
 	/**
 	 * 计算邮费,传入最细的areaid，将根据area的层级关系向上找到第一个配置邮费的记录
-	 * @param $userOrderId
+	 * @param $userOrderprductDetails
 	 * @param $expressType 见CONSTANTS中的定义
 	 * @param $areaId
 	 */
-	public function calculatePostage($productIds, $expressCompanyId, $areaId){
-		if(!$productIds || count($productIds)==0 || !isset($expressCompanyId) || !isset($areaId)){
+	public function calculatePostage($userOrderprductDetails, $expressCompanyId, $areaId){
+		if(!$userOrderprductDetails || count($userOrderprductDetails)==0 || !isset($expressCompanyId) || !isset($areaId)){
 			throw_exception("参不数全，无法计算邮费"); 	
 		}
 		$areaModel = M("Area");
@@ -68,7 +48,7 @@ class PostageStandardModel extends Model {
 			if($postageStandard){
 				break;
 			}
-			$areaWhere["id"]=$area["pid"];
+			$areaWhere["area_id"]=$area["pid"];
 			$area = $areaModel->where($areaWhere)->find();
 		}
 		if(!$postageStandard){
@@ -77,8 +57,8 @@ class PostageStandardModel extends Model {
 		$productsModel = D("Products");
 		$inventoryItemModel = D("InventoryItem");
 		$totalWeight=0;
-		foreach ($productIds as $productId){
-			$whereProduct["pid"]= $productId;
+		foreach ($userOrderprductDetails as $userOrderprductDetail){
+			$whereProduct["pid"]= $userOrderprductDetail["productid"];
 			$product = $productsModel->where($whereProduct)->find();
 			if(!$product){
 				throw_exception("无效的productId，无法计算邮费"); 	
@@ -88,7 +68,7 @@ class PostageStandardModel extends Model {
 			}
 			$whereInventoryItem["id"] = $product["inventory_item_id"];
 			$inventoryItem = $inventoryItemModel->where($whereInventoryItem)->find();
-			$totalWeight = bcadd($totalWeight, $inventoryItem["weight"]);
+			$totalWeight = ($totalWeight+$inventoryItem["weight"])*$userOrderprductDetail["product_num"];
 		}
 		$postage = null;
 		if(bccomp($totalWeight, 1000) <= 0){

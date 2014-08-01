@@ -22,8 +22,7 @@ class UserOrderModel extends Model {
 	 * @param string $orderid
 	 * @author ltingting
 	 */
-	public function getOrderDetail($orderId)
-	{
+	public function getOrderDetail($orderId){
 		$orderInfo=$this->getOrderInfo($orderId);
 		if(!$orderInfo)
 			return false;
@@ -36,26 +35,55 @@ class UserOrderModel extends Model {
 			}
 		}
 		
+		$weight = 0;
+		$productTotalNum = 0;
+		$orderProducts = D("UserOrderSendProductdetail")->getUserOrderProducts($orderId);
+		foreach ($orderProducts as $key => $product){
+			$inventoryItem = D("InventoryItem")->getById($product["inventory_item_id"]);
+			$validdateTime = strtotime($inventoryItem["validdate"]);
+			$inventoryItem["validdateFormat"]= date("Y年m月d日", $validdateTime);
+			$inventoryItem["weightKg"]=bcdiv($inventoryItem["weight"], 1000, 3);
+			$product["inventoryItem"]=$inventoryItem;
+			$productNum = $product["product_num"];
+			$product["totalWeight"]=bcmul($inventoryItem["weightKg"], $productNum, 3);
+			$weight = bcadd($weight, $product["totalWeight"], 3);
+			$productTotalNum += $productNum;
+			$orderProducts[$key]=$product;
+		}
+		
+		$list["products"] = $orderProducts;
+		
+		
+		$list["weight"]=$weight;
+		$list["productTotalNum"]=$productTotalNum;
+		
+		
 		//订单信息
 		$list['orderid']=$orderId;
-		$list['boxid']=$orderInfo['boxid'];
+		$list['userid']=$orderInfo['userid'];
 		$list['ifavalid']=$orderInfo['ifavalid'];
 		$list['addtime']=$orderInfo['addtime'];
-		$list['boxprice']=$orderInfo['boxprice'];
-		$list['discount']=$orderInfo['discount'];
-		$list['lastprice']=$orderInfo['boxprice']-$orderInfo['discount'];//实际支付金额
 		$list['credit']=$orderInfo['credit'];
 		$list['state']=$orderInfo['state'];
+		$list['ori_cost']=$orderInfo['ori_cost'];
+		$list['cost']=$orderInfo['cost'];
+		$list['costYuan']=bcdiv($orderInfo['cost'], 100,2);
+		$list['postage']=$orderInfo['postage'];
+		
+		
 		
 		//订单--收货地址
 		$orderAddressInfo=$this->getUserOrderAddressList($orderid);
-		$addressInfo=array();
-		$addressInfo['linkman']=$orderAddressInfo['linkman'];
-		$addressInfo['telphone']=$orderAddressInfo['telphone'];
-		$addressInfo['address']=$orderAddressInfo['province'].$orderAddressInfo['city'].$orderAddressInfo['district'].$orderAddressInfo['address'];
-		$addressInfo['postcode']=$orderAddressInfo['postcode'];
-		$list['address_list']=$addressInfo;
-		if($orderInfo['state']==1){
+		if($orderAddressInfo){
+			$addressInfo=array();
+			$addressInfo['linkman']=$orderAddressInfo['linkman'];
+			$addressInfo['telphone']=$orderAddressInfo['telphone'];
+			$addressInfo['address']=$orderAddressInfo['province'].$orderAddressInfo['city'].$orderAddressInfo['district'].$orderAddressInfo['address'];
+			$addressInfo['postcode']=$orderAddressInfo['postcode'];
+			$list['address_list']=$addressInfo;
+		}
+		
+		if($orderInfo['state']==C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_PAYED")){
 			/*--------已付款--------*/
 			//物流信息
 			$orderProxyInfo=$this->getUserOrderProxyInfo($orderid);
@@ -112,68 +140,68 @@ class UserOrderModel extends Model {
 	 * @throws Exception
 	 */
 	public function createOrder($userId, $productIds, $productNums){
-		$result = array();
-		$productMsgResult = array();
-		$productModel = D("Products");
 		if(count($productIds) != count($productNums)){
-			throw new Exception("未知错误");
+			throw new Exception("创建订单失败");
 		}
-		$validProductIds = array();
-		$validProductNums = array();
-		for($i=0; $i<count($productIds); $i++){
-			$productId = $productIds[$i];
-			$productNum = $productNums[$i];
-			try {
-				$productMsgResult[$productId]=null;
-				$product = $productModel->getByPid($productId);
+		try {
+			M()->startTrans();
+			$lockWhere["pid"] = array("in", $productIds);
+			$products = D("Products")->where($lockWhere)->lock(true)->select();
+			$productMap = null;
+			foreach ($products as $product){
+				$productMap[$product["pid"]]=$product;
+			}
+			foreach ($productIds as $index=>$productId){
+				$product = $productMap[$productId];
+				$productNum = $productNums[$index];
 				if($product["status"]!=C("PRODUCT_STATUS_PUBLISHED")){
-					$productMsgResult[$productId]="产品处于下架状态";	
-				}else if(!D("Products")->checkProdcutNumPerUserOrder($productId, $productNum, $userId)){
-					$productMsgResult[$productId]="购买超出限制";
-				}else{
-					D("Products")->addInventoryReducedInDBLock($productId, $productNum);
-					array_push($validProductIds, $productId);
-					array_push($validProductNums, $productNum);	
+					throw new Exception($product["pname"]."处于下架状态");
 				}
-			}catch (Exception $e){
-				$productMsgResult[$productId]=$e->getMessage();
+				$remainNum = D("Products")->getRemainProdcutNumPerUserOrder($product["pid"], $userId);
+				if($productNum > $remainNum){
+					if(!$remainNum){
+						throw new Exception($product["pname"]."购买超出限制, 您不能再购买此产品");
+					}else{
+						throw new Exception($product["pname"]."购买超出限制, 您最多能购买".$remainNum."件");
+					}
+				}
+				D("Products")->addInventoryReducedInDBLock($product["pid"], $productNum);	
 			}
-		}
-		$result["msgResult"]=$productMsgResult;
-		if(!count($validProductIds)){
-			return $result; 
-		}
-		$data['ordernmb']=date("YmdHis").rand(100,999);
-		//因为增加特权会员，在此整理特权会员价格
-		$memberMod=D("Member");
-		$memberInfo=$memberMod->getUserMemberInfo($userId);
-		$totalCost=0;
-		$originalTotalCost=0;
-		$products = array();
-		foreach ($validProductIds as $productId){
-			$product = $productModel->getByPid($productId);
-			array_push($products, $product);
-			$productMemberPrice = $product["member_price"]?$product["price"]:$product["member_price"];
-			if($memberInfo['state']==1){
-				//用户还在特权期
-				$totalCost += $productMemberPrice;
-			}else{
-				$totalCost += $product["price"];	
+			
+			$data['ordernmb']=date("YmdHis").rand(100,999);
+			//因为增加特权会员，在此整理特权会员价格
+			$memberMod=D("Member");
+			$memberInfo=$memberMod->getUserMemberInfo($userId);
+			$totalCost=0;
+			$originalTotalCost=0;
+			foreach ($productIds as $key => $productId){
+				$product = $productMap[$productId];
+				$productMemberPrice = $product["member_price"]?$product["price"]:$product["member_price"];
+				if($memberInfo['state']==1){
+					//用户还在特权期
+					$totalCost += $productMemberPrice*$productNums[$key];
+				}else{
+					$totalCost += $product["price"]*$productNums[$key];
+				}
+				$originalTotalCost += $product["price"]*$productNums[$key];
 			}
-			$originalTotalCost += $product["price"];
+			$data["ori_cost"]=$originalTotalCost;
+			$data["cost"] = $totalCost;
+			//特权会员问题end
+
+			$data['userid']=$userId;
+			$data['addtime']=date("Y-m-d H:i:s");
+			$data['state']=C("USER_ORDER_STATUS_NOT_PAYED");
+			//生成订单
+			$this->add($data);
+			$result["orderId"]=$data['ordernmb'];
+			D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$productIds,$productNums, $data['ordernmb']);
+			M()->commit();
+			return $data['ordernmb'];
+		}catch(Exception $e){
+			M()->rollback();
+			throw new Exception("创建订单失败-".$e->getMessage());	
 		}
-		$data["ori_cost"]=$originalTotalCost;
-		$data["cost"] = $totalCost;
-		//特权会员问题end
-		
-		$data['userid']=$userId;
-		$data['addtime']=date("Y-m-d H:i:s");
-		$data['state']=C("USER_ORDER_STATUS_NOT_PAYED");
-		//生成订单
-		$this->add($data);
-		$result["orderId"]=$data['ordernmb'];
-		D("UserOrderSendProductdetail")->addOrderSendProducts($userId,$products,$validProductNums, $data['ordernmb']);
-		return $result;
 	}
 	/**
 	 * 用户补全订单其他信息

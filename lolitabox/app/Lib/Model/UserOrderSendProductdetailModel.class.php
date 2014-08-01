@@ -63,13 +63,12 @@ class UserOrderSendProductdetailModel extends Model{
 	 * @param unknown_type $products
 	 * @param unknown_type $orderId
 	 */
-	public function addOrderSendProducts($userid,$products,$productNums, $orderId){
-		for($i=0; $i<count($products); $i++){
-			$product = $products[$i];
+	public function addOrderSendProducts($userid,$productIds,$productNums, $orderId){
+		foreach ($productIds as $key => $productId){
 			$data["orderid"]=$orderId;
 			$data["userid"]=$userid;
-			$data["productid"]=$product["pid"];
-			$data["product_num"]=$productNums[$i];
+			$data["productid"]=$productId;
+			$data["product_num"]=$productNums[$key];
 			$data["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_NOT_PAYED");
 			$this->add($data);	
 		}
@@ -105,7 +104,9 @@ class UserOrderSendProductdetailModel extends Model{
 		$details = $this->where($where)->select();
 		$products = array();
 		foreach ($details as $detail){
-			array_push($products, D("Products")->getByPid($detail["productid"]));
+			$product = D("Products")->getByPid($detail["productid"]);
+			$product["product_num"] = $detail["product_num"];
+			array_push($products, $product);
 		}
 		return $products;
 	}

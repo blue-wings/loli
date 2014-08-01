@@ -34,8 +34,8 @@ return array(
     //category的pcid根结点
     'PCID_ROOT'                                         =>0,
 
-	'EXPRESS_SHENTONG_ID'								=>0,
-	'EXPRESS_SHUNFENG_ID'								=>1,
+	'EXPRESS_SHENTONG_ID'								=> array("id"=>0, "name"=>"申通快递"),
+	'EXPRESS_SHUNFENG_ID'								=> array("id"=>1, "name"=>"顺丰快递"),
 
 	//订单的失效时间72小时
 	'ORDER_VALID_DURATION'								=>259200,
@@ -78,4 +78,7 @@ return array(
     //出库单出库状态
     'INVENTORY_OUT_STATUS_FINISHED'						=>1,
     'INVENTORY_OUT_STATUS_UNFINISHED'					=>0,
+	
+    //省地区的父id
+	'AREA_PROVINCE_PID'									=>0
 );
