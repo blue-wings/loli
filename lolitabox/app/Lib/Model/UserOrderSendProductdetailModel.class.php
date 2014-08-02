@@ -32,10 +32,10 @@ class UserOrderSendProductdetailModel extends Model{
             return false;
         }
         $now = date("Y-m-d");
-        $mimDate = date("Y-m-d",time()-24*60*60*7);
+        $mimDate = date("Y-m-d",time()+24*60*60*7);
         $where['user_order_send_productdetail.userid'] = $userId;
         $where['user_order_send_productdetail.status'] = c("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_NOT_PAYED");
-        $where['ii.validdate'] = array(array('egt',$mimDate),array('lt',$now));
+        $where['ii.validdate'] = array(array('egt',$now),array('lt',$mimDate));
         $productNum = $this->join("left join products as p on user_order_send_productdetail.productid = p.pid")->join("left join inventory_item as ii on p.inventory_item_id = ii.id")->where($where)->count();
         return $productNum;
     }
