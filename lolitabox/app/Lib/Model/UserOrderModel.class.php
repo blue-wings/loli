@@ -65,12 +65,7 @@ class UserOrderModel extends Model {
 		$list['addtime']=$orderInfo['addtime'];
 		$list['credit']=$orderInfo['credit'];
 		$list['state']=$orderInfo['state'];
-		$list['ori_cost']=$orderInfo['ori_cost'];
 		$list['cost']=$orderInfo['cost'];
-		$list['costYuan']=bcdiv($orderInfo['cost'], 100,2);
-		$list['postage']=$orderInfo['postage'];
-		
-		
 		
 		//订单--收货地址
 		$orderAddressInfo=$this->getUserOrderAddressList($orderid);

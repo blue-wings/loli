@@ -40,6 +40,19 @@ class ShoppingCartModel extends Model {
 	}
 	
 	/**
+	 * 删除购物车
+	 * @param unknown_type $userid
+	 */
+	public function invalidUserShoppingCart($shoppingCartIds){
+		foreach ($shoppingCartIds as $shoppingCartId){
+			$param["status"]=C("SHOPPING_CART_STATUS_INVALID");
+			$param["id"]=$shoppingCartId;
+			$this->save($param);
+		}
+	}
+	
+	
+	/**
 	 * 获取用户购物车商品
 	 * @param unknown_type $userid
 	 */

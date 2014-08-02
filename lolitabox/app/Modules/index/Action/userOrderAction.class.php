@@ -26,6 +26,7 @@ class userOrderAction extends commonAction {
         	}
         }
         $orderId = D("UserOrder")->createOrder( $this->userid, $productIds, $productNums);
+        $shoppingCartModel->invalidUserShoppingCart($shoppingCartIdArray);
         $this->redirect("userOrder/getOrder2Complete", array("orderId"=>$orderId));
     }
     
@@ -57,7 +58,7 @@ class userOrderAction extends commonAction {
     		$firstExpressCompany = C("EXPRESS_SHENTONG_ID");
     		$postage =$this->getPostage($orderId, $firstExpressCompany["id"], $userOrderAddresses[0]["district_area_id"]);
     		$this->assign("postage", bcdiv($postage, 100, 2));
-    		$this->assign("totalCost", bcdiv(($order["cost"]+$postage), 100 , 2));
+    		$this->assign("totalCost", bcdiv(($order["cost"]+$postage), 100 , 1));
     	}
     	$this->display();
     }

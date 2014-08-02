@@ -113,21 +113,22 @@ class ShoppingCartAction extends commonAction {
 		$productTotalNum = 0;
 		$totalCost = 0;
 		foreach ($shoppingCartItems as $key=>$shoppingCartItem){
+			$productPrice = 0;
 			if($this->userinfo['if_member'] && $shoppingCartItem["product"]["member_price"]){
 				$shoppingCartItem["product"]["realPrice"]=bcdiv($shoppingCartItem["product"]["member_price"], 100, 1);
-				$totalCost += $shoppingCartItem["product"]["member_price"];
+				$productPrice = $shoppingCartItem["product"]["member_price"];
 			}else{
 				$shoppingCartItem["product"]["realPrice"]=bcdiv($shoppingCartItem["product"]["price"], 100, 1);
-				$totalCost += $shoppingCartItem["product"]["price"];
+				$productPrice = $shoppingCartItem["product"]["price"];
 			}
 			$userCanBuyNum = D("Products")->getRemainProdcutNumPerUserOrder($shoppingCartItem["product"]["pid"], $this->userid);
 			$shoppingCartItem["product"]["userCanBuyNum"]= $userCanBuyNum;
 			$shoppingCartItems[$key]=$shoppingCartItem;
 			
 			$inventoryItem = D("InventoryItem")->getById($shoppingCartItem["product"]["inventory_item_id"]);
-			$weight = bcadd($weight, $inventoryItem["weight"]);
-			$weight = bcmul($weight, $shoppingCartItem["product_num"]);
-			$totalCost = bcmul($totalCost, $shoppingCartItem["product_num"]);
+			$weight += $inventoryItem["weight"] * $shoppingCartItem["product_num"];
+			
+			$totalCost += $productPrice * $shoppingCartItem["product_num"];
 			$productTotalNum += $shoppingCartItem["product_num"];
 		}
 		$weight = bcdiv($weight, 1000, 3);

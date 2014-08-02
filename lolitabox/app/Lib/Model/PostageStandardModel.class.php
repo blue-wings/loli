@@ -25,6 +25,23 @@ class PostageStandardModel extends Model {
 	}
 	
 	/**
+	 * 按订单计算邮费
+	 * @param unknown_type $orderId
+	 * @param unknown_type $expressCompanyId
+	 * @param unknown_type $areaId
+	 */
+	public function calculateSelfPackageOrderPostage($orderId, $expressCompanyId, $areaId){
+		if(!isset($orderId) || !isset($expressCompanyId) || !isset($areaId)){
+			throw_exception("参数不全，无法计算邮费");	
+		}
+		$userOrderSendProductDetailModel = D("UserOrderSendProductdetail");
+		$where["self_package_order_id"]=$orderId;
+		$userOrderprductDetails = $userOrderSendProductDetailModel->where($where)->select();
+		return $this->calculatePostage($userOrderprductDetails, $expressCompanyId, $areaId);
+	}
+	
+	
+	/**
 	 * 计算邮费,传入最细的areaid，将根据area的层级关系向上找到第一个配置邮费的记录
 	 * @param $userOrderprductDetails
 	 * @param $expressType 见CONSTANTS中的定义

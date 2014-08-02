@@ -111,6 +111,18 @@ class UserOrderSendProductdetailModel extends Model{
 		return $products;
 	}
 	
+	public function getSelfPackageOrderProducts($orderId){
+		$where["self_package_order_id"]=$orderId;
+		$details = $this->where($where)->select();
+		$products = array();
+		foreach ($details as $detail){
+			$product = D("Products")->getByPid($detail["productid"]);
+			$product["product_num"] = $detail["product_num"];
+			array_push($products, $product);
+		}
+		return $products;
+	}
+	
 	public function getUserSelfPackageOrderProducts($userSelfPackageOrderId){
 		$where["self_package_order_id"]=$userSelfPackageOrderId;
 		$details = $this->where($where)->select();

@@ -9,6 +9,7 @@
 						</div>
 					</div>
 				</div>
+				<form id="safekeeping_form" action="<{:u('safeKeeping/createOrder')}>" method="post">
 				<div class="wp780 th_con">
 					<div class="hd">&nbsp;</div>
 					<div class="con">
@@ -19,11 +20,29 @@
 								<volist name="productDetails" id="productDetail">
 									<li class="th_li">
 										<dl>
-											<dt><span class="check_bg"><input type="checkbox" id="<{$productDetail.product.pid}>_pickup_checkbox" class="pickup_checkbox" name=""><i pid="<{$productDetail.product.pid}>" class="checker">&nbsp;</i></span></dt>
-											<dd class="img"><a href="" target="_blank"><img src="<{$productDetail.product.pimg}>" width="150" height="150" alt="" style="display:inline-block"/></a></dd>
-											<dd class="name" style="width:140px; overflow:hidden"><a href="" target="_blank"><{$productDetail.product.pname}></a></dd>
-											<dd class="txt cfl"><span class="l">5ml</span><span class="r">数量：<{$productDetail.product.inventory}></span></dd>
-											<dd class="md" style="padding:0 10px">有效期至：<p class="expiration" style="display:inline"><{$productDetail.inventoryItem.validdate}></p></dd>
+											<dt>
+												<span class="check_bg">
+													<input type="checkbox" id="<{$productDetail.product.pid}>_pickup_checkbox" class="pickup_checkbox" name="detailIds[]" value="<{$productDetail.id}>" pnum="<{$productDetail.product_num}>" pweight="<{$productDetail.inventoryItem.weightKg}>">
+													<i pid="<{$productDetail.product.pid}>" class="checker">&nbsp;</i>
+												</span>
+											</dt>
+											<dd class="img">
+												<a href="" target="_blank">
+													<img src="<{$productDetail.product.pimg}>" width="150" height="150" alt="" style="display: inline-block" />
+												</a>
+											</dd>
+											<dd class="name" style="width: 140px; overflow: hidden">
+												<a href="" target="_blank"><{$productDetail.product.pname}></a>
+											</dd>
+											<dd class="txt cfl">
+												<span class="l">5ml</span>
+												<span class="r">
+													数量：<{$productDetail.product_num}>
+												</span>
+											</dd>
+											<dd class="md" style="padding: 0 10px">有效期至：
+												<p class="expiration" style="display: inline"><{$productDetail.inventoryItem.validdate}></p>
+											</dd>
 										</dl>
 									</li>
 								</volist>
@@ -33,20 +52,27 @@
 						</div>
 						<div class="W_pages" id="page"><{$page}></div>
 				        <if condition="$productDetailsCount gt 0">
- 					        <div class="th_sure cfl">
- 					        	<p><span class="all_check" id="all_select"><input type="checkbox" id="all_select" name=""><i>&nbsp;</i>全部提走</span></p>
+ 					        <div class="th_sure cfl" id="settlement">
+ 					        	<p>
+ 					        		<span class="all_check">
+ 					        			<input type="checkbox" id="all_select" name="">
+ 					        			<i id="all_check">&nbsp;</i>全部提走
+ 					        		</span>
+ 					        	</p>
  					        	<p>您本次提走<span class="g4" id="product_num">0</span>件产品</p>
- 					        	<p>总重量<span class="g4">0</span>kg</p>
- 					        	<p class="r"><a href="javascript:;" class="ty_btn">选好确认</a></p>
+ 					        	<p>总重量<span class="g4" id="product_weight">0</span>kg</p>
+ 					        	<p class="r"><a href="javascript:sub();" class="ty_btn">选好确认</a></p>
  					        </div>
  				        </if>
 					</div>
 					<div class="ft">&nbsp;</div>
 				</div>
+				</form>
 			</div>
 			<!--右边content-end-->
 			
 			<script>
+				
 				$(".expiration").each(function(){
 					var todayStr = getTodayFormate();
 					if($(this).text()<todayStr){
@@ -60,22 +86,54 @@
 					return false;
 				})
 				
+				var productNum=0;
+				var totalWeight=0;
+				
 				$(".checker").click(function(){
  					var pid = $(this).attr("pid");
+ 					var eleObj = $("#"+pid+"_pickup_checkbox");
  					if($(this).hasClass("select")){
  						$(this).removeClass("select");
- 						$("#"+pid+"_pickup_checkbox").attr("checked",false);
+ 						eleObj.attr("checked",false);
+ 						productNum -= parseInt(eleObj.attr("pnum"));
+ 						totalWeight -= parseFloat(eleObj.attr("pweight"));
  					}else{
  						$(this).addClass("select");
- 						$("#"+pid+"_pickup_checkbox").attr("checked",true);
+ 						eleObj.attr("checked",true);
+ 						productNum += parseInt(eleObj.attr("pnum"));
+ 						totalWeight += parseFloat(eleObj.attr("pweight"));
  					}
- 					var count = 0;
- 					$(".pickup_checkbox").each(function(){
- 						if($(this).attr("checked")){
- 							count++;
- 						}		
- 					})
- 					$("#product_num").text(count);
+ 					$("#product_num").text(productNum);
+ 					$("#product_weight").text(totalWeight);
  				})
+ 				
+ 				$("#all_check").click(function(){
+ 					productNum=0;
+ 					totalWeight=0;
+ 					if($(this).hasClass("select")){
+ 						$(this).removeClass("select");
+ 						$(".checker").removeClass("select");	
+ 						$(".pickup_checkbox").attr("checked",false);	
+ 					}else{
+ 						$(this).addClass("select");
+ 						$(".checker").addClass("select");
+ 	 					$.each($(".pickup_checkbox"), function(){
+ 	 						$(this).attr("checked",true);
+ 	 						productNum += parseInt($(this).attr("pnum"));
+ 	 						totalWeight += parseFloat($(this).attr("pweight"));
+ 	 					})	
+ 					}
+ 					$("#product_num").text(productNum);
+ 					$("#product_weight").text(totalWeight);
+ 				})
+ 				
+ 				function sub(){
+					var checked = $(".pickup_checkbox[checked=checked]");
+					if(!checked.length){
+						noty({'text':"请选择要提走的产品",'layout':'topLeft','type':'success'});	
+					}else{
+						$("#safekeeping_form").submit();
+					}
+				}
 			
 			</script>

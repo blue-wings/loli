@@ -98,7 +98,7 @@ var Loli = Loli || {};
 					}
 				}
 
-				pro_btn.click(function(){
+				pro_btn.unbind("click").bind("click",function(){
 					proBtnClick($(this));
 					slider();
 				});

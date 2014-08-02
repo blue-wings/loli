@@ -41,8 +41,7 @@
             </volist>
             
             <div class="commodity_foot">
-            	重量：<font><{$order.weight}></font>kg &nbsp;&nbsp;本次提货共计<font><{$order.productTotalNum}></font>件试用品&nbsp;&nbsp;总计：￥<font><{$order.costYuan}></font> &nbsp;&nbsp;&nbsp;&nbsp;获得积分：<font>360</font>
-            	 
+            	本次提货共计<font><{$order.productTotalNum}></font>件试用品&nbsp;&nbsp;重量：<font><{$order.weight}></font>kg &nbsp;&nbsp;
             </div>
         </div>
         
@@ -51,30 +50,6 @@
     </div>
 
 </div>
-
-<div class="payment">
-	<div class="payment_list"><img src="/public/images/radio_sel.jpg" id="fh" onclick="sel(this.id)" style="vertical-align:middle"/>支付，立即发货</div>
-    <div class="payment_list"><img src="/public/images/radio.jpg" id="bx" onclick="sel(this.id)" style="vertical-align:middle"/>支付，将试用品放入我的保管箱</div>
-    <input type="hidden" id="safekeeping" name="safekeeping" value="0">
-    <div class="clear"></div>
-</div>
-<script>
-function sel(id){
-	if(id=='bx'){
-		document.getElementById('bx').src='/public/images/radio_sel.jpg';
-		document.getElementById('fh').src='/public/images/radio.jpg';
-		document.getElementById('bx_show').style.display='block';
-		document.getElementById('zf_show').style.display='none';
-		$("#safekeeping").val("1");
-	}else{
-		document.getElementById('fh').src='/public/images/radio_sel.jpg';
-		document.getElementById('bx').src='/public/images/radio.jpg';
-		document.getElementById('bx_show').style.display='none';
-		document.getElementById('zf_show').style.display='block';
-		$("#safekeeping").val("0");
-	}
-}
-</script>
 
 <div class="Safe_box" id="zf_show">
 	<div class="Safe_list">
@@ -115,34 +90,7 @@ function sel(id){
             </div>
              
             <div class="commodity_foot">
-            	订阅服务费：<font>￥<{$order.costYuan}></font>         运费：<font>￥<{$postage}></font>        实际应付金额：<font>￥<{$totalCost}></font>  
-            </div>
-        </div>
-        
-       
-        
-    </div>
-
-</div>
-
-<div class="Safe_box" id="bx_show" style="display:none">
-	<div class="Safe_list">
-    	<div class="Safe_title Safe_list_bg Safe_list_title">
-        	<div class="padding">配送信息</div>
-        </div>
-        
-        <div class="commodity">
-        	 
-            <div class="Distribution">
-            	<div style="width:100%; font-weight:bold;">
-                     聪明！您选择了暂时寄存。积累了一定量的试用品后，您随时到 <font color="#f7cade">我的保险箱</font> 支付运费提货，一定要注意试用品的过期提醒哦。
-                </div>
-                 
-            </div>
-             
-            <div class="commodity_foot">
-            	订阅服务费：<font>￥<{$order.costYuan}></font>         运费：<font>￥0</font>        实际应付金额：<font>￥<{$order.costYuan}></font>         
-                
+            	运费：<font>￥<{$postage}></font>        实际应付金额：<font>￥<{$postage}></font>  
             </div>
         </div>
         

@@ -18,6 +18,7 @@ class safeKeepingAction extends commonAction{
  				$productRecord = $product->where("pid=".$productId)->find();
  				$productDetails[$i]["product"]= $productRecord;
  				$inventoryItemRecord = $inventoryItem->where("id=".$productRecord["inventory_item_id"])->find();
+ 				$inventoryItemRecord["weightKg"]=bcdiv($inventoryItemRecord["weight"], 1000, 3);
 				$productDetails[$i]["inventoryItem"]= $inventoryItemRecord;
  			}
  			$this->assign("productDetails",$productDetails);
@@ -27,40 +28,75 @@ class safeKeepingAction extends commonAction{
   		$this->display();
 	}
 	
+	public function selectedDetail(){
+		$productDetailIds = $_POST["productDetailIds"];
+	}
+	
 	public function createOrder() {
         $userId = $this->userid;
-        $userOrderSendProductDetailIds = $_GET["detailIds"];
-        if(!$userOrderSendProductDetailIds){
-        	throw new Exception("unknow error");
+        $userOrderSendProductDetailIdArray = $_POST["detailIds"];
+        if(!$userOrderSendProductDetailIdArray){
+        	throw new Exception("生成订单出错");
         }
-        $userOrderSendProductDetailIdArray = split(",", $userOrderSendProductDetailIds);
         $userOrderSendProductDetailModel = D("UserOrderSendProductdetail");
         $productIds = array();
         $productNums = array();
         
         foreach ($userOrderSendProductDetailIdArray as $userOrderSendProductDetailId){
-        	$detailItem = $shoppingCartModel->getById($userOrderSendProductDetailId);
+        	$detailItem = D("UserOrderSendProductdetail")->getById($userOrderSendProductDetailId);
         	if($detailItem["status"]==C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_NOT_PAYED")){
 				array_push($productIds, $shoppingCartItem["productid"]);
         		array_push($productNums, $shoppingCartItem["product_num"]);        	
         	}
         }
-        $result = D("UserSelfPackageOrder")->createOrder( $this->userid, $productIds, $productNums);
-        $this->display();
+        $orderId = D("UserSelfPackageOrder")->createOrder( $this->userid, $userOrderSendProductDetailIdArray);
+        $this->redirect("safeKeeping/getOrder2Complete", array("orderId"=>$orderId));
     }
+    
+    public function getOrder2Complete(){
+    	$orderId = $_GET["orderId"];
+    	if(!$orderId){
+    		$this->error("获取订单信息失败");
+    	}
+    	$order = D("UserSelfPackageOrder")->getOrderDetail($orderId);
+    	if($order["userid"] != $this->userid){
+    		$this->error("非法获取订单信息");
+    	}
+    	$this->assign("order", $order);
+    	$this->assign("ExpressCompanies", array(C("EXPRESS_SHENTONG_ID"), C("EXPRESS_SHUNFENG_ID")));
+    	$userOrderAddresses = M("UserOrderAddress")->where(array("userid"=>$this->userid))->order("id DESC")->select();
+    	if($userOrderAddresses){
+    		foreach ($userOrderAddresses as $key=>$userOrderAddress){
+    			$userOrderAddress["provinceName"]=M("area")->field("title")->getByAreaId($userOrderAddress["province_area_id"]);
+    			$userOrderAddress["provinceName"]=$userOrderAddress["provinceName"]["title"];
+    			$userOrderAddress["cityName"]=M("area")->field("title")->getByAreaId($userOrderAddress["city_area_id"]);
+    			$userOrderAddress["cityName"]=$userOrderAddress["cityName"]["title"];
+    			$userOrderAddress["districtName"]=M("area")->field("title")->getByAreaId($userOrderAddress["district_area_id"]);
+    			$userOrderAddress["districtName"]=$userOrderAddress["districtName"]["title"];
+    			$userOrderAddresses[$key]=$userOrderAddress;
+    		}
+    	}
+    	if(count($userOrderAddresses)){
+    		$this->assign("oldAdresses", $userOrderAddresses);
+    		$firstExpressCompany = C("EXPRESS_SHENTONG_ID");
+    		$postage =$this->getPostage($orderId, $firstExpressCompany["id"], $userOrderAddresses[0]["district_area_id"]);
+    		$this->assign("postage", bcdiv($postage, 100, 2));
+    	}
+    	$this->display();
+    }
+    
     
     public function ajaxGetPostage(){
     	$orderId = $_POST["orderId"];
     	$expressCompanyId = $_POST("expressCompanyId");
-    	$addressId = $_POST("addressId");
-    	$products = D("UserOrderSendProductdetail")->getUserSelfPackageOrderProducts($orderId);
-    	$productIds = array();
-    	foreach ($products as $product){
-    		array_push($productIds, $product["pid"]);
-    	}
-    	$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
-    	$data["postage"]=$postage;
+    	$areaId = $_POST("areaId");
+    	$data["postage"]=$this->getPostage($orderId, $expressCompanyId, $areaId);
 		$this->ajaxReturn($data, "JSON");    	
+    }
+    
+	private function getPostage($orderId, $expressCompanyId, $addressId){
+    	$postage = D("PostageStandard")->calculateSelfPackageOrderPostage($orderId, $expressCompanyId, $addressId);
+    	return $postage;
     }
     
     

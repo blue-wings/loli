@@ -204,7 +204,9 @@ function contentLoad(hashcode){
 					Loli.shoppingCartObj = new Loli.shoppingCart({addProduct2CartUrl:"<{:u('shoppingCart/addProduct2Cart')}>",getShoppingCartDetailUrl:"<{:u('shoppingCart/detail')}>"});	
 				}
 			}else{
-				Loli.shoppingCartObj.hide();	
+				if(Loli.shoppingCartObj){
+					Loli.shoppingCartObj.hide();	
+				}
 			}
 			
 		});		
