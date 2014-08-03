@@ -1284,67 +1284,6 @@ class InventoryAction extends CommonAction {
 		}
 	}
 
-	/**
-       +----------------------------------------------------------
-       * 创建出库单-系统出库
-       +----------------------------------------------------------
-       * @access public   
-       +----------------------------------------------------------
-       * @param  string	 
-       +-----------------------------------------------------------
-       * @author zhaoxiang 2013/1/4
-       */	
-	function outOrderSystem(){
-		$order_mod=D("InventoryUserOrderView");
-		import ( "@.ORG.Page" ); // 导入分页类库
-		extract($_GET);
-		if($this->_get('search')){
-			$where=$this->orderSystemWhere(array_map('filterVar',$_GET));
-		}
-		$where['UserOrder.ifavalid']=1;
-		$where['UserOrder.state']=1;
-		$where['UserOrderSend.productnum']=array('gt',0);
-		$where['UserOrderSend.senddate']=array('exp','IS NULL');
-		$where['UserOrderSend.proxysender']=array('exp','IS NULL');
-		$where['UserOrderSend.proxyorderid']=array('exp','IS NULL');
-
-		if($proposer==1){
-			$where['UserOrderSend.inventory_out_id']=array('gt',0);
-			$where['UserOrderSend.inventory_out_status']=1;
-		}else if($proposer==2){
-			$where['UserOrderSend.inventory_out_status']=0;
-			$where['UserOrderSend.inventory_out_id']=0;
-		}else{
-			$where['UserOrderSend.inventory_out_id']=0;
-		}
-
-		$count=$order_mod->where($where)->count();
-		$p = new Page ( $count, 1000);
-		$list=$order_mod->where($where)->field('ordernmb,userid,boxid,boxname,productnum,paytime,inventory_out_id,child_id')->limit ($p->firstRow.','.$p->listRows )->order('UserOrderSend.orderid DESC,UserOrderSend.child_id ASC')->select();
-		//echo $order_mod->getLastSql();exit;
-		$where['box.name']=array('exp','IS NOT NULL');
-		unset($where['boxid']);
-		$boxlist=$order_mod->where($where)->distinct('boxid')->field("boxid,boxname")->order('box.endtime DESC')->select();
-
-		
-		$ndate=date("Ym");
-		$timelist=array();
-		for($i=12;$i>=1;$i--){
-			$timelist[]=date("Ym",strtotime($ndate." -$i months"));
-		}
-		$timelist[]=$ndate;
-		for($j=1;$j<=3;$j++){
-			$timelist[]=date("Ym",strtotime($ndate." $j months"));
-		}
-		
-		
-		$page = $p->show ();
-		$this->assign ( "page", $page );
-		$this->assign ( "list", $list );
-		$this->assign ( "boxlist", $boxlist );
-		$this->assign("timelist",$timelist);
-		$this->display();
-	}
 
 	private function orderSystemWhere($arguments){
 
@@ -2060,10 +1999,6 @@ class InventoryAction extends CommonAction {
 				}
 			}
 
-			
-			
-			
-			
 		}
 		$count=count($list);
 		$this->assign("count",$count);
