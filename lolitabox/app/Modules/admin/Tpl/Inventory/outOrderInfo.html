@@ -246,25 +246,39 @@ input{
 		</table>
 	</div>
 </div>
+
 <div class="p10">
     <div class="flt2">
-        <span>快递单填写</span>
+        <span>快递单信息</span>
     </div>
-    <div class="flg2">
-        <table width="50%" cellpadding="0" cellspacing="0" style="padding:5px;">
+    <div class="flg">
+        <table width="80%" cellpadding="0" cellspacing="0" style="padding:5px;" border="0">
             <tr>
-                <td colspan="3" class="confrim">
-                    <if condition="$alonemessage['status'] eq 0">已删除
-                        <elseif  condition="$alonemessage['ifconfirm'] eq 1"/>
-                        已确认&nbsp;&nbsp;{$alonemessage.confirmoperator}&nbsp;&nbsp;{$alonemessage.confirmdatetime}
-                        <else/>
+                <td>快递公司:</td>
+                <td colspan="2"><p class="writebreak">{$alonemessage.proxyinfo.proxysender}</p></td>
+            </tr>
+            <tr>
+                <td>快递单号:</td>
+                <td colspan="2"><p class="writebreak">{$alonemessage.proxyinfo.proxyorderid}</p></td>
+            </tr>
+            <tr>
+                <td>发货日期:</td>
+                <td colspan="2">{$alonemessage.proxyinfo.senddate}</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <if condition="$alonemessage['proxyinfo'] eq null">
                         <input type="button" value="填写快递信息" name="confrim" onclick="editSendInfo('{$alonemessage.id}')" style="margin:5px;">
+                        <else />
+                        <input type="button" value="编辑快递信息" name="confrim" onclick="editSendInfo('{$alonemessage.id}')" style="margin:5px;">
                     </if>
                 </td>
             </tr>
         </table>
     </div>
 </div>
+
+
 <div class="p10">
 	<div class="flt2">
 		<span>出库</span>
@@ -273,12 +287,11 @@ input{
 		<table width="50%" cellpadding="0" cellspacing="0" style="padding:5px;">
 			<tr>
 				<td colspan="3" class="confrim">
-				 	<if condition="$alonemessage['status'] eq 0">已删除
-					<elseif  condition="$alonemessage['ifconfirm'] eq 1"/>
-					已确认&nbsp;&nbsp;{$alonemessage.confirmoperator}&nbsp;&nbsp;{$alonemessage.confirmdatetime}
-					<else/>
-					<input type="button" value="确认出库" name="confrim" onclick="laidUp('{$alonemessage.id}',2,'{$alonemessage.type}')" style="margin:5px;">
-					</if>
+					<input type="button" value="确认出库" name="confrim" onclick="laidUp('{$alonemessage.id}',2,'{$alonemessage.type}')" style="margin:5px;"
+                    <if condition="$alonemessage['proxyinfo'] eq null OR $alonemessage['ifagree'] neq 1">
+                    disabled = "disabled"
+                    </if>
+                            >
 				</td>
 			</tr>													
 		</table>

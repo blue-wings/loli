@@ -1238,6 +1238,17 @@ class InventoryAction extends CommonAction {
 			$price_array[]=abs($value['quantity']) * $information['price'];
 		}
 		$info['price']=array_sum($price_array);
+
+        $order = M("UserOrder")->where("inventory_out_id=".$where['in_out_id'])->field("ordernmb")->find();
+        $proxy_mod = M("UserOrderProxy");
+        $proxy=$proxy_mod->where(array("orderid"=>$order['ordernmb']))->find();
+        if($proxy){
+            $userorderinfo=M("UserOrderSend")->where("orderid=".$order['ordernmb'])->find();
+            $proxyInfo['proxysender'] = $proxy['proxysender'];
+            $proxyInfo['proxyorderid'] = $proxy['proxyorderid'];
+            $proxyInfo['senddate'] = $userorderinfo['senddate'];
+            $info['proxyinfo'] = $proxyInfo;
+        }
 		$this->assign('alonemessage',$info);
 		$this->display();
 	}
@@ -2090,7 +2101,7 @@ class InventoryAction extends CommonAction {
         if (!isset( $outid )){
             return false;
         }else{
-            $order = M("UserSend")->where("inventory_out_id="+$outid)->field("ordernmb")->find();
+            $order = M("UserOrder")->where("inventory_out_id=".$outid)->field("ordernmb")->find();
             $userorderinfo=M("UserOrderSend")->where("orderid=".$order['ordernmb'])->find();
             $userorderinfo['linkman']=M("UserOrderAddress")->where("orderid=".$order['ordernmb'])->getfield("linkman");
             $userorderinfo['orderid']=$order['ordernmb'];
@@ -2121,7 +2132,15 @@ class InventoryAction extends CommonAction {
         $send_data ["senddate"] = $_POST ["senddate"];
         $ordersend=M ( "UserOrderSend" );
         if (false !==$ordersend->where ( $where )->save ( $send_data )) {
-            M("UserOrderProxy")->where($where)->save($data);
+            $proxy_mod = M("UserOrderProxy");
+            $if_proxy=$proxy_mod->where($where)->find();
+            if($if_proxy){
+                $proxy_mod->where($where)->save($data);
+            }else{
+                $send_data['orderid'] = $orderid;
+                $send_data['status'] = 0;
+                $proxy_mod->add($send_data);
+            }
             $this->success ( '操作成功' );
         } else {
             $this->error ( '操作失败' . $ordersend->getDbError () );
