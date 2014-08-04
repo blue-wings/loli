@@ -213,11 +213,9 @@ class UserOrderModel extends Model {
 			return false;
 			
 		$data['ordernmb']=$orderId;
+
+		$data["address_id"]=$addressId;
 		
-		$addresInfo=D("UserAddress")->getUserAddressInfo($addressId);
-		if($addresInfo==false)
-			return false;
-			
 		$products = D("UserOrderSendProductdetail")->getUserOrderProducts($orderId);
     	$productIds = array();
     	foreach ($products as $product){
@@ -229,10 +227,9 @@ class UserOrderModel extends Model {
 			$data["postage"]=$postage;
 			$data["pay_postage"]=C("USER_PAY_POSTAGE_ORDER");
 		}else{
+			$data["postage"]=0;
 			$data["pay_postage"]=C("USER_NOT_PAY_POSTAGE_ORDER");
 		}
-		
-		$data["cost"] += $postage;
 		
 		$data['sendword']=$sendWord;
 		$data['address_id']=$addressId;
@@ -242,7 +239,7 @@ class UserOrderModel extends Model {
 		if($ifGiftCard==1){
 			$giftcardPrice=D("Giftcard")->getUserGiftcardPrice($userId);
 			if($giftcardPrice>0){
-				if($giftcardPrice>=(int)$data['cost']){
+				if($giftcardPrice >= ($data['cost']+$data["postage"])){
 					$data['pay_bank']=null;//如果使用礼品卡余额全额支付，清除支付方式
 					$data['giftcard']=$data['cost'];
 				}else{
@@ -250,23 +247,11 @@ class UserOrderModel extends Model {
 				}
 			}
 		}
-		$data["ifPayPostage"] = $ifPayPostage;
 		$orderAddRst = $this->save($data);
 		
 		//订单信息增加成功
 		if($orderAddRst){
-			//将订单的收获地址信息增加到user_order_address表中
-			$orderAddressData['orderid']=$data['ordernmb'];
-			$orderAddressData['linkman']=$addresInfo['linkman'];
-			$orderAddressData['telphone']=$addresInfo['telphone'];
-			$orderAddressData['province']=$addresInfo['province'];
-			$orderAddressData['city']=$addresInfo['city'];
-			$orderAddressData['district']=$addresInfo['district'];
-			$orderAddressData['address']=$addresInfo['address'];
-			$orderAddressData['postcode']=$addresInfo['postcode'];
-			M("UserOrderAddress")->add($orderAddressData);
-			
-			return true;
+			return $orderId;
 		}else{
 			return false;
 		}

@@ -43,7 +43,7 @@
 											</div>
 										
 											<div class="price_wrap" id= "price_time<{$k}>"  <if condition="$vo.start eq false"> style="display:none" </if>>
-											    <p class="price cfl"><span class="l">￥<{$vo.member_price|number_format=###, 1, '.', ''}></span>
+											    <p class="price cfl"><span class="l">￥<{$vo.member_price}></span>
 											    <if condition="$ismember eq 0">
 												 <input type="button" class="r" value="升级高级会员"></p>
 												 <else/>

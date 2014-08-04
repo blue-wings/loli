@@ -109,8 +109,8 @@ class subscribeAction extends commonAction{
 	 private function formatProductPrice($products) {
 	 	$productArray = array();
 	 	foreach ($products as $product){
-	 		$product["price"]= $product["price"]/100; 
-	 		$product["member_price"] = $product["member_price"]/100;
+	 		$product["price"]= bcdiv($product["price"],100, 2);
+	 		$product["member_price"] = bcdiv($product["member_price"],100, 2);
 	 		array_push($productArray, $product);
 	 	}
 		return $productArray;	

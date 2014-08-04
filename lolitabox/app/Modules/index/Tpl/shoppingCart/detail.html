@@ -22,8 +22,7 @@
 										<img src="<{$shoppingCartItem.product.pimg}>" alt="" />
 									</dt>
 									<dd class="name"><{$shoppingCartItem.product.pname}></dd>
-									<dd class="price">￥<{$shoppingCartItem.product.realPrice|number_format=###,
-										1, '.', ''}></dd>
+									<dd class="price">￥<{$shoppingCartItem.product.realPrice}></dd>
 									<dd class="num_ctrl">
 										<input type="button" class="num_down" /> 
 										<input type="text"
@@ -46,8 +45,7 @@
 			<div class='chart_info cfl'>
 				<p class='info l tr'>
 					<span>您选择了<i id="productNum"><{$productTotalNum}></i>件商品</span> <span>重量：<i id="productWeight"><{$weight}>kg</i>
-					</span> <span>订阅金额(不含运费）：<i class='gz_t_red' id="totalCost">￥ <{$totalCost|number_format=###,
-										1, '.', ''}></i>
+					</span> <span>订阅金额(不含运费）：<i class='gz_t_red' id="totalCost">￥ <{$totalCost}></i>
 					</span>
 				</p>
 				<p class='btn r'>

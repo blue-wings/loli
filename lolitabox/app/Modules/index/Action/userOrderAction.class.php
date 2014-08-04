@@ -58,7 +58,7 @@ class userOrderAction extends commonAction {
     		$firstExpressCompany = C("EXPRESS_SHENTONG_ID");
     		$postage =$this->getPostage($orderId, $firstExpressCompany["id"], $userOrderAddresses[0]["district_area_id"]);
     		$this->assign("postage", bcdiv($postage, 100, 2));
-    		$this->assign("totalCost", bcdiv(($order["cost"]+$postage), 100 , 1));
+    		$this->assign("totalCost", bcdiv(($order["cost"]+$postage), 100 , 2));
     	}
     	$this->display();
     }
@@ -88,18 +88,48 @@ class userOrderAction extends commonAction {
         $ifUseGiftCard = $_POST("ifUseGiftCard");
         $payBank = $_POST("payBank");
         $addressId = $_POST("addressId");
-        $ifGiftCard = $_POST("ifGiftCard");
         $ifPayPostage = $_POST("ifPayPostage");
-        $result = D("UserOrder")->complereOrder($this->userid,$orderId, $addressId,$payBank,$ifGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
-    	if($result){
-        	//TODO跳转到第三方支付	
+        $orderId = D("UserOrder")->complereOrder($this->userid,$orderId, $addressId,$payBank,$ifGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
+    	if($orderId){
+        	$this->gopay($orderId, false);	
         }
     }
     
- 	public function hasPayed(){
-    	$orderId = $_POST["orderId"];
-        $tradeNum = $_POST("tradeNum");
-        D("UserOrder")->hasPayed($orderId, $tradeNum);
-    }
+	private function gopay($orderid, $repay){
+		header("Content-type: text/html; charset=utf-8");
+		$user_order_mod=D("UserOrder");
+		$orderinfo=$user_order_mod->getOrderInfo($orderid);
+		//未支付订单再次支付
+		if($repay){
+				
+		}else{
+			//正常去支付
+			$name="我的订阅";
+			$pay_bank=$orderinfo['pay_bank'];
+			$priceFen = $orderinfo["cost"] + $orderinfo["postage"] - $orderinfo["giftcard"];
+			$priceYuan = bcdiv($priceFen, 100, 2);
+			echo "<form name=\"form1\" method=\"post\" id=\"form1\" action=\"".U('pay/alipayto')."\" >\r\n";
+			echo "<input type=\"hidden\" name=\"ordernmb\" value=\"".$orderid."\"/>\r\n";
+			echo "<input type=\"hidden\" name=\"total_fee\" value=\"".$priceYuan."\"/>\r\n";
+			echo "<input type=\"hidden\" name=\"subject\" value=\""."我订阅的萝莉盒产品"."\"/>\r\n";
+			echo "<input type=\"hidden\" name=\"body\" value=\""."我订阅的萝莉盒产品"."\"/>\r\n";
+			echo "<input type=\"hidden\" name=\"pay_bank\" value=\"".$orderinfo["pay_bank"]."\"/>\r\n";
+			echo "<input type=\"submit\" name=\"submit1\" style=\"display:none\"/>";
+			echo "</form>\r\n";
+			echo "<script>\r\n";
+			echo " if ((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0)){ \r\n";
+			echo "	document.form1.submit(); \r\n";
+			echo "}else if (navigator.userAgent.indexOf('Firefox') >= 0){ \r\n";
+			echo "	document.form1.submit1.click(); \r\n";
+			echo "}else if (navigator.userAgent.indexOf('Opera') >= 0){ \r\n";
+			echo "	document.form1.submit();";
+			echo "}else{";
+			echo "	document.form1.submit();";
+			echo "}";
+			echo "</script>";
+			exit();
+		}
+	}
+    
     
 }

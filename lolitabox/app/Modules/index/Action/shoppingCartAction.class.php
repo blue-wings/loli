@@ -115,10 +115,10 @@ class ShoppingCartAction extends commonAction {
 		foreach ($shoppingCartItems as $key=>$shoppingCartItem){
 			$productPrice = 0;
 			if($this->userinfo['if_member'] && $shoppingCartItem["product"]["member_price"]){
-				$shoppingCartItem["product"]["realPrice"]=bcdiv($shoppingCartItem["product"]["member_price"], 100, 1);
+				$shoppingCartItem["product"]["realPrice"]=bcdiv($shoppingCartItem["product"]["member_price"], 100, 2);
 				$productPrice = $shoppingCartItem["product"]["member_price"];
 			}else{
-				$shoppingCartItem["product"]["realPrice"]=bcdiv($shoppingCartItem["product"]["price"], 100, 1);
+				$shoppingCartItem["product"]["realPrice"]=bcdiv($shoppingCartItem["product"]["price"], 100, 2);
 				$productPrice = $shoppingCartItem["product"]["price"];
 			}
 			$userCanBuyNum = D("Products")->getRemainProdcutNumPerUserOrder($shoppingCartItem["product"]["pid"], $this->userid);
@@ -132,7 +132,7 @@ class ShoppingCartAction extends commonAction {
 			$productTotalNum += $shoppingCartItem["product_num"];
 		}
 		$weight = bcdiv($weight, 1000, 3);
-		$totalCost = bcdiv($totalCost, 100, 1);
+		$totalCost = bcdiv($totalCost, 100, 2);
 		$result["shoppingCartItems"]=$shoppingCartItems;
 		$result["productTotalNum"]=$productTotalNum;
 		$result["weight"]=$weight;

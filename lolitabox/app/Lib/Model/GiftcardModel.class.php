@@ -33,6 +33,7 @@ class GiftcardModel extends Model {
 	/**
 	 * 获取用户礼品卡的总金额
 	 * @author penglele
+	 * @return 返回的单位是分
 	 */
 	public function getUserGiftcardTotalPrice($userid){
 		if(!$userid){
@@ -46,6 +47,7 @@ class GiftcardModel extends Model {
 	 * 获取用户礼品卡的余额
 	 * @param int $userid
 	 * @author penglele
+	 * @return 返回的单位是分
 	 */
 	public function getUserGiftcardPrice($userid){
 		$total_price=$this->getUserGiftcardTotalPrice($userid);//礼品卡的总金额

@@ -29,6 +29,8 @@ class commonAction extends Action{
 			$this->assign("member",$member);
 			$this->assign("bind",$bind);
 			$this->assign("userface",$userface);
+			$score = M("UserScore")->where(array("userid"=>$this->userid))->getField("score");
+        	$this->userinfo["score"] = $score;
 			
 		}
 		//当前页面的url

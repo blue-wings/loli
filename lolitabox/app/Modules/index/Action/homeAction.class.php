@@ -18,8 +18,9 @@ class homeAction extends commonAction {
 
         //优惠券余额
         $price=D("Giftcard")->getUserGiftcardPrice($userid);
+        $price = bcdiv($price, 100, 2);
         $info['giftcard_price'] = $price;
-
+        
         //我的订阅
         $model= new Model();
         $dataOffset = time() - strtotime($return['userinfo']['addtime']);
