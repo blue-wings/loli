@@ -36,6 +36,9 @@ class userOrderAction extends commonAction {
     		$this->error("获取订单信息失败");
     	}
     	$order = D("UserOrder")->getOrderDetail($orderId);
+    	if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
+    		$this->error("订单状态异常");
+    	}
     	if($order["userid"] != $this->userid){
     		$this->error("非法获取订单信息");
     	}
@@ -60,6 +63,10 @@ class userOrderAction extends commonAction {
     		$this->assign("postage", bcdiv($postage, 100, 2));
     		$this->assign("totalCost", bcdiv(($order["cost"]+$postage), 100 , 2));
     	}
+    	//优惠券余额
+        $giftCardRemain =D("Giftcard")->getUserGiftcardPrice($this->userid);
+        $giftCardRemain = bcdiv($giftCardRemain, 100, 2);
+        $this->assign("giftCardRemain", $giftCardRemain);
     	$this->display();
     }
     
@@ -77,22 +84,43 @@ class userOrderAction extends commonAction {
     }
     
     
-    public function completeOrderAnd2Pay(){
+    public function completeOrder(){
     	$orderId = $_POST["orderId"];
+    	$order = D("UserOrder")->getOrderDetail($orderId);
+    	if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
+    		$this->error("订单状态异常");
+    	}
         $sendWord = $_POST["send_word"];
         import("ORG.Util.String");
         if(mb_strlen($sendWord,"utf8") > 200){
             $sendWord=String::msubstr($sendWord ,0,200,'utf-8',false);
         }
-        $expressCompanyId = $_POST("expressCompanyId");
-        $ifUseGiftCard = $_POST("ifUseGiftCard");
-        $payBank = $_POST("payBank");
-        $addressId = $_POST("addressId");
-        $ifPayPostage = $_POST("ifPayPostage");
-        $orderId = D("UserOrder")->complereOrder($this->userid,$orderId, $addressId,$payBank,$ifGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
-    	if($orderId){
-        	$this->gopay($orderId, false);	
-        }
+        $expressCompanyId = $_POST["expressCompanyId"];
+        $ifUseGiftCard = $_POST["ifUseGiftCard"];
+        $payBank = $_POST["pay_bank"];
+        $addressId = $_POST["addressId"];
+        $ifPayPostage = $_POST["ifPayPostage"];
+        D("UserOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$ifGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
+        $this->redirect("userOrder/getCompleteOrer2Pay", array("orderId"=>$orderId));
+    }
+    
+    public function getCompleteOrer2Pay(){
+    	$orderId = $_GET["orderId"];
+    	$order = D("UserOrder")->getOrderInfo($orderId);
+    	if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
+    		$this->error("订单状态异常");
+    	}
+        $this->assign("order", $order);
+    	$userOrderAddresses = M("UserOrderAddress")->getById($order["address_id"]);
+	    $provinceName=M("area")->where(array("area_id"=>$userOrderAddress["province_area_id"]))->getField("title");
+	    $cityName=M("area")->where(array("area_id"=>$userOrderAddress["city_area_i"]))->getField("title");
+	    $districtName=M("area")->where(array("area_id"=>$userOrderAddress["district_area_id"]))->getField("title");
+	    $addressNote = $userOrderAddresses["linkman"].",".$userOrderAddresses["telphone"].",".$provinceName.$cityName.$districtName.$userOrderAddresses["address"]."(".$userOrderAddresses["postcode"].")";
+	    $this->assign("addressNote", $addressNote);
+	    $priceFen = $orderinfo["cost"] + $orderinfo["postage"] - $orderinfo["giftcard"];
+		$priceYuan = bcdiv($priceFen, 100, 2);
+	    $this->assign("priceYuan", $priceYuan);
+        $this->display();
     }
     
 	private function gopay($orderid, $repay){
@@ -129,6 +157,14 @@ class userOrderAction extends commonAction {
 			echo "</script>";
 			exit();
 		}
+	}
+	
+	public function paySucces(){
+		$this->display();
+	}
+	
+	public function payFailed(){
+		$this->display();
 	}
     
     

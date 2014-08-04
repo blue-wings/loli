@@ -66,6 +66,7 @@ class UserOrderModel extends Model {
 		$list['credit']=$orderInfo['credit'];
 		$list['state']=$orderInfo['state'];
 		$list['cost']=$orderInfo['cost'];
+		$list['costYuan']=bcdiv($orderInfo['cost'], 100, 2);
 		
 		//订单--收货地址
 		$orderAddressInfo=$this->getUserOrderAddressList($orderid);
@@ -208,22 +209,17 @@ class UserOrderModel extends Model {
 	 * @param unknown_type $sendWord
 	 * @param unknown_type $expressCompanyId
 	 */
-	public function complereOrder($userId,$orderId, $addressId,$payBank="",$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
-		if(empty($userId) || empty($orderId) || empty($addressId) || $addressId==0 || empty($ifPayPostage) || empty($expressCompanyId))
+	public function completeOrder($userId,$orderId, $addressId,$payBank,$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
+		if(empty($userId) || empty($orderId) || empty($addressId) || empty($ifPayPostage) || !isset($expressCompanyId))
 			return false;
 			
 		$data['ordernmb']=$orderId;
 
 		$data["address_id"]=$addressId;
 		
-		$products = D("UserOrderSendProductdetail")->getUserOrderProducts($orderId);
-    	$productIds = array();
-    	foreach ($products as $product){
-    		array_push($productIds, $product["pid"]);
-    	}
-		
 		if($ifPayPostage){
-			$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
+			$address = M("UserOrderAddress")->getById($addressId);
+			$postage = D("PostageStandard")->calculateOrderPostage($orderId, $expressCompanyId, $address["district_area_id"]);
 			$data["postage"]=$postage;
 			$data["pay_postage"]=C("USER_PAY_POSTAGE_ORDER");
 		}else{
@@ -247,14 +243,7 @@ class UserOrderModel extends Model {
 				}
 			}
 		}
-		$orderAddRst = $this->save($data);
-		
-		//订单信息增加成功
-		if($orderAddRst){
-			return $orderId;
-		}else{
-			return false;
-		}
+		$this->save($data);
 	}
 	
 	/**

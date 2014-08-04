@@ -1,0 +1,143 @@
+<include file="public:_header.inc" />
+
+	<div class="Safe_box Topay">
+		<div class="Safe_list bank-list">
+
+			<div class="PaymentInfo">
+				<div class="Paymenttitle">
+					<img src="/public/images/order_ok.png" width="50" height="46" />订单已提交，请尽快完成付款
+				</div>
+				<div class="order">
+					订单生成后请您尽快支付，否则订单可能会因为试用品被订阅完而失效，为保证大家都能及时订阅到自己喜欢的试用品，
+					超过30分钟，订单将自动被取消。 如有任何问题请拨打客服电话：4006-263-362</div>
+				<div class="order">如有任何问题请拨打客服电话：4006-263-362</div>
+				<div class="order">&nbsp;</div>
+				<div class="order">订单编号 | <{$order.ordernmb}></div>
+				<div class="order">订单时间 | <{$order.addtime}></div>
+				<div class="order">订单产品 | 我订阅的萝莉盒产品</div>
+				<div class="order">收货信息 | <{$addressNote}></div>
+				<div class="order">付款金额 | <{$priceYuan}>元</div>
+				<div class="order">
+					支付方式 | <label class="icon <{$order.pay_bank}>">
+				</div>
+			</div>
+			
+			<div class="Cont_pay" style="text-align:center;">
+				<input type="button" class="W_pin_b14" onclick="confirm_tijiao(2,this)" value="立即支付">
+			</div>	
+
+		</div>
+
+	</div>
+	
+	<form name="form1" id="form1" method="post" action="<{:u('userOrder/gopay')}>" target="_blank">	
+		<input type="hidden" name="orderId" value="<{$order.id}>" />
+		<input type="hidden" name="repay" value="0" />
+	</form>
+
+
+	<div style="display:none ;" id="note">
+		<div id='alert-mask'></div>
+		<div id="alert">
+			<div class="alert-indicator">
+				<div class="Safe_box alert">
+					<div class="Safe_list">
+						<div class="Safe_title Safe_list_bg Safe_list_title">
+							<div class="padding" style="background: #f5f5f5;">请您在新的页面中进行付款</div>
+						</div>
+
+						<div class="alert_info">
+							<img src="/public/images/alert.png" width="150" height="110" />
+
+							<div class="info">
+								付款完成前请先不要关闭页面<br /> 完成付款后请您根据以下情况点击对应按钮
+							</div>
+
+						</div>
+						<div class="alert_btn_ btn_">
+							<div class="ok_left">
+								<input type="button" class="button_" value="支付成功" />
+							</div>
+							<div class="ok_right">
+								<input type="button" class="button_" value="支付遇到问题" />
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="foot_wrap">
+		<div class="foot">
+			<div class="list_title">新丁</div>
+			<div class="list_title">常见问题</div>
+			<div class="list_title">VIEDEO</div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="foot">
+			<div class="foot_box">
+				<div class="foot_box_li box_type_title">网站声明</div>
+				<div class="foot_box_li">隐私声明</div>
+				<div class="foot_box_li">用户协议</div>
+
+			</div>
+			<div class="foot_box">
+				<div class="foot_box_li box_type_title">关注我们</div>
+				<div class="foot_box_li">新浪微博</div>
+				<div class="foot_box_li">腾讯微博</div>
+
+			</div>
+
+			<div class="foot_box" style="width: 10%">
+				<div class="foot_box_li box_type_title">萝莉盒微信</div>
+				<div class="foot_box_li">
+					<img src="/public/images/wx.png" width="68" height="68" />
+				</div>
+
+			</div>
+
+			<div class="foot_box" style="width: 10%">
+				<div class="foot_box_li box_type_title">萝莉盒APP</div>
+				<div class="foot_box_li">
+					<img src="/public/images/app.png" width="68" height="68" />
+				</div>
+
+			</div>
+			<div class="foot_box" style="width: 20%">
+				<div class="foot_box_li box_type_title">服务支持</div>
+				<div class="foot_box_li">QQ客服</div>
+				<div class="foot_box_li">服务热线：4006-263-362</div>
+				<div class="foot_box_li">法定工作日：8：30-17：30</div>
+
+			</div>
+			<div class="foot_box" style="width: 25%">
+				<div class="foot_box_li box_type_title">版权信息</div>
+				<div class="foot_box_li">京ICP备12011669号-1</div>
+				<div class="foot_box_li">京公网安备 11010502019238</div>
+				<div class="foot_box_li">Copyright © 2012-2014 LOLITABOX</div>
+
+			</div>
+
+			<div class="clear"></div>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById('alert-mask').style.height = parseInt(window.screen.availHeight)
+				+ 'px'
+		document.getElementById('alert').style.left = parseInt(window.screen.width / 53)
+				+ '%';
+		
+		function submit(){
+			$(this).remove();
+			$("#form1").submit();
+			$("#note").show();
+		}
+	</script>
+</body>
+</html>
