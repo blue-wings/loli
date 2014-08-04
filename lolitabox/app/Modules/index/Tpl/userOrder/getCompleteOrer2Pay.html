@@ -1,4 +1,5 @@
 <include file="public:_header.inc" />
+<link href="/public/css/safe.css?02393" rel="stylesheet" type="text/css" />
 
 	<div class="Safe_box Topay">
 		<div class="Safe_list bank-list">
@@ -18,12 +19,12 @@
 				<div class="order">收货信息 | <{$addressNote}></div>
 				<div class="order">付款金额 | <{$priceYuan}>元</div>
 				<div class="order">
-					支付方式 | <label class="icon <{$order.pay_bank}>">
+					支付方式 | <label class="icon <{$order.pay_bank}>" style="width: 100px;height: 33px;display: inline-block;">
 				</div>
 			</div>
 			
 			<div class="Cont_pay" style="text-align:center;">
-				<input type="button" class="W_pin_b14" onclick="confirm_tijiao(2,this)" value="立即支付">
+				<input type="button" class="W_pin_b14" onclick="submit()" value="立即支付">
 			</div>	
 
 		</div>
@@ -31,7 +32,7 @@
 	</div>
 	
 	<form name="form1" id="form1" method="post" action="<{:u('userOrder/gopay')}>" target="_blank">	
-		<input type="hidden" name="orderId" value="<{$order.id}>" />
+		<input type="hidden" name="orderId" value="<{$order.ordernmb}>" />
 		<input type="hidden" name="repay" value="0" />
 	</form>
 
@@ -71,62 +72,6 @@
 	</div>
 
 
-	<div id="foot_wrap">
-		<div class="foot">
-			<div class="list_title">新丁</div>
-			<div class="list_title">常见问题</div>
-			<div class="list_title">VIEDEO</div>
-			<div class="clear"></div>
-		</div>
-
-		<div class="foot">
-			<div class="foot_box">
-				<div class="foot_box_li box_type_title">网站声明</div>
-				<div class="foot_box_li">隐私声明</div>
-				<div class="foot_box_li">用户协议</div>
-
-			</div>
-			<div class="foot_box">
-				<div class="foot_box_li box_type_title">关注我们</div>
-				<div class="foot_box_li">新浪微博</div>
-				<div class="foot_box_li">腾讯微博</div>
-
-			</div>
-
-			<div class="foot_box" style="width: 10%">
-				<div class="foot_box_li box_type_title">萝莉盒微信</div>
-				<div class="foot_box_li">
-					<img src="/public/images/wx.png" width="68" height="68" />
-				</div>
-
-			</div>
-
-			<div class="foot_box" style="width: 10%">
-				<div class="foot_box_li box_type_title">萝莉盒APP</div>
-				<div class="foot_box_li">
-					<img src="/public/images/app.png" width="68" height="68" />
-				</div>
-
-			</div>
-			<div class="foot_box" style="width: 20%">
-				<div class="foot_box_li box_type_title">服务支持</div>
-				<div class="foot_box_li">QQ客服</div>
-				<div class="foot_box_li">服务热线：4006-263-362</div>
-				<div class="foot_box_li">法定工作日：8：30-17：30</div>
-
-			</div>
-			<div class="foot_box" style="width: 25%">
-				<div class="foot_box_li box_type_title">版权信息</div>
-				<div class="foot_box_li">京ICP备12011669号-1</div>
-				<div class="foot_box_li">京公网安备 11010502019238</div>
-				<div class="foot_box_li">Copyright © 2012-2014 LOLITABOX</div>
-
-			</div>
-
-			<div class="clear"></div>
-		</div>
-	</div>
-
 	<script>
 		document.getElementById('alert-mask').style.height = parseInt(window.screen.availHeight)
 				+ 'px'
@@ -139,5 +84,5 @@
 			$("#note").show();
 		}
 	</script>
-</body>
-</html>
+
+	<include file="public:footer" />

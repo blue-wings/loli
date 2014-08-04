@@ -123,10 +123,10 @@ class userOrderAction extends commonAction {
         $this->display();
     }
     
-	private function gopay($orderid, $repay){
+	public function gopay($orderId, $repay){
 		header("Content-type: text/html; charset=utf-8");
 		$user_order_mod=D("UserOrder");
-		$orderinfo=$user_order_mod->getOrderInfo($orderid);
+		$orderinfo=$user_order_mod->getOrderInfo($orderId);
 		//未支付订单再次支付
 		if($repay){
 				
@@ -137,7 +137,7 @@ class userOrderAction extends commonAction {
 			$priceFen = $orderinfo["cost"] + $orderinfo["postage"] - $orderinfo["giftcard"];
 			$priceYuan = bcdiv($priceFen, 100, 2);
 			echo "<form name=\"form1\" method=\"post\" id=\"form1\" action=\"".U('pay/alipayto')."\" >\r\n";
-			echo "<input type=\"hidden\" name=\"ordernmb\" value=\"".$orderid."\"/>\r\n";
+			echo "<input type=\"hidden\" name=\"ordernmb\" value=\"".$orderId."\"/>\r\n";
 			echo "<input type=\"hidden\" name=\"total_fee\" value=\"".$priceYuan."\"/>\r\n";
 			echo "<input type=\"hidden\" name=\"subject\" value=\""."我订阅的萝莉盒产品"."\"/>\r\n";
 			echo "<input type=\"hidden\" name=\"body\" value=\""."我订阅的萝莉盒产品"."\"/>\r\n";
@@ -159,7 +159,7 @@ class userOrderAction extends commonAction {
 		}
 	}
 	
-	public function paySucces(){
+	public function paySuccess(){
 		$this->display();
 	}
 	
