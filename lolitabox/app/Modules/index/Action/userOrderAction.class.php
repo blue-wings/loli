@@ -117,7 +117,7 @@ class userOrderAction extends commonAction {
 	    $districtName=M("area")->where(array("area_id"=>$userOrderAddress["district_area_id"]))->getField("title");
 	    $addressNote = $userOrderAddresses["linkman"].",".$userOrderAddresses["telphone"].",".$provinceName.$cityName.$districtName.$userOrderAddresses["address"]."(".$userOrderAddresses["postcode"].")";
 	    $this->assign("addressNote", $addressNote);
-	    $priceFen = $orderinfo["cost"] + $orderinfo["postage"] - $orderinfo["giftcard"];
+	    $priceFen = $order["cost"] + $order["postage"] - $order["giftcard"];
 		$priceYuan = bcdiv($priceFen, 100, 2);
 	    $this->assign("priceYuan", $priceYuan);
         $this->display();

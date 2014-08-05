@@ -68,66 +68,9 @@ class UserOrderModel extends Model {
 		$list['cost']=$orderInfo['cost'];
 		$list['costYuan']=bcdiv($orderInfo['cost'], 100, 2);
 		
-		//订单--收货地址
-		$orderAddressInfo=$this->getUserOrderAddressList($orderid);
-		if($orderAddressInfo){
-			$addressInfo=array();
-			$addressInfo['linkman']=$orderAddressInfo['linkman'];
-			$addressInfo['telphone']=$orderAddressInfo['telphone'];
-			$addressInfo['address']=$orderAddressInfo['province'].$orderAddressInfo['city'].$orderAddressInfo['district'].$orderAddressInfo['address'];
-			$addressInfo['postcode']=$orderAddressInfo['postcode'];
-			$list['address_list']=$addressInfo;
-		}
-		
-		if($orderInfo['state']==C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_PAYED")){
-			/*--------已付款--------*/
-			//物流信息
-			$orderProxyInfo=$this->getUserOrderProxyInfo($orderid);
-			if($orderProxyInfo==false){
-				$proxyInfo="";
-			}else{
-				$proxyInfo=$orderProxyInfo;
-			}
-			$list['proxyinfo']=$proxyInfo;
-		}
 		return $list;
 	}
     
-	
-	/**
-	 * 订单物流信息
-	 * @param $orderid 订单ID
-	 * @return array $proxy_info 物流信息
-	 * @author penglele
-	 */
-	public function getUserOrderProxyInfo($orderid,$childid){
-		if(empty($orderid)) return false;
-		$orderProxyMod=M("UserOrderProxy");
-		$orderSendMod=M("UserOrderSend");
-		$where['orderid']=$orderid;
-		if($childid){
-			$where['child_id']=$childid;
-		}
-		$proxyInfo=$orderSendMod->where($where)->find();
-		if(!$proxyInfo || !$proxyInfo['proxyorderid']) return false;
-		$proxyInfo['proxyinfo']=$orderProxyMod->where($where)->getField("proxyinfo");
-		return $proxyInfo;
-	}
-	
-	/*
-	 * 获取用户订单地址
-	 * @param $orderid 订单ID
-	 * @return array $address_list 地址列表
-	 * @author penglele
-	 */
-	public function getUserOrderAddressList($orderid,$field=null){
-		if(empty($orderid)) return false;
-		$orderAddressMod=M("UserOrderAddress");
-		if(empty($field))  $field="*";
-		$orderAddressInfo=$orderAddressMod->field($field)->getByOrderid($orderid);
-		return $orderAddressInfo;
-	}
-	
 	/**
 	 * 减少单品发售量，创建订单
 	 * @param unknown_type $userid
@@ -210,7 +153,7 @@ class UserOrderModel extends Model {
 	 * @param unknown_type $expressCompanyId
 	 */
 	public function completeOrder($userId,$orderId, $addressId,$payBank,$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
-		if(empty($userId) || empty($orderId) || empty($addressId) || empty($ifPayPostage) || !isset($expressCompanyId))
+		if(empty($userId) || empty($orderId) || !isset($addressId) || empty($ifPayPostage) || !isset($expressCompanyId))
 			return false;
 			
 		$data['ordernmb']=$orderId;

@@ -41,7 +41,8 @@
             </volist>
             
             <div class="commodity_foot">
-            	本次提货共计<font><{$order.productTotalNum}></font>件试用品&nbsp;&nbsp;重量：<font><{$order.weight}></font>kg &nbsp;&nbsp;
+            	本次提货共计<font><{$order.productTotalNum}></font>件试用品&nbsp;&nbsp;总计重量：<font><{$order.weight}></font>kg
+            	 
             </div>
         </div>
         
@@ -51,237 +52,213 @@
 
 </div>
 
-<div class="Safe_box" id="zf_show">
-	<div class="Safe_list">
-    	<div class="Safe_title Safe_list_bg Safe_list_title">
-        	<div class="padding">配送信息</div>
-        </div>
-        
-        <div class="commodity">
-        	 
-            <div class="Distribution">
-            	<div style="width:100%;">
-                    <div class="Dtitle">选择配货方式：</div>
-                    <div class="Dtitle">设置收货地址：</div>
-                    <div class="clear"></div>
-                </div>
-                <div style="width:100%;">
-                	<div class="Dtitle">
-                    	<select style="color:#7a7a7a; font-size:12px;">
-                    		<volist name="ExpressCompanies" id="expressCompany">
-                        		<option value="<{$expressCompany.id}>"><{$expressCompany.name}></option>
-                        	</volist>
-                        </select>
-                    </div>
-                    <if condition="$oldAdresses"> 
-	                    <div class="Dtitle" style="width:60%;">
-	                    	<select style="color:#7a7a7a; font-size:12px;" id="addressSelect">
-	                    		<volist name="oldAdresses" id="oldAdress">
-	                        		<option value="<{$oldAdress.id}>"><{$oldAdress.linkman}>，<{$oldAdress.telphone}>，<{$oldAdress.provinceName}> <{$oldAdress.cityName}> <{$oldAdress.districtName}> <{$oldAdress.address}>（<{$oldAdress.postcode}>）</option>
-	                        	</volist>
-	                        </select>
-	                    </div>
-                    </if>
-                   <div class="Dtitle" style="width:20%;">
-                    	<a href="#"><font style="color:#fc8fc0; font-size:12px;">管理收货地址</font></a>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </div>
-             
-            <div class="commodity_foot">
-            	运费：<font>￥<{$postage}></font>        实际应付金额：<font>￥<{$postage}></font>  
-            </div>
-        </div>
-        
-       
-        
-    </div>
+<form action="<{:u('/safeKeeping/completeOrder')}>" method="post" id="form1">
+	<input type="hidden" name="orderId" value="<{$order.orderid}>">
 
-</div>
+	<div class="Safe_box" id="zf_show">
+		<div class="Safe_list">
+			<div class="Safe_title Safe_list_bg Safe_list_title">
+				<div class="padding">配送信息</div>
+			</div>
 
-<div class="Safe_box">
-	<div class="Safe_list">
-    	<div class="Safe_title Safe_list_bg Safe_list_title">
-        	<div class="padding">付款方式</div>
-        </div>
-        
-        <div class="commodity">
-        	 
-            <div class="Distribution Pay">
-            	<div class="Pay_type">
-                    <input type="radio" style="vertical-align:middle;margin: 10px 10px 0 0;" />&nbsp;试用账户余额支付（余额：￥178.00）
-                </div>
-            	<div class="Pay_type" >
-                    <input type="radio" style="vertical-align:middle;margin: 10px 10px 0 0;" /><img src="/public/images/zfb.png" width="188" height="50" style="vertical-align:middle;"  />
-                </div>
-                <div class="Pay_type">
-                	网银直接支付<font class="col">（由支付宝提供接口，确保您的资金安全）</font>
-                </div>
-                <div style="width:100%;" class="gateway_list bank-list">
+			<div class="commodity">
 
-					<ul class="pay_Super pay_Super_w cfl">
-						<li><input type="radio" name="pay_bank" value="ICBCB2C"
-							id="check-ICBC"> <label class="icon ICBCB2C"
-							for="check-ICBC"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-CMB"
-							value="CMB"> <label class="icon CMB" for="check-CMB"></label>
-						</li>
-						<li><input type="radio" name="pay_bank" id="check-CCB"
-							value="CCB"> <label class="icon CCB" for="check-CCB"></label>
-						</li>
-						<li><input type="radio" name="pay_bank" id="check-BOC"
-							value="BOCB2C"> <label class="icon BOCB2C"
-							for="check-BOC"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-ABC"
-							value="ABC"> <label class="icon ABC" for="check-ABC"></label>
-						</li>
-						<li><input type="radio" name="pay_bank" id="check-COMM"
-							value="COMM"> <label class="icon COMM" for="check-COMM"></label>
-						</li>
-						<li><input type="radio" name="pay_bank" id="check-PSBC"
-							value="PSBC-DEBIT"> <label class="icon PSBC-DEBIT"
-							for="check-PSBC"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-CEB"
-							value="CEBBANK"> <label class="icon CEBBANK"
-							for="check-CEB"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-SPDB"
-							value="SPDB"> <label class="icon SPDB" for="check-SPDB"></label>
-						</li>
-						<li><input type="radio" name="pay_bank" id="check-GDB"
-							value="GDB"> <label class="icon GDB" for="check-GDB"></label>
-						</li>
-						<li><input type="radio" name="pay_bank" id="check-CITIC"
-							value="CITIC"> <label class="icon CITIC"
-							for="check-CITIC"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-CIB"
-							value="CIB"> <label class="icon CIB" for="check-CIB"></label>
-						</li>
-						<li><input type="radio" name="pay_bank" id="check-SDB"
-							value="SDB"> <label class="icon SDB" for="check-SDB"></label>
-						</li>
-						<li><input type="radio" name="pay_bank" id="check-CMBC"
-							value="CMBC"> <label class="icon CMBC" for="check-CMBC"></label>
-						</li>
-						<li><input type="radio" name="pay_bank" id="check-BJBANK"
-							value="BJBANK"> <label class="icon BJBANK"
-							for="check-BJBANK"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-HZCB"
-							value="HZCBB2C"> <label class="icon HZCBB2C"
-							for="check-HZCB"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-SHBANK"
-							value="SHBANK"> <label class="icon SHBANK"
-							for="check-SHBANK"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-BJRCB"
-							value="BJRCB"> <label class="icon BJRCB"
-							for="check-BJRCB"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-SPABANK"
-							value="SPABANK"> <label class="icon SPABANK"
-							for="check-SPABANK"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-FDB"
-							value="FDB"> <label class="icon FDB" for="check-FDB"></label>
-						</li>
-						<li><input type="radio" name="pay_bank" id="check-WZCB"
-							value="WZCBB2C-DEBIT"> <label class="icon WZCBB2C-DEBIT"
-							for="check-WZCB"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-NBBANK"
-							value="NBBANK "> <label class="icon NBBANK"
-							for="check-NBBANK"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-ICBCBTB"
-							value="ICBCBTB"> <label class="icon ICBCBTB"
-							for="check-ICBCBTB"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-CCBBT"
-							value="CCBBTB"> <label class="icon CCBBTB"
-							for="check-CCBBTB"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-SPDBBTB"
-							value="SPDBB2B"> <label class="icon SPDBB2B"
-							for="check-SPDBBTB"></label></li>
-						<li><input type="radio" name="pay_bank" id="check-ABCBTB"
-							value="ABCBTB"> <label class="icon ABCBTB"
-							for="check-ABCBTB"></label></li>
-					</ul>
+				<div class="Distribution">
+					<div style="width: 100%;">
+						<div class="Dtitle">选择配货方式：</div>
+						<div class="Dtitle">设置收货地址：</div>
+						<div class="clear"></div>
+					</div>
+					<div style="width: 100%;">
+						<div class="Dtitle">
+							<select style="color: #7a7a7a; font-size: 12px;" name="expressCompanyId">
+								<volist name="ExpressCompanies" id="expressCompany">
+									<option value="<{$expressCompany.id}>" selected><{$expressCompany.name}></option>
+								</volist>
+							</select>
+						</div>
+						<if condition="$oldAdresses">
+						<div class="Dtitle" style="width: 60%;">
+							<select style="color: #7a7a7a; font-size: 12px;"
+								id="addressSelect" name="addressId">
+								<volist name="oldAdresses" id="oldAdress">
+								<option value="<{$oldAdress.id}>"><{$oldAdress.linkman}>，<{$oldAdress.telphone}>，<{$oldAdress.provinceName}>
+									<{$oldAdress.cityName}> <{$oldAdress.districtName}>
+									<{$oldAdress.address}>（<{$oldAdress.postcode}>）</option>
+								</volist>
+							</select>
+						</div>
+						</if>
+						<div class="Dtitle" style="width: 20%;">
+							<a href="#"><font style="color: #fc8fc0; font-size: 12px;">管理收货地址</font>
+							</a>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+
+				<div class="commodity_foot">
+					运费：<font>￥<{$postage}></font>
+				</div>
+			</div>
+
+
+
+		</div>
+
+	</div>
+
+
+	<div class="Safe_box">
+		<div class="Safe_list">
+			<div class="Safe_title Safe_list_bg Safe_list_title">
+				<div class="padding">付款方式</div>
+			</div>
+
+			<div class="commodity">
+
+				<div class="Distribution Pay">
+					<if condition="$giftCardRemain gt 0">
+					<div class="Pay_type">
+						<input type="radio"
+							style="vertical-align: middle; margin: 10px 10px 0 0;"
+							name="ifUseGiftCard" />&nbsp;试用账户余额支付（余额：￥<{$giftCardRemain}>）
+					</div>
+					</if>
+					<div class="Pay_type">
+						<input type="radio"
+							style="vertical-align: middle; margin: 10px 10px 0 0;" name="pay_bank" checked="checked" value="directPay"/><img
+							src="/public/images/alipay.png" width="188" height="50"
+							style="vertical-align: middle;" />
+					</div>
+					<div class="Pay_type">
+						网银直接支付<font class="col">（由支付宝提供接口，确保您的资金安全）</font>
+					</div>
+					<div style="width: 100%;" class="gateway_list bank-list">
+
+						<ul class="pay_Super pay_Super_w cfl">
+							<li><input type="radio" name="pay_bank" value="ICBCB2C"
+								id="check-ICBC"> <label class="icon ICBCB2C"
+								for="check-ICBC"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-CMB"
+								value="CMB"> <label class="icon CMB" for="check-CMB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-CCB"
+								value="CCB"> <label class="icon CCB" for="check-CCB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-BOC"
+								value="BOCB2C"> <label class="icon BOCB2C"
+								for="check-BOC"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-ABC"
+								value="ABC"> <label class="icon ABC" for="check-ABC"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-COMM"
+								value="COMM"> <label class="icon COMM" for="check-COMM"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-PSBC"
+								value="PSBC-DEBIT"> <label class="icon PSBC-DEBIT"
+								for="check-PSBC"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-CEB"
+								value="CEBBANK"> <label class="icon CEBBANK"
+								for="check-CEB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-SPDB"
+								value="SPDB"> <label class="icon SPDB" for="check-SPDB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-GDB"
+								value="GDB"> <label class="icon GDB" for="check-GDB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-CITIC"
+								value="CITIC"> <label class="icon CITIC"
+								for="check-CITIC"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-CIB"
+								value="CIB"> <label class="icon CIB" for="check-CIB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-SDB"
+								value="SDB"> <label class="icon SDB" for="check-SDB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-CMBC"
+								value="CMBC"> <label class="icon CMBC" for="check-CMBC"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-BJBANK"
+								value="BJBANK"> <label class="icon BJBANK"
+								for="check-BJBANK"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-HZCB"
+								value="HZCBB2C"> <label class="icon HZCBB2C"
+								for="check-HZCB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-SHBANK"
+								value="SHBANK"> <label class="icon SHBANK"
+								for="check-SHBANK"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-BJRCB"
+								value="BJRCB"> <label class="icon BJRCB"
+								for="check-BJRCB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-SPABANK"
+								value="SPABANK"> <label class="icon SPABANK"
+								for="check-SPABANK"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-FDB"
+								value="FDB"> <label class="icon FDB" for="check-FDB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-WZCB"
+								value="WZCBB2C-DEBIT"> <label class="icon WZCBB2C-DEBIT"
+								for="check-WZCB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-NBBANK"
+								value="NBBANK "> <label class="icon NBBANK"
+								for="check-NBBANK"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-ICBCBTB"
+								value="ICBCBTB"> <label class="icon ICBCBTB"
+								for="check-ICBCBTB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-CCBBT"
+								value="CCBBTB"> <label class="icon CCBBTB"
+								for="check-CCBBTB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-SPDBBTB"
+								value="SPDBB2B"> <label class="icon SPDBB2B"
+								for="check-SPDBBTB"></label>
+							</li>
+							<li><input type="radio" name="pay_bank" id="check-ABCBTB"
+								value="ABCBTB"> <label class="icon ABCBTB"
+								for="check-ABCBTB"></label>
+							</li>
+						</ul>
+						<div class="clear"></div>
+					</div>
+
+
 					<div class="clear"></div>
-                </div>
-                
-                
-                 <div class="clear"></div>
-            </div>
-             
-             
-        </div>
-        
-        
-       
-        
-    </div>
+				</div>
 
-</div>
 
+			</div>
+
+
+
+
+		</div>
+
+	</div>
+</form>
 <div class="Safe_sub">
 	<font style="font-size:14px; color:#f2a1c2">返回</font>
-    <input type="button" class="sub_btn" value="提交订单" />
+    <input type="button" class="sub_btn" value="提交订单" id="sub"/>
 </div>
 
-<div id="foot_wrap_new">
-	 <div class="foot">
-     	<div class="list_title">新丁</div>
-        <div class="list_title">常见问题</div>
-        <div class="list_title">VIEDEO</div>
-        <div class="clear"></div>
-     </div>
-     
-     <div class="foot">
-     	<div class="foot_box">
-        	<div class="foot_box_li box_type_title" >网站声明</div>
-            <div class="foot_box_li">隐私声明</div>
-            <div class="foot_box_li">用户协议</div>
-             
-        </div>
-        <div class="foot_box">
-        	<div class="foot_box_li box_type_title" >关注我们</div>
-            <div class="foot_box_li">新浪微博</div>
-            <div class="foot_box_li">腾讯微博</div>
-             
-        </div>
-        
-         <div class="foot_box" style="width:10%">
-        	<div class="foot_box_li box_type_title" >萝莉盒微信</div>
-            <div class="foot_box_li"><img src="/public/images/wx.png" width="68" height="68" /></div>
-             
-        </div>
-        
-        <div class="foot_box" style="width:10%">
-        	<div class="foot_box_li box_type_title" >萝莉盒APP</div>
-            <div class="foot_box_li"><img src="/public/images/app.png" width="68" height="68" /></div>
-             
-        </div>
-        <div class="foot_box" style="width:20%">
-        	<div class="foot_box_li box_type_title" >服务支持</div>
-            <div class="foot_box_li">QQ客服</div>
-            <div class="foot_box_li">服务热线：4006-263-362</div>
-            <div class="foot_box_li">法定工作日：8：30-17：30</div>
-             
-        </div>
-         <div class="foot_box" style="width:25%">
-        	<div class="foot_box_li box_type_title" >版权信息</div>
-            <div class="foot_box_li">京ICP备12011669号-1</div>
-            <div class="foot_box_li">京公网安备 11010502019238  </div>
-            <div class="foot_box_li">Copyright © 2012-2014 LOLITABOX</div>
-             
-        </div>
-         
-        <div class="clear"></div>
-     </div>
-</div>
 <script>
-	$('.bankmore').bind('click',function(){
-		if($('.gateway_list_w').height()<=160){
-			$('.pay_Super_w').css({height:'auto'});
-			$('.pay_bank_more').find('.lg_pull').addClass('lg_put');
-		}else if($('.gateway_list_w').height()>160){
-			$('.pay_Super_w').css({height:'112px'});
-			$('.pay_bank_more').find('.lg_pull').removeClass('lg_put');
-		}
+	$("#sub").click(function(){
+		$("#form1").submit();
 	})
 </script>	
+
+<include file="public:footer" />
 

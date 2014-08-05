@@ -28,10 +28,6 @@ class safeKeepingAction extends commonAction{
   		$this->display();
 	}
 	
-	public function selectedDetail(){
-		$productDetailIds = $_POST["productDetailIds"];
-	}
-	
 	public function createOrder() {
         $userId = $this->userid;
         $userOrderSendProductDetailIdArray = $_POST["detailIds"];
@@ -99,36 +95,77 @@ class safeKeepingAction extends commonAction{
     	return $postage;
     }
     
-    
-    public function completeOrderAnd2Pay(){
+ 	public function completeOrder(){
     	$orderId = $_POST["orderId"];
-        $sendWord = $_POST("send_word");
+    	$order = D("UserSelfPackageOrder")->getOrderInfo($orderId);
+    	if($order["state"] != C("USER_SELF_PACKAGE_ORDER_STATUS_NOT_PAYED")){
+    		$this->error("订单状态异常");
+    	}
+        $sendWord = $_POST["send_word"];
         import("ORG.Util.String");
         if(mb_strlen($sendWord,"utf8") > 200){
             $sendWord=String::msubstr($sendWord ,0,200,'utf-8',false);
         }
-        $expressCompanyId = $_POST("expressCompanyId");
-        $ifUseGiftCard = $_POST("ifUseGiftCard");
-        $payBank = $_POST("payBank");
-        $addressId = $_POST("addressId");
-        $ifGiftCard = $_POST("ifGiftCard");
-        $ifPayPostage = $_POST("ifPayPostage");
-        $result = D("UserSelfPackageOrder")->complereOrder($this->userid,$orderId, $addressId,$payBank,$ifGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
-    	if($result){
-        	//TODO跳转到第三方支付	
-        }
+        $expressCompanyId = $_POST["expressCompanyId"];
+        $payBank = $_POST["pay_bank"];
+        $addressId = $_POST["addressId"];
+        D("UserSelfPackageOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$sendWord, $expressCompanyId);
+        $this->redirect("safeKeeping/getCompleteOrer2Pay", array("orderId"=>$orderId));
     }
     
- 	public function hasPayed(){
-    	$orderId = $_POST["orderId"];
-        $tradeNum = $_POST("tradeNum");
-        D("UserSelfPackageOrder")->hasPayed($orderId, $tradeNum);
+    public function getCompleteOrer2Pay(){
+    	$orderId = $_GET["orderId"];
+    	$order = D("UserSelfPackageOrder")->getOrderInfo($orderId);
+    	if($order["state"] != C("USER_SELF_PACKAGE_ORDER_STATUS_NOT_PAYED")){
+    		$this->error("订单状态异常");
+    	}
+        $this->assign("order", $order);
+    	$userOrderAddresses = M("UserOrderAddress")->getById($order["address_id"]);
+	    $provinceName=M("area")->where(array("area_id"=>$userOrderAddress["province_area_id"]))->getField("title");
+	    $cityName=M("area")->where(array("area_id"=>$userOrderAddress["city_area_i"]))->getField("title");
+	    $districtName=M("area")->where(array("area_id"=>$userOrderAddress["district_area_id"]))->getField("title");
+	    $addressNote = $userOrderAddresses["linkman"].",".$userOrderAddresses["telphone"].",".$provinceName.$cityName.$districtName.$userOrderAddresses["address"]."(".$userOrderAddresses["postcode"].")";
+	    $this->assign("addressNote", $addressNote);
+		$priceYuan = bcdiv($order["cost"], 100, 2);
+	    $this->assign("priceYuan", $priceYuan);
+        $this->display();
     }
-	
-	public function autoDelivery(){
-		
-		
-	
+    
+	public function gopay($orderId, $repay){
+		header("Content-type: text/html; charset=utf-8");
+		$user_order_mod=D("UserSelfPackageOrder");
+		$orderinfo=$user_order_mod->getOrderInfo($orderId);
+		//未支付订单再次支付
+		if($repay){
+				
+		}else{
+			//正常去支付
+			$name="我的订阅";
+			$pay_bank=$orderinfo['pay_bank'];
+			$priceFen = $orderinfo["cost"];
+			$priceYuan = bcdiv($priceFen, 100, 2);
+			echo "<form name=\"form1\" method=\"post\" id=\"form1\" action=\"".U('safeKeepingPay/alipayto')."\" >\r\n";
+			echo "<input type=\"hidden\" name=\"ordernmb\" value=\"".$orderId."\"/>\r\n";
+			echo "<input type=\"hidden\" name=\"total_fee\" value=\"".$priceYuan."\"/>\r\n";
+			echo "<input type=\"hidden\" name=\"subject\" value=\""."我订阅的萝莉盒产品"."\"/>\r\n";
+			echo "<input type=\"hidden\" name=\"body\" value=\""."我订阅的萝莉盒产品"."\"/>\r\n";
+			echo "<input type=\"hidden\" name=\"pay_bank\" value=\"".$orderinfo["pay_bank"]."\"/>\r\n";
+			echo "<input type=\"submit\" name=\"submit1\" style=\"display:none\"/>";
+			echo "</form>\r\n";
+			echo "<script>\r\n";
+			echo " if ((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0)){ \r\n";
+			echo "	document.form1.submit(); \r\n";
+			echo "}else if (navigator.userAgent.indexOf('Firefox') >= 0){ \r\n";
+			echo "	document.form1.submit1.click(); \r\n";
+			echo "}else if (navigator.userAgent.indexOf('Opera') >= 0){ \r\n";
+			echo "	document.form1.submit();";
+			echo "}else{";
+			echo "	document.form1.submit();";
+			echo "}";
+			echo "</script>";
+			exit();
+		}
 	}
+    
 	
 }

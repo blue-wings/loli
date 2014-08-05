@@ -1,5 +1,19 @@
 <?php
 class UserSelfPackageOrderModel extends Model {
+	
+	/**
+	 * 获取订单信息
+	 * @param $orderid 订单ID
+	 * @return array $order_info 订单信息
+	 * @author penglele
+	 */
+	public function getOrderInfo($orderId,$field="*"){
+		if(empty($orderId)) return false;
+		$orderInfo=$this->field($field)->getByOrdernmb($orderId);
+		if(!$orderInfo) return false;
+		return $orderInfo;
+	}
+	
 	/**
 	 * 创建邮费订单
 	 * @param unknown_type $userid
@@ -29,7 +43,7 @@ class UserSelfPackageOrderModel extends Model {
 	 * @author ltingting
 	 */
 	public function getOrderDetail($orderId){
-		$orderInfo=$this->getById($orderId);
+		$orderInfo=$this->getByOrdernmb($orderId);
 		if(!$orderInfo)
 			return false;
 		//判断用户未订单是否已失效
@@ -76,48 +90,8 @@ class UserSelfPackageOrderModel extends Model {
 		$list['costYuan']=bcdiv($orderInfo['cost'], 100,1);
 		$list['postage']=$orderInfo['postage'];
 		
-		
-		
-		//订单--收货地址
-		$orderAddressInfo=$this->getUserOrderAddressList($orderid);
-		if($orderAddressInfo){
-			$addressInfo=array();
-			$addressInfo['linkman']=$orderAddressInfo['linkman'];
-			$addressInfo['telphone']=$orderAddressInfo['telphone'];
-			$addressInfo['address']=$orderAddressInfo['province'].$orderAddressInfo['city'].$orderAddressInfo['district'].$orderAddressInfo['address'];
-			$addressInfo['postcode']=$orderAddressInfo['postcode'];
-			$list['address_list']=$addressInfo;
-		}
-		
-		if($orderInfo['state']==C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_PAYED")){
-			/*--------已付款--------*/
-			//物流信息
-			$orderProxyInfo=$this->getUserOrderProxyInfo($orderid);
-			if($orderProxyInfo==false){
-				$proxyInfo="";
-			}else{
-				$proxyInfo=$orderProxyInfo;
-			}
-			$list['proxyinfo']=$proxyInfo;
-		}
 		return $list;
 	}
-	
-	/*
-	 * 获取用户订单地址
-	 * @param $orderid 订单ID
-	 * @return array $address_list 地址列表
-	 * @author penglele
-	 */
-	public function getUserOrderAddressList($orderid,$field=null){
-		if(empty($orderid)) return false;
-		$orderAddressMod=M("UserOrderAddress");
-		if(empty($field))  $field="*";
-		$orderAddressInfo=$orderAddressMod->field($field)->getByOrderid($orderid);
-		return $orderAddressInfo;
-	}
-	
-    
 	
 	
 	/**
@@ -130,27 +104,18 @@ class UserSelfPackageOrderModel extends Model {
 	 * @param unknown_type $sendWord
 	 * @param unknown_type $expressCompanyId
 	 */
-	public function completeOrder($userId,$orderId, $addressId,$payBank="",$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
-		if(empty($userId) || empty($orderId) || empty($addressId) || $addressId==0 || empty($ifPayPostage) || empty($expressCompanyId))
+	public function completeOrder($userId,$orderId, $addressId,$payBank, $sendWord="", $expressCompanyId){
+		if(empty($userId) || empty($orderId) || !isset($addressId) || !isset($expressCompanyId))
 			return false;
 			
 		$data['ordernmb']=$orderId;
-		
-		$addresInfo=D("UserAddress")->getUserAddressInfo($addressId);
-		if($addresInfo==false)
-			return false;
-		$products = D("UserOrderSendProductdetail")->getUserSelfPackageOrderProducts($orderId);
-    	$productIds = array();
-    	foreach ($products as $product){
-    		array_push($productIds, $product["pid"]);
-    	}
-			
-		$postage = D("PostageStandard")->calculateOrderPostageByAddress($productIds, $expressCompanyId, $addressId);
+		$address = M("UserOrderAddress")->getById($addressId);
+		$postage = D("PostageStandard")->calculateSelfPackageOrderPostage($orderId, $expressCompanyId, $address["district_area_id"]);
 		$data["cost"]=$postage;
 		$data['sendword']=$sendWord;
 		$data['address_id']=$addressId;
 		$data['pay_bank']=$payBank;
-		$orderAddRst = $this->save($data);
+		$this->save($data);
 	}
 	
 /**
