@@ -20,22 +20,53 @@ class  SystemSetAction extends  CommonAction{
 		$original_list=$area_mod->where(array('pid'=>0,status=>1))->
 		field("area_id,title,pid,concat(pid,'-',area_id) as path")->order('area_id ASC')->select();
 
+		$areaPostageMap = $this->getAreaPostageMap();
 		foreach ($original_list as $key => $value){
+			$value["postages"]=$areaPostageMap[$value["area_id"]];
 			$second_list = array();
 			$list[$key]['first']=$value;
 			$second_list=$area_mod->where(array('pid'=>$value['area_id'],'status'=>1))->
 			field("area_id,title,pid,concat('".$value['path']."','-',area_id) as spath")->order('spath')->select();
 
 			foreach ($second_list as $k => $val){
+				$val["postages"]=$areaPostageMap[$val["area_id"]];
 				$list[$key]['second'][$k]['superior']= $val;
 
-				$list[$key]['second'][$k]['subordinate'] = $area_mod->where(array('pid'=>$val['area_id'],'status'=>1))->
+				$third_list = $area_mod->where(array('pid'=>$val['area_id'],'status'=>1))->
 				field("area_id,title,pid,concat('".$val['spath']."','-',area_id) as tpath")->order('tpath')->select();
+				foreach ($third_list as $index => $third){
+					$third["postages"]=$areaPostageMap[$third["area_id"]];	
+					$third_list[$index]=$third;
+				}
+				$list[$key]['second'][$k]['subordinate'] = $third_list;
 			}
-		}
-
+		}	
+		$this->assign("ExpressCompanies", array(C("EXPRESS_SHENTONG_ID"), C("EXPRESS_SHUNFENG_ID")));
 		$this->assign('alist',$list);
 		$this->display();
+	}
+	
+	private function getAreaPostageMap(){
+		$postages = M("PostageStandard")->select();
+		$areaPostageMap= array();
+		if($postages){
+			foreach ($postages as $index=>$postage){
+				$areaId = $postage["areaId"];
+				if(!$areaPostageMap[$areaId]){
+					$areaPostageMap[$areaId]=array();
+				}
+				$shengtong = C("EXPRESS_SHENTONG_ID");
+				$shunfeng = C("EXPRESS_SHUNFENG_ID");
+				if($postage["express_company_id"]==$shengtong["id"]){
+					$postage["expressCompanyName"]=$shengtong["name"];
+				}
+				if($postage["express_company_id"]==$shunfeng["id"]){
+					$postage["expressCompanyName"]=$shunfeng["name"];
+				}
+				array_push($areaPostageMap[$areaId], $postage);
+			}
+		}
+		return $areaPostageMap;
 	}
 
 	/**
@@ -71,6 +102,24 @@ class  SystemSetAction extends  CommonAction{
 			}else{
 				$this->error("修改失败");
 			}
+		}else if($this->_post("action") == 'editPostage'){
+			$areaId = $_POST["areaId"];
+			$expressCompanyId = $_POST["expressCompanyId"];
+			$where["areaId"]=$areaId;
+			$where["express_company_id"]=$expressCompanyId;
+			$postageStandards = M("PostageStandard")->where($where)->select();
+			$param["ori_first_heavy"]= $_POST["oriFirstHeavy"];
+			$param["ori_continued_heavy"]= $_POST["oriContinuedHeavy"];
+			$param["first_heavy"]= $_POST["firstHeavy"];
+			$param["continued_heavy"]= $_POST["continuedHeavy"];
+			if($postageStandards){
+				M("PostageStandard")->where($where)->save($param);		
+			}else{
+				$param["areaId"]=$areaId;
+				$param["express_company_id"]=$expressCompanyId;
+				M("PostageStandard")->add($param);				
+			}
+			$this->success("修改成功");
 		}
 	}
 

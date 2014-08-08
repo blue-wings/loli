@@ -50,6 +50,14 @@ function areaManipulate(areaid,action,name){
 		$("input[name='oldname']").val(areaid);
 		$(".formstyle").show('slow');
 		$("input[name='newname']").focus();
+	}else if(action == "editPostage"){
+		var description = name;
+		$.each($(".express-"+areaid), function(index, ele){
+			description += $(ele).text();
+		})
+		$("#areaName").text(description)
+		$("#ereaId").val(areaid);
+		$("#editPostageForm").show();
 	}
 }
 
@@ -81,20 +89,49 @@ $(document).ready(function(){
 	<p>查找:<input name="search" type="text"></p>
 	<div class="formstyle" style="display:none;padding-top:10px;">
 		<form action="__URL__/areaManipulate" method="POST">
-			<p><div id="prompt" class="prompt"></div><input type="text" value="" name="newname" class="promptstyle">
-			<input type="hidden" value="" name="action">
-			<input type="hidden" value="" name="oldname">
-			<input type="submit" value="提交" name="sub"></p>
+			<p>
+				<div id="prompt" class="prompt"></div>
+				<input type="text" value="" name="newname" class="promptstyle"> 
+				<input type="hidden" value="" name="action"> 
+				<input type="hidden" value="" name="oldname"> 
+				<input type="submit" value="提交" name="sub">
+			</p>
 		</form>
 	</div>
+	<div id="editPostageForm" style="display:none;padding-top:10px;">
+		<form action="__URL__/areaManipulate" method="POST">
+			<p>
+				<div id="areaName" class="prompt"></div>
+				<select style="color: #7a7a7a; font-size: 12px;" name="expressCompanyId">
+					<volist name="ExpressCompanies" id="expressCompany">
+						<option value="{$expressCompany.id}" selected>{$expressCompany.name}</option>
+					</volist>
+				</select>
+				原始首重:<input type="text" name="oriFirstHeavy" class="promptstyle"> 
+				原始续重:<input type="text" name="oriContinuedHeavy" class="promptstyle">
+				首重:<input type="text" name="firstHeavy" class="promptstyle"> 
+				续重:<input type="text" name="continuedHeavy" class="promptstyle">
+				<input type="hidden" name="areaId" id="ereaId"> 
+				<input type="hidden" value="editPostage" name="action"> 
+				<input type="submit" value="提交" name="sub">
+			</p>
+		</form>
+	</div>
+	
 </div>
 
 <volist name="alist" id="top">
 <ul>
 	<li>
-	{$top.first.title}&nbsp;&nbsp;&nbsp;
+	{$top.first.title}
+		<volist name="top.first.postages" id="postage">
+			<span>[{$postage.expressCompanyName}]</span>
+			<span class="express-{$top.first.area_id}" style="display:none">[ {$postage.expressCompanyName}-原首重:{$postage.ori_first_heavy} 原续重:{$postage.ori_continued_heavy} 首重:{$postage.first_heavy} 续重:{$postage.continued_heavy} ]</span>
+		</volist>
+		&nbsp;&nbsp;&nbsp;
 		<a href="#" onclick="return areaManipulate('{$top.first.area_id}','add_area')" class="addstyle">增加</a>/
 		<a href="#" onclick="return areaManipulate('{$top.first.area_id}','edit_area','{$top.first.title}')">编辑</a>/
+		<a href="#" onclick="return areaManipulate('{$top.first.area_id}','editPostage','{$top.first.title}')">编辑邮费</a>/
 		<a href="#" onclick="return areaManipulate('{$top.first.area_id}','del_area')" class="redstyle">删除</a>
 	</li>
 	<li>&nbsp;</li>
@@ -102,9 +139,15 @@ $(document).ready(function(){
 		<volist name="top.second" id="second">
 			<ul>
 				<li>
-					&nbsp;|--	{$second.superior.title} &nbsp;&nbsp;&nbsp;
+					&nbsp;|--	{$second.superior.title} 
+					<volist name="second.superior.postages" id="secondPostage">
+						<span>[{$secondPostage.expressCompanyName}]</span>
+						<span class="express-{$second.superior.area_id}" style="display:none">[ {$secondPostage.expressCompanyName}-原首重:{$secondPostage.ori_first_heavy} 原续重:{$secondPostage.ori_continued_heavy} 首重:{$secondPostage.first_heavy} 续重:{$secondPostage.continued_heavy} ]</span>
+					</volist>
+					&nbsp;&nbsp;&nbsp;
 						<a href="#" onclick="return areaManipulate('{$second.superior.area_id}','add_area')" class="addstyle">增加</a>/
 						<a href="#" onclick="return areaManipulate('{$second.superior.area_id}','edit_area','{$second.superior.title}')">编辑</a>/
+						<a href="#" onclick="return areaManipulate('{$second.superior.area_id}','editPostage','{$second.superior.title}')">编辑邮费</a>/
 						<a href="#" onclick="return areaManipulate('{$second.superior.area_id}','del_area')" class="redstyle">删除</a>
 				</li>
 				<li>&nbsp;</li>
@@ -112,8 +155,14 @@ $(document).ready(function(){
 					<volist name="second.subordinate" id="sub">
 						<ul>
 							<li>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	|--	{$sub.title} &nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	|--	{$sub.title} 
+								<foreach name="sub.postages" item="subPostage">
+									<span>[{$subPostage.expressCompanyName}]</span>
+									<span class="express-{$sub.area_id}" style="display:none">[ {$subPostage.expressCompanyName}-原首重:{$subPostage.ori_first_heavy} 原续重:{$subPostage.ori_continued_heavy} 首重:{$subPostage.first_heavy} 续重:{$subPostage.continued_heavy} ]</span>
+								</foreach>
+								&nbsp;&nbsp;&nbsp;
 								<a href="#" onclick="return areaManipulate('{$sub.area_id}','edit_area','{$sub.title}')">编辑</a>/
+								<a href="#" onclick="return areaManipulate('{$sub.area_id}','editPostage','{$sub.title}')">编辑邮费</a>/
 								<a href="#" onclick="return areaManipulate('{$sub.area_id}','del_area')" class="redstyle">删除</a>
 							</li>
 						</ul>
