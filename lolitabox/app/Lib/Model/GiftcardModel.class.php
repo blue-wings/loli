@@ -51,9 +51,25 @@ class GiftcardModel extends Model {
 	 */
 	public function getUserGiftcardPrice($userid){
 		$total_price=$this->getUserGiftcardTotalPrice($userid);//礼品卡的总金额
+		if(!$total_price){
+			return 0;
+		}
 		$cost_price=D("UserOrder")->getUserOrderGiftcardPrice($userid);//用户消耗的礼品卡的总金额
 		$price=$total_price-$cost_price;//用户账户中礼品卡的余额
 		return $price;
+	}
+	
+	public function getUserGiftCardPriceInLock($userid){
+		M()->startTrans();
+		try{
+			$product = M("users")->lock(true)->getByUserid($userid);
+			$price = $this->getUserGiftcardPrice($userid);
+			M()->commit();
+			return $price;
+		}catch (Exception $e){
+			M()->rollback();
+			throw new Exception("数据库异常");
+		}
 	}
 	
 	/**

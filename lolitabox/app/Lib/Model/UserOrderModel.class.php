@@ -176,7 +176,7 @@ class UserOrderModel extends Model {
 		
 		//计算用户的礼品卡余额可以折扣的金额
 		if($ifGiftCard==1){
-			$giftcardPrice=D("Giftcard")->getUserGiftcardPrice($userId);
+			$giftcardPrice=D("Giftcard")->getUserGiftCardPriceInLock($userId);
 			if($giftcardPrice>0){
 				if($giftcardPrice >= ($data['cost']+$data["postage"])){
 					$data['pay_bank']=null;//如果使用礼品卡余额全额支付，清除支付方式
@@ -194,12 +194,16 @@ class UserOrderModel extends Model {
 	 * @param unknown_type $orderId
 	 * @param unknown_type $tradeNumber
 	 */
-	public function hasPayed($orderId, $tradeNumber){
+	public function hasPayed($orderId, $tradeNumber, $payTime){
 		$order = $this->getOrderInfo($orderId);
 		$data["ordernmb"]=$orderId;
 		$data["state"]=C("USER_ORDER_STATUS_PAYED");
-		$data["trade_no"]=$tradeNumber;
-		
+		if(empty($order["paytime"]) && !empty($payTime)) {
+			$data["paytime"]=$payTime;
+		}
+		if(empty($order["trade_no"]) && !empty($tradeNumber)){
+			$data["trade_no"]=$tradeNumber;
+		}
 		$this->save($data);
 		if($order["pay_postage"]==C("USER_NOT_PAY_POSTAGE_ORDER")){
 			D("UserOrderSendProductdetail")->changeStatus2PostageNotPay($orderId);	
