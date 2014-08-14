@@ -33,5 +33,6 @@ class crontabAction extends commonAction {
 		$userSelfPackageOrderWhere["addtime"]=array('elt',$startTime);
 		$userSelfPackageOrderWhere["state"]=C("USER_ORDER_STATUS_NOT_PAYED");
 		D("UserSelfPackageOrder")->where($userSelfPackageOrderWhere)->save(array("ifavalid"=>C("ORDER_IFAVALID_OVERDUE")));
+		$this->ajaxReturn(array("action"=>"recyclingOrder","time"=>date("Y-m-d H:i:s"),"result"=>"ok"), "JSON");
 	}
 }
