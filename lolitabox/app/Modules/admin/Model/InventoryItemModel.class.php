@@ -46,5 +46,23 @@ class InventoryItemModel extends model{
 			throw new Exception("库存上架到商品失败");
 		}
 	}
+
+    /**
+     * 人工或虚拟出库单审核后，更新对应库存的各个指标
+     */
+    public function updateAbnormalInventoryOutLock($inventoryItemId, $quantity){
+        try{
+            M()->startTrans();
+            $this->lock(true)->getById($inventoryItemId);
+            $param["id"]=$inventoryItemId;
+            $this->where($param)->setInc("inventory_abnormal_out", $quantity);
+            $sql= "UPDATE `inventory_item` SET inventory_real=inventory_in-inventory_abnormal_out-product_shelved_inventory_out,inventory_estimated=inventory_in-inventory_abnormal_out-product_shelved_inventory_in WHERE id=".$inventoryItemId;
+            $this->db->execute ( $sql );
+            M()->commit();
+        }catch (Exception $e){
+            M()->rollback();
+            throw new Exception("出库失败");
+        }
+    }
 	
 }

@@ -803,6 +803,7 @@ class InventoryAction extends CommonAction {
 		$out_mod=M('inventoryOut');
 		$stat_mod=M("inventoryStat");
 		$order_mod=M("userOrderSend");
+        $item_mod=M("inventoryItem");
 
 		$time=date('Y-m-d H:i:s');
 		$da=trim($_SESSION['loginUserName']);
@@ -820,8 +821,14 @@ class InventoryAction extends CommonAction {
 
 		$stat_result=$stat_mod->where($where)->save($saveData);
 
-		if($this->_post('type')==1)
-		$order_result=$order_mod->where(array('inventory_out_id'=>$this->_post('id')))->setField('inventory_out_status',1);
+        //系统出库，出库单生成之前减去库存，人工出库和虚拟出库：确认之后减库存
+		if($this->_post('type')==1){
+            $order_result=$order_mod->where(array('inventory_out_id'=>$this->_post('id')))->setField('inventory_out_status',1);
+        }else{
+            foreach($stat_result as $stat){
+                $item_mod->updateAbnormalInventoryOutLock($stat['id'],$stat['quantity']);
+            }
+        }
 		if($this->_post('type')==3)     //如果是虚拟出库
 		{
 			$rel_mod=M("InventoryVirtualRelation");
@@ -1240,6 +1247,7 @@ class InventoryAction extends CommonAction {
 		$info['price']=array_sum($price_array);
 
         $order = M("UserOrder")->where("inventory_out_id=".$where['in_out_id'])->field("ordernmb")->find();
+        //快递信息
         $proxy_mod = M("UserOrderProxy");
         $proxy=$proxy_mod->where(array("orderid"=>$order['ordernmb']))->find();
         if($proxy){
