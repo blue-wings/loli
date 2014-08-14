@@ -118,13 +118,6 @@
 			<div class="commodity">
 
 				<div class="Distribution Pay">
-					<if condition="$giftCardRemain gt 0">
-					<div class="Pay_type">
-						<input type="radio"
-							style="vertical-align: middle; margin: 10px 10px 0 0;"
-							name="ifUseGiftCard" />&nbsp;试用账户余额支付（余额：￥<{$giftCardRemain}>）
-					</div>
-					</if>
 					<div class="Pay_type">
 						<input type="radio"
 							style="vertical-align: middle; margin: 10px 10px 0 0;" name="pay_bank" checked="checked" value="directPay"/><img
@@ -250,7 +243,7 @@
 	</div>
 </form>
 <div class="Safe_sub">
-	<font style="font-size:14px; color:#f2a1c2">返回</font>
+	<font style="font-size:14px; color:#f2a1c2"><a href="<{:u('/home/index')}>#!safekeeping">返回</a></font>
     <input type="button" class="sub_btn" value="提交订单" id="sub"/>
 </div>
 

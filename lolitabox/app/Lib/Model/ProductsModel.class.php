@@ -904,7 +904,7 @@ class ProductsModel extends Model {
 	public function addInventoryReducedInDBLock($productId, $num){
 		M()->startTrans();
 		$product = $this->lock(true)->getByPid($productId);
-		if(($product["inventory"] - $product["inventoryreduced"] - $num)>0){
+		if(($product["inventory"] - $product["inventoryreduced"] - $num)>=0){
 			try{
 				$param["pid"]=$product["pid"];
 				$param["inventoryreduced"]= $product["inventoryreduced"] + $num;

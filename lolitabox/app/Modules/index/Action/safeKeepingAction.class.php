@@ -133,8 +133,7 @@ class safeKeepingAction extends commonAction{
     
 	public function gopay($orderId, $repay){
 		header("Content-type: text/html; charset=utf-8");
-		$user_order_mod=D("UserSelfPackageOrder");
-		$orderinfo=$user_order_mod->getOrderInfo($orderId);
+		$orderinfo=D("UserSelfPackageOrder")->getOrderInfo($orderId);
 		//未支付订单再次支付
 		if($repay){
 				
@@ -165,6 +164,14 @@ class safeKeepingAction extends commonAction{
 			echo "</script>";
 			exit();
 		}
+	}
+	
+	public function paySuccess(){
+		$this->display();
+	}
+	
+	public function payFailed(){
+		$this->display();
 	}
     
 	

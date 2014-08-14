@@ -131,6 +131,7 @@ class UserOrderModel extends Model {
 			$data['userid']=$userId;
 			$data['addtime']=date("Y-m-d H:i:s");
 			$data['state']=C("USER_ORDER_STATUS_NOT_PAYED");
+			$data['ifavalid']=C("ORDER_IFAVALID_VALID");
 			//生成订单
 			$this->add($data);
 			$result["orderId"]=$data['ordernmb'];
@@ -155,7 +156,8 @@ class UserOrderModel extends Model {
 	public function completeOrder($userId,$orderId, $addressId,$payBank,$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
 		if(empty($userId) || empty($orderId) || !isset($addressId) || empty($ifPayPostage) || !isset($expressCompanyId))
 			return false;
-			
+
+		$order = $this->getOrderInfo($orderId);
 		$data['ordernmb']=$orderId;
 
 		$data["address_id"]=$addressId;
@@ -174,19 +176,40 @@ class UserOrderModel extends Model {
 		$data['address_id']=$addressId;
 		$data['pay_bank']=$payBank;
 		
+		$needGoToPayGateway=true;
 		//计算用户的礼品卡余额可以折扣的金额
 		if($ifGiftCard==1){
-			$giftcardPrice=D("Giftcard")->getUserGiftCardPriceInLock($userId);
+			$giftcardPrice=D("Giftcard")->getUserGiftcardPrice($userId);
 			if($giftcardPrice>0){
-				if($giftcardPrice >= ($data['cost']+$data["postage"])){
-					$data['pay_bank']=null;//如果使用礼品卡余额全额支付，清除支付方式
-					$data['giftcard']=$data['cost'];
-				}else{
-					$data['giftcard']=$giftcardPrice;
-				}
+				$needGoToPayGateway = $this->useGiftCardInOrderWithLock($userId, $order, $data);
+				return $needGoToPayGateway;
 			}
 		}
 		$this->save($data);
+		return $needGoToPayGateway;
+	}
+	
+	private function useGiftCardInOrderWithLock($userid, $order, $data){
+		$needGoToPayGateway = true;
+		M()->startTrans();
+		try{
+			$product = M("users")->lock(true)->getByUserid($userid);
+			$giftcardPrice = D("Giftcard")->getUserGiftcardPrice($userid);
+			if($giftcardPrice >= ($order['cost']+$data["postage"])){
+				$data['pay_bank']=null;//如果使用礼品卡余额全额支付，清除支付方式
+				$data['giftcard']=$order['cost']+$data["postage"];
+				$needGoToPayGateway=false;
+				$this->hasPayed($order["ordernmb"], -1, date("Y-m-d H:i:s"));
+			}else{
+				$data['giftcard']=$giftcardPrice;
+			}
+			$this->save($data);
+			M()->commit();
+			return $needGoToPayGateway;
+		}catch (Exception $e){
+			M()->rollback();
+			throw new Exception("数据库异常");
+		}
 	}
 	
 	/**

@@ -100,8 +100,12 @@ class userOrderAction extends commonAction {
         $payBank = $_POST["pay_bank"];
         $addressId = $_POST["addressId"];
         $ifPayPostage = $_POST["ifPayPostage"];
-        D("UserOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$ifGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
-        $this->redirect("userOrder/getCompleteOrer2Pay", array("orderId"=>$orderId));
+        $needGoToPayGateway = D("UserOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$ifUseGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
+        if(!$needGoToPayGateway){
+			$this->redirect("userOrder/paySuccess");
+        }else{
+        	$this->redirect("userOrder/getCompleteOrer2Pay", array("orderId"=>$orderId));
+        }
     }
     
     public function getCompleteOrer2Pay(){

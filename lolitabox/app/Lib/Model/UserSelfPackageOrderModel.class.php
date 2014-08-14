@@ -26,7 +26,9 @@ class UserSelfPackageOrderModel extends Model {
 		$data["cost"] = 0;
 		$data['userid']=$userId;
 		$data['addtime']=date("Y-m-d H:i:s");
+		$data['user_order_send_productdetail_ids']=join(",", $userOrderSendProductDetailIds);
 		$data['state']=C("USER_SELF_PACKAGE_ORDER_STATUS_NOT_PAYED");
+		$data['ifavalid']=C("ORDER_IFAVALID_VALID");
 		//生成订单
 		$this->add($data);
 		foreach ($userOrderSendProductDetailIds as $userOrderSendProductDetailId){
@@ -118,18 +120,24 @@ class UserSelfPackageOrderModel extends Model {
 		$this->save($data);
 	}
 	
-/**
+	/**
 	 * 用户支付完毕
 	 * @param unknown_type $orderId
 	 * @param unknown_type $tradeNumber
 	 */
-	public function hasPayed($orderId, $tradeNumber){
+	public function hasPayed($orderId, $tradeNumber, $payTime){
 		$order = $this->getOrderInfo($orderId);
 		$data["ordernmb"]=$orderId;
 		$data["state"]=C("USER_ORDER_STATUS_PAYED");
-		$data["trade_no"]=$tradeNumber;
+		if(empty($order["paytime"]) && !empty($payTime)) {
+			$data["paytime"]=$payTime;
+		}
+		if(empty($order["trade_no"]) && !empty($tradeNumber)){
+			$data["trade_no"]=$tradeNumber;
+		}
 		$this->save($data);
 		D("UserOrderSendProductdetail")->changeStatus2PostagePayedBySelfPackageOrderId($orderId);
+		//@TODOcreate inventoryOut and orderSend record
 	}
 	
 }

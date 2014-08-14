@@ -35,7 +35,7 @@ class payAction extends commonAction {
 
 		$anti_phishing_key  = '';
 		$exter_invoke_ip = '';
-		$show_url			= "http://".$_SERVER["SERVER_NAME"]."/userOrder/index.html";
+		$show_url			= "http://".$_SERVER["SERVER_NAME"]."/home/index.html";
 		$extra_common_param = '';
 		$royalty_type		= "";			//提成类型，该值为固定值：10，不需要修改
 		$royalty_parameters	= "";
