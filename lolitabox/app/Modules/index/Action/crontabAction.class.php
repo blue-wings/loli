@@ -10,7 +10,7 @@ class crontabAction extends commonAction {
 	 */
 	public function recyclingOrder(){
 		$ip = get_client_ip();
-		if($ip != "localhost"){
+		if($ip != "127.0.0.1"){
 			$this->ajaxReturn(array("action"=>"recyclingOrder","time"=>date("Y-m-d H:i:s"),"result"=>"false", "msg"=>"external ip"), "JSON");
 		}
 		$startTime = date("Y-m-d H:i:s",time()-C("ORDER_VALID_DURATION"));
