@@ -803,7 +803,7 @@ class InventoryAction extends CommonAction {
 		$out_mod=M('inventoryOut');
 		$stat_mod=M("inventoryStat");
 		$order_mod=M("userOrderSend");
-        $item_mod=M("inventoryItem");
+        $item_mod=D("InventoryItem");
 
 		$time=date('Y-m-d H:i:s');
 		$da=trim($_SESSION['loginUserName']);
@@ -825,8 +825,9 @@ class InventoryAction extends CommonAction {
 		if($this->_post('type')==1){
             $order_result=$order_mod->where(array('inventory_out_id'=>$this->_post('id')))->setField('inventory_out_status',1);
         }else{
-            foreach($stat_result as $stat){
-                $item_mod->updateAbnormalInventoryOutLock($stat['id'],$stat['quantity']);
+            $stat_info = $stat_mod->where($where)->select();
+            foreach($stat_info as $stat){
+                $item_mod->updateAbnormalInventoryOutLock($stat['itemid'],-$stat['quantity']);
             }
         }
 		if($this->_post('type')==3)     //如果是虚拟出库
@@ -844,7 +845,6 @@ class InventoryAction extends CommonAction {
 		$result=$out_mod->where(array('id'=>$this->_post('id')))->setField($data);
 
 		if($result){
-			$this->updateInventory();
 			$this->ajaxReturn($da,$time,1);
 		}else{
 			$this->ajaxReturn(0,0,0);
