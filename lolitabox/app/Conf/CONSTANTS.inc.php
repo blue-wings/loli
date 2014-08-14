@@ -42,7 +42,7 @@ return array(
 	'EXPRESS_SHUNFENG_ID'								=> array("id"=>1, "name"=>"顺丰快递"),
 
 	//订单的失效时间72小时
-	'ORDER_VALID_DURATION'								=>259200,
+	'ORDER_VALID_DURATION'								=>3600,
 	//有效
 	'ORDER_IFAVALID_VALID'								=>1,
 	//失效

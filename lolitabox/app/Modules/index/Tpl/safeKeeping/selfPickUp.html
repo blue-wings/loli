@@ -22,8 +22,8 @@
 										<dl>
 											<dt>
 												<span class="check_bg">
-													<input type="checkbox" id="<{$productDetail.product.pid}>_pickup_checkbox" class="pickup_checkbox" name="detailIds[]" value="<{$productDetail.id}>" pnum="<{$productDetail.product_num}>" pweight="<{$productDetail.inventoryItem.weightKg}>">
-													<i pid="<{$productDetail.product.pid}>" class="checker">&nbsp;</i>
+													<input type="checkbox" id="<{$productDetail.id}>_pickup_checkbox" class="pickup_checkbox" name="detailIds[]" value="<{$productDetail.id}>" pnum="<{$productDetail.product_num}>" pweight="<{$productDetail.inventoryItem.weightKg}>">
+													<i pid="<{$productDetail.id}>" class="checker">&nbsp;</i>
 												</span>
 											</dt>
 											<dd class="img">
@@ -96,15 +96,15 @@
  						$(this).removeClass("select");
  						eleObj.attr("checked",false);
  						productNum -= parseInt(eleObj.attr("pnum"));
- 						totalWeight -= parseFloat(eleObj.attr("pweight"));
+ 						totalWeight -= parseFloat(eleObj.attr("pweight"))*parseInt(eleObj.attr("pnum"));
  					}else{
  						$(this).addClass("select");
  						eleObj.attr("checked",true);
  						productNum += parseInt(eleObj.attr("pnum"));
- 						totalWeight += parseFloat(eleObj.attr("pweight"));
+ 						totalWeight += parseFloat(eleObj.attr("pweight"))*parseInt(eleObj.attr("pnum"));
  					}
  					$("#product_num").text(productNum);
- 					$("#product_weight").text(totalWeight);
+ 					$("#product_weight").text(totalWeight.toFixed(2));
  				})
  				
  				$("#all_check").click(function(){
@@ -120,11 +120,11 @@
  	 					$.each($(".pickup_checkbox"), function(){
  	 						$(this).attr("checked",true);
  	 						productNum += parseInt($(this).attr("pnum"));
- 	 						totalWeight += parseFloat($(this).attr("pweight"));
+ 	 						totalWeight += parseFloat($(this).attr("pweight"))*parseInt($(this).attr("pnum"));
  	 					})	
  					}
  					$("#product_num").text(productNum);
- 					$("#product_weight").text(totalWeight);
+ 					$("#product_weight").text(totalWeight.toFixed(2));
  				})
  				
  				function sub(){
