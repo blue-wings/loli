@@ -2,8 +2,16 @@
    RewriteEngine on
    RewriteCond %{REQUEST_FILENAME} !-d
    RewriteCond %{REQUEST_FILENAME} !-f
-   RewriteRule ^(.*)$ index.php/$1 [QSA,PT]   
-   RewriteRule ^(.*)api.php(.*) $1api$2 [L]
+   RewriteCond %{HTTP_HOST} !^127\.0\.0\.1$
+   RewriteRule ^.*crontab.*$ - [F,L]
 
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteCond %{HTTP_HOST} ^127\.0\.0\.1$
+   RewriteRule ^(.*)$ index.php/$1 [L]
+
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteRule ^(.*)$ index.php/$1 [L]
 </IfModule>
 

@@ -9,10 +9,14 @@ class crontabAction extends commonAction {
 	 * 每5分钟执行一次，找出无效订单，回收产品库存
 	 */
 	public function recyclingOrder(){
-		
+		$ip = get_client_ip();
+		if($ip != "localhost"){
+			$this->ajaxReturn(array("action"=>"recyclingOrder","time"=>date("Y-m-d H:i:s"),"result"=>"false", "msg"=>"external ip"), "JSON");
+		}
 		$startTime = date("Y-m-d H:i:s",time()-C("ORDER_VALID_DURATION"));
 		$userOrderWhere["addtime"]=array('elt',$startTime);
 		$userOrderWhere["state"]=C("USER_ORDER_STATUS_NOT_PAYED");
+		$userOrderWhere["ifavalid"]=C("ORDER_IFAVALID_VALID");
 		$orders = D("UserOrder")->where($userOrderWhere)->select();
 		foreach ($orders as $order){
 			try {
@@ -32,6 +36,7 @@ class crontabAction extends commonAction {
 		
 		$userSelfPackageOrderWhere["addtime"]=array('elt',$startTime);
 		$userSelfPackageOrderWhere["state"]=C("USER_ORDER_STATUS_NOT_PAYED");
+		$userSelfPackageOrderWhere["ifavalid"]=C("ORDER_IFAVALID_VALID");
 		D("UserSelfPackageOrder")->where($userSelfPackageOrderWhere)->save(array("ifavalid"=>C("ORDER_IFAVALID_OVERDUE")));
 		$this->ajaxReturn(array("action"=>"recyclingOrder","time"=>date("Y-m-d H:i:s"),"result"=>"ok"), "JSON");
 	}
