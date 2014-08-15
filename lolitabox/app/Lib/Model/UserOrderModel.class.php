@@ -198,12 +198,13 @@ class UserOrderModel extends Model {
 			if($giftcardPrice >= ($order['cost']+$data["postage"])){
 				$data['pay_bank']=null;//如果使用礼品卡余额全额支付，清除支付方式
 				$data['giftcard']=$order['cost']+$data["postage"];
+				$this->save($data);
 				$needGoToPayGateway=false;
 				$this->hasPayed($order["ordernmb"], -1, date("Y-m-d H:i:s"));
 			}else{
 				$data['giftcard']=$giftcardPrice;
+				$this->save($data);
 			}
-			$this->save($data);
 			M()->commit();
 			return $needGoToPayGateway;
 		}catch (Exception $e){
