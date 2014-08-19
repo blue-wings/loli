@@ -256,16 +256,7 @@ $(function(){
 //删除 tab1下面的删除则连子产品列表一起删除,否则只删除本身
 function bindListener(obj){
 	var tablepar = $(obj).closest("table");
-	if(tablepar.attr("id") == 'tab1'){
-		var parval = tablepar.find(":text[name='pid[]']").val();
-		if(gvar[parval]){
-			for(var i=0;i<gvar[parval].length;i++){
-				$(":text[name='cpid[]'][value='"+gvar[parval][i]+"']").closest("tr").remove();
-			}
-		}
-	}else{
-		$(obj).closest("tr").remove();
-	}
+    $(obj).closest("tr").remove();
 }
 
 //检查表单内容
@@ -291,7 +282,7 @@ function checkform(){
 }
 
 
-var gvar = new Array;
+var gvar = new Array();
 
 
 function addvirtuallist(obj){

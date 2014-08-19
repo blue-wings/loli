@@ -825,8 +825,8 @@ class InventoryAction extends CommonAction {
 		if($this->_post('type')==1){
             $order_result=$order_mod->where(array('inventory_out_id'=>$this->_post('id')))->setField('inventory_out_status',1);
         }else{
-            $stat_info = $stat_mod->where($where)->select();
-            foreach($stat_info as $stat){
+            $stat_out_info = $stat_mod->where($where)->select();
+            foreach($stat_out_info as $stat){
                 $item_mod->updateAbnormalInventoryOutLock($stat['itemid'],-$stat['quantity']);
             }
         }
@@ -840,6 +840,10 @@ class InventoryAction extends CommonAction {
 			$saveData['operator']=$da;
 			$saveData['add_time']=time();
 			$stat_result=$stat_mod->where($where)->save($saveData);
+            $stat_in_info = $stat_mod->where($where)->select();
+            foreach($stat_in_info as $stat){
+                $item_mod->IncInventoryInLock($stat['itemid'],$stat['quantity']);
+            }
 		}
 
 		$result=$out_mod->where(array('id'=>$this->_post('id')))->setField($data);
