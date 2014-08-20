@@ -206,7 +206,8 @@ $(function(){
 	});
 	
 	
-	$(":text[name='pid[]']").live('keyup',function(){
+	$(":text[name='pid[]'],:text[name='cpid[]']").live('keyup',function(){
+        console.log("123");
 		var th=$(this);
 		$.ajax({
 			url:"{:U('Inventory/getProductsData')}",
