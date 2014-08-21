@@ -1,6 +1,9 @@
 <?php
 /**
- * 首页控制嚣 【THINKPHP 3.1.3】echo THINK_VERSION;
+ * 消息控制嚣 【THINKPHP 3.1.3】echo THINK_VERSION;
+ *
+ * @author gaodongchen@gmail.com
+ * @version 
  */
 class msgAction extends commonAction {
 

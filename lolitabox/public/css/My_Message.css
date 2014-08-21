@@ -1,0 +1,108 @@
+/**
+* 我的消息
+* author yuanzhiwei
+* createTime 2014-08-08
+*
+**/
+
+@charset "utf-8";
+.clear{ clear:both;}
+.My_message_table{ width:98%; margin:0 auto; height:25px;}
+.My_message_table .clock{ width:40%; float:left; height:80px; margin-left:45px;}
+.My_message_table .clock img{ width:55px; height:55px; vertical-align:middle;}
+.My_message_table .operation{ width:40%; float:right; text-align:right; height:80px; line-height:100px;}
+.My_message_list{ widows:98%; margin:0 auto; height:auto;}
+.My_message_list >li .cbp_tmtime{display: block;width: 25%;padding-right: 100px;position: absolute; text-align:center;}
+.cbp_tmtimeline{margin: 30px 0 0 0;padding: 0;list-style: none;position: relative;}
+/* The line */
+.cbp_tmtimeline:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 5px;
+	background: #71d5df;
+	left: 11.4%;
+	margin-left: -10px;
+}
+
+.cbp_tmtimeline > li {position: relative;}
+
+
+.cbp_tmtimeline > li .cbp_tmicon {
+	width:22px; height:22px;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	font-size: 1.4em;
+	line-height: 40px;
+	-webkit-font-smoothing: antialiased;
+	position: absolute;
+	color: #fff;
+	border-radius: 50%;
+	text-align: center;
+	left: 8.9%;
+	top: 25px;	 
+}
+.cbp_tmtimeline > li .cbp_tmlabel {
+	margin: -30px 0 15px 15%;
+	background: #f5f5f5;
+	color: #333333;
+	padding: 1em;
+	font-size: 14px;;
+	font-weight:bold;
+	line-height: 1.4;
+	position: relative;
+	border-radius: 5px;
+}
+
+/* The triangle */
+.cbp_tmtimeline > li .cbp_tmlabel:after {
+	right: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-right-color: #f5f5f5;
+	border-width: 10px;
+	top: 28px;
+}
+
+.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {border-right-color: #f5f5f5;}
+.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel {background: #f5f5f5;}
+.cbp_tmtimeline > li .cbp_tmlabel .message_info{width:98%; margin:0 auto;}
+.cbp_tmtimeline > li .cbp_tmlabel .message_info .message_thenews{width:70%;	float:left;}
+.cbp_tmtimeline > li .cbp_tmlabel p { 
+	margin-top: 0px;
+	padding: 0 0 5px 0;
+	font-size:14px;
+	font-weight:500;
+	width:500px;
+	height:25px;
+	line-height:25px;
+	overflow:hidden;								 
+}
+/***详情显示**/
+.cbp_tmtimeline > li .cbp_tmlabel .message_info_show{ height:auto;}
+.cbp_tmtimeline > li .cbp_tmlabel .source{width:90px;font-weight:bold;font-size:16px;padding-right:5px;color:#ff2686;float:left;}
+.cbp_tmtimeline > li .cbp_tmlabel .source >div{ padding:10px; padding-top:1px;}
+.cbp_tmtimeline > li .cbp_tmlabel .source >img{ width:50px; height:50px; margin:0 auto;}
+.cbp_tmtimeline > li .cbp_tmlabel .messgae_set{width:98%;margin:0 auto;	text-align:right;}
+.cbp_tmtimeline > li .cbp_tmlabel .messgae_set >a{margin-left:20px;	color:#ff2686;}
+
+.month{ font-size:18px; width:70px; text-align:center;}
+.data{ font-size:12px; width:70px; float:left; text-align:center;}
+
+.message_time_Orange{ color:#ff2686}
+.message_time_blue{color:#6ad9e5;}
+/**未读消息**/
+.Read_no{ background:url(../images/Read_no.png); }
+/**重要未读消息**/
+.Read_Warning{ background:url(../images/Read_Warning.png); }
+/**已读消息**/
+.Read_Yes{ background:url(../images/Read_Yes.png); }
+

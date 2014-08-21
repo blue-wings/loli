@@ -201,7 +201,7 @@
 			$where['_string'] = "(to_uid=$userid OR to_uid=".C("MSG_TO_ALL_USER_ID").")";
 			$where['to_status'] = 1;
 			$where['addtime'] = array("egt",strtotime(M("Users")->where("userid=".$userid)->getField("addtime")));
-			$where['from_uid']=array("exp","!=".C("LOLITABOX_ID")."");
+			$where['from_uid']=array("exp","=".C("LOLITABOX_ID")."");
 			$list = $this->where($where)->order("addtime DESC")->limit($p)->select();
 			foreach($list as $key =>$val){
 				$userinfo = D("Users")->getUserInfo($val['from_uid'],"userface,nickname");
@@ -260,7 +260,7 @@
 			$where['_string'] = "(to_uid=$userid OR to_uid=0)";
 			$where['to_status'] = C("MSG_TO_STATUS_VALID");
 			$where['addtime'] = array("egt",strtotime(M("Users")->where("userid=".$userid)->getField("addtime")));
-			$where['from_uid']=array("exp","!=".C("LOLITABOX_ID")."");
+			$where['from_uid']=array("exp","=".C("LOLITABOX_ID")."");
 			return $this->where($where)->count();
 		}
 		
