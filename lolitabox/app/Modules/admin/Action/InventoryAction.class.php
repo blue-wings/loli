@@ -1248,7 +1248,7 @@ class InventoryAction extends CommonAction {
 
 			$price_array[]=abs($value['quantity']) * $information['price'];
 		}
-		$info['price']=array_sum($price_array);
+		$info['price']=number_format(array_sum($price_array)/100,2);
 
         $order = M("UserOrder")->where("inventory_out_id=".$where['in_out_id'])->field("ordernmb")->find();
         //快递信息

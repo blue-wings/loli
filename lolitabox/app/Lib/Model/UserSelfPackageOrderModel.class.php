@@ -138,6 +138,7 @@ class UserSelfPackageOrderModel extends Model {
 		$this->save($data);
 		D("UserOrderSendProductdetail")->changeStatus2PostagePayedBySelfPackageOrderId($orderId);
 		//@TODOcreate inventoryOut and orderSend record
+        D("UserOrder")->createSystemOutInventory($orderId);
 	}
 	
 }

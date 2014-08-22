@@ -237,7 +237,7 @@ class UserOrderModel extends Model {
             $this->createSystemOutInventory($orderId);
         }
     }
-    private function createSystemOutInventory($orderId){
+    public function createSystemOutInventory($orderId){
         //generate inventory out record
         $out_mod=M('inventoryOut');
         $data=array(
@@ -285,7 +285,7 @@ class UserOrderModel extends Model {
         $orderSendData['orderid'] = $orderId;
         $orderSendData['userid'] = $order['userid'];
         $orderSendData['productnum'] = $total_num;
-        $orderSendData['productprice'] = $order['cost']; //todo ??
+        $orderSendData['productprice'] = $order['cost'];
         $orderSendData['inventory_out_id'] = $in_out_id;
         $orderSendData['inventory_out_status'] = C("INVENTORY_OUT_STATUS_UNFINISHED");
         $order_send_mod->add($orderSendData);
