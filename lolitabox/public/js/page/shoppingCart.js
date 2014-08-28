@@ -23,7 +23,7 @@ var Loli = Loli || {};
 			},
 
 			initHtml : function(){
-				var html = "<div class='fm1025' id='ids' style='margin-bottom:-16px'>"+
+				var html = "<div class='fm1025' id='ids' style='height: 94px;'>"+
 				"</div>";
 				var parentContainer = $("#"+this.options.parentContainerId);
 				if(parentContainer.children().length){
