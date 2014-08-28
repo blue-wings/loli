@@ -1,0 +1,36 @@
+<div>
+    <form action="<{:u('archive/deliverProduct')}>" method="post" id="archiveForm">
+        <input type="hidden" value="<{$pid}>" name="pid">
+        <volist name="propertyList" id="property">
+            <br><span style="width: 100px;display: inline-block;"><{$property.name}>:</span>
+                <volist name="property.values" id="value">
+                   <span style="width: 100px;display: inline-block;">
+                        <input type="checkbox" name="property-<{$property.id}>[]" value="<{$value.id}>"
+                        <if condition="$value.check == '1'">
+                            checked="true"
+                        </if>
+                        ><{$value.name}>
+                    </span>
+                </volist>
+        </volist>
+        <div style="width:500px; margin-top: 5px; ">
+            <input type="submit" value="更新">
+            <!--<a href="#" id="submit">更新</a>-->
+        </div>
+    </form>
+    <script>
+        $("#submit").click(function(){
+            $("#archiveForm").ajaxSubmit({
+                type:"post",
+                datatype:"json",
+                success:function(data){
+                    if(data.result){
+                        $("#main-container").load("<{:u('archive/mineArchive')}>");
+                    }else{
+                        noty({'text':data.msg,'layout':'topLeft','type':'error'});
+                    }
+                }
+            })
+        })
+    </script>
+</div>

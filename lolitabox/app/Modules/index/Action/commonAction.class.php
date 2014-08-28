@@ -229,6 +229,17 @@ class commonAction extends Action{
         return getPromotionCookie();
     }
 
+    public function isNewMember(){
+        $userinfo=D("Users")->getUserInfo($this->userid);
+        $registerTime = strtotime($userinfo['addtime']);
+        $dataOffset = time() - $registerTime;
+        $isNewMember = true;
+        if($dataOffset/(3600 *24) > 7){
+            $isNewMember = false;
+        }
+        return $isNewMember;
+    }
+
 
 
 }

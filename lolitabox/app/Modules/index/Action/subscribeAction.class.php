@@ -70,17 +70,6 @@ class subscribeAction extends commonAction{
         $this->ajaxReturn(0,'订阅成功',1);
     }
     
-    public function isNewMember(){
-    	$userinfo=D("Users")->getUserInfo($this->userid);
-		$registerTime = strtotime($userinfo['addtime']);
-		$dataOffset = time() - $registerTime;
-		$isNewMember = true;
-		if($dataOffset/(3600 *24) > 7){
-			$isNewMember = false;
-		}
-		return $isNewMember;
-    }
-    
     private function showCountDown(){
     	$userinfo=D("Users")->getUserInfo($this->userid);
 		$registerTime = strtotime($userinfo['addtime']);
