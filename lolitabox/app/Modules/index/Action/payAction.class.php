@@ -96,7 +96,7 @@ class payAction extends commonAction {
 					D("UserOrder")->hasPayed($out_trade_no, $trade_no, $paytime);
 					header("location:".U('userOrder/paySuccess',array('id'=>$out_trade_no)));
 				}else{
-					header("location:".U('userOrder/payFailed',array('id'=>$out_trade_no)));
+					header("location:".U('userOrder/paySuccess',array('id'=>$out_trade_no)));
 				}
 			}else{
 				header("location:".U('userOrder/payFailed',array('id'=>$out_trade_no)));
