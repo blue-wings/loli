@@ -51,10 +51,11 @@ class msgAction extends commonAction {
 		$userid=$this->userid;
 		$id=$_GET['id'];
 		if(empty($id)) $this->error("非法操作","/");
-		D("UserData")->updataUserData($userid,"newmsg_num");
+		//D("UserData")->updataUserData($userid,"newmsg_num");
 		$to_userinfo=D("Users")->getUserInfo($id,"nickname");
 		$msg_detail_num=D("Msg")->getMsgDialogueCount($userid,$id);
 		$msg_detail_list=D("Msg")->getMsgDialogue($userid,$id,$this->getlimit());
+		D("Msg")->where("id=".$id)->save(array('to_status'=>2));
 		foreach($msg_detail_list as $key=>$val){
 			if($val['from_uid']==$userid){
 				$msg_detail_list[$key]['spaceurl']=getSpaceUrl($val['to_uid']);
@@ -71,7 +72,7 @@ class msgAction extends commonAction {
 		'pagesId'=>'page',		//分页后页的容器id不带# target和pagesId同时定义才Ajax分页
 		'template'=>'home:mymsg_detail_ajaxlist',//ajax更新模板
 		);
-		$return=$this->getInterestUserList();
+		//$return=$this->getInterestUserList();
 		$return['to_userinfo']=$to_userinfo;
 		$return['userinfo']=$this->userinfo;
 		$return["title"]=$return['userinfo']['nickname']."的私信详情-".C("SITE_NAME");

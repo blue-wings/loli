@@ -199,7 +199,7 @@
 		 */
 		public function getReceverMsgListByUserid($userid,$p=null){
 			$where['_string'] = "(to_uid=$userid OR to_uid=".C("MSG_TO_ALL_USER_ID").")";
-			$where['to_status'] = 1;
+			//$where['to_status'] = 1;
 			$where['addtime'] = array("egt",strtotime(M("Users")->where("userid=".$userid)->getField("addtime")));
 			$where['from_uid']=array("exp","=".C("LOLITABOX_ID")."");
 			$list = $this->where($where)->order("addtime DESC")->limit($p)->select();

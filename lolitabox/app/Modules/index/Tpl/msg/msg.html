@@ -22,7 +22,7 @@
 										<div class="month"><{$it.addtime|date="m-d",###}></div>
                                         <div class="data"><{$it.addtime|date="Y",###}></div>
                                     </time>
-									<div class="cbp_tmicon  <if condition="$it.to_uid eq 0">Read_Warning<else />Read_Yes</if>"></div>
+									<div class="cbp_tmicon  <if condition="$it['to_status'] eq 2">Read_Yes<else /><if condition="$it.to_uid eq 0">Read_Warning<else />Read_no</if></if>"></div>
                                     <div class="cbp_tmlabel">
                                         <div class="message_info">
                                             <div class="source">
@@ -34,8 +34,8 @@
                                             <div class="clear"></div>
                                         </div>
                                         <div class="messgae_set">
-											<a href="#<{$it.id}>"><if condition="$it.to_uid neq 0">删除</if></a>
-                                            <a href="#<{$it.id}>">详情</a>
+											<if condition="$it.to_uid neq 0"><a href="#" onclick="return del_msg_detail(<{$it['id']}>)">删除</a></if>
+											<a href="<{:u('msg/mymsg_detail', 'id='.$it['id'])}>">详情</a>
                                         </div>                                    
                                    </div>
                                 </li>

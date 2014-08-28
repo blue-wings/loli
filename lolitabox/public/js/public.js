@@ -262,13 +262,14 @@ function del_msg_detail(id){
 	}
 	if(confirm("删除后不可恢复，您确定要删除吗？")){
 		$.ajax({
-			url:"/home/delete_msg_dialog.html",
+			url:"/msg/delete_msg_dialog.html",
 			type:"post",
 			dataType:"json",
 			data:"id="+id,
 			success:function(ret){
+				console.log(ret);
 				y_dialog("删除成功",3,function(){
-					location.reload();
+					//location.reload();
 				})
 			}
 		})
