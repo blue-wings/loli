@@ -95,7 +95,7 @@ class safeKeepingPayAction extends commonAction {
 					D("UserSelfPackageOrder")->hasPayed($out_trade_no, $trade_no, $paytime);
 					header("location:".U('safeKeeping/paySuccess',array('id'=>$out_trade_no)));
 				}else{
-					header("location:".U('safeKeeping/payFailed',array('id'=>$out_trade_no)));
+					header("location:".U('safeKeeping/paySuccess',array('id'=>$out_trade_no)));
 				}
 			}else{
 				header("location:".U('safeKeeping/payFailed',array('id'=>$out_trade_no)));
