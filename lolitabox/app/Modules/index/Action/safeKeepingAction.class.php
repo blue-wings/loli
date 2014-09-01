@@ -29,21 +29,9 @@ class safeKeepingAction extends commonAction{
 	}
 	
 	public function createOrder() {
-        $userId = $this->userid;
         $userOrderSendProductDetailIdArray = $_POST["detailIds"];
         if(!$userOrderSendProductDetailIdArray){
         	throw new Exception("生成订单出错");
-        }
-        $userOrderSendProductDetailModel = D("UserOrderSendProductdetail");
-        $productIds = array();
-        $productNums = array();
-        
-        foreach ($userOrderSendProductDetailIdArray as $userOrderSendProductDetailId){
-        	$detailItem = D("UserOrderSendProductdetail")->getById($userOrderSendProductDetailId);
-        	if($detailItem["status"]==C("USER_ODER_SEND_PRODUCT_STATUS_POSTAGE_NOT_PAYED")){
-				array_push($productIds, $shoppingCartItem["productid"]);
-        		array_push($productNums, $shoppingCartItem["product_num"]);        	
-        	}
         }
         $orderId = D("UserSelfPackageOrder")->createOrder( $this->userid, $userOrderSendProductDetailIdArray);
         $this->redirect("safeKeeping/getOrder2Complete", array("orderId"=>$orderId));
