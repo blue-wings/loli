@@ -35,6 +35,7 @@ var Loli = Loli || {};
 				var me = this;
 				$("#"+this.options.selfId).load(this.options.getShoppingCartDetailUrl, function(){
 					me.bindEvent();
+                    me.bindSubscribeButtonEvent();
 				});
 			},
 
@@ -85,88 +86,6 @@ var Loli = Loli || {};
 					$('.chart_info').find('.info').removeClass('tr');
 					me.open=false;
 				})
-
-				var buy_box = $('#sider_wrap');
-				var all_box = $('#all_box');
-				var pro_btn = all_box.find("input:button");
-				var buyLiArray = new Array();
-				var numpro = 0,that,numli=0;
-				//mark标记
-				if(all_box){
-					for(var i = 0; i < pro_btn.length; i++){
-						pro_btn.eq(i).attr('mark','pro_'+i);
-					}
-				}
-
-				pro_btn.unbind("click").bind("click",function(){
-					proBtnClick($(this));
-					slider();
-				});
-				//点击按钮加入产品开始
-				function proBtnClick(btnobj){
-					var pid = btnobj.attr("pid");
-					$.ajax({
-						url:me.options.addProduct2CartUrl,
-						type:"POST",
-						datatype:"json",
-						data:{"pid":pid,"pNum":1},
-						cache:false,
-						success:function(result){
-							if(result.result){
-								$("#"+me.options.selfId).load(me.options.getShoppingCartDetailUrl, function(){
-									me.bindEvent();
-									if(me.open){
-										$(".open_chart").trigger("click");
-									}else{
-										$(".close_chart").trigger("click");
-									}
-									noty({'text':"更新购物车成功",'layout':'topLeft','type':'success'});	
-								});
-							}else{
-								noty({'text':result.msg,'layout':'topLeft','type':'error'});	
-							}
-
-						},
-						error:function(result){
-							noty({'text':"添加到购物车失败!",'layout':'topLeft','type':'error'});
-						}
-					});
-
-					
-				}
-
-				//订阅内容滚动
-				function slider(){
-					var count = $("#sider_wrap li").length - 6;  
-					var interval = $("#sider_wrap li:first").outerWidth(true); 
-					var curIndex = 0;
-					var maxIndex = -count*interval+"px";
-					if(count > 0){
-						$('.aright').removeClass('agray');
-					}else{
-						$('.aright').addClass('agray');
-					}
-					$('.a_arrow').click(function(){
-						if ($(this).hasClass('aleft')) {
-							--curIndex;
-						}
-						if($(this).hasClass('aright')){
-							++curIndex;
-						}
-						$("#sider_wrap ul").stop().animate({"left" : -curIndex*interval + "px"},300,function(){
-							var leftul = $("#sider_wrap ul").css("left");
-							if(leftul == "0px"){
-								$('.aleft').addClass('agray');
-							}else if(leftul == maxIndex){
-								$('.aright').addClass('agray');
-							}else{
-								$('.aleft').removeClass('agray');
-								$('.aright').removeClass('agray');
-							}
-						});     
-					});
-
-				}
 
 				//实现数量的控制
 				$(".num_down").click("click",function(){
@@ -239,6 +158,84 @@ var Loli = Loli || {};
 					});	
 
 			},
+
+            bindSubscribeButtonEvent : function(){
+                var me= this;
+                var all_box = $('#all_box');
+                var pro_btn = all_box.find(".subscribe-button");
+
+                //订阅内容滚动
+                function slider(){
+                    var count = $("#sider_wrap li").length - 6;
+                    var interval = $("#sider_wrap li:first").outerWidth(true);
+                    var curIndex = 0;
+                    var maxIndex = -count*interval+"px";
+                    if(count > 0){
+                        $('.aright').removeClass('agray');
+                    }else{
+                        $('.aright').addClass('agray');
+                    }
+                    $('.a_arrow').click(function(){
+                        if ($(this).hasClass('aleft')) {
+                            --curIndex;
+                        }
+                        if($(this).hasClass('aright')){
+                            ++curIndex;
+                        }
+                        $("#sider_wrap ul").stop().animate({"left" : -curIndex*interval + "px"},300,function(){
+                            var leftul = $("#sider_wrap ul").css("left");
+                            if(leftul == "0px"){
+                                $('.aleft').addClass('agray');
+                            }else if(leftul == maxIndex){
+                                $('.aright').addClass('agray');
+                            }else{
+                                $('.aleft').removeClass('agray');
+                                $('.aright').removeClass('agray');
+                            }
+                        });
+                    });
+
+                }
+
+
+                pro_btn.die("click").live("click",function(){
+                    proBtnClick($(this));
+                    slider();
+                });
+                //点击按钮加入产品开始
+                function proBtnClick(btnobj){
+                    $("#"+me.options.submitButtonId).attr("disabled", true);
+                    var pid = btnobj.attr("pid");
+                    $.ajax({
+                        url:me.options.addProduct2CartUrl,
+                        type:"POST",
+                        datatype:"json",
+                        data:{"pid":pid,"pNum":1},
+                        cache:false,
+                        success:function(result){
+                            if(result.result){
+                                $("#"+me.options.selfId).load(me.options.getShoppingCartDetailUrl, function(){
+                                    me.bindEvent();
+                                    if(me.open){
+                                        $(".open_chart").trigger("click");
+                                    }else{
+                                        $(".close_chart").trigger("click");
+                                    }
+                                    noty({'text':"更新购物车成功",'layout':'topLeft','type':'success'});
+                                });
+                            }else{
+                                noty({'text':result.msg,'layout':'topLeft','type':'error'});
+                            }
+                            $("#"+me.options.submitButtonId).attr("disabled", false);
+                        },
+                        error:function(result){
+                            noty({'text':"添加到购物车失败!",'layout':'topLeft','type':'error'});
+                        }
+                    });
+
+
+                }
+            },
 			
 			hide : function(){
 				$("#"+this.options.selfId).hide();

@@ -7,14 +7,15 @@ class subscribeAction extends commonAction{
 		$products = $this->formatProductCountdown($products);	
 		$this->assign("list",$products);
 		$this->assign("ismember",$this->userinfo['if_member']);
+        $this->assign("mineSelect","select");
 		$this->display();
 	}
 	
 
 	
 	public function newuser(){
-		
-		
+
+        $this->assign("displayNewUserItem",true);
 		$products = $this->getAllProductsAndShowPage("3");
 		
 		$products = $this->formatProductPrice($products);
@@ -22,7 +23,7 @@ class subscribeAction extends commonAction{
 	    $this->showCountDown();
 		$this->assign("list",$products);
 		$this->assign("ismember",$this->userinfo['if_member']);
-		
+        $this->assign("newuserSelect","select");
 		$this->display();
 	}	
 	
@@ -33,7 +34,7 @@ class subscribeAction extends commonAction{
 		$products = $this->formatProductCountdown($products);			
 		$this->assign("list",$products);
 		$this->assign("ismember",$this->userinfo['if_member']);
-		
+        $this->assign("advanceSelect","select");
 		$this->display();
 	}
 	

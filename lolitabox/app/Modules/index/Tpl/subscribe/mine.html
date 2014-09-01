@@ -1,17 +1,5 @@
 <script type="text/javascript" src="/public/js/countDownTimer.js"></script>
-				<div class="dy_tab">
-					<div class="tab">
-						<div class="tad_li cfl">
-							<if condition="$displayNewUserItem eq true">
-							<a href="javascript:$('#main-container').load('../subscribe/newuser/userType/0.html');"><p><span class="txt">新会员专属</span><span class="on_bg"></span></p></a>
-							</if>
-							<a href="javascript:;" class="select"><p><span class="txt">普通订阅区</span><span class="on_bg"></span></p></a>
-							<a href="javascript:$('#main-container').load('../subscribe/advance/userType/0.html');"><p><span class="txt">高级订阅区</span><span class="on_bg"></span></p></a>
-							<a href="javascript:$('#main-container').load('../subscribe/year/userType/0.html');"><p><span class="txt">年度试用尊享</span><span class="on_bg"></span></p></a>
-							<a href="javascript:;" class="nobr"><p><span class="txt"><em class="gz_help">HELP</em></span><span class="on_bg"></span></p></a>
-						</div>
-					</div>
-				</div>
+                <include file="subscribe:tab" />
 				<div class="wp780 dy_con" id="dy_con">
 					<div class="hd">&nbsp;</div>
 					<div class="con">
@@ -43,7 +31,7 @@
 								        <if condition="$ismember eq 0">
 									        <div class="pri"  id= "price_time<{$k}>"  <if condition="$vo.start eq false"> style="display:none" </if>>
 										        <div class="price_wrap">
-													<p class="price pt_price cfl"><span class="l">￥<{$vo.price}></span><input type="button" class="r" value="立即订购" pid="<{$vo.pid}>" id="subscribe-button-<{$k}>"></p>
+													<p class="price pt_price cfl"><span class="l">￥<{$vo.price}></span><input type="button" class="r subscribe-button" value="立即订购" pid="<{$vo.pid}>" id="subscribe-button-<{$k}>"></p>
 													<p class="price gj_price cfl"><span class="l">￥<{$vo.member_price}></span><span class="r">高级订阅专享</span></p>
 												</div>												
 								             </div>
@@ -51,7 +39,7 @@
 											<div class="pri pri_gj cfl"  id= "price_time<{$k}>"  <if condition="$vo.start eq false"> style="display:none" </if>>											
 										        <div class="price_wrap">
 													<p class="price l"><span class="gj_price">￥<{$vo.member_price}></span><span class="pt_price">￥<{$vo.price}><i class="overline">&nbsp;</i></span></p>
-													<p class="r"><input type="button" value="立即订购" pid="<{$vo.pid}>" id="subscribe-button-<{$k}>"></p>
+													<p class="r"><input type="button" value="立即订购" pid="<{$vo.pid}>" id="subscribe-button-<{$k}>" class="subscribe-button"></p>
 												</div>
 											
 									       </div>

@@ -1,22 +1,9 @@
-
-				<div class="dy_tab">
-					<div class="tab">
-						<div class="tad_li cfl">
-							<if condition="$displayNewUserItem eq true">
-							 <a href="javascript:$('#main-container').load('../subscribe/newuser/userType/0.html');"><p><span class="txt">新会员专属</span><span class="on_bg"></span></p></a>
-							</if>
-							<a href="javascript:$('#main-container').load('../subscribe/mine/userType/0.html');"><p><span class="txt">普通订阅区</span><span class="on_bg"></span></p></a>
-							<a href="javascript:;" class="select"><p><span class="txt" >高级订阅区</span><span class="on_bg"></span></p></a>
-							<a href="javascript:;"><p><span class="txt">年度试用尊享</span><span class="on_bg"></span></p></a>
-							<a href="javascript:;" class="nobr"><p><span class="txt"><em class="gz_help">HELP</em></span><span class="on_bg"></span></p></a>
-						</div>
-					</div>
-				</div>
+                <include file="subscribe:tab" />
 				<div class="wp780 dy_con" id="dy_con">
 					<div class="hd">&nbsp;</div>
 					<div class="con">
 						<p class="td_h_btn"><a href="" target="">投递记录</a></p>
-						<div class="dy_list">
+						<div class="dy_list"  id="all_box">
 							<ul class="dy_ul cfl">
 							
 			                   <volist name="list" id="vo" key="k">
@@ -47,7 +34,7 @@
 											    <if condition="$ismember eq 0">
 												 <input type="button" class="r" value="升级高级会员"></p>
 												 <else/>
-												 <input type="button" class="r" value="立即订购"></p>
+												 <input type="button" class="r subscribe-button" value="立即订购" pid="<{$vo.pid}>"></p>
 												 </if>
 											</div> 											
 										</div>
