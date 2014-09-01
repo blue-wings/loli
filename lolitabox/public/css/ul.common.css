@@ -129,7 +129,7 @@
 .dy_ul li .gj_price{ background: #f6faff; line-height: 38px; padding: 0 9px 0 17px;}
 .dy_ul li .gj_price .r{ color: #999; font-size: 12px;}
 .dy_ul li input[type="button"]{ background: url(../images/dy_dg_btn.jpg) repeat-x; height: 30px; line-height: 30px; color: #fff; border: 0; padding: 0 20px;_padding: 0 10px;*padding: 0 10px; font-size: 14px;}
-.pri_0,.time_wrap{ padding: 0 0 15px 20px;}
+.pri_0,.time_wrap{ padding: 0 0 15px 5px;}
 .time_wrap{ display: none;}
 .xtime_tip{ padding: 10px;color: #fff; height: 110px; }
 .xtime_tip .time_down{ line-height: 40px; display: block; background: url(../images/new_hy_tip.png) 0px 0px no-repeat; padding-left: 20px; font-size: 18px; width: 338px; height: 56px;}
