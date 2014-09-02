@@ -30,7 +30,7 @@ $array = array(
 	'ERROR_PAGE' =>'/error.html',
 	'LOG_RECORD'			=>	true,  // 进行日志记录
     'LOG_EXCEPTION_RECORD'  => 	true,    // 是否记录异常信息日志
-    'LOG_LEVEL'       		=>  'EMERG,ALERT,CRIT,ERR',  // 允许记录的日志级别
+    'LOG_LEVEL'       		=>  'EMERG,ALERT,CRIT,ERR,WARN,NOTICE,INFO',  // 允许记录的日志级别
 	'TAG_NESTED_LEVEL'		=> 	5
 );
 return array_merge ( $config_db,$config_global,$constants,$array);

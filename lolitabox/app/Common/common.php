@@ -134,8 +134,8 @@ function newSendtomess($dest,$message){
 	$url = "http://api.app2e.com/smsSend.api.php?username=".$username."&pwd=".$passwd."&p=".$p."&msg=".urlencode($message);
 	$info = curlPost(array(),$url);
 	$info_arr = json_decode($info,true);
-	Log::write("==================发送短信详情===================".date("Y-m-d H:i:s")."\r",CRIT);
-	Log::write(var_export($info_arr,true),CRIT);
+	Log::write("==================发送短信详情===================".date("Y-m-d H:i:s")."\r",INFO);
+	Log::write(var_export($info_arr,true),INFO);
 	if($info_arr['status']==100){
 		return true;
 	}else{

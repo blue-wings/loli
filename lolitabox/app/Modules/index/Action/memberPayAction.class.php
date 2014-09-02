@@ -145,11 +145,11 @@ class memberPayAction extends commonAction {
 		    	$this->doByBuySuccess($out_trade_no, $paytime, $trade_no);
 		    	logResult( "n2_TRADE_SUCCESS_支付成功,订单号码".$out_trade_no."--支付宝交易号--".$trade_no);
 		    }
-		    Log::write("alipay_notify:".$out_trade_no.",".$trade_no.",".$total_fee,CRIT);
+		    Log::write("alipay_notify:".$out_trade_no.",".$trade_no.",".$total_fee,INFO);
 			echo "success";		//请不要修改或删除
 		}
 		else {
-			Log::write("alipay_notify pay fail",CRIT);
+			Log::write("alipay_notify pay fail",INFO);
 		    echo "fail";
 		}
 	}
@@ -262,9 +262,9 @@ class memberPayAction extends commonAction {
 			$status = getDataForXML ( $_POST ['notify_data'], '/notify/trade_status' ); // 返回token
 			if ($status == 'TRADE_FINISHED') { // 交易成功结束
 				echo "success"; // 请不要修改或删除，在判断交易正常后，必须在页面输出success
-				Log::write ( 'success', CRIT );
+				Log::write ( 'success', INFO );
 			} else {
-				Log::write ( 'fail', CRIT );
+				Log::write ( 'fail', INFO );
 			}
 		} else {
 			echo "fail";

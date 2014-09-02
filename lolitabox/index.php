@@ -2,7 +2,7 @@
  //定义项目名称和路径
 define('APP_NAME', 'app');
 define('APP_PATH', './app/');
-define('APP_DEBUG',TRUE);
+define('APP_DEBUG',FALSE);
 define('RUNTIME_PATH','./data/runtime/');
 require("config.php");
 // 加载框架入口文件
