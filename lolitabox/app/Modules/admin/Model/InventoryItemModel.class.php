@@ -30,9 +30,9 @@ class InventoryItemModel extends model{
 	public function shelveProductInventory($pid, $inventoryItemId, $quantity){
 		$productMod = D("Product");
 		try{
-			$inventoryItem = $this->getById($inventoryItemId);
+			$inventoryItem = $this->lock(true)->getById($inventoryItemId);
 			if($inventoryItem["inventory_estimated"] < $quantity){
-				throw new Exception("");
+				throw new Exception("库存不足");
 			}
 			$params["id"]=$inventoryItemId;	
 			$this->where($params)->setInc("product_shelved_inventory_in", $quantity);
