@@ -8,7 +8,7 @@ class IndexAction extends commonAction {
 	 */
 	public function index() {
         $brand_count = D("ProductsBrand")->where("status=1")->count();
-        $return['brand_count'] = $brand_count + 1;
+        $return['brand_count'] = $brand_count;
         $this->assign("return",$return);
         $this->display("index");
 	}

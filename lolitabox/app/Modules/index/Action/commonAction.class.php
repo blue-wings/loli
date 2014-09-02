@@ -39,10 +39,13 @@ class commonAction extends Action{
 			$thirdurl=urlencode($thirdurl);
 			$this->assign("thirdurl",$thirdurl);
 		}
-		if(MODULE_NAME =='home'){
+
+
+        $notMustLoginModule = array("Index","user");
+		if(!in_array(MODULE_NAME, $notMustLoginModule)){
 			
 			if(empty($this->userid)){
-				$unlogin_page = array();     //不需要登录的页面
+				$unlogin_page = array("subscribe_theirs");     //不需要登录的页面
 				$current_page = MODULE_NAME."_".ACTION_NAME;
 				if(!in_array($current_page, $unlogin_page)){    //如果此页面不需要则跳过，反之则header到首页
 					header("location:".U('user/login'));    //未登录则跳转到登录页
