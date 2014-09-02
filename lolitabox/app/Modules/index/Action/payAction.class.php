@@ -132,11 +132,11 @@ class payAction extends commonAction {
 				}
 		    	logResult( "n2_TRADE_SUCCESS_支付成功,订单号码".$out_trade_no."--支付宝交易号--".$trade_no);
 		    }
-		    Log::write("alipay_notify:".$out_trade_no.",".$trade_no.",".$total_fee,INFO);
+		    Log::write("alipay_notify:".$out_trade_no.",".$trade_no.",".$total_fee,CRIT);
 			echo "success";		//请不要修改或删除
 		}
 		else {
-			Log::write("alipay_notify pay fail",INFO);
+			Log::write("alipay_notify pay fail",CRIT);
 		    echo "fail";
 		}
 	}

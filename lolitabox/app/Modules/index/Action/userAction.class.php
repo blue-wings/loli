@@ -1201,7 +1201,7 @@ class userAction extends commonAction {
                     $this->error("请填写用户名、密码");
                 }
             }
-            Log::write("user login ".$username,INFO);
+            Log::write("user login ".$username,CRIT);
             $UserModel=M("users");
             $userinfo=$UserModel->getByUsermail($username);
             if($userinfo){

@@ -26,7 +26,7 @@ class userOrderAction extends commonAction {
         	}
         }
         $orderId = D("UserOrder")->createOrder( $this->userid, $productIds, $productNums);
-        Log::write($userId."create order ".$orderId,INFO);
+        Log::write($userId."create order ".$orderId,CRIT);
         $shoppingCartModel->invalidUserShoppingCart($shoppingCartIdArray);
         $this->redirect("userOrder/getOrder2Complete", array("orderId"=>$orderId));
     }
