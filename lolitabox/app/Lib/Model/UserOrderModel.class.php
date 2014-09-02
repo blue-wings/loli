@@ -154,15 +154,16 @@ class UserOrderModel extends Model {
 	 * @param unknown_type $expressCompanyId
 	 */
 	public function completeOrder($userId,$orderId, $addressId,$payBank,$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
-		if(empty($userId) || empty($orderId) || !isset($addressId) || empty($ifPayPostage) || !isset($expressCompanyId))
+		if(!isset($userId) || !isset($orderId) || !isset($ifPayPostage))
 			return false;
 
 		$order = $this->getOrderInfo($orderId);
 		$data['ordernmb']=$orderId;
-
-		$data["address_id"]=$addressId;
-		
 		if($ifPayPostage){
+            $data["address_id"]=$addressId;
+            if(empty($addressId) || empty($expressCompanyId)){
+                throw new Exception("未选择地址或者快递公司");
+            }
 			$address = M("UserOrderAddress")->getById($addressId);
 			$postage = D("PostageStandard")->calculateOrderPostage($orderId, $expressCompanyId, $address["district_area_id"]);
 			$data["postage"]=$postage;

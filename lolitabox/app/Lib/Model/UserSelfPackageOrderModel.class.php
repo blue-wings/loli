@@ -107,7 +107,7 @@ class UserSelfPackageOrderModel extends Model {
 	 * @param unknown_type $expressCompanyId
 	 */
 	public function completeOrder($userId,$orderId, $addressId,$payBank, $sendWord="", $expressCompanyId){
-		if(empty($userId) || empty($orderId) || !isset($addressId) || !isset($expressCompanyId))
+		if(!isset($userId) || !isset($orderId) || !isset($addressId) || !isset($expressCompanyId))
 			return false;
 			
 		$data['ordernmb']=$orderId;
