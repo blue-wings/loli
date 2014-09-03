@@ -47,8 +47,8 @@ class safeKeepingPayAction extends commonAction {
 				"partner"			=> trim($aliapy_config['partner']),
 				"_input_charset"	=> trim(strtolower($aliapy_config['input_charset'])),
 		        "seller_email"		=> trim($aliapy_config['seller_email']),
-		        "return_url"		=> trim($aliapy_config['return_url']),
-		        "notify_url"		=> trim($aliapy_config['notify_url']),
+		        "return_url"		=> trim($aliapy_config['safeKeeping_return_url']),
+		        "notify_url"		=> trim($aliapy_config['safeKeeping_notify_url']),
 		
 				"out_trade_no"		=> $out_trade_no,
 				"subject"			=> $subject,
