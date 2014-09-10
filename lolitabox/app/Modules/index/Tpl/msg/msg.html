@@ -24,7 +24,7 @@
                                     </time>
 									<div class="cbp_tmicon  <if condition="$it['to_status'] eq 2">Read_Yes<else /><if condition="$it.to_uid eq 0">Read_Warning<else />Read_no</if></if>"></div>
                                     <div class="cbp_tmlabel">
-                                        <div class="message_info">
+                                        <div class="message_info" id="inline-<{$it['id']}>">
                                             <div class="source">
 												<div><img src="<{$it.userface}>" width="50" height="50" /></div>
 												<{$it.nickname}>:</div>
@@ -35,7 +35,7 @@
                                         </div>
                                         <div class="messgae_set">
 											<if condition="$it.to_uid neq 0"><a href="#" onclick="return del_msg_detail(<{$it['id']}>)">删除</a></if>
-											<a href="<{:u('msg/mymsg_detail', 'id='.$it['id'])}>">详情</a>
+											<a class="inline" href="#inline-<{$it['id']}>">详情</a>
                                         </div>                                    
                                    </div>
                                 </li>
@@ -57,7 +57,6 @@
 			</div>
 
 <script type="text/javascript" src="/public/js/ellipsisSizeH.js"></script>
-<script type="text/javascript" src="/public/js/jquery.infinitescroll.min.js"></script>
 <!--<script type="text/javascript" src="/public/js/gzJs.js"></script>-->
 <script src="/public/js/jquery.masonry.min.js" type="text/javascript"></script>
 <script src="/public/js/jquery.lazyload.js"></script>
@@ -66,11 +65,18 @@ $('.cbp_tmtimeline').infinitescroll({
 	navSelector		: "#next:last",
 	nextSelector	: "a#next:last",
 	itemSelector	: ".cbp_tmtimeline li",
+	donetext		: "I think we've hit the end, Jim",
+	loadingText		: "Loading ...",      
+	debug			: true,
+	animate			: true,
 	path			: function(index) {
 		return "/msg/msg/?p="+index;
 		return "index" + index + ".html";
 	}
 }, function(arrayOfNewElems){});
+
+$(".inline").colorbox({inline:true, width:"50%"});
+
 $(function () {
 	$("img[data-original]").lazyload({ threshold: 200, effect: "fadeIn" });
 	 /**
