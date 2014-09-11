@@ -223,7 +223,7 @@ class ProductAction extends CommonAction{
 				}
 				if($data["inventory_item_id"] && $data["inventory"]){
 					try {
-						D("InventoryItem")->shelveProductInventory($pid, $data["inventory_item_id"], $data["inventory"]);	
+						D("InventoryItem")->shelveProductInventory($pid, $data["inventory_item_id"], $data["inventoryInc"]);
 					}catch(Exception $e){
 						$this->error($e->getMessage());	
 					}

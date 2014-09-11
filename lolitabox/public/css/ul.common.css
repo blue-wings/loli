@@ -108,7 +108,7 @@
 .dy_con .td_h_btn{ text-align: right;}
 .dy_con .td_h_btn a{ display: inline-block;  background: #ff4200; font-size: 16px; color: #fff; padding: 2px 8px; border-radius: 5px;}
 .dy_con .td_h_btn a:hover{ text-decoration: none;}
-.dy_ul li{ width: 230px; float: left; margin: 9px; position: relative; height: 301px;}
+.dy_ul li{ width: 230px; float: left; margin: 9px; margin-top: 30px; position: relative; height: 301px;}
 #all_box .dy_ul li{ height: 278px;}
 .dy_li .hd,.dy_li .ft,.chart .hd,.chart .ft{ background:url(../images/main_bg_v6.png) no-repeat; width: 230px;}
 .dy_li .hd{ background-position: 0px -52px; height: 10px;}
