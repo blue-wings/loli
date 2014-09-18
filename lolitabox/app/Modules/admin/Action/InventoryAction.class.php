@@ -1971,6 +1971,8 @@ class InventoryAction extends CommonAction {
 		$order_mod=M("UserOrder");
 		$order_address_mod=M("UserOrderAddress");
 		$box_mod=M("Box");
+        $out_mod = M("inventoryOut");
+        $outInfo = $out_mod->where(array('id'=>trim($outid)))->find();
 		if($orderList){
 			$get_tips=D("Article")->getArticleList(773,1);
 			$tips=$get_tips[0];

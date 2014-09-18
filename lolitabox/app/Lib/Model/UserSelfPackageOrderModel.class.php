@@ -138,7 +138,66 @@ class UserSelfPackageOrderModel extends Model {
 		$this->save($data);
 		D("UserOrderSendProductdetail")->changeStatus2PostagePayedBySelfPackageOrderId($orderId);
 		//@TODOcreate inventoryOut and orderSend record
-        D("UserOrder")->createSystemOutInventory($orderId);
+        $this->createSystemOutInventory($orderId);
+	}
+    public function createSystemOutInventory($orderId){
+        //generate inventory out record
+        $out_mod=M('inventoryOut');
+        $data=array(
+            'type'=> C("INVENTORY_OUT_TYPE_SYSTEM"),
+            'title'=>'出库单'.date("m.d"),
+            'outdate'=>date("Y-m-d").' 00:00:00', //todo 今天？或者过一定时间变成明天？
+            'description'=>'系统出库单'.date("m.d"),
+            'cdatetime'=>date('Y-m-d H:i:s'),
+            'operator'=>'system',
+            'status'=>1,
+            'ifagree'=>0,
+            'agreeoperator'=>'',
+            'agreedatetime'=>'',
+            'ifconfirm'=>0,
+            'confirmoperator'=>'',
+            'confirmdatetime'=>'',
+            'ifselfpackage'=>1
+        );
+        $in_out_id=$out_mod->add($data);
+
+        $total_num=0;//当前订单内商品总数
+
+        //get product detail
+        $detail_mod=M("userOrderSendProductdetail");
+        $info=$detail_mod->where(array('self_package_order_id'=>$orderId))->field('productid,product_num')->select();
+        $stat_mod=M("inventoryStat");
+        $product_mod = M("products");
+        foreach ($info AS $k => $val){
+            $product = $product_mod->field("inventory_item_id")->getByPid($val['productid']);
+            $data1=array(
+                'itemid'=>$product['inventory_item_id'],
+                'message'=>'',
+                'operator'=>'',
+                'quantity'=>-$val['product_num'],
+                'add_time'=>'',
+                'status'=>0,
+                'in_out_id'=>$in_out_id
+            );
+            $stat_mod->add($data1);
+            $total_num = $total_num + $val['product_num'];
+        }
+        $order = $this->getOrderInfo($orderId,"userid,cost");
+
+        //generate order send
+        $order_send_mod=M("UserOrderSend");
+        $orderSendData['orderid'] = $orderId;
+        $orderSendData['userid'] = $order['userid'];
+        $orderSendData['productnum'] = $total_num;
+        $orderSendData['productprice'] = $order['cost'];
+        $orderSendData['inventory_out_id'] = $in_out_id;
+        $orderSendData['inventory_out_status'] = C("INVENTORY_OUT_STATUS_UNFINISHED");
+        $order_send_mod->add($orderSendData);
+
+        //关联user_self_package _order
+        $orderData['inventory_out_id'] = $in_out_id;
+        $orderData['inventory_out_status'] = C("INVENTORY_OUT_STATUS_UNFINISHED");
+        $this->where(array('ordernmb'=>$orderId))->setField($orderData);
 	}
 	
 }
