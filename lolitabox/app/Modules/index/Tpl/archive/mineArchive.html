@@ -2,7 +2,7 @@
     <form action="<{:u('archive/updateArchive')}>" method="post" id="archiveForm">
         <volist name="propertyList" id="property">
             <br><span style="width: 100px;display: inline-block;"><{$property.name}>:</span>
-                <volist name="property.values" id="value">
+            <volist name="property.values" id="value">
                    <span style="width: 100px;display: inline-block;">
                         <input name="property-<{$property.id}>[]"
                             <if condition="$property.type == 'checkbox'">
@@ -17,7 +17,7 @@
                         </if>
                         ><{$value.name}>
                     </span>
-                </volist>
+            </volist>
         </volist>
         <div style="width:500px; margin-top: 5px; ">
             <input type="submit" value="更新">

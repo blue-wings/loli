@@ -117,43 +117,6 @@ class subscribeAction extends commonAction{
 		}
 		return $productsResult;
 	}
-	
-	private function getAllProductsAndShowPage1($productType){
-		$userid = $this->userid;
-		import("ORG.Util.Page");
-		$usersProductsCategorySubscribe = D("UsersProductsCategorySubscribe");
-		$subscribes = $usersProductsCategorySubscribe->getByUserId($userid);
-		if(count($subscribes) == 0){
-			$this->error("尚未订阅任何分类，请订阅!");
-		}
-		$categoryIds = "";
-		for($i=0; $i<count($subscribes); $i++){
-			$categoryIds .= $subscribes[$i]["product_category_id"];
-			if($i != count($subscribes)-1){
-				$categoryIds .= ",";
-			}
-		}
-		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$productType.",p.user_type) and p.end_time> now() and (inventory - inventoryreduced)>0 and status= ".C("PRODUCT_STATUS_PUBLISHED")." and p.firstcid in (" .$categoryIds .")";
-		$model= new Model();
-		$productCount = $model->query($sql);
-		$count = $productCount[0]['count'];
-		$p = new Page($count,8);
-		$pageSql = $p->firstRow.','.$p->listRows;
-		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$productType.",p.user_type) and p.end_time> now() and (inventory - inventoryreduced)>0 and status =".C("PRODUCT_STATUS_PUBLISHED")." and p.firstcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
-		$prodcutIdList = $model->query($productSql);
-		$productIdsStr = "";
-		for($i=0; $i<count($prodcutIdList); $i++){
-			$productIdsStr .= $prodcutIdList[$i]["productIds"];
-			if($i != count($prodcutIdList)-1){
-				$productIdsStr .= ",";
-			}	
-		}
-		$where = array("in", $productIdsStr);
-		$products = D("Products")->where("pid in (".$productIdsStr.")")->select();
-		$page=$p->show();
-		$this->assign('page',$page);
-		return $products;
-	}
 
     private function getAllProductsAndShowPage($productType){
         $userid = $this->userid;

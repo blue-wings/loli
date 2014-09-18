@@ -2,12 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: work
- * Date: 8/19/14
- * Time: 6:16 PM
+ * Date: 9/18/14
+ * Time: 1:48 PM
  */
-class archiveAction extends commonAction{
-
-    function mineArchive(){
+class ArchiveAction extends CommonAction {
+    function productProperties(){
+        $pid = $_GET["pid"];
         $properties = M("ArchiveProperty")->select();
         $propertyList = array();
         foreach($properties as $key => $property){
@@ -16,7 +16,7 @@ class archiveAction extends commonAction{
                 continue;
             }
             foreach($propertyValues as $index=>$propertyValue){
-                $userValues = M("archiveUser")->where(array( "userid"=>$this->userid, "property_id"=>$property["id"], "value_id"=>$propertyValue["id"]))->select();
+                $userValues = M("archiveProduct")->where(array( "pid"=>$pid, "property_id"=>$property["id"], "value_id"=>$propertyValue["id"]))->select();
                 if($userValues){
                     $propertyValue["check"]=1;
                 }
@@ -25,29 +25,30 @@ class archiveAction extends commonAction{
             $property["values"]=$propertyValues;
             array_push($propertyList, $property);
         }
+        $this->assign("pid", $pid);
         $this->assign("propertyList", $propertyList);
         $this->display();
     }
 
-    function updateArchive(){
+    function deliverProduct(){
+        $pid = $_POST["pid"];
         $properties = M("ArchiveProperty")->select();
         if($properties){
-            M("ArchiveUser")->where(array("userid"=>$this->userid))->delete();
+            M("ArchiveProduct")->where(array("pid"=>$pid))->delete();
             foreach($properties as $property){
                 $propertyValueIds = $_POST["property-".$property["id"]];
                 if(!$propertyValueIds){
                     continue;
                 }
                 foreach($propertyValueIds as $propertyValueId){
-                    $data["userid"]=$this->userid;
+                    $data["pid"]=$pid;
                     $data["property_id"]=$property["id"];
                     $data["value_id"]=$propertyValueId;
-                    M("ArchiveUser")->add($data);
+                    M("ArchiveProduct")->add($data);
                 }
             }
         }
-        $this->redirect("Archive/mineArchive");
-//        $this->ajaxReturn(array("result"=>true));
+        D("ArchiveIndex")->createProductIndex($pid);
+        $this->redirect("Archive/productProperties", array("pid"=>$pid));
     }
-
 }
