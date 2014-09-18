@@ -2,118 +2,35 @@
 /**
  * Created by PhpStorm.
  * User: work
- * Date: 8/19/14
- * Time: 6:16 PM
+ * Date: 9/18/14
+ * Time: 10:58 AM
  */
-class archiveAction extends commonAction{
+class ArchiveIndexModel extends Model {
 
     private static $INDEX="product";
     private static $TYPE="productArchive";
     private static $PROPERTY_INDEX_PREFIX="property";
     private static $USER_TYPE_INDEX_PREFIX="user_type";
 
-    public $elasticSearchClient;
+    private  $elasticSearchClient;
 
     function _initialize() {
         require 'vendor/autoload.php';
         $params = array();
         $params['hosts'] = array (
-            '127.0.0.1:9200'
+            C("elastic_search_host")
         );
         $this->elasticSearchClient = new Elasticsearch\Client($params);
         parent::_initialize();
     }
 
-    function mineArchive(){
-        $properties = M("ArchiveProperty")->select();
-        $propertyList = array();
-        foreach($properties as $key => $property){
-            $propertyValues = M("archiveValue")->where(array("property_id"=>$property["id"]))->select();
-            if(!$propertyValues){
-                continue;
-            }
-            foreach($propertyValues as $index=>$propertyValue){
-                $userValues = M("archiveUser")->where(array( "userid"=>$this->userid, "property_id"=>$property["id"], "value_id"=>$propertyValue["id"]))->select();
-                if($userValues){
-                    $propertyValue["check"]=1;
-                }
-                $propertyValues[$index]=$propertyValue;
-            }
-            $property["values"]=$propertyValues;
-            array_push($propertyList, $property);
+    public function createProductsIndex($pids){
+        foreach($pids as $pid){
+            $this->createProductIndex($pid);
         }
-        $this->assign("propertyList", $propertyList);
-        $this->display();
     }
 
-    function updateArchive(){
-        $properties = M("ArchiveProperty")->select();
-        if($properties){
-            M("ArchiveUser")->where(array("userid"=>$this->userid))->delete();
-            foreach($properties as $property){
-                $propertyValueIds = $_POST["property-".$property["id"]];
-                if(!$propertyValueIds){
-                    continue;
-                }
-                foreach($propertyValueIds as $propertyValueId){
-                    $data["userid"]=$this->userid;
-                    $data["property_id"]=$property["id"];
-                    $data["value_id"]=$propertyValueId;
-                    M("ArchiveUser")->add($data);
-                }
-            }
-        }
-        $this->redirect("archive/mineArchive");
-//        $this->ajaxReturn(array("result"=>true));
-    }
-
-    function productProperties(){
-        $pid = $_GET["pid"];
-        $properties = M("ArchiveProperty")->select();
-        $propertyList = array();
-        foreach($properties as $key => $property){
-            $propertyValues = M("archiveValue")->where(array("property_id"=>$property["id"]))->select();
-            if(!$propertyValues){
-                continue;
-            }
-            foreach($propertyValues as $index=>$propertyValue){
-                $userValues = M("archiveProduct")->where(array( "pid"=>$pid, "property_id"=>$property["id"], "value_id"=>$propertyValue["id"]))->select();
-                if($userValues){
-                    $propertyValue["check"]=1;
-                }
-                $propertyValues[$index]=$propertyValue;
-            }
-            $property["values"]=$propertyValues;
-            array_push($propertyList, $property);
-        }
-        $this->assign("pid", $pid);
-        $this->assign("propertyList", $propertyList);
-        $this->display();
-    }
-
-    function deliverProduct(){
-        $pid = $_POST["pid"];
-        $properties = M("ArchiveProperty")->select();
-        if($properties){
-            M("ArchiveProduct")->where(array("pid"=>$pid))->delete();
-            foreach($properties as $property){
-                $propertyValueIds = $_POST["property-".$property["id"]];
-                if(!$propertyValueIds){
-                    continue;
-                }
-                foreach($propertyValueIds as $propertyValueId){
-                    $data["pid"]=$pid;
-                    $data["property_id"]=$property["id"];
-                    $data["value_id"]=$propertyValueId;
-                    M("ArchiveProduct")->add($data);
-                }
-            }
-        }
-        $this->createProductIndex($pid);
-        $this->redirect("archive/productProperties", array("pid"=>$pid));
-    }
-
-    private function createProductIndex($pid){
+    public function createProductIndex($pid){
         $product = D("Products")->getByPid($pid);
         $index = self::$INDEX;
         $type=self::$TYPE;
@@ -170,60 +87,49 @@ class archiveAction extends commonAction{
         $this->elasticSearchClient->create($doc);
     }
 
-    //$params['body']['query']['filtered']["filter"]["and"][]["or"][]["term"]["1"]="2";
-    function getProductList(){
-
-        $subscribes = D("UsersProductsCategorySubscribe")->getByUserId($this->userid);
+    public function getSubscribedProductsCount($userId, $productType){
+        $subscribes = D("UsersProductsCategorySubscribe")->getByUserId($userId);
         if(!$subscribes || count($subscribes) == 0){
-            $this->error("尚未订阅任何分类，请订阅!");
+            return false;
         }
-
-        $archiveUsers = M("archiveUser")->where(array("userid"=>$this->userid))->select();
-        $index = self::$INDEX;
-        $type=self::$TYPE;
-        $params["index"]=$index;
-        $params["type"]=$type;
-        $propertyMap=array();
-        $member=D("Member")->getUserIfMember($this->userid);
-        $propertyMap["userType"] = array();
-        if($member){
-            $propertyMap["userType"][self::$USER_TYPE_INDEX_PREFIX."-1"]=1;
-        }else{
-            $propertyMap["userType"][self::$USER_TYPE_INDEX_PREFIX."-0"]=1;
+        $params = $this->prepareParams($userId, $productType, $subscribes);
+        $count = $this->elasticSearchClient->count($params);
+        if(!$count){
+            return 0;
         }
-        if($this->isNewMember()){
-            $propertyMap["userType"][self::$USER_TYPE_INDEX_PREFIX."-3"]=1;
-        }
-
-        foreach($archiveUsers as $archiveUser){
-            $propertyMap[$archiveUser["property_id"]][self::$PROPERTY_INDEX_PREFIX.$archiveUser["property_id"]."-".$archiveUser["value_id"]]=1;
-        }
-
-        foreach($propertyMap as $propertyId=>$valueMap){
-            foreach($valueMap as $key=>$value){
-                $orArray["term"][$key]=$value;
-            }
-            $params['body']['query']['filtered']["filter"]["and"][]["or"][]=$orArray;
-        }
-
-        foreach($subscribes as $subscribe){
-            $subscribeArray["term"]["firstcid"]=$subscribe["product_category_id"];
-        }
-        $params['body']['query']['filtered']["filter"]["and"][]["or"][]=$subscribeArray;
-        $params['body']['query']['filtered']["filter"]["and"][]["or"][]=["range"=>["inventory_remain"=>["gt"=>0]]];
-        $params['body']['query']['filtered']["filter"]["and"][]["or"][]=["term"=>["status"=>C("PRODUCT_STATUS_PUBLISHED")]];
-        $params['body']['query']['filtered']["filter"]["and"][]["or"][]=["range"=>["end_time"=>["gt"=>date("Y-m-d H:i:s",time())]]];
-
-        $params['body']['facets']["filters"]["terms"]=array("field"=>"pid","size"=>0);
-        $params['body']["aggs"]["grouped_by_pid"]["terms"]=array("field"=>"pid","size"=>0);
-        $params['body']["from"]=0;
-        $params['body']["size"]=10;
-
-        $result = $this->elasticSearchClient->search($params);
-        $this->ajaxReturn($result, "JSON");
+        return $count["count"];
     }
 
-    public function init(){
+    //$params['body']['query']['filtered']["filter"]["and"][]["or"][]["term"]["1"]="2";
+    public function getSubscribedProductList($userId, $productType, $from, $rows){
+        $subscribes = D("UsersProductsCategorySubscribe")->getByUserId($userId);
+        if(!$subscribes || count($subscribes) == 0){
+            return false;
+        }
+        $params = $this->prepareParams($userId, $productType, $subscribes);
+        $params['body']["from"]=0;
+        $params['body']["size"]=10;
+        $params['body']['facets']["filters"]["terms"] = array("field" => "pid", "size" => 0);
+        $params['body']["aggs"]["grouped_by_pid"]["terms"] = array("field" => "pid", "size" => 0);
+        if($from){
+            $params['body']["from"]=$from;
+        }
+        if($rows){
+            $params['body']["size"]=$rows;
+        }
+        $products = array();
+        $result = $this->elasticSearchClient->search($params);
+        $count = $result["hits"]["total"];
+        foreach($result["hits"]["hits"] as $hit){
+            $source = $hit["_source"];
+            array_push($products, $source);
+        }
+        $ret["count"]=$count;
+        $ret["products"]=$products;
+        return $ret;
+    }
+
+    public function initIndex(){
         $params = [
             'index' => self::$INDEX,
             'body' => [
@@ -355,7 +261,7 @@ class archiveAction extends commonAction{
                                     "match"=>"property*",
                                     "match_mapping_type"=>"integer",
                                     "mapping"=>[
-                                        'type' => 'string',
+                                        'type' => 'integer',
                                         'index' => 'not_analyzed',
                                         'store' => false
                                     ]
@@ -378,10 +284,44 @@ class archiveAction extends commonAction{
             ]
         ];
         try{
-            $this->elasticSearchClient->indices()->delete(array("index"=>"product"));
+            $this->elasticSearchClient->indices()->delete(array("index"=>self::$INDEX));
         }catch (Exception $e){}
         $this->elasticSearchClient->indices()->create($params);
     }
 
+    /**
+     * @param $userId
+     * @param $subscribes
+     * @return mixed
+     */
+    private  function prepareParams($userId, $productType, $subscribes)
+    {
+        $archiveUsers = M("archiveUser")->where(array("userid" => $userId))->select();
+        $index = self::$INDEX;
+        $type = self::$TYPE;
+        $params["index"] = $index;
+        $params["type"] = $type;
+        $propertyMap = array();
+        foreach ($archiveUsers as $archiveUser) {
+            $propertyMap[$archiveUser["property_id"]][self::$PROPERTY_INDEX_PREFIX . $archiveUser["property_id"] . "-" . $archiveUser["value_id"]] = 1;
+        }
+
+        foreach ($propertyMap as $propertyId => $valueMap) {
+            foreach ($valueMap as $key => $value) {
+                $orArray["term"][$key] = $value;
+            }
+            $params['body']['query']['filtered']["filter"]["and"][]["or"][] = $orArray;
+        }
+
+        foreach ($subscribes as $subscribe) {
+            $subscribeArray["term"]["firstcid"] = $subscribe["product_category_id"];
+        }
+        $params['body']['query']['filtered']["filter"]["and"][]["or"][] = $subscribeArray;
+        $params['body']['query']['filtered']["filter"]["and"][]["or"][] = ["term" => [self::$USER_TYPE_INDEX_PREFIX . "-".$productType =>1]];
+        $params['body']['query']['filtered']["filter"]["and"][]["or"][] = ["range" => ["inventory_remain" => ["gt" => 0]]];
+        $params['body']['query']['filtered']["filter"]["and"][]["or"][] = ["term" => ["status" => C("PRODUCT_STATUS_PUBLISHED")]];
+        $params['body']['query']['filtered']["filter"]["and"][]["or"][] = ["range" => ["end_time" => ["gt" => date("Y-m-d H:i:s", time())]]];
+        return $params;
+    }
 
 }

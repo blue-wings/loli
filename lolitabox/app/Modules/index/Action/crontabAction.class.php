@@ -20,6 +20,7 @@ class crontabAction extends commonAction {
 		$orders = D("UserOrder")->where($userOrderWhere)->select();
 		$failedOrders = array();
 		$successOrders = array();
+        $pIds=array();
 		foreach ($orders as $order){
 			try {
 				M()->startTrans();
@@ -31,6 +32,7 @@ class crontabAction extends commonAction {
 				}
 				D("UserOrder")->where(array("ordernmb"=>$order["ordernmb"]))->save(array("ifavalid"=>C("ORDER_IFAVALID_OVERDUE")));
 				array_push($successOrders, $order["ordernmb"]);
+                array_push($pIds, $product["pid"]);
 				M()->commit();
 			}catch(Exception $e){
 				M()->rollback();
@@ -42,6 +44,9 @@ class crontabAction extends commonAction {
 		$userSelfPackageOrderWhere["state"]=C("USER_ORDER_STATUS_NOT_PAYED");
 		$userSelfPackageOrderWhere["ifavalid"]=C("ORDER_IFAVALID_VALID");
 		D("UserSelfPackageOrder")->where($userSelfPackageOrderWhere)->save(array("ifavalid"=>C("ORDER_IFAVALID_OVERDUE")));
+
+        D("ArchiveIndex")->createProductsIndex($pIds);
+
 		$msg = "successOrders[".join(",", $successOrders)."] failedOrders[".join(",", $failedOrders)."]";
 		$this->ajaxReturn(array("action"=>"recyclingOrder","time"=>date("Y-m-d H:i:s"),"result"=>"ok", "msg"=>$msg), "JSON");
 	}

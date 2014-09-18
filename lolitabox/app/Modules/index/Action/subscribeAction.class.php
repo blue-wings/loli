@@ -13,8 +13,6 @@ class subscribeAction extends commonAction{
 
 	
 	public function newuser(){
-		
-		
 		$products = $this->getAllProductsAndShowPage("3");
 		
 		$products = $this->formatProductPrice($products);
@@ -120,7 +118,7 @@ class subscribeAction extends commonAction{
 		return $productsResult;
 	}
 	
-	private function getAllProductsAndShowPage($productType){
+	private function getAllProductsAndShowPage1($productType){
 		$userid = $this->userid;
 		import("ORG.Util.Page");
 		$usersProductsCategorySubscribe = D("UsersProductsCategorySubscribe");
@@ -156,6 +154,25 @@ class subscribeAction extends commonAction{
 		$this->assign('page',$page);
 		return $products;
 	}
+
+    private function getAllProductsAndShowPage($productType){
+        $userid = $this->userid;
+        import("ORG.Util.Page");
+        $usersProductsCategorySubscribe = D("UsersProductsCategorySubscribe");
+        $subscribes = $usersProductsCategorySubscribe->getByUserId($userid);
+        if(count($subscribes) == 0){
+            $this->error("尚未订阅任何分类，请订阅!");
+        }
+        $count = D("ArchiveIndex")->getSubscribedProductsCount($this->userid, $productType);
+        if(!$count){
+            return;
+        }
+        $p = new Page($count,8);
+        $page=$p->show();
+        $this->assign('page',$page);
+        $ret = D("ArchiveIndex")->getSubscribedProductList($this->userid, $productType, $p->firstRow, $p->listRows);
+        return  $ret["products"];
+    }
 	
 	public function theirs(){
 

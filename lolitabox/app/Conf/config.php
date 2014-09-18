@@ -31,7 +31,9 @@ $array = array(
 	'LOG_RECORD'			=>	true,  // 进行日志记录
     'LOG_EXCEPTION_RECORD'  => 	true,    // 是否记录异常信息日志
     'LOG_LEVEL'       		=>  'EMERG',  // 允许记录的日志级别
-	'TAG_NESTED_LEVEL'		=> 	5
+	'TAG_NESTED_LEVEL'		=> 	5,
+
+    'elastic_search_host' => '127.0.0.1:9200'
 );
 return array_merge ( $config_db,$config_global,$constants,$array);
 ?>

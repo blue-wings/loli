@@ -142,6 +142,7 @@ class UserOrderModel extends Model {
 			M()->rollback();
 			throw new Exception("创建订单失败-".$e->getMessage());	
 		}
+        D("ArchiveIndex")->createProductsIndex($productIds);
 	}
 	/**
 	 * 用户补全订单其他信息
