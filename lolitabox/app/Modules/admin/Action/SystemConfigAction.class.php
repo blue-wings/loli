@@ -103,4 +103,8 @@
   	      else 
   	      	$this->ajaxReturn(0,"更新失败",0);
   	  }
+
+      public function initProductIndex(){
+          D("ArchiveIndex")->initIndex();
+      }
   }

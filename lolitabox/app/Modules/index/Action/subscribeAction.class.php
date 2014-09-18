@@ -2,7 +2,7 @@
 class subscribeAction extends commonAction{
 	public function mine(){
 		$this->assign("displayNewUserItem",$this->isNewMember());
-        $products = $this->getAllProductsAndShowPage("0");
+        $products = $this->getAllProductsAndShowPage("0", $_GET["search"]);
 		$products = $this->formatProductPrice($products); 
 		$products = $this->formatProductCountdown($products);	
 		$this->assign("list",$products);
@@ -118,7 +118,7 @@ class subscribeAction extends commonAction{
 		return $productsResult;
 	}
 
-    private function getAllProductsAndShowPage($productType){
+    private function getAllProductsAndShowPage($productType, $searchWords){
         $userid = $this->userid;
         import("ORG.Util.Page");
         $usersProductsCategorySubscribe = D("UsersProductsCategorySubscribe");
@@ -126,14 +126,14 @@ class subscribeAction extends commonAction{
         if(count($subscribes) == 0){
             $this->error("尚未订阅任何分类，请订阅!");
         }
-        $count = D("ArchiveIndex")->getSubscribedProductsCount($this->userid, $productType);
+        $count = D("ArchiveIndex")->getSubscribedProductsCount($this->userid, $productType, $searchWords);
         if(!$count){
             return;
         }
         $p = new Page($count,8);
         $page=$p->show();
         $this->assign('page',$page);
-        $ret = D("ArchiveIndex")->getSubscribedProductList($this->userid, $productType, $p->firstRow, $p->listRows);
+        $ret = D("ArchiveIndex")->getSubscribedProductList($this->userid, $productType, $p->firstRow, $p->listRows, $searchWords);
         return  $ret["products"];
     }
 	

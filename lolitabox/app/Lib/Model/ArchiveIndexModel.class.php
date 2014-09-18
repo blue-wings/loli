@@ -87,12 +87,12 @@ class ArchiveIndexModel extends Model {
         $this->elasticSearchClient->create($doc);
     }
 
-    public function getSubscribedProductsCount($userId, $productType){
+    public function getSubscribedProductsCount($userId, $productType, $searchWords){
         $subscribes = D("UsersProductsCategorySubscribe")->getByUserId($userId);
         if(!$subscribes || count($subscribes) == 0){
             return false;
         }
-        $params = $this->prepareParams($userId, $productType, $subscribes);
+        $params = $this->prepareParams($userId, $productType, $subscribes, $searchWords);
         $count = $this->elasticSearchClient->count($params);
         if(!$count){
             return 0;
@@ -101,12 +101,12 @@ class ArchiveIndexModel extends Model {
     }
 
     //$params['body']['query']['filtered']["filter"]["and"][]["or"][]["term"]["1"]="2";
-    public function getSubscribedProductList($userId, $productType, $from, $rows){
+    public function getSubscribedProductList($userId, $productType, $from, $rows, $searchWords){
         $subscribes = D("UsersProductsCategorySubscribe")->getByUserId($userId);
         if(!$subscribes || count($subscribes) == 0){
             return false;
         }
-        $params = $this->prepareParams($userId, $productType, $subscribes);
+        $params = $this->prepareParams($userId, $productType, $subscribes, $searchWords);
         $params['body']["from"]=0;
         $params['body']["size"]=10;
         $params['body']['facets']["filters"]["terms"] = array("field" => "pid", "size" => 0);
@@ -155,6 +155,18 @@ class ArchiveIndexModel extends Model {
                             ]
                         ],
                         'analyzer' => [
+                            'ik' => [
+                                "alias"=>['ik_analyzer'],
+                                "type"=>"org.elasticsearch.index.analysis.IkAnalyzerProvider"
+                            ],
+                            'ik_max_word' => [
+                                "use_smart"=>false,
+                                "type"=>"ik"
+                            ],
+                            'ik_smart' => [
+                                "use_smart"=>true,
+                                "type"=>"ik"
+                            ],
                             'product' => [
                                 'type' => 'custom',
                                 'tokenizer' => 'standard',
@@ -174,12 +186,12 @@ class ArchiveIndexModel extends Model {
                         'properties' => [
                             'pname' => [
                                 'type' => 'string',
-                                'analyzer' => 'product',
+                                'analyzer' => 'ik',
                                 'store' => true
                             ],
                             'readme' => [
                                 'type' => 'string',
-                                'analyzer' => 'product',
+                                'analyzer' => 'ik',
                                 'store' => true
                             ],
                             'pid' => [
@@ -294,7 +306,7 @@ class ArchiveIndexModel extends Model {
      * @param $subscribes
      * @return mixed
      */
-    private  function prepareParams($userId, $productType, $subscribes)
+    private  function prepareParams($userId, $productType, $subscribes, $searchWords)
     {
         $archiveUsers = M("archiveUser")->where(array("userid" => $userId))->select();
         $index = self::$INDEX;
@@ -321,6 +333,9 @@ class ArchiveIndexModel extends Model {
         $params['body']['query']['filtered']["filter"]["and"][]["or"][] = ["range" => ["inventory_remain" => ["gt" => 0]]];
         $params['body']['query']['filtered']["filter"]["and"][]["or"][] = ["term" => ["status" => C("PRODUCT_STATUS_PUBLISHED")]];
         $params['body']['query']['filtered']["filter"]["and"][]["or"][] = ["range" => ["end_time" => ["gt" => date("Y-m-d H:i:s", time())]]];
+        if($searchWords){
+            $params['body']['query']['filtered']['query']["query_string"]=["fields"=>["pname","readme"], "query"=>$searchWords];
+        }
         return $params;
     }
 
