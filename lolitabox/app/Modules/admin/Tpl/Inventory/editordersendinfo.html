@@ -45,11 +45,12 @@
 </tbody></table>
 <include file="Public:footer" />
 <script type="text/javascript">
-//    $(":text[name='senddate']").datepicker({
-//        changeMonth: true,
-//        numberOfMonths: 1,
-//        onSelect: function( selectedDate ) {
-//            $(":text[name='senddate']").datepicker( "option", "minDate", selectedDate );
-//        }
-//    });
+    $(":text[name='senddate']").datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        dateFormat:"yy-mm-dd",
+        onSelect: function( selectedDate ) {
+            $(":text[name='senddate']").datepicker( "option", "minDate", selectedDate );
+        }
+    });
 </script>

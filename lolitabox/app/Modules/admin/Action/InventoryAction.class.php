@@ -1218,7 +1218,7 @@ class InventoryAction extends CommonAction {
 		$where['quantity']=array('lt',0);
 		$info['list']=$stat_mod->where($where)->field('itemid,quantity')->select();
 		//如果是虚拟出库，刚加上入库信息
-		if($info['type']==3)
+		if($info['type']==C("INVENTORY_OUT_TYPE_VIRTUAL"))
 		{
 			$inventory_rel_mod=M("InventoryVirtualRelation");
 			$in_id=$inventory_rel_mod->where("out_id=".$this->_get('id'))->getField("in_id");
@@ -1250,7 +1250,12 @@ class InventoryAction extends CommonAction {
 		}
 		$info['price']=number_format(array_sum($price_array)/100,2);
 
-        $order = M("UserOrder")->where("inventory_out_id=".$where['in_out_id'])->field("ordernmb")->find();
+        if($info['type'] == C("INVENTORY_OUT_TYPE_SYSTEM") && $info['ifselfpackage'] == 1){
+            $order = M("UserSelfPackageOrder")->where("inventory_out_id=".$where['in_out_id'])->field("ordernmb")->find();
+        }else{
+            $order = M("UserOrder")->where("inventory_out_id=".$where['in_out_id'])->field("ordernmb")->find();
+        }
+
         //快递信息
         $proxy_mod = M("UserOrderProxy");
         $proxy=$proxy_mod->where(array("orderid"=>$order['ordernmb']))->find();
@@ -1973,11 +1978,16 @@ class InventoryAction extends CommonAction {
 		$box_mod=M("Box");
         $out_mod = M("inventoryOut");
         $outInfo = $out_mod->where(array('id'=>trim($outid)))->find();
+        $isSelfPackageOrder = $outInfo['type'] == C("INVENTORY_OUT_TYPE_SYSTEM") && $outInfo['ifselfpackage'] == 1;
 		if($orderList){
 			$get_tips=D("Article")->getArticleList(773,1);
 			$tips=$get_tips[0];
 			foreach($orderList as $key=>$val){
-				$itemid_list=$order_send_mod->field("productid")->distinct(true)->where("orderid=".$val['orderid'])->select();
+                if($isSelfPackageOrder){
+                    $itemid_list=$order_send_mod->field("productid")->distinct(true)->where("self_package_order_id=".$val['orderid'])->select();
+                }else{
+                    $itemid_list=$order_send_mod->field("productid")->distinct(true)->where("orderid=".$val['orderid'])->select();
+                }
 				if($itemid_list){
 					$info=array();
 					$per_arr=array();
@@ -1995,12 +2005,21 @@ class InventoryAction extends CommonAction {
 						$product_arr['effect']=$effect_arr[2];
 						//$type=$category_mod->where("cid=".$proinfo['secondcid'])->getfield("cname");
 						//$product_arr['type']= $type ? $type : "" ;
-						$product_arr['num']=$order_send_mod->where("orderid=".$val['orderid']." AND productid=".$ival['productid'])->count();
+                        if($isSelfPackageOrder){
+                            $product_arr['num']=$order_send_mod->where("self_package_order_id=".$val['orderid']." AND productid=".$ival['productid'])->count();
+                        }else{
+                            $product_arr['num']=$order_send_mod->where("orderid=".$val['orderid']." AND productid=".$ival['productid'])->count();
+                        }
+
 						$price=$price+($item_info['price']*$product_arr['num']);
 						$per_arr[]=$product_arr;
 					}
 					if($per_arr){
-						$orderinfo=$order_mod->where("ordernmb=".$val['orderid'])->find();
+                        if($isSelfPackageOrder){
+                            $orderinfo=M("UserSelfPackageOrder")->where("ordernmb=".$val['orderid'])->find();
+                        }else{
+                            $orderinfo=$order_mod->where("ordernmb=".$val['orderid'])->find();
+                        }
 						$info['list']=$per_arr;
 						$info['totalprice']=$price;
 						$info['orderid']=$val['orderid'];
@@ -2046,14 +2065,12 @@ class InventoryAction extends CommonAction {
      */
     public function editOrderSendInfo() {
         $outid = $_REQUEST ["outid"];
-
         if (!isset( $outid )){
             return false;
         }else{
-            $order = M("UserOrder")->where("inventory_out_id=".$outid)->field("ordernmb")->find();
-            $userorderinfo=M("UserOrderSend")->where("orderid=".$order['ordernmb'])->find();
-            $userorderinfo['linkman']=M("UserOrderAddress")->where("orderid=".$order['ordernmb'])->getfield("linkman");
-            $userorderinfo['orderid']=$order['ordernmb'];
+            $userorderinfo=M("UserOrderSend")->where("inventory_out_id=".$outid)->find();
+            $userorderinfo['linkman']=M("UserOrderAddress")->where("orderid=".$userorderinfo['orderid'])->getfield("linkman");
+            $userorderinfo['orderid']=$userorderinfo['orderid'];
             $this->assign ( 'userorderinfo', $userorderinfo ); // 用户订单详细数据
             $this->display ( 'editordersendinfo' ); // 指定模板文件
         }
