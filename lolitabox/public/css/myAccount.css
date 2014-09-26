@@ -1,0 +1,77 @@
+/**
+* 我的账户
+* author yuanzhiwei
+* createTime 2014-09-19
+*
+**/
+
+@charset "utf-8";
+.clear{ clear:both;}
+.dy_tab .tab a{ display: block; float: left; color: #fff; width: 110px; height: 37px; cursor: pointer; text-align: center;font-size: 18px;  line-height: 18px; position: relative; z-index: 2;}
+.dy_tab .tab a .on_bg{ position: absolute; z-index: 1;display: none; width: 117px; height: 54px; left:-3px; top: -17px; background: url(../images/dy_tab_bg.png) no-repeat;}
+
+/**萝莉档案**/
+.My_Acc{ width:95%; margin:0 auto;}
+.My_Acc a font{ color:#f01877;}
+.My_Acc label{ font-size:16px; color:#333333; font-weight:bold; margin-right:5px;}
+.My_Acc .harder{  width:100%; height:auto;}
+.My_Acc .harder #Harder_Info{ width:60%; float:left; font-size:24px; font-weight:bold; text-align:left;}
+.My_Acc .harder #Harder_Edit{ width:30%; float:right; text-align:right; font-size:14px; font-weight:700; margin-top:10px;}
+.My_Acc .harder #Harder_Edit a img{ vertical-align:middle; width:16px; height:15px; border:0px;}
+
+.My_Acc .UserInfo{ width:100%; margin-top:45px; margin-bottom:60px;}
+.My_Acc .UserInfo #UserIcon{ width:20%; text-align:center; float:left;}
+.My_Acc .UserInfo #UserIcon #UserIconBorder{ width:110px; height:110px; margin:0 auto; border-radius:115px;background:#CCC; text-align:center; margin-bottom:10px;}
+.My_Acc .UserInfo #UserIcon img{ width:107px; height:107px; border-radius:100px; vertical-align:middle;}
+.My_Acc .UserInfo #UserMsg{ width:74%; float:right; color:#666666;}
+.My_Acc .UserInfo #UserMsg .MsgLi li{ float:left; width:49%; height:35px; line-height:35px; font-size:14px;}
+
+.My_Acc .SkinInfo{width:100%; margin-top:30px;}
+.My_Acc .SkinInfo .Skin{ width:100%; color:#666666;}
+.My_Acc .SkinInfo .Skin .SkinHander{ float:left; width:32%; text-align:center;}
+.My_Acc .SkinInfo .Skin .SkinHander font{ font-size:14px; font-weight:600;}
+.My_Acc .SkinInfo .SkinLi{ width:95%; margin:0 auto; margin-top:20px;}
+.My_Acc .SkinInfo .SkinLi >li{ width:100%; height:35px; line-height:35px; margin-bottom:20px; background:url(../images/Acc_li.png) repeat-x !important; border:1px solid #ecebeb;}
+.My_Acc .SkinInfo .SkinLi >li i{ width:10px; height:10px; background:url(../images/Acc_li_Alloy.png) no-repeat; cursor:pointer; margin-left:10px; margin-right:5px;}
+.My_Acc .SkinInfo .SkinLi >li i:before {content:""; width:10px; height:10px; }
+
+/**萝莉档案编辑页面**/
+.My_Acc .SkinInfo .SkinLi .Edit{ color:#ff2686; height:auto;}
+.My_Acc .SkinInfo .SkinLi .Edit a{color:#ff2686; font-size:14px; font-weight:700;}
+.My_Acc .SkinInfo .SkinLi .Edit i{ background:url(../images/Acc_li_Alloy_.png) no-repeat;}
+.My_Acc .SkinInfo .SkinLi .Edit label{ color:#ff2686;}
+.My_Acc .SkinInfo .SkinLi .Edit .Edit_Save{float:right; width:50px;}
+.My_Acc .SkinInfo .SkinLi .Edit ul{box-shadow:0px 1px 5px rgba(0,0,0,.6); border:1px solid #ecebeb; width:100%; }
+.My_Acc .SkinInfo .SkinLi .Edit ul li{ float:left; width:15%; text-align:center; height:40px; line-height:40px;}
+.My_Acc .SkinInfo .SkinLi .Edit ul li label{ color:#999999; font-weight:600; vertical-align:middle; padding-left:5px;}
+.My_Acc .SkinInfo .SkinLi .Edit ul li input{ border:1px #999999 solid; width:20px; height:20px; vertical-align:middle;}
+.My_Acc input,.My_Acc select{ border:1px solid #999999; border-radius:3px; }
+.My_Acc input:focus,.My_Acc select:focus{border:1px solid #ff2686;}
+
+/**收货地址**/
+.My_Acc .Delivery_Address{ width:100%;}
+.My_Acc .Delivery_Address .Delivery_Add_Address{ width:80%; margin:0 auto; margin-top:30px;}
+.My_Acc .Delivery_Address .Delivery_Add_Address li{ width:100%; height:60px;}
+.My_Acc .Delivery_Address .Delivery_Add_Address li em{ color:#fa3c91; font-weight:bold; font-size:16px; margin-right:5px;}
+.My_Acc .Delivery_Address .Delivery_Add_Address li label{ font-size:15px; width:150px; text-align:right;}
+.My_Acc .Delivery_Address .Delivery_Add_Address li input[type="text"]{border-radius:4px; height:35px; line-height:35px; font-size:24px; vertical-align:middle;}
+.My_Acc .Delivery_Address .Delivery_Add_Address li select{border-radius:4px; height:28px; line-height:28px;  vertical-align:middle;}
+.My_Acc .Delivery_Address .Acc_Delivery_Save{ width:100%; text-align:center;}
+.My_Acc .Delivery_Address .Acc_Delivery_Save input{background:url(../images/Acc_Delivery_Save.png) repeat-x; border:0px; height:30px; width:100px; color:#FFF; font-weight:700; font-size:14px; border-radius:3px;}
+.My_Acc .harder .font_btm{ font-size:16px;}
+.My_Acc .Acc_tip{float:right; width:30%;height:35px; line-height:35px; font-size:14px; font-weight:700; color:#f82081;}
+.My_Acc .Tabel_Thead{ width:100%; background:#d7d7d7;}
+.My_Acc .Tabel_Thead .Thead_Th{ width:20%; color:#333333; font-size:14px; font-weight:bold; float:left; text-align:center; height:35px; line-height:35px;}
+.My_Acc .Tabel_Thead .Tabel_btm{ width:10%}
+.My_Acc .Tabel_Thead .Tabel_btmh2{ width:15%;}
+.My_Acc .Tabel_Thead .Tabel_btmh1{ width:41%;}
+.My_Acc .Tabel_Tbody{ width:100%; background:#FFFFFF;}
+.My_Acc .Tabel_Tbody .Tbody_Tr{ border:1px #dfdfdf solid; border-top:0px;}
+.My_Acc .Tabel_Tbody .Tbody_Tr .Tbody_Td{width:20%; color:#333333;text-align:center;height:35px; line-height:35px; float:left;}
+.My_Acc .Tabel_Tbody .Tbody_Tr .Tabel_btm{ width:10%}
+.My_Acc .Tabel_Tbody .Tbody_Tr .Tabel_btmh2{ width:15%;}
+.My_Acc .Tabel_Tbody .Tbody_Tr .Tabel_btmh1{ width:41%;}
+.My_Acc .Tabel_Tbody .Tbody_Tr .Tr_Edit{color:#ff2686;}
+.My_Acc .Tabel_Tbody .Tbody_Tr .Tr_Del{color:#00F;}
+.My_Acc .Acc_Prompt {color:#797979; margin-bottom:20px;}
+.My_Acc .Acc_Prompt h3{font-size:12px; color:#252525; font-weight:bold;margin:20px 0px 20px 0px;}
