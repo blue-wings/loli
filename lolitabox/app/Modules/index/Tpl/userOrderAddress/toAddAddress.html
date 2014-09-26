@@ -8,26 +8,26 @@
     <div class="Delivery_Address">
         <ul class="Delivery_Add_Address">
             <li>
-                <em>*</em><label>收货人姓名：</label><input type="text"  value=""/>
+                <em>*</em><label>收货人姓名：</label><input type="text"  name="userAddress.linkman"/>
                 <div class="Acc_tip">
                     收货人姓名不能为空
                 </div>
             </li>
             <li>
-                <em>*</em><label>联 系 电 话：</label><input type="text"  value=""/>
+                <em>*</em><label>联 系 电 话：</label><input type="text"  name="userAddress.telphone"/>
                 <div class="Acc_tip">
                     联系电话不能为空
                 </div>
             </li>
             <li>
                 <em>*</em><label>所  &nbsp;  在  &nbsp; 地：</label>
-                <select>
+                <select name="userAddress.province_area_id">
                     <option>北京</option>
                 </select>
-                <select>
+                <select name="userAddress.city_area_id">
                     <option>北京市</option>
                 </select>
-                <select>
+                <select name="userAddress.district__area_id">
                     <option>昌平区</option>
                 </select>
                 <div class="Acc_tip">
@@ -35,25 +35,23 @@
                 </div>
             </li>
             <li>
-                <em>*</em><label>街 道 地 址：</label><input type="text"  value=""/>
+                <em>*</em><label>街 道 地 址：</label><input type="text"  name="userAddress.address"/>
                 <div class="Acc_tip">
                     请填写街道地址
                 </div>
             </li>
             <li>
-                <em>*</em><label>邮 政 编 码：</label><input type="text"  value=""/>
+                <em>*</em><label>邮 政 编 码：</label><input type="text"  name="userAddress.postcode"/>
                 <div class="Acc_tip">
                     请填写邮政编码
                 </div>
             </li>
             <li>
-                <em>*</em><label>设 为 默 认：</label><input type="checkbox"  value=""/>
+                <em>*</em><label>设 为 默 认：</label><input type="checkbox"  value="userAddress.if_active"/>
             </li>
-
-
         </ul>
         <div class="Acc_Delivery_Save">
-            <input type="button" value="保 存" />
+            <input type="submit" value="保 存" />
         </div>
     </div>
 </div>

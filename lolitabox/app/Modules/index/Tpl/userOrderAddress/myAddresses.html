@@ -23,46 +23,19 @@
                         <div class="clear"></div>
                     </div>
                     <div class="Tabel_Tbody">
-
-                        <ul class="Tbody_Tr">
-                            <li class="Tbody_Td Tabel_btm">当前默认</li>
-                            <li class="Tbody_Td Tabel_btm">解立明</li>
-                            <li class="Tbody_Td Tabel_btmh2">13812341234</li>
-                            <li class="Tbody_Td Tabel_btmh1">北京市朝阳区十里堡都会国际18N</li>
-                            <li class="Tbody_Td Tabel_btm">200000</li>
-                            <li class="Tbody_Td Tabel_btm">
-                                <a href="#" class="Tr_Edit">编辑</a> |
-                                <a href="#" class="Tr_Del">删除</a>
-                            </li>
-                            <div class="clear"></div>
-                        </ul>
-
-                        <ul class="Tbody_Tr">
-                            <li class="Tbody_Td Tabel_btm">当前默认</li>
-                            <li class="Tbody_Td Tabel_btm">解立明</li>
-                            <li class="Tbody_Td Tabel_btmh2">13812341234</li>
-                            <li class="Tbody_Td Tabel_btmh1">北京市朝阳区十里堡都会国际18N</li>
-                            <li class="Tbody_Td Tabel_btm">200000</li>
-                            <li class="Tbody_Td Tabel_btm">
-                                <a href="#" class="Tr_Edit">编辑</a> |
-                                <a href="#" class="Tr_Del">删除</a>
-                            </li>
-                            <div class="clear"></div>
-                        </ul>
-
-                        <ul class="Tbody_Tr">
-                            <li class="Tbody_Td Tabel_btm">当前默认</li>
-                            <li class="Tbody_Td Tabel_btm">解立明</li>
-                            <li class="Tbody_Td Tabel_btmh2">13812341234</li>
-                            <li class="Tbody_Td Tabel_btmh1">北京市朝阳区十里堡都会国际18N</li>
-                            <li class="Tbody_Td Tabel_btm">200000</li>
-                            <li class="Tbody_Td Tabel_btm">
-                                <a href="#" class="Tr_Edit">编辑</a> |
-                                <a href="#" class="Tr_Del">删除</a>
-                            </li>
-                            <div class="clear"></div>
-                        </ul>
-
+                        <volist name="userOrderAddresses" id="userOrderAddress">
+                            <ul class="Tbody_Tr">
+                                <li class="Tbody_Td Tabel_btm">当前默认</li>
+                                <li class="Tbody_Td Tabel_btm"><{$userOrderAddress.linkman}></li>
+                                <li class="Tbody_Td Tabel_btmh2"><{$userOrderAddress.telphone}></li>
+                                <li class="Tbody_Td Tabel_btmh1"><{$userOrderAddress.provinceName}><{$userOrderAddress.cityName}> <{$userOrderAddress.districtName}><{$userOrderAddress.address}></li>
+                                <li class="Tbody_Td Tabel_btm"><{$userOrderAddress.postcode}></li>
+                                <li class="Tbody_Td Tabel_btm">
+                                    <a href="#" class="Tr_Del">删除</a>
+                                </li>
+                                <div class="clear"></div>
+                            </ul>
+                        </volist>
                     </div>
                 </div>
 
