@@ -749,3 +749,8 @@ function decodeNum($num, $base = 62, $index = false) {
 	return $out;
 }
 
+function getNowMillisecond(){
+    list($s1, $s2) = explode(' ', microtime());
+    return (float)sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000);
+}
+

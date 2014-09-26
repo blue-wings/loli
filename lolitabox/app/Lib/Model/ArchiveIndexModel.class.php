@@ -107,10 +107,13 @@ class ArchiveIndexModel extends Model {
             return false;
         }
         $params = $this->prepareParams($userId, $productType, $subscribes, $searchWords);
+        $params['body']["_source"]=["pid","pname","price","member_price","pimg","max_peruser"];
         $params['body']["from"]=0;
         $params['body']["size"]=10;
         $params['body']['facets']["filters"]["terms"] = array("field" => "pid", "size" => 0);
         $params['body']["aggs"]["grouped_by_pid"]["terms"] = array("field" => "pid", "size" => 0);
+        $params['body']['highlight']=["pre_tags"=>["<h1>"],"post_tags"=>["</h1>"],"fields"=>["pname"=>[]]];
+        $params['body']["sort"][]["start_time"]=["order"=>"desc"];
         if($from){
             $params['body']["from"]=$from;
         }
