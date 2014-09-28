@@ -120,7 +120,7 @@
 						</div>
 						</if>
 						<div class="Dtitle" style="width: 20%;">
-							<a href="#"><font style="color: #fc8fc0; font-size: 12px;">管理收货地址</font>
+							<a href="#" id="addAddress"><font style="color: #fc8fc0; font-size: 12px;">添加收货地址</font>
 							</a>
 						</div>
 						<div class="clear"></div>
@@ -316,6 +316,11 @@
 	$("#sub").click(function(){
 		$("#form1").submit();
 	})
+
+    $("#addAddress").click(function(){
+        $.colorbox({href:"<{:u('/userOrderAddress/toAddAddress')}>?orderId=<{$order.orderid}>",transition:"elastic", width:"50%", height:"50%",onClosed:function(){
+        }})
+    })
 </script>	
 
 <include file="public:footer" />

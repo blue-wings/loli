@@ -45,7 +45,7 @@ class userOrderAction extends commonAction {
     	}
     	$this->assign("order", $order);
     	$this->assign("ExpressCompanies", array(C("EXPRESS_SHENTONG_ID"), C("EXPRESS_SHUNFENG_ID")));
-    	$userOrderAddresses = M("UserOrderAddress")->where(array("userid"=>$this->userid))->order("id DESC")->select();
+    	$userOrderAddresses = M("UserOrderAddress")->where(array("userid"=>$this->userid))->order("if_active DESC, id DESC")->select();
     	if($userOrderAddresses){
 	    	foreach ($userOrderAddresses as $key=>$userOrderAddress){
 	    		$userOrderAddress["provinceName"]=M("area")->field("title")->getByAreaId($userOrderAddress["province_area_id"]);

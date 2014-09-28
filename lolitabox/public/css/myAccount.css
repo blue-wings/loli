@@ -49,29 +49,29 @@
 .My_Acc input:focus,.My_Acc select:focus{border:1px solid #ff2686;}
 
 /**收货地址**/
-.My_Acc .Delivery_Address{ width:100%;}
-.My_Acc .Delivery_Address .Delivery_Add_Address{ width:80%; margin:0 auto; margin-top:30px;}
-.My_Acc .Delivery_Address .Delivery_Add_Address li{ width:100%; height:60px;}
-.My_Acc .Delivery_Address .Delivery_Add_Address li em{ color:#fa3c91; font-weight:bold; font-size:16px; margin-right:5px;}
-.My_Acc .Delivery_Address .Delivery_Add_Address li label{ font-size:15px; width:150px; text-align:right;}
-.My_Acc .Delivery_Address .Delivery_Add_Address li input[type="text"]{border-radius:4px; height:35px; line-height:35px; font-size:24px; vertical-align:middle;}
-.My_Acc .Delivery_Address .Delivery_Add_Address li select{border-radius:4px; height:28px; line-height:28px;  vertical-align:middle;}
-.My_Acc .Delivery_Address .Acc_Delivery_Save{ width:100%; text-align:center;}
-.My_Acc .Delivery_Address .Acc_Delivery_Save input{background:url(../images/Acc_Delivery_Save.png) repeat-x; border:0px; height:30px; width:100px; color:#FFF; font-weight:700; font-size:14px; border-radius:3px;}
-.My_Acc .harder .font_btm{ font-size:16px;}
-.My_Acc .Acc_tip{float:right; width:30%;height:35px; line-height:35px; font-size:14px; font-weight:700; color:#f82081;}
-.My_Acc .Tabel_Thead{ width:100%; background:#d7d7d7;}
-.My_Acc .Tabel_Thead .Thead_Th{ width:20%; color:#333333; font-size:14px; font-weight:bold; float:left; text-align:center; height:35px; line-height:35px;}
-.My_Acc .Tabel_Thead .Tabel_btm{ width:10%}
-.My_Acc .Tabel_Thead .Tabel_btmh2{ width:15%;}
-.My_Acc .Tabel_Thead .Tabel_btmh1{ width:41%;}
-.My_Acc .Tabel_Tbody{ width:100%; background:#FFFFFF;}
-.My_Acc .Tabel_Tbody .Tbody_Tr{ border:1px #dfdfdf solid; border-top:0px;}
-.My_Acc .Tabel_Tbody .Tbody_Tr .Tbody_Td{width:20%; color:#333333;text-align:center;height:35px; line-height:35px; float:left;}
-.My_Acc .Tabel_Tbody .Tbody_Tr .Tabel_btm{ width:10%}
-.My_Acc .Tabel_Tbody .Tbody_Tr .Tabel_btmh2{ width:15%;}
-.My_Acc .Tabel_Tbody .Tbody_Tr .Tabel_btmh1{ width:41%;}
-.My_Acc .Tabel_Tbody .Tbody_Tr .Tr_Edit{color:#ff2686;}
-.My_Acc .Tabel_Tbody .Tbody_Tr .Tr_Del{color:#00F;}
-.My_Acc .Acc_Prompt {color:#797979; margin-bottom:20px;}
-.My_Acc .Acc_Prompt h3{font-size:12px; color:#252525; font-weight:bold;margin:20px 0px 20px 0px;}
+.Delivery_Address{ width:100%;}
+.Delivery_Address .Delivery_Add_Address{ width:80%; margin:0 auto; margin-top:30px;}
+.Delivery_Address .Delivery_Add_Address li{ width:100%; height:60px;}
+.Delivery_Address .Delivery_Add_Address li em{ color:#fa3c91; font-weight:bold; font-size:16px; margin-right:5px;}
+.Delivery_Address .Delivery_Add_Address li label{ font-size:15px; width:150px; text-align:right;}
+.Delivery_Address .Delivery_Add_Address li input[type="text"]{border-radius:4px; height:35px; line-height:35px; font-size:24px; vertical-align:middle;}
+.Delivery_Address .Delivery_Add_Address li select{border-radius:4px; height:28px; line-height:28px;  vertical-align:middle;}
+.Delivery_Address .Acc_Delivery_Save{ width:100%; text-align:center;}
+.Delivery_Address .Acc_Delivery_Save input{background:url(../images/Acc_Delivery_Save.png) repeat-x; border:0px; height:30px; width:100px; color:#FFF; font-weight:700; font-size:14px; border-radius:3px;}
+.harder .font_btm{ font-size:16px;}
+.Acc_tip{float:right; width:30%;height:35px; line-height:35px; font-size:14px; font-weight:700; color:#f82081;}
+.Tabel_Thead{ width:100%; background:#d7d7d7;}
+.Tabel_Thead .Thead_Th{ width:20%; color:#333333; font-size:14px; font-weight:bold; float:left; text-align:center; height:35px; line-height:35px;}
+.Tabel_Thead .Tabel_btm{ width:10%}
+.Tabel_Thead .Tabel_btmh2{ width:15%;}
+.Tabel_Thead .Tabel_btmh1{ width:41%;}
+.Tabel_Tbody{ width:100%; background:#FFFFFF;}
+.Tabel_Tbody .Tbody_Tr{ border:1px #dfdfdf solid; border-top:0px;}
+.Tabel_Tbody .Tbody_Tr .Tbody_Td{width:20%; color:#333333;text-align:center;height:35px; line-height:35px; float:left;}
+.Tabel_Tbody .Tbody_Tr .Tabel_btm{ width:10%}
+.Tabel_Tbody .Tbody_Tr .Tabel_btmh2{ width:15%;}
+.Tabel_Tbody .Tbody_Tr .Tabel_btmh1{ width:41%;}
+.Tabel_Tbody .Tbody_Tr .Tr_Edit{color:#ff2686;}
+.Tabel_Tbody .Tbody_Tr .Tr_Del{color:#00F;}
+.Acc_Prompt {color:#797979; margin-bottom:20px;}
+.Acc_Prompt h3{font-size:12px; color:#252525; font-weight:bold;margin:20px 0px 20px 0px;}

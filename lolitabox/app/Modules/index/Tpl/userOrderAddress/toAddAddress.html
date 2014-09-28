@@ -79,15 +79,19 @@
      param["districtSelectName"]="district_area_id";
      new Loli.AddressSelector(param);
 
-
+     var orderId = "<{$orderId}>"
      $(function(){
          $("#addressAddForm").Validform({
              tiptype:2,
-             ajaxPost:true,
              beforeSubmit:function(curform){
-             },
+             } ,
+             ajaxPost:true,
              callback:function(data){
-                 $("#list").load("<{:u('/userOrderAddress/myList')}>");
+                 if(orderId){
+                    window.location.reload();
+                 }else{
+                     $("#list").load("<{:u('/userOrderAddress/myList')}>");
+                 }
              }
          });
      })

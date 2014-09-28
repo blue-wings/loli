@@ -13,7 +13,7 @@ class userOrderAddressAction extends commonAction {
     }
 
     public function myList(){
-        $userOrderAddresses = M("UserOrderAddress")->where(array("userid"=>$this->userid))->order("if_active DESC, id ASC")->select();
+        $userOrderAddresses = M("UserOrderAddress")->where(array("userid"=>$this->userid))->order("if_active DESC, id DESC")->select();
         if($userOrderAddresses){
             foreach ($userOrderAddresses as $key=>$userOrderAddress){
                 $userOrderAddress["provinceName"]=M("area")->field("title")->getByAreaId($userOrderAddress["province_area_id"]);
@@ -30,7 +30,7 @@ class userOrderAddressAction extends commonAction {
     }
 
     public function toAddAddress(){
-        $orderId = $_POST["orderId"];
+        $orderId = $_GET["orderId"];
         $this->assign("orderId", $orderId);
         $this->assign("maxAddressNumPerUser", C("MAX_ADDRESS_NUM_PER_USER"));
         $this->display();
@@ -56,9 +56,6 @@ class userOrderAddressAction extends commonAction {
             M("UserOrderAddress")->where(array("userid"=>$this->userid))->save(array("if_active"=>C("USER_ORDER_ADDRESS_NOT_ACTIVE")));
         }
         M("UserOrderAddress")->add($address);
-        if($orderId){
-            $this->redirect("userOrder/getOrder2Complete", array("orderId"=>$orderId));
-        }
         $this->ajaxReturn(array("status"=>"y","info"=>"添加成功"), "JSON");
     }
 
