@@ -1,0 +1,69 @@
+<div class="harder">
+    <div id="Harder_Info">
+        <font>已保存的地址</font>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="Delivery_Address">
+    <div class="Tabel_Thead">
+        <div class="Thead_Th Tabel_btm">默认</div>
+        <div class="Thead_Th Tabel_btm">姓名</div>
+        <div class="Thead_Th Tabel_btmh2">手机号码</div>
+        <div class="Thead_Th Tabel_btmh1">收货地址</div>
+        <div class="Thead_Th Tabel_btm">邮政编码</div>
+        <div class="Thead_Th Tabel_btm">操作</div>
+        <div class="clear"></div>
+    </div>
+    <div class="Tabel_Tbody">
+        <volist name="userOrderAddresses" id="userOrderAddress">
+            <ul class="Tbody_Tr">
+                <li class="Tbody_Td Tabel_btm">
+                    <if condition="$userOrderAddress.if_active eq 1">
+                        当前默认
+                    </if>
+                </li>
+                <li class="Tbody_Td Tabel_btm"><{$userOrderAddress.linkman}></li>
+                <li class="Tbody_Td Tabel_btmh2"><{$userOrderAddress.telphone}></li>
+                <li class="Tbody_Td Tabel_btmh1"><{$userOrderAddress.provinceName}><{$userOrderAddress.cityName}> <{$userOrderAddress.districtName}><{$userOrderAddress.address}></li>
+                <li class="Tbody_Td Tabel_btm"><{$userOrderAddress.postcode}></li>
+                <li class="Tbody_Td Tabel_btm">
+                    <a class="addressDel"href="#" url="<{:u('/userOrderAddress/del')}>?id=<{$userOrderAddress.id}>" class="Tr_Del" >删除</a>
+                    <if condition="$userOrderAddress.if_active neq 1">
+                        <a class="setDefault"href="#" url="<{:u('/userOrderAddress/setDefault')}>?id=<{$userOrderAddress.id}>" class="Tr_Del" >置默认</a>
+                    </if>
+                </li>
+                <div class="clear"></div>
+            </ul>
+        </volist>
+    </div>
+</div>
+ <script>
+    $(".addressDel").click(function(){
+        if(confirm('确定删除吗!')){
+            $.ajax({
+                url:$(this).attr("url"),
+                type:"GET",
+                datatype:"json",
+                success:function(data){
+                    if(data.result){
+                        $("#list").load("<{:u('/userOrderAddress/myList')}>");
+                    }
+                }
+            })
+        }
+    })
+
+    $(".setDefault").click(function(){
+        $.ajax({
+            url: $(this).attr("url"),
+            type: "GET",
+            datatype: "json",
+            success: function (data) {
+                if (data.result) {
+                    $("#list").load("<{:u('/userOrderAddress/myList')}>");
+                }
+            }
+        })
+    })
+ </script>
+

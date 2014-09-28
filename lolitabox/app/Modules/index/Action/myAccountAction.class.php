@@ -8,6 +8,6 @@
 class myAccountAction extends commonAction {
 
     public function index(){
-        $this->redirect("userOrderAddress/myAddresses");
+        $this->redirect("userOrderAddress/index");
     }
 }

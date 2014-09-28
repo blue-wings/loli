@@ -84,5 +84,9 @@ return array(
     'INVENTORY_OUT_STATUS_UNFINISHED'					=>0,
 	
     //省地区的父id
-	'AREA_PROVINCE_PID'									=>0
+	'AREA_PROVINCE_PID'									=>0,
+
+    'MAX_ADDRESS_NUM_PER_USER'                      =>3,
+    'USER_ORDER_ADDRESS_ACTIVE'                          =>1,
+    'USER_ORDER_ADDRESS_NOT_ACTIVE'                 =>0
 );

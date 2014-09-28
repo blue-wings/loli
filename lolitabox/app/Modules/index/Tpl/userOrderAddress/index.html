@@ -1,0 +1,35 @@
+<div class="f780 dy_wrap r">
+    <include file="myAccount:tab" />
+    <div class="wp780 dy_con" id="dy_con">
+        <div class="hd">&nbsp;</div>
+        <div class="con">
+            <!--内容--->
+            <div class="My_Acc">
+                <div id="add-segment"></div>
+                <div id="list"></div>
+
+                <div class="Delivery_Address">
+                    <div class="Acc_Prompt">
+                        <h3>小萝莉温馨提示：</h3>
+
+                        <p>
+                            默认地址是网站活动实物奖品的派送地址，如用户在参与网站活动中获得了实物奖品，在无特殊声明情况下，均会通过
+                            用户设定的“默认地址”进行派送。
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--内容-END-->
+        </div>
+        <div class="ft">&nbsp;</div>
+    </div>
+</div>
+
+<script>
+    $("#add-segment").load("<{:u('/userOrderAddress/toAddAddress')}>");
+    $("#list").load("<{:u('/userOrderAddress/myList')}>")
+</script>
+
