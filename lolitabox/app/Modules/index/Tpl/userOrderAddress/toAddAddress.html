@@ -87,10 +87,12 @@
              } ,
              ajaxPost:true,
              callback:function(data){
-                 if(orderId){
-                    window.location.reload();
-                 }else{
-                     $("#list").load("<{:u('/userOrderAddress/myList')}>");
+                 if(data.status=="y"){
+                     if(orderId){
+                         window.location.reload();
+                     }else{
+                         $("#list").load("<{:u('/userOrderAddress/myList')}>");
+                     }
                  }
              }
          });
