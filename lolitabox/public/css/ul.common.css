@@ -13,6 +13,7 @@
 .side_top .tips{ line-height: 24px; color: #666;  padding:8px 0 24px 40px;}
 .side_top .tips a,.gz_con a{ color: #ff4e00;}
 .side_top .btn a{ display: inline-block; background: #27b9c9; color: #fff; line-height: 36px; padding: 0 22px;}
+.side_top .btn span{ display: inline-block; background: #27b9c9; color: #fff; line-height: 36px; padding: 0 22px;cursor: pointer}
 .side_top .btn .l,.side_top .btn .r{ width: auto;}
 .side_top .btn a:hover{ text-decoration: none;}
 .side_bar li{border-bottom: 1px #999 solid; cursor: pointer; padding-left: 40px; font-size: 18px; color: #ff2686; line-height: 48px;}

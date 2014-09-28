@@ -21,8 +21,8 @@
                                                                         <p>积分：<a href="" target="_blank"><{$return.userinfo.score}></a></p>
                                                                         <p>账户余额：<a href="" target="_blank">￥<{$info['giftcard_price']}></a></p></dd>
                                                                 <dd class="btn cfl">
-                                                                        <a href="" target="_blank" class="l">修改收货地址</a>
-                                                                        <a href="" target="_blank" class="r">修改密码</a>
+                                                                        <span href="#"  for-action="<{:u('myAccount/index', 'tab=address')}>" class="menu-time l" hashcode="modaddress">修改收货地址</span>
+                                                                        <span href="#" target="_blank" class="r">修改密码</span>
                                                                 </dd>
                                                         </dl>
                                                 </div>
@@ -35,7 +35,7 @@
                                                                         <!--<li><em class="gz_try">&nbsp;</em><span>我的试用</span></li>-->
                                                                         <!--<li><em class="gz_list">&nbsp;</em><span>我的订单</span></li>-->
                                                                         <li><em class="gz_tip">&nbsp;</em><span for-action="<{:u('msg/msg')}>" class="menu-time" hashcode="msg">我的消息</span></li>
-                                                                        <li><em class="gz_host">&nbsp;</em><span for-action="<{:u('myAccount/index')}>" class="menu-time" hashcode="myaccount">我的账户</span></li>
+                                                                        <li><em class="gz_host">&nbsp;</em><span for-action="<{:u('myAccount/index', 'tab=address')}>" class="menu-time" hashcode="myaccount">我的账户</span></li>
                                                                 </ul>
                                                         </div>
                                                         <div class="ft">&nbsp;</div>

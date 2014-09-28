@@ -8,6 +8,9 @@
 class myAccountAction extends commonAction {
 
     public function index(){
-        $this->redirect("userOrderAddress/index");
+        $tab = $_GET["tab"];
+        if($tab == "address"){
+            $this->redirect("userOrderAddress/index");
+        }
     }
 }
