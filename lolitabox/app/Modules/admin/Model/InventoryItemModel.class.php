@@ -8,7 +8,7 @@ class InventoryItemModel extends model{
 	public function IncInventoryInLock($inventoryItemId, $quantity){
 		try{
 			M()->startTrans();
-			$this->lock(true)->getById($inventoryItemId);
+            D("DBLock")->getSingleInventoryItemLock($inventoryItemId);
 			$param["id"]=$inventoryItemId;
 			$this->where($param)->setInc("inventory_in", $quantity);
 			$sql= "UPDATE `inventory_item` SET inventory_real=inventory_in-inventory_abnormal_out-product_shelved_inventory_out,inventory_estimated=inventory_in-inventory_abnormal_out-product_shelved_inventory_in WHERE id=".$inventoryItemId;
@@ -30,11 +30,11 @@ class InventoryItemModel extends model{
 	public function shelveProductInventory($pid, $inventoryItemId, $quantity){
 		$productMod = D("Product");
 		try{
-			$inventoryItem = $this->lock(true)->getById($inventoryItemId);
+			$inventoryItem = D("DBLock")->getSingleInventoryItemLock($inventoryItemId);
 			if($inventoryItem["inventory_estimated"] < $quantity){
 				throw new Exception("库存不足");
 			}
-			$params["id"]=$inventoryItemId;	
+			$params["id"]=$inventoryItemId;
 			$this->where($params)->setInc("product_shelved_inventory_in", $quantity);
 			$sql= "UPDATE `inventory_item` SET inventory_real=inventory_in-inventory_abnormal_out-product_shelved_inventory_out,inventory_estimated=inventory_in-inventory_abnormal_out-product_shelved_inventory_in WHERE id=".$inventoryItemId;
 			$this->db->execute ( $sql );
@@ -53,7 +53,7 @@ class InventoryItemModel extends model{
     public function updateAbnormalInventoryOutLock($inventoryItemId, $quantity){
         try{
             M()->startTrans();
-            $this->lock(true)->getById($inventoryItemId);
+            D("DBLock")->getSingleInventoryItemLock($inventoryItemId);
             $param["id"]=$inventoryItemId;
             $this->where($param)->setInc("inventory_abnormal_out", $quantity);
             $sql= "UPDATE `inventory_item` SET inventory_real=inventory_in-inventory_abnormal_out-product_shelved_inventory_out,inventory_estimated=inventory_in-inventory_abnormal_out-product_shelved_inventory_in WHERE id=".$inventoryItemId;

@@ -62,7 +62,7 @@ class GiftcardModel extends Model {
 	public function getUserGiftCardPriceInLock($userid){
 		M()->startTrans();
 		try{
-			$product = M("users")->lock(true)->getByUserid($userid);
+			D("DBLock")->getSingleUserLock($userid);
 			$price = $this->getUserGiftcardPrice($userid);
 			M()->commit();
 			return $price;

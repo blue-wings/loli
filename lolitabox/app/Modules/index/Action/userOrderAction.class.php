@@ -40,6 +40,9 @@ class userOrderAction extends commonAction {
     	if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
     		$this->error("订单状态异常");
     	}
+        if($order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
+            $this->error("订单已失效");
+        }
     	if($order["userid"] != $this->userid){
     		$this->error("非法获取订单信息");
     	}
@@ -102,7 +105,9 @@ class userOrderAction extends commonAction {
         $addressId = $_POST["addressId"];
         $ifPayPostage = $_POST["ifPayPostage"];
         $needGoToPayGateway = D("UserOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$ifUseGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
-        if(!$needGoToPayGateway){
+        if($needGoToPayGateway == -1){
+            $this->error("订单已失效");
+        }else if ($needGoToPayGateway == 2){
 			$this->redirect("userOrder/paySuccess");
         }else{
         	$this->redirect("userOrder/getCompleteOrer2Pay", array("orderId"=>$orderId));
@@ -117,9 +122,9 @@ class userOrderAction extends commonAction {
     	}
         $this->assign("order", $order);
     	$userOrderAddresses = M("UserOrderAddress")->getById($order["address_id"]);
-	    $provinceName=M("area")->where(array("area_id"=>$userOrderAddress["province_area_id"]))->getField("title");
-	    $cityName=M("area")->where(array("area_id"=>$userOrderAddress["city_area_i"]))->getField("title");
-	    $districtName=M("area")->where(array("area_id"=>$userOrderAddress["district_area_id"]))->getField("title");
+	    $provinceName=M("area")->where(array("area_id"=>$userOrderAddresses["province_area_id"]))->getField("title");
+	    $cityName=M("area")->where(array("area_id"=>$userOrderAddresses["city_area_i"]))->getField("title");
+	    $districtName=M("area")->where(array("area_id"=>$userOrderAddresses["district_area_id"]))->getField("title");
 	    $addressNote = $userOrderAddresses["linkman"].",".$userOrderAddresses["telphone"].",".$provinceName.$cityName.$districtName.$userOrderAddresses["address"]."(".$userOrderAddresses["postcode"].")";
 	    $this->assign("addressNote", $addressNote);
 	    $priceFen = $order["cost"] + $order["postage"] - $order["giftcard"];

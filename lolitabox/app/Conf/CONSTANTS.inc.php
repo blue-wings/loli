@@ -41,8 +41,8 @@ return array(
 	'EXPRESS_SHENTONG_ID'								=> array("id"=>0, "name"=>"申通快递"),
 	'EXPRESS_SHUNFENG_ID'								=> array("id"=>1, "name"=>"顺丰快递"),
 
-	//订单的失效时间72小时
-	'ORDER_VALID_DURATION'								=>3600,
+	//订单的失效时间72小时,支付宝订单失效时间48小时,该值需要大约48小时
+	'ORDER_VALID_DURATION'								=>72*3600,
 	//有效
 	'ORDER_IFAVALID_VALID'								=>1,
 	//失效

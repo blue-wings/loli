@@ -84,8 +84,7 @@ class UserOrderModel extends Model {
 		}
 		try {
 			M()->startTrans();
-			$lockWhere["pid"] = array("in", $productIds);
-			$products = D("Products")->where($lockWhere)->lock(true)->select();
+			$products = D("DBLock")->getProductsLock($productIds);
 			$productMap = null;
 			foreach ($products as $product){
 				$productMap[$product["pid"]]=$product;
@@ -152,16 +151,15 @@ class UserOrderModel extends Model {
 	 * @param unknown_type $ifGiftCard
 	 * @param unknown_type $sendWord
 	 * @param unknown_type $expressCompanyId
+     * @return -1:valid 1:neen go to gateway 2:pay direct
 	 */
 	public function completeOrder($userId,$orderId, $addressId,$payBank,$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
 		if(!isset($userId) || !isset($orderId) || !isset($ifPayPostage))
 			return false;
         try {
             M()->startTrans();
-            $lockWhere["ordernmb"] = $orderId;
-            D("UserOrder")->where($lockWhere)->lock(true)->select();
-            $order = $this->getOrderInfo($orderId);
-            if($order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
+            $order = D("DBLock")->getSingleOrderLock($orderId);
+            if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED") || $order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
                 return -1;
             }
             $data['ordernmb']=$orderId;
@@ -188,7 +186,7 @@ class UserOrderModel extends Model {
             if($ifGiftCard==1){
                 $giftcardPrice=D("Giftcard")->getUserGiftcardPrice($userId);
                 if($giftcardPrice>0){
-                    $needGoToPayGateway = $this->useGiftCardInOrderWithLock($userId, $order, $data);
+                    $needGoToPayGateway = $this->useGiftCard($userId, $order, $data);
                 }
             }
             $this->save($data);
@@ -196,31 +194,23 @@ class UserOrderModel extends Model {
         }catch(Exception $e){
             M()->rollback();
         }
-        return $needGoToPayGateway;
+        return $needGoToPayGateway?1:2;
 	}
 	
-	private function useGiftCardInOrderWithLock($userid, $order, $data){
-		$needGoToPayGateway = true;
-		M()->startTrans();
-		try{
-			$product = M("users")->lock(true)->getByUserid($userid);
-			$giftcardPrice = D("Giftcard")->getUserGiftcardPrice($userid);
-			if($giftcardPrice >= ($order['cost']+$data["postage"])){
-				$data['pay_bank']=null;//如果使用礼品卡余额全额支付，清除支付方式
-				$data['giftcard']=$order['cost']+$data["postage"];
-				$this->save($data);
-				$needGoToPayGateway=false;
-				$this->hasPayed($order["ordernmb"], -1, date("Y-m-d H:i:s"));
-			}else{
-				$data['giftcard']=$giftcardPrice;
-				$this->save($data);
-			}
-			M()->commit();
-			return $needGoToPayGateway;
-		}catch (Exception $e){
-			M()->rollback();
-			throw new Exception("数据库异常");
-		}
+	private function useGiftCard($userid, $order, $data){
+        $needGoToPayGateway = true;
+        $giftcardPrice = D("Giftcard")->getUserGiftCardPriceInLock($userid);
+        if ($giftcardPrice >= ($order['cost'] + $data["postage"])) {
+            $data['pay_bank'] = null; //如果使用礼品卡余额全额支付，清除支付方式
+            $data['giftcard'] = $order['cost'] + $data["postage"];
+            $this->save($data);
+            $needGoToPayGateway = false;
+            $this->hasPayed($order["ordernmb"], -1, date("Y-m-d H:i:s"));
+        } else {
+            $data['giftcard'] = $giftcardPrice;
+            $this->save($data);
+        }
+        return $needGoToPayGateway;
 	}
 	
 	/**
@@ -229,24 +219,40 @@ class UserOrderModel extends Model {
 	 * @param unknown_type $tradeNumber
 	 */
 	public function hasPayed($orderId, $tradeNumber, $payTime){
-		$order = $this->getOrderInfo($orderId);
-		$data["ordernmb"]=$orderId;
-		$data["state"]=C("USER_ORDER_STATUS_PAYED");
-		if(empty($order["paytime"]) && !empty($payTime)) {
-			$data["paytime"]=$payTime;
-		}
-		if(empty($order["trade_no"]) && !empty($tradeNumber)){
-			$data["trade_no"]=$tradeNumber;
-		}
-		$this->save($data);
+        try {
+            M()->startTrans();
+            $order = D("DBLock")->getSingleOrderLock($orderId);
+            if($order["ifavalid"] == C("ORDER_IFAVALID_OVERDUE")){
+                Log::write("order was recycled during user pay, orderId ".$order." tradeNumber ".$tradeNumber." paytime ".$payTime,CRIT);
+                return;
+            }
+            if($order["state"] == C("USER_ORDER_STATUS_PAYED")){
+                if($order["trade_no"] != $tradeNumber){
+                    Log::write("order has payed before, orderId ".$order." tradeNumber ".$tradeNumber." paytime ".$payTime,CRIT);
+                }
+                return;
+            }
+            $data["ordernmb"]=$orderId;
+            $data["state"]=C("USER_ORDER_STATUS_PAYED");
+            if(empty($order["paytime"]) && !empty($payTime)) {
+                $data["paytime"]=$payTime;
+            }
+            if(empty($order["trade_no"]) && !empty($tradeNumber)){
+                $data["trade_no"]=$tradeNumber;
+            }
+            $this->save($data);
+            M()->commit();
+        }catch(Exception $e){
+            M()->rollback();
+        }
 		if($order["pay_postage"]==C("USER_NOT_PAY_POSTAGE_ORDER")){
 			D("UserOrderSendProductdetail")->changeStatus2PostageNotPay($orderId);	
 		}else{
 			D("UserOrderSendProductdetail")->changeStatus2PostagePayed($orderId);
-            //@TODOcreate inventoryOut and orderSend record
             $this->createSystemOutInventory($orderId);
         }
     }
+
     public function createSystemOutInventory($orderId){
         //generate inventory out record
         $out_mod=M('inventoryOut');

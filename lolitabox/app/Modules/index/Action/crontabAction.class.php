@@ -23,9 +23,7 @@ class crontabAction extends commonAction {
 		foreach ($orders as $order){
 			try {
 				M()->startTrans();
-				$lockWhere["ordernmb"] = $order["ordernmb"];
-				D("UserOrder")->where($lockWhere)->lock(true)->select();
-                $order = D("UserOrder")->getOrderInfo($order["ordernmb"]);
+                $order = D("DBLock")->getSingleOrderLock($order["ordernmb"]);
                 if($order["state"]==C("USER_ORDER_STATUS_PAYED")){
                     continue;
                 }
