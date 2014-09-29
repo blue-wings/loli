@@ -25,6 +25,10 @@ class crontabAction extends commonAction {
 				M()->startTrans();
 				$lockWhere["ordernmb"] = $order["ordernmb"];
 				D("UserOrder")->where($lockWhere)->lock(true)->select();
+                $order = D("UserOrder")->getOrderInfo($order["ordernmb"]);
+                if($order["state"]==C("USER_ORDER_STATUS_PAYED")){
+                    continue;
+                }
 				$products = D("UserOrderSendProductdetail")->getUserOrderProducts($order["ordernmb"]);
 				foreach ($products as $product){
 					D("Products")->minusInventoryReducedInDBLock($product["pid"], $product["product_num"]);

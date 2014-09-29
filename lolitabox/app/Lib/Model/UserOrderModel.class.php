@@ -156,38 +156,47 @@ class UserOrderModel extends Model {
 	public function completeOrder($userId,$orderId, $addressId,$payBank,$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
 		if(!isset($userId) || !isset($orderId) || !isset($ifPayPostage))
 			return false;
-
-		$order = $this->getOrderInfo($orderId);
-		$data['ordernmb']=$orderId;
-		if($ifPayPostage){
-            $data["address_id"]=$addressId;
-            if(empty($addressId) || empty($expressCompanyId)){
-                throw new Exception("未选择地址或者快递公司");
+        try {
+            M()->startTrans();
+            $lockWhere["ordernmb"] = $orderId;
+            D("UserOrder")->where($lockWhere)->lock(true)->select();
+            $order = $this->getOrderInfo($orderId);
+            if($order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
+                return -1;
             }
-			$address = M("UserOrderAddress")->getById($addressId);
-			$postage = D("PostageStandard")->calculateOrderPostage($orderId, $expressCompanyId, $address["district_area_id"]);
-			$data["postage"]=$postage;
-			$data["pay_postage"]=C("USER_PAY_POSTAGE_ORDER");
-		}else{
-			$data["postage"]=0;
-			$data["pay_postage"]=C("USER_NOT_PAY_POSTAGE_ORDER");
-		}
-		
-		$data['sendword']=$sendWord;
-		$data['address_id']=$addressId;
-		$data['pay_bank']=$payBank;
-		
-		$needGoToPayGateway=true;
-		//计算用户的礼品卡余额可以折扣的金额
-		if($ifGiftCard==1){
-			$giftcardPrice=D("Giftcard")->getUserGiftcardPrice($userId);
-			if($giftcardPrice>0){
-				$needGoToPayGateway = $this->useGiftCardInOrderWithLock($userId, $order, $data);
-				return $needGoToPayGateway;
-			}
-		}
-		$this->save($data);
-		return $needGoToPayGateway;
+            $data['ordernmb']=$orderId;
+            if($ifPayPostage){
+                $data["address_id"]=$addressId;
+                if(empty($addressId) || empty($expressCompanyId)){
+                    throw new Exception("未选择地址或者快递公司");
+                }
+                $address = M("UserOrderAddress")->getById($addressId);
+                $postage = D("PostageStandard")->calculateOrderPostage($orderId, $expressCompanyId, $address["district_area_id"]);
+                $data["postage"]=$postage;
+                $data["pay_postage"]=C("USER_PAY_POSTAGE_ORDER");
+            }else{
+                $data["postage"]=0;
+                $data["pay_postage"]=C("USER_NOT_PAY_POSTAGE_ORDER");
+            }
+
+            $data['sendword']=$sendWord;
+            $data['address_id']=$addressId;
+            $data['pay_bank']=$payBank;
+
+            $needGoToPayGateway=true;
+            //计算用户的礼品卡余额可以折扣的金额
+            if($ifGiftCard==1){
+                $giftcardPrice=D("Giftcard")->getUserGiftcardPrice($userId);
+                if($giftcardPrice>0){
+                    $needGoToPayGateway = $this->useGiftCardInOrderWithLock($userId, $order, $data);
+                }
+            }
+            $this->save($data);
+            M()->commit();
+        }catch(Exception $e){
+            M()->rollback();
+        }
+        return $needGoToPayGateway;
 	}
 	
 	private function useGiftCardInOrderWithLock($userid, $order, $data){
