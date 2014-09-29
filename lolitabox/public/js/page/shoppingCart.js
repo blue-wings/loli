@@ -243,6 +243,7 @@ var Loli = Loli || {};
 			},
 			
 			show : function(){
+                this.bindSubscribeButtonEvent();
 				$("#"+this.options.selfId).show();
 			},
 			

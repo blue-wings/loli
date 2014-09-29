@@ -2,20 +2,12 @@
     <div class="tab">
         <div class="tad_li cfl">
             <if condition="$displayNewUserItem eq true">
-                <a href="javascript:tabLoad('<{:u('/subscribe/newuser')}>');" class="<{$newuserSelect}>"><p><span class="txt">新会员专属</span><span class="on_bg"></span></p></a>
+                <a href="#!snew" class="<{$newuserSelect}>"><p><span class="txt">新会员专属</span><span class="on_bg"></span></p></a>
             </if>
-            <a href="javascript:tabLoad('<{:u('/subscribe/mine')}>');" class="<{$mineSelect}>"><p><span class="txt">普通订阅区</span><span class="on_bg"></span></p></a>
-            <a href="javascript:tabLoad('<{:u('/subscribe/advance')}>');" class="<{$advanceSelect}>"><p><span class="txt">高级订阅区</span><span class="on_bg"></span></p></a>
+            <a href="#!snormal" class="<{$mineSelect}>"><p><span class="txt">普通订阅区</span><span class="on_bg"></span></p></a>
+            <a href="#!smember" class="<{$advanceSelect}>"><p><span class="txt">高级订阅区</span><span class="on_bg"></span></p></a>
             <a href="javascript:;"><p><span class="txt">年度试用尊享</span><span class="on_bg"></span></p></a>
             <a href="javascript:;" class="nobr"><p><span class="txt"><em class="gz_help">HELP</em></span><span class="on_bg"></span></p></a>
         </div>
     </div>
 </div>
-
-<script>
-    function tabLoad(url){
-        $('#main-container').load(url, function(){
-            Loli.shoppingCartObj.bindSubscribeButtonEvent();
-        });
-    }
-</script>

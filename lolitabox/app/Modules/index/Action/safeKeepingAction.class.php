@@ -25,6 +25,7 @@ class safeKeepingAction extends commonAction{
  			$this->assign("page",$p->show());
   		}
  		$this->assign("productDetailsCount",$productDetailsCount);
+        $this->assign("selfPickUpSelect","select");
   		$this->display();
 	}
 	
