@@ -1,0 +1,51 @@
+<script>
+    $(function () {
+        Loli.hashRouter = {};
+
+        Loli.hashRouter["snormal"] = {url: "<{:u('/subscribe/mine')}>", shoppingCart: true};
+        Loli.hashRouter["snew"] = {url: "<{:u('/subscribe/newuser')}>", shoppingCart: false};
+        Loli.hashRouter["smember"] = {url: "<{:u('/subscribe/advance')}>", shoppingCart: false};
+        Loli.hashRouter["safekeeping"] = {url: "<{:u('/safeKeeping/selfPickUp')}>", shoppingCart: false};
+        Loli.hashRouter["msg"] = {url: "<{:u('/msg/msg')}>", shoppingCart: false};
+        Loli.hashRouter["address"] = {url: "<{:u('/userOrderAddress/index')}>", shoppingCart: false};
+
+        function contentLoad(hashcode) {
+            var router = Loli.hashRouter[hashcode];
+            var url = router["url"];
+            if (url) {
+                $("#main-container").load(url, function () {
+                    $("#menu-content").css("height", $(this).css("height"));
+                    var ifShowShoppingCart = router["shoppingCart"];
+                    if (ifShowShoppingCart) {
+                        if (Loli.shoppingCartObj) {
+                            Loli.shoppingCartObj.show();
+                        } else {
+                            Loli.shoppingCartObj = new Loli.shoppingCart({addProduct2CartUrl: "<{:u('shoppingCart/addProduct2Cart')}>", getShoppingCartDetailUrl: "<{:u('shoppingCart/detail')}>"});
+                        }
+                    } else {
+                        if (Loli.shoppingCartObj) {
+                            Loli.shoppingCartObj.hide();
+                        }
+                    }
+
+                });
+            }
+        }
+
+        var options = [];
+        var index = 0;
+        $.each(Loli.hashRouter, function (hashcode, router) {
+            var seg = {
+                hash: "#!" + hashcode,
+                onSet: function () {
+                    contentLoad(hashcode);
+                },
+                onRemove: function () {
+                }
+            }
+            options[index++] = seg;
+        })
+
+        $(window).hashchange(options)
+    })
+</script>
