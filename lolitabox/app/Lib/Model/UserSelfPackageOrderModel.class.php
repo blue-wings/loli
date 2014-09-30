@@ -122,8 +122,6 @@ class UserSelfPackageOrderModel extends Model {
 	 */
 	public function completeOrder($userId,$orderId, $addressId,$payBank, $sendWord="", $expressCompanyId){
         try {
-            if(!isset($userId) || !isset($orderId) || !isset($addressId) || !isset($expressCompanyId))
-                throw new Exception("订单信息不完整");
             M()->startTrans();
             $order = D("DBLock")->getSingleSelfPackageOrderLock($orderId);
             if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED") || $order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){

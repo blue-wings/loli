@@ -111,15 +111,17 @@ class safeKeepingAction extends commonAction{
         $expressCompanyId = $_POST["expressCompanyId"];
         $payBank = $_POST["pay_bank"];
         $addressId = $_POST["addressId"];
+        if(!isset($orderId) || !isset($addressId) || !isset($expressCompanyId) || !isset($payBank))
+            throw new Exception("订单信息不完整");
         try{
             D("UserSelfPackageOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$sendWord, $expressCompanyId);
-            $this->redirect("safeKeeping/getCompleteOrer2Pay", array("orderId"=>$orderId));
+            $this->redirect("safeKeeping/getCompleteOrder2Pay", array("orderId"=>$orderId));
         }catch (Exception $e){
             $this->error("提取货物失败,".$e->getMessage());exit;
         }
     }
     
-    public function getCompleteOrer2Pay(){
+    public function getCompleteOrder2Pay(){
     	$orderId = $_GET["orderId"];
     	$order = D("UserSelfPackageOrder")->getOrderInfo($orderId);
     	if($order["state"] != C("USER_SELF_PACKAGE_ORDER_STATUS_NOT_PAYED")){

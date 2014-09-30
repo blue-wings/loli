@@ -79,10 +79,10 @@ class UserOrderModel extends Model {
 	 * @throws Exception
 	 */
 	public function createOrder($userId, $productIds, $productNums){
-		if(count($productIds) != count($productNums)){
-			throw new Exception("创建订单失败");
-		}
 		try {
+            if(count($productIds) != count($productNums)){
+                throw new Exception("创建订单失败");
+            }
 			M()->startTrans();
 			$products = D("DBLock")->getProductsLock($productIds);
 			$productMap = null;
@@ -155,12 +155,14 @@ class UserOrderModel extends Model {
 	 */
 	public function completeOrder($userId,$orderId, $addressId,$payBank,$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
         try {
-            if(!isset($userId) || !isset($orderId) || !isset($ifPayPostage))
-                throw new Exception("订单信息不完整");
             M()->startTrans();
             $order = D("DBLock")->getSingleOrderLock($orderId);
-            if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED") || $order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
+            //获得锁时订单的状态可能已经改变
+            if($order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
                 throw new Exception("订单已失效");
+            }
+            if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED") ){
+                throw new Exception("订单状态异常");
             }
             $data['ordernmb']=$orderId;
             if($ifPayPostage){
@@ -188,6 +190,9 @@ class UserOrderModel extends Model {
                 if($giftcardPrice>0){
                     $needGoToPayGateway = $this->useGiftCard($userId, $order, $data);
                 }
+            }
+            if($needGoToPayGateway && !isset($payBank)){
+                throw new Exception("为选择支付方式");
             }
             $this->save($data);
             M()->commit();

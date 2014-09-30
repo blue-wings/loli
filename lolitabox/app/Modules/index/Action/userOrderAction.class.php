@@ -103,7 +103,7 @@ class userOrderAction extends commonAction {
     public function completeOrder(){
     	$orderId = $_POST["orderId"];
     	$order = D("UserOrder")->getOrderDetail($orderId);
-    	if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
+    	if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED") || $order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
     		$this->error("订单状态异常");
     	}
         if($order["userid"] != $this->userid){
@@ -119,10 +119,12 @@ class userOrderAction extends commonAction {
         $payBank = $_POST["pay_bank"];
         $addressId = $_POST["addressId"];
         $ifPayPostage = $_POST["ifPayPostage"];
+        if(!isset($orderId) || !isset($ifPayPostage))
+            $this->error("订单信息不完整");
         try{
             $needGoToPayGateway = D("UserOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$ifUseGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
             if ($needGoToPayGateway){
-                $this->redirect("userOrder/getCompleteOrer2Pay", array("orderId"=>$orderId));
+                $this->redirect("userOrder/getCompleteOrder2Pay", array("orderId"=>$orderId));
             }else{
                 $this->redirect("userOrder/paySuccess");
             }
@@ -131,7 +133,7 @@ class userOrderAction extends commonAction {
         }
     }
     
-    public function getCompleteOrer2Pay(){
+    public function getCompleteOrder2Pay(){
     	$orderId = $_GET["orderId"];
     	$order = D("UserOrder")->getOrderInfo($orderId);
     	if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
