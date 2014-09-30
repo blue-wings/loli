@@ -31,11 +31,15 @@ class safeKeepingAction extends commonAction{
 	
 	public function createOrder() {
         $userOrderSendProductDetailIdArray = $_POST["detailIds"];
-        if(!$userOrderSendProductDetailIdArray){
-        	throw new Exception("生成订单出错");
+        if(!$userOrderSendProductDetailIdArray || !count($userOrderSendProductDetailIdArray)){
+            $this->error("生成订单出错");
         }
-        $orderId = D("UserSelfPackageOrder")->createOrder( $this->userid, $userOrderSendProductDetailIdArray);
-        $this->redirect("safeKeeping/getOrder2Complete", array("orderId"=>$orderId));
+        try{
+            $orderId = D("UserSelfPackageOrder")->createOrder( $this->userid, $userOrderSendProductDetailIdArray);
+            $this->redirect("safeKeeping/getOrder2Complete", array("orderId"=>$orderId));
+        }catch (Exception $e){
+            $this->error("提取货物出错,".$e->getMessage());
+        }
     }
     
     public function getOrder2Complete(){
@@ -44,6 +48,12 @@ class safeKeepingAction extends commonAction{
     		$this->error("获取订单信息失败");
     	}
     	$order = D("UserSelfPackageOrder")->getOrderDetail($orderId);
+        if($order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
+            $this->error("订单已失效");
+        }
+        if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
+            $this->error("订单状态异常");
+        }
     	if($order["userid"] != $this->userid){
     		$this->error("非法获取订单信息");
     	}
@@ -90,6 +100,9 @@ class safeKeepingAction extends commonAction{
     	if($order["state"] != C("USER_SELF_PACKAGE_ORDER_STATUS_NOT_PAYED")){
     		$this->error("订单状态异常");
     	}
+        if($order["userid"] != $this->userid){
+            $this->error("非法获取订单信息");
+        }
         $sendWord = $_POST["send_word"];
         import("ORG.Util.String");
         if(mb_strlen($sendWord,"utf8") > 200){
@@ -98,8 +111,12 @@ class safeKeepingAction extends commonAction{
         $expressCompanyId = $_POST["expressCompanyId"];
         $payBank = $_POST["pay_bank"];
         $addressId = $_POST["addressId"];
-        D("UserSelfPackageOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$sendWord, $expressCompanyId);
-        $this->redirect("safeKeeping/getCompleteOrer2Pay", array("orderId"=>$orderId));
+        try{
+            D("UserSelfPackageOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$sendWord, $expressCompanyId);
+            $this->redirect("safeKeeping/getCompleteOrer2Pay", array("orderId"=>$orderId));
+        }catch (Exception $e){
+            $this->error("提取货物失败,".$e->getMessage());exit;
+        }
     }
     
     public function getCompleteOrer2Pay(){
@@ -110,9 +127,9 @@ class safeKeepingAction extends commonAction{
     	}
         $this->assign("order", $order);
     	$userOrderAddresses = M("UserOrderAddress")->getById($order["address_id"]);
-	    $provinceName=M("area")->where(array("area_id"=>$userOrderAddress["province_area_id"]))->getField("title");
-	    $cityName=M("area")->where(array("area_id"=>$userOrderAddress["city_area_i"]))->getField("title");
-	    $districtName=M("area")->where(array("area_id"=>$userOrderAddress["district_area_id"]))->getField("title");
+	    $provinceName=M("area")->where(array("area_id"=>$userOrderAddresses["province_area_id"]))->getField("title");
+	    $cityName=M("area")->where(array("area_id"=>$userOrderAddresses["city_area_i"]))->getField("title");
+	    $districtName=M("area")->where(array("area_id"=>$userOrderAddresses["district_area_id"]))->getField("title");
 	    $addressNote = $userOrderAddresses["linkman"].",".$userOrderAddresses["telphone"].",".$provinceName.$cityName.$districtName.$userOrderAddresses["address"]."(".$userOrderAddresses["postcode"].")";
 	    $this->assign("addressNote", $addressNote);
 		$priceYuan = bcdiv($order["cost"], 100, 2);

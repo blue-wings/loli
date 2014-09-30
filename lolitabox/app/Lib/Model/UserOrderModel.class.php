@@ -139,7 +139,7 @@ class UserOrderModel extends Model {
 			return $data['ordernmb'];
 		}catch(Exception $e){
 			M()->rollback();
-			throw new Exception("创建订单失败-".$e->getMessage());	
+			throw new Exception($e->getMessage());
 		}
 	}
 	/**
@@ -154,13 +154,13 @@ class UserOrderModel extends Model {
      * @return -1:valid 1:neen go to gateway 2:pay direct
 	 */
 	public function completeOrder($userId,$orderId, $addressId,$payBank,$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
-		if(!isset($userId) || !isset($orderId) || !isset($ifPayPostage))
-            throw new Exception("订单信息不完整");
         try {
+            if(!isset($userId) || !isset($orderId) || !isset($ifPayPostage))
+                throw new Exception("订单信息不完整");
             M()->startTrans();
             $order = D("DBLock")->getSingleOrderLock($orderId);
             if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED") || $order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
-                return -1;
+                throw new Exception("订单已失效");
             }
             $data['ordernmb']=$orderId;
             if($ifPayPostage){
@@ -193,8 +193,9 @@ class UserOrderModel extends Model {
             M()->commit();
         }catch(Exception $e){
             M()->rollback();
+            throw new Exception($e->getMessage());
         }
-        return $needGoToPayGateway?1:2;
+        return $needGoToPayGateway;
 	}
 	
 	private function useGiftCard($userid, $order, $data){
@@ -241,14 +242,16 @@ class UserOrderModel extends Model {
                 $data["trade_no"]=$tradeNumber;
             }
             $this->save($data);
+            if($order["pay_postage"]==C("USER_NOT_PAY_POSTAGE_ORDER")){
+                D("UserOrderSendProductdetail")->changeStatus2PostageNotPay($orderId);
+            }else{
+                D("UserOrderSendProductdetail")->changeStatus2PostagePayed($orderId);
+            }
             M()->commit();
         }catch(Exception $e){
             M()->rollback();
         }
-		if($order["pay_postage"]==C("USER_NOT_PAY_POSTAGE_ORDER")){
-			D("UserOrderSendProductdetail")->changeStatus2PostageNotPay($orderId);	
-		}else{
-			D("UserOrderSendProductdetail")->changeStatus2PostagePayed($orderId);
+        if($order["pay_postage"]==C("USER_PAY_POSTAGE_ORDER")){
             $this->createSystemOutInventory($orderId);
         }
     }

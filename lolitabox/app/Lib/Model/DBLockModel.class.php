@@ -34,4 +34,9 @@ class DBLockModel extends Model {
         return $inventoryItem;
     }
 
+    public function getSingleSelfPackageOrderLock($orderId){
+        $order = D("UserSelfPackageOrder")->lock(true)->getById($orderId);
+        return $order;
+    }
+
 }
