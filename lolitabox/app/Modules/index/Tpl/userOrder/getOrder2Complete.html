@@ -101,7 +101,7 @@
 					</div>
 					<div style="width: 100%;">
 						<div class="Dtitle">
-							<select style="color: #7a7a7a; font-size: 12px;" name="expressCompanyId">
+							<select style="color: #7a7a7a; font-size: 12px;" name="expressCompanyId" id="expressSelect">
 								<volist name="ExpressCompanies" id="expressCompany">
 									<option value="<{$expressCompany.id}>" selected><{$expressCompany.name}></option>
 								</volist>
@@ -112,9 +112,12 @@
 							<select style="color: #7a7a7a; font-size: 12px;"
 								id="addressSelect" name="addressId">
 								<volist name="oldAdresses" id="oldAdress">
-								<option value="<{$oldAdress.id}>"><{$oldAdress.linkman}>，<{$oldAdress.telphone}>，<{$oldAdress.provinceName}>
+								<option value="<{$oldAdress.id}>" shunfeng-postage="<{$oldAdress.shunfengPostage}>" shunfeng-totalCost="<{$oldAdress.shunfengTotalCost}>"
+                                        shengtong-postage="<{$oldAdress.shenTongPostage}>" shengtong-totalCost="<{$oldAdress.shenTongTotalCost}>">
+                                    <{$oldAdress.linkman}>，<{$oldAdress.telphone}>，<{$oldAdress.provinceName}>
 									<{$oldAdress.cityName}> <{$oldAdress.districtName}>
-									<{$oldAdress.address}>（<{$oldAdress.postcode}>）</option>
+									<{$oldAdress.address}>（<{$oldAdress.postcode}>）
+                                </option>
 								</volist>
 							</select>
 						</div>
@@ -128,8 +131,8 @@
 				</div>
 
 				<div class="commodity_foot">
-					订阅服务费：<font>￥<{$order.costYuan}></font> 运费：<font>￥<{$postage}></font>
-					实际应付金额：<font>￥<{$totalCost}></font>
+					订阅服务费：￥<font><span  id="orderCost"><{$order.costYuan}></span></font> 运费：￥<font ><span id="postage"><{$defaultAddress.shenTongPostage}></span></font>
+					实际应付金额：￥<font ><span id="totalCost"><{$defaultAddress.shenTongTotalCost}></span></font>
 				</div>
 			</div>
 
@@ -314,13 +317,50 @@
 
 <script>
 	$("#sub").click(function(){
-		$("#form1").submit();
+        var flag = true;
+        if($("#ifPayPostage").val() == "1"){
+            var selectedExpressCompany = $("#expressSelect").find("option:selected");
+            var selectedAddress = $("#addressSelect").find("option:selected");
+            if(!selectedExpressCompany.length || !selectedAddress.length){
+                flag = false;
+                noty({'text':"请添加收货地址!",'layout':'topLeft','type':'error'});
+            }
+        }
+        if(flag){
+            $("#form1").submit();
+        }
 	})
 
     $("#addAddress").click(function(){
         $.colorbox({href:"<{:u('/userOrderAddress/toAddAddress')}>?orderId=<{$order.orderid}>",transition:"elastic", width:"50%", height:"50%",onClosed:function(){
         }})
     })
+
+    $("#expressSelect").change(function(){
+        changeCostDisplay();
+    })
+
+    $("#addressSelect").change( function(){
+        changeCostDisplay();
+    })
+
+    function changeCostDisplay(){
+        var selectedExpressCompany = $("#expressSelect").find("option:selected");
+        var selectedAddress = $("#addressSelect").find("option:selected");
+        var postage = 0;
+        var totalCost = 0;
+        if($(selectedExpressCompany[0]).val() == 0){
+            postage = $(selectedAddress[0]).attr("shengtong-postage");
+            totalCost = $(selectedAddress[0]).attr("shengtong-totalcost");
+        }else if($(selectedExpressCompany[0]).val() == 1){
+            postage = $(selectedAddress[0]).attr("shunfeng-postage");
+            totalCost = $(selectedAddress[0]).attr("shunfeng-totalcost");
+        }
+        $("#postage").text(postage);
+        $("#totalCost").text(totalCost);
+    }
+
+    changeCostDisplay();
 </script>	
 
 <include file="public:footer" />

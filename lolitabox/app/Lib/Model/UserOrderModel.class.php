@@ -155,7 +155,7 @@ class UserOrderModel extends Model {
 	 */
 	public function completeOrder($userId,$orderId, $addressId,$payBank,$ifGiftCard=0, $ifPayPostage, $sendWord="", $expressCompanyId){
 		if(!isset($userId) || !isset($orderId) || !isset($ifPayPostage))
-			return false;
+            throw new Exception("订单信息不完整");
         try {
             M()->startTrans();
             $order = D("DBLock")->getSingleOrderLock($orderId);
@@ -165,7 +165,7 @@ class UserOrderModel extends Model {
             $data['ordernmb']=$orderId;
             if($ifPayPostage){
                 $data["address_id"]=$addressId;
-                if(empty($addressId) || empty($expressCompanyId)){
+                if(!isset($addressId) || !isset($expressCompanyId)){
                     throw new Exception("未选择地址或者快递公司");
                 }
                 $address = M("UserOrderAddress")->getById($addressId);
