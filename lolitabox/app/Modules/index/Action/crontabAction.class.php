@@ -7,6 +7,7 @@ class crontabAction extends commonAction {
 
 	/**
 	 * 每5分钟执行一次，找出无效订单，回收产品库存
+     * 每次回收三天前的订单资源，理论上不会与订单的支付产生并发问题，支付宝订单的有效期为两天
 	 */
 	public function recyclingOrder(){
 		$ip = get_client_ip();
@@ -23,7 +24,6 @@ class crontabAction extends commonAction {
 		foreach ($orders as $order){
 			try {
 				M()->startTrans();
-                $order = D("DBLock")->getSingleOrderLock($order["ordernmb"]);
                 if($order["state"]==C("USER_ORDER_STATUS_PAYED")){
                     continue;
                 }
@@ -45,6 +45,6 @@ class crontabAction extends commonAction {
 		$userSelfPackageOrderWhere["ifavalid"]=C("ORDER_IFAVALID_VALID");
 		D("UserSelfPackageOrder")->where($userSelfPackageOrderWhere)->save(array("ifavalid"=>C("ORDER_IFAVALID_OVERDUE")));
 		$msg = "successOrders[".join(",", $successOrders)."] failedOrders[".join(",", $failedOrders)."]";
-		$this->ajaxReturn(array("action"=>"recyclingOrder","time"=>date("Y-m-d H:i:s"),"result"=>"ok", "msg"=>$msg), "JSON");
+		$this->ajaxReturn(array("action"=>"recyclingOrder","runtime"=>date("Y-m-d H:i:s"),"order max addtime"=>$startTime,"result"=>"ok", "msg"=>$msg), "JSON");
 	}
 }

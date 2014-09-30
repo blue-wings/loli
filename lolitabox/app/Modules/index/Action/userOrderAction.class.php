@@ -1,14 +1,20 @@
 <?php
 class userOrderAction extends commonAction {
-	
+
+    /**
+     * 以购物车为依据创建订单
+     */
     public function createOrder() {
+        $logTag = MODULE_NAME."-".ACTION_NAME;
         $userId = $this->userid;
         $shoppingCartIds = $_POST["shoppingCartIds"];
         if(!$shoppingCartIds){
-        	$this->error("创建订单失败");exit;
+            eLog($logTag,$this->userid," 创建订单失败","提交的购物车为空", ERROR);
+        	$this->error("创建订单失败");
         }
         $shoppingCartIdArray = split(",", $shoppingCartIds);
     	if(!$shoppingCartIdArray || !count($shoppingCartIdArray)){
+            eLog($logTag,$this->userid," 创建订单失败","提交的购物车为空", ERROR);
         	$this->error("创建订单失败");exit;
         }
         
@@ -19,38 +25,46 @@ class userOrderAction extends commonAction {
         foreach ($shoppingCartIdArray as $shopingCartId){
         	$shoppingCartItem = $shoppingCartModel->getById($shopingCartId);
             if($shoppingCartItem["userid"] != $this->userid){
+                eLog($logTag,$this->userid,"创建订单失败"," 提交的购物车不是自己的", ERROR);
                 $this->error("非法创建订单");exit;
             }
         	if($shoppingCartItem["status"]==C("SHOPPING_CART_STATUS_VALID")){
 				array_push($productIds, $shoppingCartItem["productid"]);
         		array_push($productNums, $shoppingCartItem["product_num"]);        	
         	}else{
+                eLog($logTag,$this->userid,"创建订单失败","购物车已过期 ", ERROR);
         		$this->error("创建订单失败,购物车已过期");exit;
         	}
         }
         try{
             $orderId = D("UserOrder")->createOrder( $this->userid, $productIds, $productNums);
-            Log::write($userId."create order ".$orderId,INFO);
             $shoppingCartModel->invalidUserShoppingCart($shoppingCartIdArray);
         }catch (Exception $e){
+            eLog($logTag,$this->userid,"创建订单失败",$e->getMessage(), ERROR);
             $this->error("创建订单失败,".$e->getMessage());exit;
         }
+        eLog($logTag,$this->userid,"创建订单成功",$orderId, INFO);
         $this->redirect("userOrder/getOrder2Complete", array("orderId"=>$orderId));
     }
     
     public function getOrder2Complete(){
+        $logTag = MODULE_NAME."-".ACTION_NAME;
     	$orderId = $_GET["orderId"];	
     	if(!$orderId){
+            eLog($logTag,$this->userid,"获取订单失败",$orderId, ERROR);
     		$this->error("获取订单信息失败");
     	}
     	$order = D("UserOrder")->getOrderDetail($orderId);
         if($order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
+            eLog($logTag,$this->userid,"获取订单失败","订单已失效", ERROR);
             $this->error("订单已失效");
         }
         if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
+            eLog($logTag,$this->userid,"获取订单失败","订单状态异常", ERROR);
             $this->error("订单状态异常");
         }
     	if($order["userid"] != $this->userid){
+            eLog($logTag,$this->userid,"获取订单失败","非法获取订单信息", ERROR);
     		$this->error("非法获取订单信息");
     	}
     	$this->assign("order", $order);
@@ -101,12 +115,15 @@ class userOrderAction extends commonAction {
     
     
     public function completeOrder(){
+        $logTag = MODULE_NAME."-".ACTION_NAME;
     	$orderId = $_POST["orderId"];
     	$order = D("UserOrder")->getOrderDetail($orderId);
     	if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED") || $order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
+            eLog($logTag,$this->userid,"补全订单失败","订单状态异常", ERROR);
     		$this->error("订单状态异常");
     	}
         if($order["userid"] != $this->userid){
+            eLog($logTag,$this->userid,"补全订单失败","非法获取订单信息", ERROR);
             $this->error("非法获取订单信息");
         }
         $sendWord = $_POST["send_word"];
@@ -119,8 +136,10 @@ class userOrderAction extends commonAction {
         $payBank = $_POST["pay_bank"];
         $addressId = $_POST["addressId"];
         $ifPayPostage = $_POST["ifPayPostage"];
-        if(!isset($orderId) || !isset($ifPayPostage))
+        if(!isset($orderId) || !isset($ifPayPostage)){
+            eLog($logTag,$this->userid,"补全订单失败","订单信息不完整", ERROR);
             $this->error("订单信息不完整");
+        }
         try{
             $needGoToPayGateway = D("UserOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$ifUseGiftCard,$ifPayPostage, $sendWord, $expressCompanyId);
             if ($needGoToPayGateway){
@@ -129,14 +148,18 @@ class userOrderAction extends commonAction {
                 $this->redirect("userOrder/paySuccess");
             }
         }catch (Exception $e){
+            eLog($logTag,$this->userid,"补全订单失败",$e->getMessage(), ERROR);
             $this->error("提交订单失败,".$e->getMessage());exit;
         }
+        eLog($logTag,$this->userid,"补全订单成功",$orderId, INFO);
     }
     
     public function getCompleteOrder2Pay(){
+        $logTag = MODULE_NAME."-".ACTION_NAME;
     	$orderId = $_GET["orderId"];
     	$order = D("UserOrder")->getOrderInfo($orderId);
     	if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
+            eLog($logTag,$this->userid,"获取订单支付失败","订单状态异常", INFO);
     		$this->error("订单状态异常");
     	}
         $this->assign("order", $order);

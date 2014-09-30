@@ -749,3 +749,10 @@ function decodeNum($num, $base = 62, $index = false) {
 	return $out;
 }
 
+function eLog($tag, $userId, $result, $reason, $level){
+    Log::write("[".$tag."]"."[".$userId."]"."[".$result."]"."-".$reason, $level);
+    if($level == ERROR){
+
+    }
+}
+

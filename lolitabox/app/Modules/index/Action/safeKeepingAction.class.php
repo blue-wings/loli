@@ -30,6 +30,7 @@ class safeKeepingAction extends commonAction{
 	}
 	
 	public function createOrder() {
+        $logTag = MODULE_NAME."-".ACTION_NAME;
         $userOrderSendProductDetailIdArray = $_POST["detailIds"];
         if(!$userOrderSendProductDetailIdArray || !count($userOrderSendProductDetailIdArray)){
             $this->error("生成订单出错");
