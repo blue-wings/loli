@@ -33,29 +33,37 @@ class safeKeepingAction extends commonAction{
         $logTag = MODULE_NAME."-".ACTION_NAME;
         $userOrderSendProductDetailIdArray = $_POST["detailIds"];
         if(!$userOrderSendProductDetailIdArray || !count($userOrderSendProductDetailIdArray)){
+            eLog($logTag,$this->userid,"创建保管箱订单失败","未选择产品", ERROR);
             $this->error("生成订单出错");
         }
         try{
             $orderId = D("UserSelfPackageOrder")->createOrder( $this->userid, $userOrderSendProductDetailIdArray);
             $this->redirect("safeKeeping/getOrder2Complete", array("orderId"=>$orderId));
         }catch (Exception $e){
+            eLog($logTag,$this->userid,"创建保管箱订单失败",$e->getMessage(), ERROR);
             $this->error("提取货物出错,".$e->getMessage());
         }
+        eLog($logTag,$this->userid,"创建保管箱订单成功",$orderId, INFO);
     }
     
     public function getOrder2Complete(){
+        $logTag = MODULE_NAME."-".ACTION_NAME;
     	$orderId = $_GET["orderId"];
     	if(!$orderId){
+            eLog($logTag,$this->userid,"获取订单失败","orderId 为空", ERROR);
     		$this->error("获取订单信息失败");
     	}
     	$order = D("UserSelfPackageOrder")->getOrderDetail($orderId);
         if($order["ifavalid"]==C("ORDER_IFAVALID_OVERDUE")){
+            eLog($logTag,$this->userid,"获取订单失败","订单已失效", ERROR);
             $this->error("订单已失效");
         }
         if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
+            eLog($logTag,$this->userid,"获取订单失败","订单状态异常", ERROR);
             $this->error("订单状态异常");
         }
     	if($order["userid"] != $this->userid){
+            eLog($logTag,$this->userid,"获取订单失败","非法获取订单信息", ERROR);
     		$this->error("非法获取订单信息");
     	}
     	$this->assign("order", $order);
@@ -96,12 +104,15 @@ class safeKeepingAction extends commonAction{
     }
     
  	public function completeOrder(){
+        $logTag = MODULE_NAME."-".ACTION_NAME;
     	$orderId = $_POST["orderId"];
     	$order = D("UserSelfPackageOrder")->getOrderInfo($orderId);
     	if($order["state"] != C("USER_SELF_PACKAGE_ORDER_STATUS_NOT_PAYED")){
+            eLog($logTag,$this->userid,"补全订单失败","订单状态异常", ERROR);
     		$this->error("订单状态异常");
     	}
         if($order["userid"] != $this->userid){
+            eLog($logTag,$this->userid,"补全订单失败","非法获取订单信息", ERROR);
             $this->error("非法获取订单信息");
         }
         $sendWord = $_POST["send_word"];
@@ -112,20 +123,26 @@ class safeKeepingAction extends commonAction{
         $expressCompanyId = $_POST["expressCompanyId"];
         $payBank = $_POST["pay_bank"];
         $addressId = $_POST["addressId"];
-        if(!isset($orderId) || !isset($addressId) || !isset($expressCompanyId) || !isset($payBank))
-            throw new Exception("订单信息不完整");
+        if(!isset($orderId) || !isset($addressId) || !isset($expressCompanyId) || !isset($payBank)){
+            eLog($logTag,$this->userid,"补全订单失败","订单信息不完整", ERROR);
+            $this->error("订单信息不完整");
+        }
         try{
             D("UserSelfPackageOrder")->completeOrder($this->userid,$orderId, $addressId,$payBank,$sendWord, $expressCompanyId);
             $this->redirect("safeKeeping/getCompleteOrder2Pay", array("orderId"=>$orderId));
         }catch (Exception $e){
+            eLog($logTag,$this->userid,"补全订单失败",$e->getMessage(), ERROR);
             $this->error("提取货物失败,".$e->getMessage());exit;
         }
+        eLog($logTag,$this->userid,"补全订单成功",$orderId, INFO);
     }
     
     public function getCompleteOrder2Pay(){
+        $logTag = MODULE_NAME."-".ACTION_NAME;
     	$orderId = $_GET["orderId"];
     	$order = D("UserSelfPackageOrder")->getOrderInfo($orderId);
     	if($order["state"] != C("USER_SELF_PACKAGE_ORDER_STATUS_NOT_PAYED")){
+            eLog($logTag,$this->userid,"获取订单支付失败","订单状态异常", ERROR);
     		$this->error("订单状态异常");
     	}
         $this->assign("order", $order);

@@ -51,7 +51,7 @@ class userOrderAction extends commonAction {
         $logTag = MODULE_NAME."-".ACTION_NAME;
     	$orderId = $_GET["orderId"];	
     	if(!$orderId){
-            eLog($logTag,$this->userid,"获取订单失败",$orderId, ERROR);
+            eLog($logTag,$this->userid,"获取订单失败","orderId 为空", ERROR);
     		$this->error("获取订单信息失败");
     	}
     	$order = D("UserOrder")->getOrderDetail($orderId);
@@ -159,7 +159,7 @@ class userOrderAction extends commonAction {
     	$orderId = $_GET["orderId"];
     	$order = D("UserOrder")->getOrderInfo($orderId);
     	if($order["state"] != C("USER_ORDER_STATUS_NOT_PAYED")){
-            eLog($logTag,$this->userid,"获取订单支付失败","订单状态异常", INFO);
+            eLog($logTag,$this->userid,"获取订单支付失败","订单状态异常", ERROR);
     		$this->error("订单状态异常");
     	}
         $this->assign("order", $order);
