@@ -284,7 +284,8 @@ var Loli = Loli || {};
 					}
 				})
 				if(!chartIds.length){
-					noty({'text':"请先添加商品",'layout':'topLeft','type':'error'});	
+					noty({'text':"请先添加商品",'layout':'topLeft','type':'error'});
+                    return;
 				}
 				if(!hasError){
 					if(chartProductNums.length){
