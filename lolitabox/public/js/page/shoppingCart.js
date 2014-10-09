@@ -5,6 +5,7 @@ var Loli = Loli || {};
 		this.options = $.extend({}, this.options, options);
 		this.init();
 		this.open=false;
+        this.updating = 0;
 		return this;
 	}
 
@@ -130,7 +131,7 @@ var Loli = Loli || {};
 
 
 				//直接修改数量时对输入字符的控制
-				$(".num").click("change",function(){
+				$(".num").bind("change",function(){
 					check($(this),$(this).val());
 					me.updateOneShoppingCart($(this));
 				})
@@ -154,8 +155,11 @@ var Loli = Loli || {};
 				}
 				
 				$("#"+me.options.submitButtonId).click(function(){
-					me.updateAllShoppingCartsAndcreateOrder();
-					});	
+                        if(this.updating != 0){
+                            noty({'text':"稍等片刻...",'layout':'topLeft','type':'alter'});
+                        }
+					    me.updateAllShoppingCartsAndcreateOrder();
+				});
 
 			},
 
@@ -204,8 +208,8 @@ var Loli = Loli || {};
                 });
                 //点击按钮加入产品开始
                 function proBtnClick(btnobj){
-                    $("#"+me.options.submitButtonId).attr("disabled", true);
                     var pid = btnobj.attr("pid");
+                    me.updating ++;
                     $.ajax({
                         url:me.options.addProduct2CartUrl,
                         type:"POST",
@@ -226,7 +230,7 @@ var Loli = Loli || {};
                             }else{
                                 noty({'text':result.msg,'layout':'topLeft','type':'error'});
                             }
-                            $("#"+me.options.submitButtonId).attr("disabled", false);
+                            me.updating --;
                         },
                         error:function(result){
                             noty({'text':"添加到购物车失败!",'layout':'topLeft','type':'error'});
@@ -264,6 +268,13 @@ var Loli = Loli || {};
 			},
 			
 			updateAllShoppingCartsAndcreateOrder : function(){
+                var me = this;
+                if(this.updating != 0){
+                    setTimeout(function(){
+                        me.updateAllShoppingCartsAndcreateOrder();
+                    }, 500);
+                    return;
+                }
 				var chartItems = $(".chart_item");
 				var chartIds = new Array();
 				var chartProductNums = new Array();
@@ -304,6 +315,8 @@ var Loli = Loli || {};
 			_update : function(chartIds, chartProductNums, func) {
 				$("#shoppingCartIds").val(chartIds.join(","));
 				$("#productNums").val(chartProductNums.join(","));
+                var me = this;
+                me.updating++;
 				$("#chart_form").ajaxSubmit({
 					type:"post",
 					datatype:"json",
@@ -318,6 +331,7 @@ var Loli = Loli || {};
 						}else{
 							noty({'text':data.msg,'layout':'topLeft','type':'error'});
 						}
+                        me.updating--;
 					}
 				});
 			}
