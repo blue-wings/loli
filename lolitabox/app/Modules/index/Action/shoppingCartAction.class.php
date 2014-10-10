@@ -139,6 +139,16 @@ class ShoppingCartAction extends commonAction {
 		$result["totalCost"]=$totalCost;
 		return $result;
 	}
+
+    public function delete(){
+        $shoppingCartId = $_POST["shoppingCartId"];
+        if(!$shoppingCartId){
+            $this->error("非法参数");
+        }
+        $shoppingCartIds[0]=$shoppingCartId;
+        D("ShoppingCart")->invalidUserShoppingCart($shoppingCartIds);
+        $this->ajaxReturn(array("result"=> true), "JSON");
+    }
 	
 	/**
 	 * 配置cron，定期清理购物车

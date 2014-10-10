@@ -15,11 +15,12 @@
 							<input type="hidden" name="shoppingCartIds" id="shoppingCartIds">
 							<input type="hidden" name="productNums" id="productNums">
 							<volist name="shoppingCartItems" id="shoppingCartItem">
-							<li class="chart_item">
+							<li class="chart_item" id="seg-<{$shoppingCartItem.id}>">
 								<dl>
 									<input type="hidden" class="chart_id" value="<{$shoppingCartItem.id}>">
-									<dt class="img">
+									<dt class="img" style="position: relative">
 										<img src="<{$shoppingCartItem.product.pimg}>" alt="" />
+                                        <div style="position: absolute; top: 0; right: 0" ><a href="#" class="chart-del" chart-id="<{$shoppingCartItem.id}>" product-name="<{$shoppingCartItem.product.pname}>">删除</a></div>
 									</dt>
 									<dd class="name"><{$shoppingCartItem.product.pname}></dd>
 									<dd class="price">￥<{$shoppingCartItem.product.realPrice}></dd>

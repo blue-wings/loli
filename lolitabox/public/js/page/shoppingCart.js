@@ -16,6 +16,8 @@ var Loli = Loli || {};
 				subscribeButtonClass : "subscribe-button",
 				addProduct2CartUrl:null,
 				getShoppingCartDetailUrl :null,
+                deleteUrl : null,
+                deleteButtonClassName : "chart-del",
 				submitButtonId:"submit"
 			},
 
@@ -161,6 +163,29 @@ var Loli = Loli || {};
 					    me.updateAllShoppingCartsAndcreateOrder();
 				});
 
+                $("."+me.options.deleteButtonClassName).click(function(){
+                    var productName = $(this).attr("product-name");
+                    var chartId = $(this).attr("chart-id");
+                    if(confirm("真的要删除"+productName+"吗？")){
+                        me.updating++;
+                        $.ajax({
+                            url:me.options.deleteUrl,
+                            type:"POST",
+                            datatype:"json",
+                            data:{"shoppingCartId":chartId},
+                            cache:false,
+                            success:function(result){
+                                if(result.result){
+                                    me._reload(function(){
+                                        me.updating--;
+                                        noty({'text':"删除成功!",'layout':'topLeft','type':'success'});
+                                    })
+                                }
+                            }
+                        })
+                    }
+                })
+
 			},
 
             bindSubscribeButtonEvent : function(){
@@ -218,15 +243,9 @@ var Loli = Loli || {};
                         cache:false,
                         success:function(result){
                             if(result.result){
-                                $("#"+me.options.selfId).load(me.options.getShoppingCartDetailUrl, function(){
-                                    me.bindEvent();
-                                    if(me.open){
-                                        $(".open_chart").trigger("click");
-                                    }else{
-                                        $(".close_chart").trigger("click");
-                                    }
+                                me._reload(function(){
                                     noty({'text':"更新购物车成功",'layout':'topLeft','type':'success'});
-                                });
+                                })
                             }else{
                                 noty({'text':result.msg,'layout':'topLeft','type':'error'});
                             }
@@ -334,7 +353,22 @@ var Loli = Loli || {};
                         me.updating--;
 					}
 				});
-			}
+			},
+
+            _reload : function(callback){
+                var me = this;
+                $("#"+me.options.selfId).load(me.options.getShoppingCartDetailUrl, function(){
+                    me.bindEvent();
+                    if(me.open){
+                        $(".open_chart").trigger("click");
+                    }else{
+                        $(".close_chart").trigger("click");
+                    }
+                    if(callback){
+                        callback();
+                    }
+                });
+            }
 	}
 
 })();

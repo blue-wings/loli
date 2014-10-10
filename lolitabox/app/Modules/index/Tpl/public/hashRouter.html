@@ -20,7 +20,7 @@
                         if (Loli.shoppingCartObj) {
                             Loli.shoppingCartObj.show();
                         } else {
-                            Loli.shoppingCartObj = new Loli.shoppingCart({addProduct2CartUrl: "<{:u('shoppingCart/addProduct2Cart')}>", getShoppingCartDetailUrl: "<{:u('shoppingCart/detail')}>"});
+                            Loli.shoppingCartObj = new Loli.shoppingCart({addProduct2CartUrl: "<{:u('shoppingCart/addProduct2Cart')}>", getShoppingCartDetailUrl: "<{:u('shoppingCart/detail')}>", deleteUrl:"<{:u('shoppingCart/delete')}>"});
                         }
                     } else {
                         if (Loli.shoppingCartObj) {
