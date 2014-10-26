@@ -1,0 +1,118 @@
+<link rel="stylesheet" type="text/css" href="/public/css/My_Account.css"/>
+<div class="f780 dy_wrap r">
+    <div class="dy_tab">
+        <div class="tab">
+            <div class="tad_li cfl">
+                <a href="My_Account.html" class="select"><p><span class="txt">萝莉档案</span><span class="on_bg"></span></p></a>
+                <a href="javascript:;"><p><span class="txt">订阅设置</span><span class="on_bg"></span></p></a>
+                <a href="javascript:;"><p><span class="txt">修改密码</span><span class="on_bg"></span></p></a>
+                <a href="My_Delivery_Address.html"><p><span class="txt">收货地址</span><span class="on_bg"></span></p></a>
+                <!--<a href="javascript:;"><p><span class="txt">我的积分</span><span class="on_bg"></span></p></a>-->
+                <!--<a href="javascript:;"><p><span class="txt">账户余额</span><span class="on_bg"></span></p></a>-->
+                <!--<a href="javascript:;"><p><span class="txt">我的邀请</span><span class="on_bg"></span></p></a>-->
+
+            </div>
+        </div>
+    </div>
+
+    <div class="wp780 dy_con" id="dy_con">
+        <div class="hd">&nbsp;</div>
+        <div class="con">
+            <!--内容--->
+            <div class="My_Acc">
+                <div class="harder">
+                    <div id="Harder_Info">
+                        <font>个人信息</font>
+                    </div>
+                    <div id="Harder_Edit">
+                        <a href="#!editarchive">
+                            <img src="/public/images/Acc_li_edit.png" /><font>编辑萝莉档案</font>
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="UserInfo">
+                    <div id="UserIcon">
+                        <div id="UserIconBorder">
+                            <img src="<{$userinfo.userface}>" width="107" height="107" />
+                        </div>
+                        <div id="UserIconUrl">
+                            <a href="#"><font>修改头像</font></a>
+                        </div>
+                    </div>
+                    <div id="UserMsg">
+                        <ul class="MsgLi">
+                            <li>
+                                <label>呢 &nbsp;&nbsp;&nbsp;&nbsp;  称：</label><font><{$Think.cookie.nickname}></font>
+                            </li>
+                            <li>
+                                <label>性 &nbsp;&nbsp;&nbsp;&nbsp;  别：</label><font><{$userinfo.sex}></font>
+                            </li>
+                            <li>
+                                <label>生 &nbsp;&nbsp;&nbsp;&nbsp;  日：</label><font><{$userinfo.years}>年<{$userinfo.months}>月<{$userinfo.days}>日</font>
+                            </li>
+                            <li>
+                                <label>职业状态：</label><font>在校学生</font>
+                            </li>
+                            <li>
+                                <label>学 &nbsp;&nbsp;&nbsp;&nbsp;  历：</label><font>本科</font>
+                            </li>
+                            <li>
+                                <label>手机号码：</label><font><{$userinfo.telphone}></font>
+                            </li>
+                            <li>
+                                <label>所 &nbsp;在&nbsp;地：</label><font>黑龙江省齐齐哈尔</font>
+                            </li>
+                            <li>
+                                <label>E&nbsp;m&nbsp;a&nbsp;i&nbsp;l：</label><font><{$userinfo.email}></font>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+
+                </div>
+
+                <div class="harder">
+                    <div id="Harder_Info">
+                        <font>个人肤质及订阅信息</font>
+                    </div>
+
+                    <div class="clear"></div>
+                </div>
+
+                <div class="SkinInfo">
+
+                    <div class="Skin">
+                        <div class="SkinHander">
+                            <label>肤 质:</label><font>混合性皮肤</font>
+                        </div>
+                        <div class="SkinHander">
+                            <label>肤 色：</label><font>黑珍珠</font>
+                        </div>
+                        <div class="SkinHander">
+                            <label>发 质：</label><font>油性发质</font>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+                    <ul class="SkinLi">
+                        <volist name="properties" id="property">
+                            <li>
+                                <i>&nbsp; &nbsp;</i><label> <{$property.property_name}>：</label><font id="property_value_names_<{$property.property_id}>"><{$property.checked_values}></font>
+                            </li>
+                        </volist>
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <!--内容-END-->
+        </div>
+        <div class="ft">&nbsp;</div>
+    </div>
+</div>
+<!--右边content-end-->
+</div>
+</div>

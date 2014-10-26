@@ -35,7 +35,8 @@
                                                                         <!--<li><em class="gz_try">&nbsp;</em><span>我的试用</span></li>-->
                                                                         <!--<li><em class="gz_list">&nbsp;</em><span>我的订单</span></li>-->
                                                                         <li><em class="gz_tip">&nbsp;</em><span for-action="<{:u('msg/msg')}>" class="menu-time" hashcode="msg">我的消息</span></li>
-                                                                        <!--<li><em class="gz_host">&nbsp;</em><span>我的账户</span></li>-->
+                                                                        <li><em class="gz_host">&nbsp;</em><span for-action="<{:u('archive/mine')}>" class="menu-time" hashcode="myarchive">我的账户</span></li>
+                                                                        <li style="display: none;"><em class="gz_host">&nbsp;</em><span for-action="<{:u('archive/edit')}>"  class="menu-time" hashcode="editarchive">我的账户</span></li>
                                                                 </ul>
                                                         </div>
                                                         <div class="ft">&nbsp;</div>
@@ -217,6 +218,7 @@ var listenHashCodes = [];
 $.each($(".menu-time"), function(index, ele){
 	listenHashCodes[index]=$(this).attr("hashcode");
 })
+
 $(".menu-time").click(function(){
 	window.location.hash="#!"+$(this).attr("hashcode");
 	$(".menu-time").parent().removeClass("select");

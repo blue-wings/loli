@@ -168,8 +168,8 @@ class ArchiveIndexModel extends Model {
                             ],
                             'ik_smart' => [
                                 "use_smart"=>true,
-                                "type"=>"ik"
-                            ],
+                            "type"=>"ik"
+                        ],
                             'product' => [
                                 'type' => 'custom',
                                 'tokenizer' => 'standard',
