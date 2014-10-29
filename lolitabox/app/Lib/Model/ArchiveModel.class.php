@@ -12,7 +12,7 @@ class ArchiveModel extends Model {
         $archiveProperty = D("ArchiveProperty");
         $list = $archiveProperty->field("archive_property.name as property_name,archive_property.type as property_type,archive_value.*")
             ->join("archive_value on archive_value.property_id=archive_property.id")
-            ->order('sort desc,archive_property.id asc')->select();
+            ->order('archive_property.sort desc')->select();
         $userProperty = D("ArchiveUser");
         $myProperties = $userProperty->where(array('userid'=>$userId))->select();
         $pvMap = array();

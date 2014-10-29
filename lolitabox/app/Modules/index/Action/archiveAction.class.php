@@ -49,10 +49,7 @@ class archiveAction extends commonAction{
         $this->redirect("Archive/mineArchive");
 //        $this->ajaxReturn(array("result"=>true));
     }
-//    public function initIndex(){
-//        $indexModel = D("ArchiveIndex");
-//        $indexModel->initIndex();
-//    }
+
     public function mine(){
         $userinfo=$this->userinfo;
         $properties = D("Archive")->getIndexProperty($this->getUserid());
@@ -66,10 +63,18 @@ class archiveAction extends commonAction{
         $userinfo=$this->userinfo;
         $properties = D("Archive")->getIndexProperty($this->getUserid());
 
+        $provinces = D("Area")->where(array('pid'=>0))->select();
+
         $this->assign("userinfo",$userinfo);
         $this->assign("properties",$properties);
+        $this->assign("provinces",$provinces);
 
         $this->display();
+    }
+    public function getCity(){
+        $pid = $_POST['province_id'];
+        $cites = D("Area")->where(array('pid'=>$pid))->select();
+        $this->ajaxReturn($cites,'请求成功!',1);
     }
     public function update(){
         $user_profile_model=M("UserProfile");
@@ -96,5 +101,6 @@ class archiveAction extends commonAction{
             $this->ajaxReturn($names,'保存成功!',1);
         }
     }
+
 
 }

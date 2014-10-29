@@ -1,14 +1,13 @@
-<link rel="stylesheet" type="text/css" href="/public/css/My_Account.css?v=2"/>
 
 <!--右边content-start-->
 <div class="f780 dy_wrap r">
 <div class="dy_tab">
     <div class="tab">
         <div class="tad_li cfl">
-            <a href="My_Account.html" class="select"><p><span class="txt">萝莉档案</span><span class="on_bg"></span></p></a>
+            <a href="#!myarchive" class="select"><p><span class="txt">萝莉档案</span><span class="on_bg"></span></p></a>
             <a href="javascript:;"><p><span class="txt">订阅设置</span><span class="on_bg"></span></p></a>
             <a href="javascript:;"><p><span class="txt">修改密码</span><span class="on_bg"></span></p></a>
-            <a href="My_Delivery_Address.html"><p><span class="txt">收货地址</span><span class="on_bg"></span></p></a>
+            <a href="#!deliveryAddress"><p><span class="txt">收货地址</span><span class="on_bg"></span></p></a>
             <!--<a href="javascript:;"><p><span class="txt">我的积分</span><span class="on_bg"></span></p></a>-->
             <!--<a href="javascript:;"><p><span class="txt">账户余额</span><span class="on_bg"></span></p></a>-->
             <!--<a href="javascript:;"><p><span class="txt">我的邀请</span><span class="on_bg"></span></p></a>-->
@@ -89,12 +88,13 @@
                             </font>
                         </li>
                         <li>
+                            <select name="province" id="area-province" >
+                                <volist name="provinces" id="prov">
+                                    <option value="<{$prov.title}>"  area-id="<{$prov.area_id}>" ><{$prov.title}></option>
+                                </volist>
 
-                            <select name="province">
-                                <option value="<{$userinfo.province}>" ><{$userinfo.province}></option>
                             </select>
-                            <select name="city">
-                                <option value="<{$userinfo.city}>"><{$userinfo.city}></option>
+                            <select name="city" id="area-city">
                             </select>
 
                         </li>
@@ -239,7 +239,6 @@
 
             });
             params += '&value_ids=' + values;
-            console.log(params);
             $.ajax({
                 url:"__URL__/updateUserArchive",
                 type:"post",
@@ -265,6 +264,23 @@
 
             me.nextAll('ul').toggle();
             me.nextAll('div').toggle();
+        });
+        $("#area-province").on('change',function(){
+            var option = $("#area-province > option:selected");
+            $.ajax({
+                url:"__URL__/getCity",
+                type:"post",
+                dataType:"json",
+                data:"&province_id="+option.attr('area-id'),
+                success: function(result){
+                    var city = $("#area-city");
+                    city.empty();
+                    $.each(result.data,function(index,area){
+                        var c = ("<option value='"+area.title+"'>"+area.title+"</option>")
+                        city.append(c);
+                    });
+                }
+            });
         });
     });
 </script>
