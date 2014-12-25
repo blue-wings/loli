@@ -1,0 +1,49 @@
+<script type="text/javascript" src="/public/js/addressSelector.js"></script>
+<div>
+    <div class="Delivery_Address">
+        <form id="acticeGiftCardForm" action="<{:u('/giftCard/active')}>" method="post">
+            <ul class="Delivery_Add_Address">
+                <li>
+                    <div style="float: left">
+                        <em>*</em><label>礼品卡编号：</label>
+                    </div>
+                    <div style="float: left">
+                    <input type="text"  name="cardId" tip="请您输入礼品卡编号" altercss="gray" errormsg="格式：2-10个字符（可包含汉字、数字、字母及下划线）" nullmsg="请您输入礼品卡编号" datatype="s2-10" />
+                    </div>
+                    <div class="tips" style="float: left; width: 150px">
+                        <div class="Validform_checktip" ></div>
+                    </div>
+                </li>
+                <li>
+                    <div style="float: left">
+                        <em>*</em><label>礼品卡密码：</label>
+                    </div>
+                    <div style="float: left">
+                        <input type="password"  name="cardPwd" tip="请您输入礼品卡密码" altercss="gray" errormsg="格式：2-10个字符（可包含汉字、数字、字母及下划线）" nullmsg="请您输入礼品卡密码" datatype="s2-10"/>
+                    </div>
+                    <div class="tips" style="float: left; width: 150px">
+                        <div class="Validform_checktip" ></div>
+                    </div>
+                </li>
+            </ul>
+            <div class="Acc_Delivery_Save">
+                <input type="submit" value="激活 ">
+            </div>
+        </form>
+    </div>
+</div>
+ <script>
+     $(function(){
+         $("#acticeGiftCardForm").Validform({
+             tiptype:2,
+             beforeSubmit:function(curform){
+             } ,
+             ajaxPost:true,
+             callback:function(data){
+                 if(data =="y"){
+                     history.go(0)
+                 }
+             }
+         });
+     })
+ </script>

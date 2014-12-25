@@ -24,6 +24,7 @@ class crontabAction extends commonAction {
 		foreach ($orders as $order){
 			try {
 				M()->startTrans();
+                D("DBLock")->getSingleOrderLock($order["ordernmb"]);
                 if($order["state"]==C("USER_ORDER_STATUS_PAYED")){
                     continue;
                 }
@@ -32,6 +33,9 @@ class crontabAction extends commonAction {
 					D("Products")->minusInventoryReducedInDBLock($product["pid"], $product["product_num"]);
 				}
 				D("UserOrder")->where(array("ordernmb"=>$order["ordernmb"]))->save(array("ifavalid"=>C("ORDER_IFAVALID_OVERDUE")));
+                D("DBLock")->getSingleUserLock($order["userid"]);
+                $sql = "UPDATE `users` SET balance=balance+" . $order["giftcard"] . " WHERE userid=" . $order["userid"];
+                $this->db->execute($sql);
 				array_push($successOrders, $order["ordernmb"]);
 				M()->commit();
 			}catch(Exception $e){

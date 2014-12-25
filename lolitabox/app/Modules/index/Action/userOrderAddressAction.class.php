@@ -45,7 +45,7 @@ class userOrderAddressAction extends commonAction {
         if(!isset($_POST["province_area_id"]) || !isset($_POST["city_area_id"]) || !isset($_POST["district_area_id"])){
             $this->ajaxReturn(array("status"=>"n","info"=>"请选择省市区，添加失败"), "JSON");
         }
-        if(!isset($_POST["userid"]) || !isset($_POST["linkman"]) || !isset($_POST["telphone"]) || !isset($_POST["address"]) || !isset($_POST["postcode"])){
+        if( !isset($_POST["linkman"]) || !isset($_POST["telphone"]) || !isset($_POST["address"]) || !isset($_POST["postcode"])){
             $this->ajaxReturn(array("status"=>"n","info"=>"请填写完整信息，添加失败"), "JSON");
         }
         $address["userid"]=$this->userid;

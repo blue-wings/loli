@@ -94,7 +94,7 @@ class userOrderAction extends commonAction {
         }
 
     	//优惠券余额
-        $giftCardRemain =D("Giftcard")->getUserGiftcardPrice($this->userid);
+        $giftCardRemain =$this->userinfo["balance"];
         $giftCardRemain = bcdiv($giftCardRemain, 100, 2);
         $this->assign("giftCardRemain", $giftCardRemain);
     	$this->display();

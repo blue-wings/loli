@@ -17,7 +17,7 @@ class homeAction extends commonAction {
 		$return['title']=$return['userinfo']['nickname']."的主页-".C("SITE_NAME");
 
         //优惠券余额
-        $price=D("Giftcard")->getUserGiftcardPrice($userid);
+        $price=$this->userinfo["balance"];
         $price = bcdiv($price, 100, 2);
         $info['giftcard_price'] = $price;
         

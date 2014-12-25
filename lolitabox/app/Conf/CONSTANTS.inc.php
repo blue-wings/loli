@@ -88,5 +88,8 @@ return array(
 
     'MAX_ADDRESS_NUM_PER_USER'                      =>3,
     'USER_ORDER_ADDRESS_ACTIVE'                          =>1,
-    'USER_ORDER_ADDRESS_NOT_ACTIVE'                 =>0
+    'USER_ORDER_ADDRESS_NOT_ACTIVE'                 =>0,
+
+    'GIFT_CARD_ACTIVATED'                                           =>1,
+    'GIFT_CARD_INACTIVE'                                                =>0
 );
