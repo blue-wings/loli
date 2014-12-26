@@ -7,7 +7,7 @@ class ShoppingCartModel extends Model {
 	 * @param unknown_type $productId
 	 * @param unknown_type $productNum
 	 */
-	public function addProdcutToCart($userId, $productId, $productNum){
+	public function addProductToCart($userId, $productId, $productNum){
 		$param["userid"]=$userId;
 		$param["productid"]=$productId;
 		$param["status"]=C("SHOPPING_CART_STATUS_VALID");

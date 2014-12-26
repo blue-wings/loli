@@ -204,6 +204,39 @@ class subscribeAction extends commonAction{
 		$this->assign("closedProducts",$closedProducts);
 		$this->display();
 	}
+
+    public function getAllSubscribeFirstCategories(){
+        $firstCategories = M("Category")->where(array("ctype"=>1, "pcid"=>0))->select();
+        $subscribes = M("UsersProductsCategorySubscribe")->where(array("user_id"=>$this->userid))->select();
+        foreach($subscribes as $key =>$val){
+            $subscribeMap[$val["product_category_id"]]=true;
+        }
+        foreach($firstCategories as $key =>$val){
+            if($subscribeMap[$val["cid"]]==true){
+                $val["subscribe"]=true;
+                $firstCategories[$key]=$val;
+            }
+        }
+        $this->assign("firstCategories", $firstCategories);
+        $this->assign("subscribeCategorySelect","select   ");
+        $this->display();
+    }
+
+    public function subscribeCategories(){
+        $firstCategoryIds = $_POST["firstCategoryIds"];
+        if(!$firstCategoryIds){
+            $this->ajaxReturn(array("status"=>"n","info"=>"订阅失败!"), "JSON");
+        }
+        M("UsersProductsCategorySubscribe")->where(array("user_id"=>$this->userid))->delete();
+        $time = date("Y-m-d H:i:s");
+        foreach($firstCategoryIds as $key=>$val){
+            $param["product_category_id"]=$val;
+            $param["user_id"]=$this->userid;
+            $param["subscribe_time"]=$time;
+            M("UsersProductsCategorySubscribe")->add($param);
+        }
+        $this->ajaxReturn(array("status"=>"y","info"=>"订阅成功!"), "JSON");
+    }
 	
 	
 }

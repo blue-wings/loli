@@ -100,7 +100,7 @@ class UserOrderModel extends Model
                 if ($product["status"] != C("PRODUCT_STATUS_PUBLISHED")) {
                     throw new Exception($product["pname"] . "处于下架状态");
                 }
-                $remainNum = D("Products")->getRemainProdcutNumPerUserOrder($product["pid"], $userId);
+                $remainNum = D("Products")->getRemainProductNumPerUserOrder($product["pid"], $userId);
                 if ($productNum > $remainNum) {
                     if (!$remainNum) {
                         throw new Exception($product["pname"] . "购买超出限制, 您不能再购买此产品");

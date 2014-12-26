@@ -22,7 +22,7 @@ class ShoppingCartAction extends commonAction {
 			$data["result"]=false;
 			$data["msg"]="商品已售空";	
 		}
-		$remainNum = D("Products")->getRemainProdcutNumPerUserOrder($productId, $this->userid);
+		$remainNum = D("Products")->getRemainProductNumPerUserOrder($productId, $this->userid);
 		$shoppingCartModel = D("ShoppingCart");
 		$shoppingCart = $shoppingCartModel->get($this->userid, $productId);
 		$shoppingCartProductNum = 0;
@@ -38,7 +38,7 @@ class ShoppingCartAction extends commonAction {
 		}
 		
 		try{
-			$shoppingCartModel->addProdcutToCart($userid, $productId, $_POST["pNum"]);
+			$shoppingCartModel->addProductToCart($userid, $productId, $_POST["pNum"]);
 		}catch (Exception $e){
 			$data["result"]=false;
 			$data["msg"]=$e->getMessage();	
@@ -70,7 +70,7 @@ class ShoppingCartAction extends commonAction {
 				}
 				$shoppingCartProductNum = $shoppingCartProductNumArray[$i];
 				$shopingCartProductId = $shoppingCart["productid"];
-				$remainNum = D("Products")->getRemainProdcutNumPerUserOrder($shopingCartProductId, $this->userid);
+				$remainNum = D("Products")->getRemainProductNumPerUserOrder($shopingCartProductId, $this->userid);
 				if(($shoppingCartProductNum+$shoppingCart["productNum"])>$remainNum){
 					$product = D("Products")->getByPid($shopingCartProductId);
 					$data["result"]=false;
@@ -121,7 +121,7 @@ class ShoppingCartAction extends commonAction {
 				$shoppingCartItem["product"]["realPrice"]=bcdiv($shoppingCartItem["product"]["price"], 100, 2);
 				$productPrice = $shoppingCartItem["product"]["price"];
 			}
-			$userCanBuyNum = D("Products")->getRemainProdcutNumPerUserOrder($shoppingCartItem["product"]["pid"], $this->userid);
+			$userCanBuyNum = D("Products")->getRemainProductNumPerUserOrder($shoppingCartItem["product"]["pid"], $this->userid);
 			$shoppingCartItem["product"]["userCanBuyNum"]= $userCanBuyNum;
 			$shoppingCartItems[$key]=$shoppingCartItem;
 			

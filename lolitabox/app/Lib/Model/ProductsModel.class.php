@@ -877,46 +877,34 @@ class ProductsModel extends Model {
 	 * @param unknown_type $num
 	 * @throws Exception
 	 */
-	public function minusInventoryReducedInDBLock($productId, $num){
-        try {
-            M()->startTrans();
-            $product = D("DBLock")->getSingleProductLock($productId);
-            if ($product["inventoryreduced"] >= $num) {
-                $param["pid"] = $product["pid"];
-                $param["inventoryreduced"] = $product["inventoryreduced"] - $num;
-                $this->save($param);
-                M()->commit();
-            } else {
-                throw new Exception("已经退货");
-            }
-        } catch (Exception $e) {
-            M()->rollback();
-            throw new Exception("数据库异常");
+    public function minusInventoryReducedInDBLock($productId, $num)
+    {
+        $product = D("DBLock")->getSingleProductLock($productId);
+        if ($product["inventoryreduced"] >= $num) {
+            $param["pid"] = $product["pid"];
+            $param["inventoryreduced"] = $product["inventoryreduced"] - $num;
+            $this->save($param);
+        } else {
+            throw new Exception("已经退货");
         }
-	}
+    }
 
 	/**
 	 * 在数据库锁的保护下增加已使用投放量
 	 * @param unknown_type $productId
 	 * @param unknown_type $num
 	 */
-	public function addInventoryReducedInDBLock($productId, $num){
-        try {
-            M()->startTrans();
-            $product = D("DBLock")->getSingleProductLock($productId);
-            if (($product["inventory"] - $product["inventoryreduced"] - $num) >= 0) {
-                $param["pid"] = $product["pid"];
-                $param["inventoryreduced"] = $product["inventoryreduced"] + $num;
-                $this->save($param);
-                M()->commit();
-            } else {
-                throw new Exception($product["pname"] . "库存不足");
-            }
-        } catch (Exception $e) {
-            M()->rollback();
-            throw new Exception("数据库异常");
+    public function addInventoryReducedInDBLock($productId, $num)
+    {
+        $product = D("DBLock")->getSingleProductLock($productId);
+        if (($product["inventory"] - $product["inventoryreduced"] - $num) >= 0) {
+            $param["pid"] = $product["pid"];
+            $param["inventoryreduced"] = $product["inventoryreduced"] + $num;
+            $this->save($param);
+        } else {
+            throw new Exception($product["pname"] . "库存不足");
         }
-	}
+    }
 	
 	/**
 	 * 在数据库锁的保护下减小全部投放量
@@ -925,20 +913,13 @@ class ProductsModel extends Model {
 	 * @throws Exception
 	 */
 	public function minusInventoryInDBLock($productId, $num){
-        try {
-            M()->startTrans();
-            $product = D("DBLock")->getSingleProductLock($productId);
-            if ($product["inventory"] > $num) {
-                $param["pid"] = $product["pid"];
-                $param["inventory"] = $product["inventory"] - $num;
-                $this->save($param);
-                M()->commit();
-            } else {
-                throw new Exception("库存不足");
-            }
-        } catch (Exception $e) {
-            M()->rollback();
-            throw new Exception("数据库异常");
+        $product = D("DBLock")->getSingleProductLock($productId);
+        if ($product["inventory"] > $num) {
+          $param["pid"] = $product["pid"];
+          $param["inventory"] = $product["inventory"] - $num;
+          $this->save($param);
+        }else {
+            throw new Exception($product["pname"] . "库存不足");
         }
 	}
 
@@ -948,17 +929,10 @@ class ProductsModel extends Model {
 	 * @param unknown_type $num
 	 */
 	public function addInventoryInDBLock($productId, $num){
-		try{
-			M()->startTrans();
-            $product = D("DBLock")->getSingleProductLock($productId);
-			$param["pid"]=$product["pid"];
-			$param["inventory"]= $product["inventory"] + $num;
-			$this->save($param);	
-			M()->commit();
-		}catch (Exception $e){
-			M()->rollback();
-			throw new Exception("数据库异常");
-		}
+        $product = D("DBLock")->getSingleProductLock($productId);
+        $param["pid"]=$product["pid"];
+		$param["inventory"]= $product["inventory"] + $num;
+		$this->save($param);
 	}
 	
 	/**
@@ -966,7 +940,7 @@ class ProductsModel extends Model {
 	 * @param unknown_type $productId
 	 * @param unknown_type $userId
 	 */
-	public function checkProdcutNumPerUserOrder($productId, $productNum, $userId){
+	public function checkProductNumPerUserOrder($productId, $productNum, $userId){
 		$product = $this->getByPid($productId);
 		$maxPerUser = $product["max_peruser"];	
 		if(!$maxPerUser){
@@ -984,7 +958,7 @@ class ProductsModel extends Model {
 	 * @param unknown_type $productId
 	 * @param unknown_type $userId
 	 */
-	public function getRemainProdcutNumPerUserOrder($productId, $userId){
+	public function getRemainProductNumPerUserOrder($productId, $userId){
 		$product = $this->getByPid($productId);
 		if(!$product){
 			throw new Exception("商品不存在");

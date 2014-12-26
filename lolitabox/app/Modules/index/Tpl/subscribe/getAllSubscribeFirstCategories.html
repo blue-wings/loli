@@ -1,0 +1,56 @@
+<div class="f780 dy_wrap r">
+    <include file="myAccount:tab" />
+    <div class="wp780 dy_con" id="dy_con">
+        <div class="hd">&nbsp;</div>
+        <div class="con">
+            <!--内容--->
+            <div class="My_Acc">
+                <form action="<{:u('/subscribe/subscribeCategories')}>" method="post" id="subscribeCategoriesForm">
+                    <select multiple name="firstCategoryIds[]">
+                        <volist name="firstCategories" id="category">
+                            <option value="<{$category.cid}>"
+                            <if condition="$category.subscribe == true">
+                                selected
+                            </if>
+                            ><{$category.cname}></option>
+                        </volist>
+                    </select>
+                </form>
+                <div style="margin-top: 5px">
+                    <input type="button" class="W_pin_b14" onclick="submit()" value="立即订阅">
+                </div>
+
+                <div class="Delivery_Address">
+                    <div class="Acc_Prompt">
+                        <h3>小萝莉温馨提示：</h3>
+
+                        <p>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--内容-END-->
+        </div>
+        <div class="ft">&nbsp;</div>
+    </div>
+</div>
+ <script>
+     function submit(){
+         $("#subscribeCategoriesForm").ajaxSubmit({
+             type:"post",
+             datatype:"json",
+             success:function(data){
+                 if(data.status == "y"){
+                     noty({'text':data.info,'layout':'topLeft','type':'success'});
+                 }else{
+                     noty({'text':data.info,'layout':'topLeft','type':'error'});
+                 }
+                 me.updating--;
+             }
+         });
+     }
+ </script>
+
