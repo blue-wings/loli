@@ -11,3 +11,9 @@
         </div>
     </div>
 </div>
+<script>
+    <if condition="$gotoSubscribeCategory == true">
+            noty({'text':"您还未订阅分类，请先订阅分类",'layout':'topCenter','type':'error'});
+    window.location.hash="#!subscribeCategory";
+    </if>
+</script>

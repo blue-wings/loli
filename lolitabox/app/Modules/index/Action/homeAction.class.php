@@ -52,11 +52,6 @@ class homeAction extends commonAction {
         $receiveTryProductNum = $userOrderSendProductDetail->getReceiveTryProductNum($userid);
         $info['receiveTryProductNum'] = $receiveTryProductNum;
 
-        $subscribes = M("UsersProductsCategorySubscribe")->where(array("user_id"=>$this->userid))->select();
-        if(!$subscribes){
-            $this->assign("gotoSubscribeCategory",true);
-        }
-
         $this->assign("info",$info);
         $this->assign("return",$return);
         $this->display();

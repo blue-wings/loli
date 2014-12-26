@@ -31,7 +31,10 @@ class commonAction extends Action{
 			$this->assign("userface",$userface);
 			$score = M("UserScore")->where(array("userid"=>$this->userid))->getField("score");
         	$this->userinfo["score"] = $score;
-			
+            $subscribes = M("UsersProductsCategorySubscribe")->where(array("user_id"=>$this->userid))->select();
+            if(!$subscribes){
+                $this->assign("gotoSubscribeCategory",true);
+            }
 		}
 		//当前页面的url
 		if(!(MODULE_NAME=="user" && in_array(ACTION_NAME,array("reglogin","logout")))){

@@ -102,7 +102,7 @@ class payAction extends commonAction {
 				header("location:".U('userOrder/payFailed',array('id'=>$out_trade_no)));
 			}
 		}else{
-			header("location:".U('userOrder/payFailed',array('id'=>$out_trade_no)));
+			header("location:".U('userOrder/payFailed'));
 		}
 	}
 

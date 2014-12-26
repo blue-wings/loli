@@ -1047,10 +1047,7 @@ class userAction extends commonAction {
 			}
 			$data["state"]=2;
 			$user_model->where("usermail='$usermail'")->save($data);
-			$user_credit_stat_model = D("UserCreditStat");
-			$user_credit_stat_model ->optCreditSet($userinfo['userid'],'user_verify_email');
-			D("Task")->addUserTask($userinfo["userid"],2);
-			$this->success("邮件激活成功，您刚刚获取20积分！",U("home/index"),5);
+			$this->success("邮件激活成功！",U("home/index"),5);
 		}
 		else {
 			$this->assign("mailauth",$code);
