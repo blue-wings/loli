@@ -79,10 +79,14 @@ class userOrderAction extends commonAction {
 	    		$userOrderAddress["districtName"]=M("area")->field("title")->getByAreaId($userOrderAddress["district_area_id"]);	
 	    		$userOrderAddress["districtName"]=$userOrderAddress["districtName"]["title"];
                 $shenTongPostage = $this->getPostage($orderId, C("EXPRESS_SHENTONG_ID")["id"], $userOrderAddress["district_area_id"]);
-                $userOrderAddress["shenTongPostage"]=bcdiv($shenTongPostage, 100, 2);
+                if($shenTongPostage){
+                    $userOrderAddress["shenTongPostage"]=bcdiv($shenTongPostage, 100, 2);
+                }
                 $userOrderAddress["shenTongTotalCost"]=bcdiv(($order["cost"]+$shenTongPostage), 100 , 2);
                 $shunfengPostage = $this->getPostage($orderId, C("EXPRESS_SHUNFENG_ID")["id"], $userOrderAddress["district_area_id"]);
-                $userOrderAddress["shunfengPostage"]=bcdiv($shunfengPostage, 100, 2);
+                if($shunfengPostage){
+                    $userOrderAddress["shunfengPostage"]=bcdiv($shunfengPostage, 100, 2);
+                }
                 $userOrderAddress["shunfengTotalCost"]=bcdiv(($order["cost"]+$shunfengPostage), 100 , 2);
 	    		$userOrderAddresses[$key]=$userOrderAddress;
 	    	}

@@ -179,6 +179,9 @@ class UserOrderModel extends Model
                 }
                 $address = M("UserOrderAddress")->getById($addressId);
                 $postage = D("PostageStandard")->calculateOrderPostage($orderId, $expressCompanyId, $address["district_area_id"]);
+                if(!$postage){
+                    throw new Exception("配送地址不支持");
+                }
                 $data["postage"] = $postage;
                 $data["pay_postage"] = C("USER_PAY_POSTAGE_ORDER");
             } else {

@@ -358,6 +358,11 @@
         }
         $("#postage").text(postage);
         $("#totalCost").text(totalCost);
+        console.log(postage)
+        if(!postage){
+            $("#sub").attr("disabled", true);
+            noty({'text':"暂不支持该地区的配送",'layout':'topLeft','type':'error'});
+        }
     }
 
     changeCostDisplay();
