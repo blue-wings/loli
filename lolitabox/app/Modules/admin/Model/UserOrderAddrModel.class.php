@@ -5,7 +5,10 @@ class UserOrderAddrModel extends ViewModel {
 		'UserOrder' => array (
 			'ordernmb',
 			'userid',
+			'cost',
+			'postage',
 			'giftcard',
+			'pay_bank',
 			'state',
 			'trade_no',
 			'addtime',

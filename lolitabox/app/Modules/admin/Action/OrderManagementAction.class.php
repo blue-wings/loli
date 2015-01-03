@@ -25,6 +25,17 @@ class OrderManagementAction extends CommonAction {
 		$count = $userorderaddr->where ( $where )->count ();
 		$p = new Page ( $count, 15);
 		$list = $userorderaddr->limit ( $p->firstRow . ',' . $p->listRows )->order ( 'UserOrder.addtime DESC' )->where ( $where )->select ();
+		foreach($list as $key=>$val){
+			$realCost = bcdiv($val['cost']+$val["postage"]-$val["giftcard"], 100, 2);
+			$val["realCost"]=$realCost;
+			$cost = bcdiv($val["cost"], 100, 2);
+			$val["cost"]=$cost;
+			$giftcard = bcdiv($val["giftcard"], 100, 2);
+			$val["giftcard"]=$giftcard;
+			$postage = bcdiv($val["postage"], 100, 2);
+			$val["postage"]=$postage;
+			$list[$key]=$val;
+		}
 		$sql =  $userorderaddr->getLastSql();
 		$page = $p->show ();
 

@@ -68,32 +68,23 @@
         <input type="hidden"  name="listname"  value="{$Think.request.listname}">
         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
           <tr background="__PUBLIC__/images/tab_14.gif">
-            <td width="17%" height="26" align="center">订单号</td>
-            <td width="3%" height="26" align="center">订单金额</td>
-            <td width="5%" height="26" align="center">折扣</td>
-            <td width="4%" height="26" align="center">积分</td>
-            <td width="4%" height="26" align="center">礼品卡</td>
-            <td width="4%" height="18" align="center">订单历史</td>
-            <td width="4%" height="18" align="center">当前状态</td>
-            <td width="15%" height="18" align="center">用户名</td>
+            <td width="15%" height="26" align="center">订单号</td>
+            <td width="10%" height="26" align="center">订单金额</td>
+            <td width="10%" height="26" align="center">支付平台</td>
+            <td width="5%" height="26" align="center">交易号</td>
+            <td width="5%" height="18" align="center">当前状态</td>
+            <td width="20%" height="18" align="center">用户名</td>
+			  <td width="15%" height="18" align="center">产品</td>
 			<td width="15%" height="18" align="center">工单</td>
           </tr>
           <volist name="userlist" id="usersendlist" empty="暂时没有匹配的数据">
           <tr height="60px" align="center">
             <td bgcolor="#FFFFFF" height="18">
-            <font color="red">{$usersendlist[boxname]}</font><br><b>{$usersendlist[ordernmb]|default="0"}</b>
-            <notempty name="usersendlist.addproject"><br>加价购方案:{$usersendlist.addproject}</notempty>
-            <notempty name="usersendlist.coupon"><br>优惠券:{$usersendlist.coupon}</notempty>
-            <br>订单日期：{$usersendlist.addtime} <br>支付日期：{$usersendlist.paytime} 
-            <if condition="$usersendlist.fromname neq null "><br/><span style="color:red">订单来源:{$usersendlist.fromname}</span></if>
-            <if condition="$usersendlist.fromname neq null"><span style="color:red"><br/>参数:{$usersendlist.frominfo}</span></if>
-            </td>
-            <td bgcolor="#FFFFFF">{$usersendlist.realpay}</td>
-              <td bgcolor="#FFFFFF" height="18" class="STYLE2">{$usersendlist.discount|default="0"}</div></td>
-            <td bgcolor="#FFFFFF" height="18">{$usersendlist.credit}</td>
-            <td bgcolor="#FFFFFF" height="18">{$usersendlist.giftcard}</td>
-            <td bgcolor="#FFFFFF" height="18"><a href="{:u('BoxSend/orderList',array('userid'=>$usersendlist[userid]))}">{$usersendlist[order_num]}</a></div></td>
-
+				{$usersendlist.ordernmb}<br>订单日期：{$usersendlist.addtime} <br>支付日期：{$usersendlist.paytime}
+			</td>
+            <td bgcolor="#FFFFFF">实付金额:{$usersendlist.realCost}<br>产品费用:{$usersendlist.cost}<br>邮费:{$usersendlist.postage}<br>礼品卡:{$usersendlist.giftcard}</td>
+              <td bgcolor="#FFFFFF" height="18" class="STYLE2">{$usersendlist.pay_bank}</td>
+            <td bgcolor="#FFFFFF" height="18">{$usersendlist.trade_no}</td>
           	<td bgcolor="#FFFFFF">
           		<a href="javascript:void(0)" onclick="changepaystatus(this,'{$usersendlist[ordernmb]}')" title="点击切换状态">	
 					<if condition="$usersendlist.state eq 1">
@@ -113,6 +104,11 @@
 			<a href="#" onclick="editAddress('{$usersendlist[ordernmb]}','{$usersendlist[userid]}',{$usersendlist[address_id]})"><font color=red>修改地址</font></a>
 			<if condition="$usersendlist[sendword] neq ''"><br><div style="background:#eee000">礼品寄语：{$usersendlist[sendword]}</div></if>
 			</td>
+
+			  <td bgcolor="#FFFFFF" height="18" class="STYLE2">
+				  <a href="#" onclick="dialogmeseeage('__URL__/workorder/ordernmb/{$usersendlist[ordernmb]}/userid/{$usersendlist[userid]}','创建工单')">
+					  查看产品</a></div>
+			  </td>
 			<td bgcolor="#FFFFFF" height="18" class="STYLE2">
 				<a href="#" onclick="dialogmeseeage('__URL__/workorder/ordernmb/{$usersendlist[ordernmb]}/userid/{$usersendlist[userid]}','创建工单')">
 				<if condition="$usersendlist['uord']">查看工单<else />创建工单</if></a></div>
