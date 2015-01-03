@@ -1,0 +1,230 @@
+<include file="Public:header" />
+<table width="100%" cellspacing="1" cellpadding="6" border="0" align="center" class="tborder">
+<tbody>
+<tr>
+	<td align="center" class="panelsurround">
+	<div class="panel">
+		<div align="left">
+			
+	<fieldset class="fieldset">
+	<legend>为订单用户[{$userorderinfo[linkman]}]添加产品，订单ID:{$userorderinfo[ordernmb]}</legend>
+	<table cellpadding="0" border="0" align="left">
+	<tbody>
+	<tr><td>
+    产品关键字查询:<input type="text" name="productkeyword" id="productkeyword" value="">
+      <br />
+      套餐列表添加：
+      <select name="package" id="package">
+      <option value="0">请选择套餐</option>
+      <foreach name="packageList" item="vo">
+      <option value="{$vo.id}">{$vo.name}</option>
+	  </foreach>
+      </select>
+    </td></tr>
+	<tr>
+	<td>
+					
+	<select id="categoryselect" name="categoryselect" size="20" style="height: auto;width:200px">
+		<option value="0">--产品分类--</option>
+		<volist name="clist" id="catgoryinfo">
+		<option value="{$catgoryinfo['cid']}">
+		<php>
+		if($catgoryinfo['signnum']>1){	
+			for($i=0;$i<count($catgoryinfo['marginnum']);$i++){	
+					echo '&nbsp';	
+			}	
+			echo "|--"; 
+		}
+		echo $catgoryinfo['cname'];	
+		</php>
+		</option>
+		</volist>
+	</select>	
+	</td>
+	<td>
+	<select name="productlist" size="20" multiple="multiple" id="productlist" style="width:expression((this.offsetWidth < 100) ? '100' : ((this.offsetWidth > 300)? '300' : this.offsetWidth))">
+	<option value="0">--产品列表--</option>
+	</select>			
+							
+	</td>
+	<td>
+	<button id="add_list" name="addbox">加入</button><br>
+	<button id="del_list" name="delbox">删除</button><br>
+	<button id="clearlist" name="clearbox">清空</button><br>
+	</td>
+	<td>
+
+	<select multiple id="productselected" name="productselected" size="20" style="width:expression((this.offsetWidth < 100) ? '100' : ((this.offsetWidth > 300)? '300' : this.offsetWidth))">
+		<option value="0">--已选产品--</option>
+		{$orderproductlist}
+	</select>
+	</td>
+
+		<td>
+			<div id='calculateresult' name='calculateresult' style="padding: 10px;border: 1px solid #CCCCCC; margin-left:10px; width:150px; height:100px;"></div>
+			<br />以下产品库存不足：<br /><span style="color:red;" id="tips_noproducts"></span>
+			<br /><br /><br /><br /><span style="color:red;">*P.S.：对于没有库存的产品，添加时候自动筛选不加载。</span>
+		</td>
+		</tr>
+				</tbody>
+				</table>
+			</fieldset>
+			
+		</div>
+	</div>
+	<div style="margin-top:6px">
+	<b>最喜欢的品牌：</b>{$useranswer.0} {$useranswer.1} <b>心水标签：</b>{$useranswer.2} {$useranswer.3} <b>心愿：</b>{$useranswer.4}
+	</div>
+	<div style="margin-top:6px">
+	<b>已经购买盒子：</b>
+	<foreach name="buyboxlist" item="vo">
+		{$vo} &nbsp;
+	</foreach>
+	</div>
+	</td>
+</tr>
+</tbody></table>
+	<script>
+	function deleteSelect()
+	{
+		var select1 = document.getElementById("productselected");
+		var delIndex=-1;
+		var a=$("#productselected").val();
+		delIndex=select1.options.length-1;
+		if(delIndex<1){
+			alert("没有可以删除的选项！");
+			return;
+		}
+		for(i=0;i<select1.options.length;i++){
+			if(select1.options[i].selected==true){
+				delIndex=i;
+				break;
+			}
+		}
+		if(delIndex>=0){
+			select1.remove(delIndex);
+		}
+		calculateProductList(a);
+	}
+
+	function calculateProductList(b){
+		var cids='';
+		var select1 = document.getElementById("productselected");
+		if(select1){
+			for(i=0;i<select1.options.length;i++){
+				if(select1.options[i].value>0){
+					if(select1.options[i].value>0) {
+						cids+=select1.options[i].value+",";
+					}
+				}
+			}
+
+			
+			if(cids != ''){
+				var userid ="{$userorderinfo.userid}";
+					orderid="{$userorderinfo.ordernmb}";
+			
+				$.post("{:U('Product/ajaxCalculateProductList')}",
+					{userid:userid,orderid:orderid,cids:cids},
+					function (reponse){$('#calculateresult').html(reponse);}
+				);
+			}
+		}
+	}
+
+	calculateProductList();
+	
+		$("#package").change(function(){
+			$('#tips_noproducts').html("");
+			var id = $("#package").val();
+			if(id==0) return false;
+			//判断某一项是否还有库存，没有不加载到列表
+			$.post("{:U('Product/packageProduct')}",{id:id},function(data){
+				if(data[0]!=null){
+					var str="";
+					$.each(data[0], function(i, n){
+						str+="<option value='"+n['id']+"'>"+n['name']+"</option>";
+					});
+					$('#productselected').append(str);
+				}
+				if(data[1]!=null){
+					var str1="";
+					$.each(data[1], function(i, n){
+						str1+="<span>"+n['name']+"</span><br>";
+					});
+					$('#tips_noproducts').html(str1);
+				}
+				calculateProductList(); //实时统计
+			},"json");
+
+		});
+		
+
+		//根据分类提取产品列表
+		$('#categoryselect').change(function(){
+			cid=$(this).children('option:selected').val();
+			$('#productlist').empty();
+
+			if(cid>0) {
+				$('#productlist').append("<option value='0'>选择产品</option>");
+				$.post("{:U('Product/ajaxGetProductList')}",{cid:cid},function(data){
+					$('#productlist').append(data);
+				},'html');
+			}else{
+				$('#productlist').append("<option value='0'>--产品列表--</option>");
+			}
+		})
+		
+		//根据关键字提取产品列表
+		$("#productkeyword").blur(function(){
+			kw=$(this).val();
+			if(kw.length>0){
+				$('#productlist').empty();
+				$('#productlist').append("<option value='0'>选择产品</option>");
+				
+				$.post("{:U('Product/ajaxGetProductListByKey')}",{searchkeyword:kw},function(rep){$('#productlist').append(rep);},'html')
+				
+			}
+		})
+		
+		$('#add_list').click(function(){
+			$('#tips_noproducts').html("");
+			var productselected=$('#productlist').children('option:selected');
+			var cids=""
+			$.each( productselected, function(i, n){
+				if(n.value!=0){
+					cids +=n.value;
+					if(productselected.length!=(i+1)){ cids+=","; }
+				}
+			});
+			//判断某一项是否还有库存，没有不加载到列表
+			$.post("{:U('Product/packageProduct')}",{cids:cids},function(data){
+				if(data[0]!=null){
+					var str="";
+					$.each(data[0], function(i, n){
+						str+="<option value='"+n['id']+"'>"+n['name']+"</option>";
+					});
+					$('#productselected').append(str);
+				}
+				if(data[1]!=null){
+					var str1="";
+					$.each(data[1], function(i, n){
+						str1+="<span>"+n['name']+"</span><br>";
+					});
+					$('#tips_noproducts').html(str1);
+				}
+				calculateProductList(); //实时统计
+			},"json");
+		});		
+		
+		$('#del_list').click(function(){
+			deleteSelect();
+		});
+
+
+		$('#clearlist').click(function(){
+			$("#productselected").empty();
+			calculateProductList();
+		});
+	</script>
+<include file="Public:footer" />

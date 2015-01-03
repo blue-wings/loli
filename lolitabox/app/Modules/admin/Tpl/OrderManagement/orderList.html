@@ -1,0 +1,427 @@
+<include file="Public:header" />
+<include file="Public:header" />
+<div class="panel">
+<div align="left">			
+
+<fieldset class="fieldset">
+<legend>{$Think.request.listname}查询条件</legend>
+<form name="myform" id="myform" action="__ACTION__" method="get">
+订单号查询：<input name='orderid' type='text' value='{$Think.get.orderid}'>  
+用户ID查询：<input name='userid' type='text' value='{$Think.get.userid}'>
+联系人查询：<input name='linkman' type='text' value='{$Think.get.linkman}'>
+手机号查询：<input name='telphone' type='text' value='{$Think.get.telphone}'><br><br>
+
+订单日期: 
+<label for="from">From</label>
+<input type="text" id="from" name="from" value="{$Think.get.from}"/>
+<label for="to">to</label>
+<input type="text" id="to" name="to" value="{$Think.get.to}"/>
+
+订单状态:
+<select name='ifavalid' id='ifavalid'>
+<option <eq name="Think.get.ifavalid" value="1"> selected="selected" </eq> value="1">有效</option>
+<option <eq name="Think.get.ifavalid" value="0"> selected="selected" </eq> value="0">无效</option>
+</select>
+
+<select name='orderstate' id='orderstate'>
+<option <eq name="Think.get.orderstate" value="1"> selected="selected" </eq> value="1">已经付费</option>
+<option <eq name="Think.get.orderstate" value="0"> selected="selected" </eq> value="0">还未付费</option>
+<option <eq name="Think.get.orderstate" value="2"> selected="selected" </eq> value="2">已经退款</option>
+</select>
+
+订单来源
+<select name="resour" onchange="change(this.value)">
+	<option value="">全部</option>
+	<volist name="plist" id="list">
+		<option value="{$list.code}">{$list.name}</option>
+	</volist>
+</select>
+	<br><br>
+	单品id:<input name='productId' type='text' value='{$Think.get.productId}'>
+	投递批次：<input name='delivery' type='text' value='{$Think.get.delivery}'>
+<br><br>
+<input type="button" name="resetpage" value="重置">
+<input type="submit" name="search" vlaue="提交" /><br><br>
+<input type="submit" value="导出查询结果" name="outputexcel" />
+</form><br/>
+
+</fieldset>
+		</div>
+	</div>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="30"><img src="__PUBLIC__/images/tab_03.gif" width="15" height="30" /></td>
+        <td width="281" background="__PUBLIC__/images/tab_05.gif"><img src="__PUBLIC__/images/311.gif" width="16" height="16" /> <span class="STYLE4">会员商品发送管理</span></td>
+        <td width="1101" background="__PUBLIC__/images/tab_05.gif" align="right">{$page}</td>
+        <td width="14"><img src="/siteadmin/Public/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0" id="showdata">
+      <tr>
+        <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#f3ffe3">
+        <form name="orderlist" id="orderlist" >
+        <input type="hidden"  name="listname"  value="{$Think.request.listname}">
+        <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
+          <tr background="__PUBLIC__/images/tab_14.gif">
+            <td width="17%" height="26" align="center">订单号</td>
+            <td width="3%" height="26" align="center">订单金额</td>
+            <td width="5%" height="26" align="center">折扣</td>
+            <td width="4%" height="26" align="center">积分</td>
+            <td width="4%" height="26" align="center">礼品卡</td>
+            <td width="4%" height="18" align="center">订单历史</td>
+            <td width="4%" height="18" align="center">当前状态</td>
+            <td width="15%" height="18" align="center">用户名</td>
+			<td width="15%" height="18" align="center">工单</td>
+          </tr>
+          <volist name="userlist" id="usersendlist" empty="暂时没有匹配的数据">
+          <tr height="60px" align="center">
+            <td bgcolor="#FFFFFF" height="18">
+            <font color="red">{$usersendlist[boxname]}</font><br><b>{$usersendlist[ordernmb]|default="0"}</b>
+            <notempty name="usersendlist.addproject"><br>加价购方案:{$usersendlist.addproject}</notempty>
+            <notempty name="usersendlist.coupon"><br>优惠券:{$usersendlist.coupon}</notempty>
+            <br>订单日期：{$usersendlist.addtime} <br>支付日期：{$usersendlist.paytime} 
+            <if condition="$usersendlist.fromname neq null "><br/><span style="color:red">订单来源:{$usersendlist.fromname}</span></if>
+            <if condition="$usersendlist.fromname neq null"><span style="color:red"><br/>参数:{$usersendlist.frominfo}</span></if>
+            </td>
+            <td bgcolor="#FFFFFF">{$usersendlist.realpay}</td>
+              <td bgcolor="#FFFFFF" height="18" class="STYLE2">{$usersendlist.discount|default="0"}</div></td>
+            <td bgcolor="#FFFFFF" height="18">{$usersendlist.credit}</td>
+            <td bgcolor="#FFFFFF" height="18">{$usersendlist.giftcard}</td>
+            <td bgcolor="#FFFFFF" height="18"><a href="{:u('BoxSend/orderList',array('userid'=>$usersendlist[userid]))}">{$usersendlist[order_num]}</a></div></td>
+
+          	<td bgcolor="#FFFFFF">
+          		<a href="javascript:void(0)" onclick="changepaystatus(this,'{$usersendlist[ordernmb]}')" title="点击切换状态">	
+					<if condition="$usersendlist.state eq 1">
+						<font color="red">已付</font>
+					<elseif condition="$usersendlist.state eq 2" />
+						<font color="#000080">已退</font>
+					<else/>
+						<font color="#808080">未付</font>
+					</if>
+          		</a>
+          		<input type="hidden" value="{$usersendlist['state']}">
+          	</td>
+            <td bgcolor="#FFFFFF" height="18">
+			<a target="_blank" href="{:U('User/userList',array('email'=>$usersendlist[usermail]))}">用户名:{$usersendlist[usermail]}，ID：{$usersendlist[userid]}</a>
+			<br/>联系人：{$usersendlist[linkman]}  联系电话：{$usersendlist[telphone]}<br/>
+			{$usersendlist[province]}{$usersendlist[city]}{$usersendlist[district]}{$usersendlist[address]}&nbsp;({$usersendlist[postcode]})<br/>
+			<a href="#" onclick="editAddress('{$usersendlist[ordernmb]}','{$usersendlist[userid]}',{$usersendlist[address_id]})"><font color=red>修改地址</font></a>
+			<if condition="$usersendlist[sendword] neq ''"><br><div style="background:#eee000">礼品寄语：{$usersendlist[sendword]}</div></if>
+			</td>
+			<td bgcolor="#FFFFFF" height="18" class="STYLE2">
+				<a href="#" onclick="dialogmeseeage('__URL__/workorder/ordernmb/{$usersendlist[ordernmb]}/userid/{$usersendlist[userid]}','创建工单')">
+				<if condition="$usersendlist['uord']">查看工单<else />创建工单</if></a></div>
+			</td>
+          </tr>
+		</volist>
+
+        </table>
+		</form>
+
+	<script>
+	jQuery(function($){
+		$.datepicker.regional['zh-CN'] = {
+			closeText: '关闭',
+			prevText: '&#x3c;上月',
+			nextText: '下月&#x3e;',
+			currentText: '今天',
+			monthNames: ['一月','二月','三月','四月','五月','六月',
+			'七月','八月','九月','十月','十一月','十二月'],
+			monthNamesShort: ['一','二','三','四','五','六',
+			'七','八','九','十','十一','十二'],
+			dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+			dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+			dayNamesMin: ['日','一','二','三','四','五','六'],
+			weekHeader: '周',
+			dateFormat: 'yy-mm-dd',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: true,
+			yearSuffix: '年'};
+			$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+	});
+	$(function() {
+		$( "#from" ).datepicker({
+			defaultDate: "-1w",
+			changeMonth: true,
+			numberOfMonths: 2,
+			onSelect: function( selectedDate ) {
+				$( "#to" ).datepicker( "option", "minDate", selectedDate );
+			}
+		});
+		$( "#to" ).datepicker({
+			defaultDate: "+1w",
+			changeMonth: true,
+			numberOfMonths: 2,
+			onSelect: function( selectedDate ) {
+				$( "#from" ).datepicker( "option", "maxDate", selectedDate );
+			}
+		});
+	});
+
+	function addproduct(orderid){
+		$.dialog({title:'产品添加',content:'url:__URL__/addproduct/orderid/'+orderid,
+		init: function () {
+			this.max();
+		},
+
+		close: function(){
+			this.reload();
+		},
+		ok: function(){
+			this.reload();
+		}
+		});
+	}
+
+	//查看每个用户添加的产品
+	function chakanproduct(	orderid){
+		$.dialog({title:"查看产品",content:"url:__URL__/productlist/orderid/"+orderid,width:"500px",height:"300px"});
+	}
+
+	//查看用户发货的进度
+	function send_proxy_info(orderid)
+	{
+		$.dialog({title:"发货情况明细",content:"url:__URL__/send_proxy_info/orderid/"+orderid,width:"600px",height:"500px"});
+	}
+
+	function addproductMuch(){
+		var obj=$("input[id='listcheckbox']:not(:disabled):checked");
+		if(obj.length==1){
+			addproduct(obj.val());
+			return false;
+		}
+		var str="";
+		obj.each(function(i,n){
+			var temp =$(this).val();
+			if(temp!=""){
+				str+=temp;
+			}
+			if(obj.length!=(i+1)){
+				str+=',';
+			}
+		});
+		if(str==""){
+			alert('请选择选项。');
+			return false;
+		}
+		$.dialog({title:'产品添加',content:'url:__URL__/addproductMuch/orderid/'+str,width:'700px',height:'400px',
+		init: function () {
+			this.max();
+		},
+
+		close: function(){
+			this.reload();
+		},
+		ok: function(){
+			this.reload();
+		}
+		});
+	}
+
+	function editSendInfo(orderid){
+		$.dialog({title:'订单发送信息管理',content: 'url:__URL__/editOrderSendInfo/orderid/'+orderid,width:'500px',height:'400px',
+		close: function(){
+			this.reload();
+		},
+		ok: function(){
+			this.reload();
+		}
+		});
+	}
+
+	//批量清空订单的产品数据
+	function clearOrderProductInfoMuch(){
+		$.post(
+		"__URL__/clearOrderProductinfo",
+		$("#orderlist").serialize(),
+		function(result){
+			alert(result.info);
+			window.location.href='__SELF__';
+		},
+		" json"
+		);
+	}
+</script>
+		
+		
+		</td>
+        <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
+      </tr>
+   <tr>
+        <!--td colspan="10">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;全选：<input type="checkbox" value="全选" id="allSelect" name="allSelect">&nbsp;&nbsp;
+        <input type="button"  onclick="addproductMuch();" value="批量添加产品"/><span style="color:red;">P.S.:对于查询出来的订单，批量添加产品。(如有分页，仅对当前页有效)</span>
+        <input type="button" onclick="if(confirm('确认要批量清空订单中的产品信息吗?')) clearOrderProductInfoMuch();" value="批量清空订单数据"/>
+        </td-->
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="__PUBLIC__/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="__PUBLIC__/images/tab_21.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="25%" height="29" nowrap="nowrap"><span class="STYLE1">{$page}</span></td>
+            <td width="75%" valign="top" class="STYLE1"></td>
+          </tr>
+        </table></td>
+        <td width="14"><img src="__PUBLIC__/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<br /><br /><br />
+	<script>
+	function editAddress(ordernmb,userid,address_id){
+		$.ajax({
+			url:"{:u('BoxSend/getaddress')}",
+			type:"post",
+			dataType:"json",
+			data:"userid="+userid+'&n='+Math.random(),
+			success: function(chkresult){
+				if(parseInt(chkresult.status)==1){
+					var data=chkresult.data;
+					var str='';
+
+					for(var i in data){
+						if(data[i]['id']==address_id){
+							str+="<input type='radio' name='address' checked=checked value='"+data[i]['id']+"' style='border:0px'/>"+" "+data[i]['linkman']+" "+data[i]['telphone']+" "+data[i]['province']+" "+data[i]['city']+" "+data[i]['district']+" "+data[i]['address']+" "+data[i]['postcode']+"<br/><br/>";
+						}else{
+							str+="<input type='radio' name='address' value='"+data[i]['id']+"' style='border:0px'/>"+" "+data[i]['linkman']+" "+data[i]['telphone']+" "+data[i]['province']+" "+data[i]['city']+" "+data[i]['district']+" "+data[i]['address']+" "+data[i]['postcode']+"<br/><br/>";
+						}
+					}
+
+					var sstr='';
+					sstr+="<form  method='post'>"+str;
+
+					$.dialog({
+						title:'修改地址',
+						content: sstr,
+						ok:function(){
+							send(ordernmb)
+						},
+						cancel: true
+					});
+				}
+			}
+		})
+	}
+
+	function send(ordernmb){
+		var addm= $("input[@type=radio][name=address][checked]").val();
+		if(addm!=null){
+			$.ajax({
+				url:"{:U('BoxSend/getaddress')}",
+				type:"post",
+				dataType:"json",
+				data:"uid="+addm+"&ordernmb="+ordernmb+'&n='+Math.random(),
+				success: function(chkresult){
+					if(parseInt(chkresult.status)==1){
+						alert('修改成功!');
+						location.reload();
+					}else{
+						alert('修改失败!');
+					}
+				}
+			})
+		}
+	}
+
+	$("#allSelect").click(function(){
+		var obj =$("input[id='listcheckbox']:not(:disabled)");
+		if($(this).is(':checked')){
+			obj.each(function(){
+				$(this).attr('checked',true);
+			});
+		}else{
+			obj.each(function(){
+				$(this).attr('checked',false);
+			});
+		}
+	});
+
+	$("input[id='listcheckbox']:not(:disabled)").click(function(){
+		var obj = $("input[id='listcheckbox']:not(:disabled):not(:checked)");
+		if(obj.length){
+			$("#allSelect").attr('checked',false);
+		}else{
+			$("#allSelect").attr('checked',true);
+		}
+	});
+
+	var k="{$Think.get.boxid}";
+	var resour="{$Think.get.resour}";
+	var frominfo = "{$Think.get.frominfo}";
+	if(resour){
+		$("select[name='resour']").val(resour);
+	}
+
+	if(frominfo){
+		change("{$Think.get.resour}","{$Think.get.frominfo}");
+	}
+
+	if(k){
+		$("select[name='boxid']").val(k);
+	}
+
+	function change(value,param){
+		if(value != ''){
+			$.ajax({
+				url:"__URL__/returnOrderResour",
+				type:"post",
+				dataType:"json",
+				data:'fromid='+value,
+				success: function(chkresult){
+					if(parseInt(chkresult.status)==1){
+						var data = chkresult.data;
+						$("select[name='frominfo'] option:gt(0)").remove();
+						if(data != null){
+							for(var i in data){
+								$("select[name='frominfo']").append("<option value='"+data[i].frominfo+"'>"+data[i].frominfo+"</option>");
+							}
+						}
+
+						if(param != '' || param != 'undefined'){
+							$("select[name='frominfo']").val(param);
+						}
+					}
+				}
+			})
+		}else{
+			$("select[name='frominfo'] option:gt(0)").remove();
+		}
+	}
+
+	//切换订单状态
+	function changepaystatus(obj,ordernum){
+
+		var val = $(obj).next("input:hidden");
+		
+		if(val.val() == 1){
+			if(!confirm("您确定设置为已退款么?")){
+				return false;
+			}
+		}else if(val.val() ==2){
+			if(!confirm("您确定设置为已付款么?")){
+				return false;
+			}
+		}else{
+			alert("此状态不可修改!");
+			return false;
+		}
+		
+		var value = val.val()==1?2:1;
+		$.post("__URL__/changeState",{action:'changestate',val:value,ordernum:ordernum},function(ret){
+			ret.data==1?$(obj).html('<font color="red">已付款</font>'):$(obj).html('<font color="#000080">已退款</font>');
+			val.val(ret.data);
+		})	
+	}
+</script>
+<include file="Public:footer" />

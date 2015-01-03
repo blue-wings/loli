@@ -1,0 +1,11 @@
+<include file="Public:header" />
+<form method="POST" action="<{:U('Boxsend/workorder')}>">
+<div style="margin-left:100px;font-size:12px;width:420px;">工单问题描述:<span><input type="text" value="" name=''   style="border:solid #DBDFE6 1px;"></span></div>
+<div style="padding-top:30px;margin-left:100px;width:400px;">
+	<span style="font-size:12px;float:left;">自定义备注:</span>
+	<textarea cols="40" rows="5" name="des" id="note" style="margin-left:15px;overflow-y:auto;border:solid #DBDFE6 1px;">请仔细填写以免出错!</textarea>	
+</div>
+<br>
+<input type="button" value="提交" name="sub" id="sub" style="margin:30px 220px;">
+</form>
+<include file="Public:footer" />

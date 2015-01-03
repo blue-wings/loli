@@ -5,31 +5,15 @@ class UserOrderAddrModel extends ViewModel {
 		'UserOrder' => array (
 			'ordernmb',
 			'userid',
-			'boxid',
-			'boxprice',
-			'credit',
 			'giftcard',
-			'type',
 			'state',
 			'trade_no',
-			'coupon',
-			'discount',
 			'addtime',
 			'paytime',
-			'fromid',
-			'frominfo',
 			'address_id',
-			'projectid',
 			'sendword',
 			'_table' => 'user_order',
 			'_type' => 'LEFT'
-		),
-		'Box' => array (
-			'name'  =>  'boxname',
-			'boxid'=>'bid',
-			'_table' => 'box',
-			'_on' => 'UserOrder.boxid=Box.boxid',
-		    '_type' => 'LEFT'
 		),
 		'Users' => array (
 			'nickname' => 'username',
@@ -42,13 +26,13 @@ class UserOrderAddrModel extends ViewModel {
 		'UserOrderAddress' => array (
 			'linkman',
 			'telphone',
-			'province',
-			'city',
-			'district',
+			'province_area_id',
+			'city_area_id',
+			'district_area_id',
 			'address',
 			'postcode',
 			'_table' => 'user_order_address',
-			'_on' => 'UserOrderAddress.orderid=UserOrder.ordernmb',
+			'_on' => 'UserOrderAddress.id=UserOrder.address_id',
 			'_type' => 'LEFT'
 		)
 
