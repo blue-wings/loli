@@ -1,0 +1,104 @@
+<script type="text/javascript" src="/public/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.form.js"></script>
+<script type="text/javascript" src="/public/js/validform.js"></script>
+<script type="text/javascript" src="/public/js/addressSelector.js"></script>
+<link rel="stylesheet" type="text/css" href="/public/css/myAccount.css"/>
+<div>
+    <div class="harder">
+        <div id="Harder_Info">
+            原地址:
+            <font>{$oldAdress.linkman}，{$oldAdress.telphone}，{$oldAdress.provinceName}
+                {$oldAdress.cityName} {$oldAdress.districtName}
+                {$oldAdress.address}（{$oldAdress.postcode}）
+            </font>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="Delivery_Address">
+        <form id="addressEditForm" action="{:u('OrderManagement/saveAddress')}" method="post">
+            <input type="hidden" name="orderId" value="{$orderId}">
+            <input type="hidden" name="selfPackageOrderId" value="{$selfPackageOrderId}">
+            <input type="hidden" name="userid" value="{$userid}">
+            <ul class="Delivery_Add_Address">
+                <li>
+                    <div style="float: left">
+                        <em>*</em><label>收货人姓名：</label>
+                    </div>
+                    <div style="float: left">
+                    <input type="text"  name="linkman" tip="请您输入姓名" altercss="gray" errormsg="格式：2-10个字符（可包含汉字、数字、字母及下划线）" nullmsg="请您输入姓名" datatype="s2-10" />
+                    </div>
+                    <div class="tips" style="float: left; width: 150px">
+                        <div class="Validform_checktip" ></div>
+                    </div>
+                </li>
+                <li>
+                    <div style="float: left">
+                        <em>*</em><label>联 系 电 话：</label>
+                    </div>
+                    <div style="float: left">
+                        <input type="text"  name="telphone" tip="请您输入联 系 电 话" altercss="gray" errormsg="格式：手机号" nullmsg="请您输入联 系 电 话" datatype="m"/>
+                    </div>
+                    <div class="tips" style="float: left; width: 150px">
+                        <div class="Validform_checktip" ></div>
+                    </div>
+                </li>
+                <li>
+                    <em>*</em><label>所  &nbsp;  在  &nbsp; 地：</label>
+                    <span id="addressSelector"></span>
+                </li>
+                <li>
+                    <div style="float: left">
+                        <em>*</em><label>街 道 地 址：</label>
+                    </div>
+                    <div style="float: left">
+                        <input type="text"  name="address" tip="请您输入街 道 地 址" altercss="gray" errormsg="格式：1-200个字符" nullmsg="请您输入街 道 地 址" datatype="s1-200"/>
+                    </div>
+                    <div class="tips" style="float: left; width: 150px">
+                        <div class="Validform_checktip" ></div>
+                    </div>
+                </li>
+                <li>
+                    <div style="float: left">
+                        <em>*</em><label>邮 政 编 码：</label>
+                    </div>
+                    <div style="float: left">
+                        <input type="text"  name="postcode" tip="请您输入邮 政 编 码" altercss="gray" errormsg="格式：邮 政 编 码" nullmsg="请您输入邮 政 编 码" datatype="p"/>
+                    </div>
+                    <div class="tips" style="float: left; width: 150px">
+                        <div class="Validform_checktip" ></div>
+                    </div>
+                </li>
+                <li>
+                    <label style="margin-left: 12px">设 为 默 认：</label><input type="checkbox"  name="if_active" value="1"/>
+                </li>
+            </ul>
+            <div class="Acc_Delivery_Save">
+                <input type="submit" value="保 存 ">
+            </div>
+        </form>
+    </div>
+</div>
+ <script>
+     var param = {};
+     param["containerId"]="addressSelector";
+     param["getProvincesUrl"]="{:u('index/area/getProvincesJson')}";
+     param["getCitiesUrl"]="{:u('index/area/getCitiesJson')}";
+     param["getDistrictsUrl"]="{:u('index/area/getDistrictsJson')}";
+     param["provinceSelectName"]="province_area_id";
+     param["citySelectName"]="city_area_id";
+     param["districtSelectName"]="district_area_id";
+     new Loli.AddressSelector(param);
+
+     var orderId = "<{$orderId}>"
+     $(function(){
+         $("#addressEditForm").Validform({
+             tiptype:2,
+             beforeSubmit:function(curform){
+             } ,
+             ajaxPost:true,
+             callback:function(data){
+                alert(data.info);
+             }
+         });
+     })
+ </script>

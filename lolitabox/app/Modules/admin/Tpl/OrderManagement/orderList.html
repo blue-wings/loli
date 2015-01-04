@@ -30,11 +30,10 @@
 </select>
 
 订单来源
-<select name="resour" onchange="change(this.value)">
-	<option value="">全部</option>
-	<volist name="plist" id="list">
-		<option value="{$list.code}">{$list.name}</option>
-	</volist>
+<select name="resour">
+	<option value="">网站</option>
+    <option value="">微信</option>
+    <option value="">app</option>
 </select>
 	<br><br>
 	单品id:<input name='productId' type='text' value='{$Think.get.productId}'>
@@ -101,12 +100,12 @@
 			<a target="_blank" href="{:U('User/userList',array('email'=>$usersendlist[usermail]))}">用户名:{$usersendlist[usermail]}，ID：{$usersendlist[userid]}</a>
 			<br/>联系人：{$usersendlist[linkman]}  联系电话：{$usersendlist[telphone]}<br/>
 			{$usersendlist[province]}{$usersendlist[city]}{$usersendlist[district]}{$usersendlist[address]}&nbsp;({$usersendlist[postcode]})<br/>
-			<a href="#" onclick="editAddress('{$usersendlist[ordernmb]}','{$usersendlist[userid]}',{$usersendlist[address_id]})"><font color=red>修改地址</font></a>
+			<a href="#" onclick="editAddress('{$usersendlist[ordernmb]}','{$usersendlist[address_id]}', '{$usersendlist[userid]}')"><font color=red>修改地址</font></a>
 			<if condition="$usersendlist[sendword] neq ''"><br><div style="background:#eee000">礼品寄语：{$usersendlist[sendword]}</div></if>
 			</td>
 
 			  <td bgcolor="#FFFFFF" height="18" class="STYLE2">
-				  <a href="#" onclick="dialogmeseeage('__URL__/workorder/ordernmb/{$usersendlist[ordernmb]}/userid/{$usersendlist[userid]}','创建工单')">
+				  <a href="#" onclick="getOrderProducts('{$usersendlist.ordernmb}')">
 					  查看产品</a></div>
 			  </td>
 			<td bgcolor="#FFFFFF" height="18" class="STYLE2">
@@ -185,6 +184,10 @@
 	{
 		$.dialog({title:"发货情况明细",content:"url:__URL__/send_proxy_info/orderid/"+orderid,width:"600px",height:"500px"});
 	}
+
+    function getOrderProducts(orderid){
+        $.dialog({title:"发货情况明细",content:"url:__URL__/productlist/orderid/"+orderid,width:"600px",height:"500px"});
+    }
 
 	function addproductMuch(){
 		var obj=$("input[id='listcheckbox']:not(:disabled):checked");
@@ -275,39 +278,12 @@
 </table>
 <br /><br /><br />
 	<script>
-	function editAddress(ordernmb,userid,address_id){
-		$.ajax({
-			url:"{:u('BoxSend/getaddress')}",
-			type:"post",
-			dataType:"json",
-			data:"userid="+userid+'&n='+Math.random(),
-			success: function(chkresult){
-				if(parseInt(chkresult.status)==1){
-					var data=chkresult.data;
-					var str='';
-
-					for(var i in data){
-						if(data[i]['id']==address_id){
-							str+="<input type='radio' name='address' checked=checked value='"+data[i]['id']+"' style='border:0px'/>"+" "+data[i]['linkman']+" "+data[i]['telphone']+" "+data[i]['province']+" "+data[i]['city']+" "+data[i]['district']+" "+data[i]['address']+" "+data[i]['postcode']+"<br/><br/>";
-						}else{
-							str+="<input type='radio' name='address' value='"+data[i]['id']+"' style='border:0px'/>"+" "+data[i]['linkman']+" "+data[i]['telphone']+" "+data[i]['province']+" "+data[i]['city']+" "+data[i]['district']+" "+data[i]['address']+" "+data[i]['postcode']+"<br/><br/>";
-						}
-					}
-
-					var sstr='';
-					sstr+="<form  method='post'>"+str;
-
-					$.dialog({
-						title:'修改地址',
-						content: sstr,
-						ok:function(){
-							send(ordernmb)
-						},
-						cancel: true
-					});
-				}
-			}
-		})
+	function editAddress(orderid, addressId, userid){
+        $.dialog({title:'修改地址',content:'url:__URL__/getAddress/orderid/'+orderid+"/userOrderAddressId/"+addressId+"/userid/"+userid,width:"800px",height:"500px",
+            close: function(){
+                this.reload();
+            }
+        });
 	}
 
 	function send(ordernmb){

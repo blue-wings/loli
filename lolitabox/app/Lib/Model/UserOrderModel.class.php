@@ -117,14 +117,17 @@ class UserOrderModel extends Model
             $memberInfo = $memberMod->getUserMemberInfo($userId);
             $totalCost = 0;
             $originalTotalCost = 0;
+            $productPrices = array();
             foreach ($productIds as $key => $productId) {
                 $product = $productMap[$productId];
                 $productMemberPrice = $product["member_price"] ? $product["price"] : $product["member_price"];
                 if ($memberInfo['state'] == 1) {
                     //用户还在特权期
                     $totalCost += $productMemberPrice * $productNums[$key];
+                    $productPrices[$key]=$productMemberPrice;
                 } else {
                     $totalCost += $product["price"] * $productNums[$key];
+                    $productPrices[$key]=$product["price"];
                 }
                 $originalTotalCost += $product["price"] * $productNums[$key];
             }
@@ -139,7 +142,7 @@ class UserOrderModel extends Model
             //生成订单
             $this->add($data);
             $result["orderId"] = $data['ordernmb'];
-            D("UserOrderSendProductdetail")->addOrderSendProducts($userId, $productIds, $productNums, $data['ordernmb']);
+            D("UserOrderSendProductdetail")->addOrderSendProducts($userId, $productIds, $productNums, $productPrices, $data['ordernmb']);
             M()->commit();
             return $data['ordernmb'];
         } catch (Exception $e) {

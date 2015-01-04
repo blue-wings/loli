@@ -46,24 +46,18 @@ class OrderManagementAction extends CommonAction {
 	}
 
 	//修改订单状态
-	public  function changeState(){
-		
-		$result = M("UserOrder")->where(array('ordernmb'=>$this->_post('ordernum')))->setField("state",$this->_post('val'));
-
-		if($this->orderChangeScore()){
-			if($result){
-				if($this->_post('val')==2){
-					$this->cleanOrderDetail($this->_post('ordernum'));
-				}
-				$this->ajaxReturn($this->_post('val'),'success',1);
-			}else{
-				$this->ajaxReturn($this->_post('val'),'fail',0);
-			}
-		}else{
-				$this->ajaxReturn($this->_post('val'),'扣减积分未同步',0);
-		}
-		exit();
-	}
+    public function changeState(){
+        $result = M("UserOrder")->where(array('ordernmb' => $this->_post('ordernum')))->setField("state", $this->_post('val'));
+        if ($result) {
+            if ($this->_post('val') == C("USER_ORDER_STATUS_REFUNDED")) {
+                $this->cleanOrderDetail($this->_post('ordernum'));
+            }
+            $this->ajaxReturn($this->_post('val'), 'success', 1);
+        } else {
+            $this->ajaxReturn($this->_post('val'), 'fail', 0);
+        }
+        exit();
+    }
 	
 	/**
 	 * 清除订单相关信息
@@ -75,7 +69,7 @@ class OrderManagementAction extends CommonAction {
 		}
 		$order_state=M("UserOrder")->where("ordernmb=".$orderid)->getField("state");
 		//只针对已退款订单
-		if($order_state==2){
+		if($order_state==C("USER_ORDER_STATUS_REFUNDED")){
 			//用户订单-发送表
 			M("UserOrderSend")->where("orderid=".$orderid)->delete();
 			//用户订单-物流表
@@ -85,45 +79,6 @@ class OrderManagementAction extends CommonAction {
 		}
 	}
 	
-	
-
-	//退款更新积分值
-	private function  orderChangeScore(){
-
-		$user_credit_stat_model = D ( "UserCreditStat" );
-		
-		if($this->_post('val') == 2){
-			$order_mod = M("UserOrder");
-
-			$userid = $order_mod->where(array('ordernmb'=>$this->_post('ordernum')))->getField('userid');
-			
-			//扣减积分
-			$user_credit_stat_model->addUserCreditStat ($userid, '购买的萝莉盒已退款，扣减相应的积分',-50,-100);
-			
-			//邀请人id
-			$invite_uid = M('users')->where(array('userid'=>$userid))->getField('invite_uid');
-			
-			if($invite_uid){
-					
-				$where = array(
-					'userid'=>$userid,
-					'state'=>array('neq',0),
-					'discount'=>0,
-					'ifavalid'=>1,
-				);
-
-				$firstOrder = $order_mod->where($where)->order("paytime ASC")->getField("ordernmb");
-				
-				if($this->_post('ordernum') == $firstOrder){
-					if($user_credit_stat_model->addUserCreditStat ($invite_uid, '被邀请的用户购买的萝莉盒已退款，扣减相应的积分',-50,-50)){
-						return 1;
-					}
-				}
-			}else{
-				return 1;
-			}		
-		}	
-	}
 
 	/**
        +----------------------------------------------------------
@@ -138,7 +93,7 @@ class OrderManagementAction extends CommonAction {
 	private function exportUserOrder($list){
 		$str = "用户ID,订单号,折扣金额,Email,用户名,TEL,地址,邮编\n";
 		foreach ( $list as $key => $value ) {
-			$str .= $value ['userid'] . ",T" . $value ['ordernmb'] . "," .$value['discount'].",". $value ['usermail'] . "," . $value ['linkman'] . "," . $value ['telphone'] . "," . $value ['province'] . $value ['city'] . $value ['district'] . $value ['address'] . "," . $value ['postcode']."\n";
+			$str .= $value ['userid'] . ",T" . $value ['ordernmb'] . ",". $value ['usermail'] . "," . $value ['linkman'] . "," . $value ['telphone'] . "," . $value ['province'] . $value ['city'] . $value ['district'] . $value ['address'] . "," . $value ['postcode']."\n";
 		}
 		outputExcel ( iconv ( "UTF-8", "GBK", date ( "Y-m-d" ) . "订单列表" ), $str );
 		exit ();
@@ -225,30 +180,34 @@ class OrderManagementAction extends CommonAction {
        * @update zhaoxiang 2013.1.23
      */	
 	public function productlist(){
-		$userorder = trim($_GET["orderid"]);
-		$order_arr=explode("-",$userorder);
-		$orderid=$order_arr[0];
-		$childid=$order_arr[1];
-		
+        $orderid = trim($_GET["orderid"]);
+
 		/* 提取订单单品列表 */
-		$inventory_item_mod=D("InventoryItem");
+		$productsModel=M("Products");
 		$UserOrderSendProductdetail = M ( "UserOrderSendProductdetail" );
 		$where['orderid']=$orderid;
-		$where['child_id']=$childid;
-		$orderproductlist = $UserOrderSendProductdetail->where ($where)->field('productid,productprice')->order('productid ASC')->select ();
-		echo '<table>';
+		$orderproductlist = $UserOrderSendProductdetail->where ($where)->order('productid ASC')->select ();
+		echo '<table border="1">';
+        echo '<tr heighht="20">';
+        echo '<td>单品ID</td>';
+        echo '<td>单品名称</td>';
+        echo '<td>订购数量</td>';
+        echo '<td>订阅价格</td>';
+        echo '</tr>';
+        $total = 0;
 		foreach($orderproductlist as $key =>$value){
-			$productname = $inventory_item_mod->getById ( $value ['productid'] );
-
-			$url="/products/{$value['productid']}.html";
-			$total+=$value['productprice'];
-			echo '<tr heighht="20">';
+			$product = $productsModel->getById ( $value ['productid'] );
+			echo '<tr>';
 			echo '<td>'.$value['productid'].'</td>';
-			echo '<td><a href="/products/'.$value['productid'].'.html" target="_blank" style="font-size:14px;color:#333">'.$productname [name].'</a></td>';
-			echo '<td>￥'.$value['productprice'].'</td>';
+			echo '<td>'.$product ["pname"].'</td>';
+            echo '<td>'.$value['product_num'].'</td>';
+            $price = bcdiv($value['product_price'], 100, 2);
+            $total += $value['product_price']*$value['product_num'];
+			echo '<td>￥'.$price.'</td>';
 			echo '</tr>';
 		}
-		echo "<td colspan='3'><span style='color:red'>总价为:".$total."</span></td>";
+        $total = bcdiv($total, 100, 2);
+		echo "<td colspan='4'><span style='color:red'>总价为:￥".$total."</span></td>";
 		echo '</table>';
 		die;
 	}
@@ -1016,33 +975,63 @@ class OrderManagementAction extends CommonAction {
 	 * 用于修改订单用户地址信息
 	 * 
 	 */
-	function getaddress(){
-		if($_POST['userid']){
-			$user_address=M('userAddress');
-			$where['userid']=$_POST['userid'];
-			$where['if_del']=array('eq',0);
-			//$this->ajaxReturn($where['userid'],$where['if_del'],1);
-			$result=$user_address->where($where)->field('id,linkman,telphone,province,city,district,address,postcode,if_active')->select();
+    function getAddress()
+    {
+        $user_address = M('userOrderAddress');
+        $where['id'] = $_GET['userOrderAddressId'];
+        $userOrderAddress = $user_address->where($where)->field('id,linkman,telphone,province_area_id,city_area_id,district_area_id,address,postcode,if_active')->find();
+        $userOrderAddress["provinceName"] = M("area")->field("title")->getByAreaId($userOrderAddress["province_area_id"]);
+        $userOrderAddress["provinceName"] = $userOrderAddress["provinceName"]["title"];
+        $userOrderAddress["cityName"] = M("area")->field("title")->getByAreaId($userOrderAddress["city_area_id"]);
+        $userOrderAddress["cityName"] = $userOrderAddress["cityName"]["title"];
+        $userOrderAddress["districtName"] = M("area")->field("title")->getByAreaId($userOrderAddress["district_area_id"]);
+        $userOrderAddress["districtName"] = $userOrderAddress["districtName"]["title"];
+        $this->assign("oldAdress",$userOrderAddress);
+        $this->assign("orderId", $_GET["orderid"]);
+        $this->assign("selfPackageOrderId", $_GET["selfPackageOrderId"]);
+        $this->assign("userid", $_GET["userid"]);
+        $this->display();
+    }
 
-			if($result){
-				$this->ajaxReturn($result,'ok',1);
-			}else{
-				$this->ajaxReturn($result,'no',0);
-			}
-		}else if($_POST['uid']){
-			if(!$_POST['ordernmb'])
-			$this->ajaxReturn(0,'没有订单号',0);
-			$where['orderid']=$_POST['ordernmb'];
-			$info=M("UserAddress")->field("linkman,telphone,province,city,district,address,postcode")->getById($_POST['uid']);
-			if(empty($info))
-			$this->ajaxReturn($result,'没有查到该地址',0);
-			if(M("UserOrderAddress")->where($where)->save($info)!==false)  {
-				M("UserOrder")->where("ordernmb=".$_POST['ordernmb'])->save(array('address_id' =>$_POST['uid']));
-				$this->ajaxReturn($result,$_POST['ordernmb'],1);
-			}else{
-				$this->ajaxReturn($result,'no',0);
-			}
-		}}
+    public function saveAddress(){
+        $orderId = $_POST["orderId"];
+        $selfPackageOrderId=$_POST["selfPackageOrderId"];
+        $userid = $_POST["userid"];
+        if((!$orderId && !$selfPackageOrderId) || !$userid){
+            $this->ajaxReturn(array("status"=>"n","info"=>"添加失败"), "JSON");
+        }
+        $count = M("UserOrderAddress")->where(array("userid"=>$this->userid))->count();
+        if($count >= C("MAX_ADDRESS_NUM_PER_USER")){
+            $this->ajaxReturn(array("status"=>"n","info"=>"超出限定数量，添加失败"), "JSON");
+        }
+        if(!isset($_POST["province_area_id"]) || !isset($_POST["city_area_id"]) || !isset($_POST["district_area_id"])){
+            $this->ajaxReturn(array("status"=>"n","info"=>"请选择省市区，添加失败"), "JSON");
+        }
+        if( !isset($_POST["linkman"]) || !isset($_POST["telphone"]) || !isset($_POST["address"]) || !isset($_POST["postcode"])){
+            $this->ajaxReturn(array("status"=>"n","info"=>"请填写完整信息，添加失败"), "JSON");
+        }
+        $address["userid"]=$userid;
+        $address["linkman"]=$_POST["linkman"];
+        $address["telphone"]=$_POST["telphone"];
+        $address["province_area_id"]=$_POST["province_area_id"];
+        $address["city_area_id"]=$_POST["city_area_id"];
+        $address["district_area_id"]=$_POST["district_area_id"];
+        $address["address"]=$_POST["address"];
+        $address["postcode"]=$_POST["postcode"];
+        $address["if_active"] = $_POST["if_active"]? C("USER_ORDER_ADDRESS_ACTIVE"):C("USER_ORDER_ADDRESS_NOT_ACTIVE");
+        $address["addtime"]=date("Y-m-d H:i:s",time());
+        if($address["if_active"] && $address["if_active"] == C("USER_ORDER_ADDRESS_ACTIVE")){
+            M("UserOrderAddress")->where(array("userid"=>$userid))->save(array("if_active"=>C("USER_ORDER_ADDRESS_NOT_ACTIVE")));
+        }
+        $addressId = M("UserOrderAddress")->add($address);
+        if($orderId){
+            M("UserOrder")->where(array("ordernmb"=>$orderId))->save(array("address_id"=>$addressId));
+        }
+        if($selfPackageOrderId){
+            M("UserSelfPackageOrder")->where(array("ordernmb"=>$orderId))->save(array("address_id"=>$addressId));
+        }
+        $this->ajaxReturn(array("status"=>"y","info"=>"添加成功"), "JSON");
+    }
 
 		/**
 	 * 用于获取用户的发货进度
