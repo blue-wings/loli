@@ -34,9 +34,10 @@ class OrderManagementAction extends CommonAction {
 			$val["giftcard"]=$giftcard;
 			$postage = bcdiv($val["postage"], 100, 2);
 			$val["postage"]=$postage;
-			$list[$key]=$val;
+            $userWorkOrder = M('UserWorkOrder')->where ( array ('order' => $val["ordernmb"]) )->find ();
+            $val["uord"]=$userWorkOrder;
+            $list[$key]=$val;
 		}
-		$sql =  $userorderaddr->getLastSql();
 		$page = $p->show ();
 
 
@@ -673,17 +674,16 @@ class OrderManagementAction extends CommonAction {
        */	
 	public function workorder() {
 
-		$address_mod=M('userAddress');
+		$address_mod=M('userOrderAddress');
 		$userorder_mod=M('userOrder');
-		$box_mod=M( 'box' );
 		$users_mod=M('Users');
 		$work_mod=M('UserWorkOrder');
 		$infomation_mod=M ('UserWorkOrderInfomation');
 
 		if (($_GET ['ordernmb'] && $_GET ['userid']) || $_GET['number']){
 
-			$ordernmb = empty($_GET ['ordernmb'])?filterVar($this->_get('number')):filterVar($this->_get('ordernmb'));
-			$userid =  filterVar($this->_get('userid'));
+			$ordernmb = $_GET ['ordernmb'];
+			$userid =  $this->_get('userid');
 
 			$orderInfo = $work_mod->where ( array ('order' => $ordernmb) )->find ();
 
@@ -692,7 +692,7 @@ class OrderManagementAction extends CommonAction {
 				$orderInfo['complete']=$infomation_mod->where ( array ('ordernmb' => $ordernmb,'pid' => 1) )->find ();
 			}else{
 				//用户订单默认地址ID和购买盒子的ID
-				$orderInfo=$userorder_mod->where(array('ordernmb'=>$ordernmb))->field('address_id,boxid')->find();
+				$orderInfo=$userorder_mod->where(array('ordernmb'=>$ordernmb))->field('address_id')->find();
 
 				if($orderInfo['address_id']){
 					$userInfo=$address_mod->where(array('id'=>$orderInfo['address_id']))->field('linkman,telphone')->find();
@@ -703,7 +703,6 @@ class OrderManagementAction extends CommonAction {
 
 				$orderInfo['linkman']=$userInfo['linkman'];
 				$orderInfo['telephone']=$userInfo['telphone'];
-				$orderInfo['boxin']=$box_mod->where (array('boxid'=>$orderInfo['boxid']))->getField ( 'name' );
 				$orderInfo['email']=$users_mod->where (array('userid'=>$userid))->getField ( 'usermail' );
 
 				$orderInfo['order'] = $ordernmb;
@@ -722,7 +721,6 @@ class OrderManagementAction extends CommonAction {
 				'email'=>$this->_post('email'),
 				'linkman'=>$this->_post('linkman'),
 				'telephone'=>$this->_post('telephone'),
-				'boxin'=>$this->_post('boxin'),
 				'orderdate'=>time(),
 				'status'=>0,
 				'cpeople'=>$_SESSION ['loginUserName']
@@ -961,7 +959,7 @@ class OrderManagementAction extends CommonAction {
 		$str="订单号,邮箱,联系人,盒子信息,问题描述,创建人,创建时间,处理结果,处理人\n";
 
 		foreach ($list as $key => $value){
-			$str.='T'.$value['order'].",".$value['email'].",".$value['linkman'].",".$value['boxin'].",";
+			$str.='T'.$value['order'].",".$value['email'].",".$value['linkman'].",";
 			$undone=$infomation->where(array('pid'=>0,'ordernmb'=>$value['order']))->getField('reason');
 			$complete=$infomation->where(array('pid'=>1,'ordernmb'=>$value['order']))->field('reason,cpeople')->find();
 			$str.=$undone.",".$value['cpeople'].",".date('Y/m/d H:i',$value['orderdate']).",".$complete['reason'].",".$complete['cpeople']."\n";
