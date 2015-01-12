@@ -63,11 +63,12 @@ class UserOrderSendProductdetailModel extends Model{
 	 * @param unknown_type $products
 	 * @param unknown_type $orderId
 	 */
-	public function addOrderSendProducts($userid,$productIds,$productNums, $productPrices, $orderId){
+	public function addOrderSendProducts($userid,$productIds,$productNums, $inventoryItemIds, $productPrices, $orderId){
 		foreach ($productIds as $key => $productId){
 			$data["orderid"]=$orderId;
 			$data["userid"]=$userid;
 			$data["productid"]=$productId;
+            $data["inventory_item_id"]=$inventoryItemIds[$key];
             $data["product_price"]=$productPrices[$key];
 			$data["product_num"]=$productNums[$key];
 			$data["status"]=C("USER_ODER_SEND_PRODUCT_STATUS_NOT_PAYED");

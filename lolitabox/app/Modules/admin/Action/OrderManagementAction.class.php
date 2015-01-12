@@ -24,7 +24,7 @@ class OrderManagementAction extends CommonAction {
 
 		$count = $userorderaddr->where ( $where )->count ();
 		$p = new Page ( $count, 15);
-		$list = $userorderaddr->limit ( $p->firstRow . ',' . $p->listRows )->order ( 'UserOrder.addtime DESC' )->where ( $where )->select ();
+		$list = $userorderaddr->Distinct(true)->limit ( $p->firstRow . ',' . $p->listRows )->order ( 'UserOrder.addtime DESC' )->where ( $where )->group("ordernmb")->select ();
 		foreach($list as $key=>$val){
 			$realCost = bcdiv($val['cost']+$val["postage"]-$val["giftcard"], 100, 2);
 			$val["realCost"]=$realCost;
@@ -135,9 +135,14 @@ class OrderManagementAction extends CommonAction {
 			$where ["UserOrderAddress.telphone"] =array('LIKE','%'.$arguments['telphone'].'%');
 		}
 
+        //单品id
+        if($arguments['inventoryItemId']){
+            $where ["UserOrderSendProductDetail.inventory_item_id"] =$arguments['inventoryItemId'];
+        }
+
         //投递批次
-        if($arguments['inventoryOutId']){
-            $where ["UserOrderSend.inventory_out_id"] =$arguments['inventoryOutId'];
+        if($arguments['productId']){
+            $where ["UserOrderSendProductDetail.productId"] =$arguments['productId'];
         }
 
 		//订单日期
@@ -195,6 +200,7 @@ class OrderManagementAction extends CommonAction {
 		$orderproductlist = $UserOrderSendProductdetail->where ($where)->order('productid ASC')->select ();
 		echo '<table border="1">';
         echo '<tr heighht="20">';
+        echo '<td>投递批次</td>';
         echo '<td>单品ID</td>';
         echo '<td>单品名称</td>';
         echo '<td>订购数量</td>';
@@ -205,6 +211,7 @@ class OrderManagementAction extends CommonAction {
 			$product = $productsModel->getById ( $value ['productid'] );
 			echo '<tr>';
 			echo '<td>'.$value['productid'].'</td>';
+            echo '<td>'.$value['inventory_item_id'].'</td>';
 			echo '<td>'.$product ["pname"].'</td>';
             echo '<td>'.$value['product_num'].'</td>';
             $price = bcdiv($value['product_price'], 100, 2);

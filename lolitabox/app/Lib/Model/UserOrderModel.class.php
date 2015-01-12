@@ -118,8 +118,10 @@ class UserOrderModel extends Model
             $totalCost = 0;
             $originalTotalCost = 0;
             $productPrices = array();
+            $inventoryItemIds = array();
             foreach ($productIds as $key => $productId) {
                 $product = $productMap[$productId];
+                array_push($inventoryItemIds, $product["inventory_item_id"]);
                 $productMemberPrice = $product["member_price"] ? $product["price"] : $product["member_price"];
                 if ($memberInfo['state'] == 1) {
                     //用户还在特权期
@@ -142,7 +144,7 @@ class UserOrderModel extends Model
             //生成订单
             $this->add($data);
             $result["orderId"] = $data['ordernmb'];
-            D("UserOrderSendProductdetail")->addOrderSendProducts($userId, $productIds, $productNums, $productPrices, $data['ordernmb']);
+            D("UserOrderSendProductdetail")->addOrderSendProducts($userId, $productIds, $productNums, $inventoryItemIds, $productPrices, $data['ordernmb']);
             M()->commit();
             return $data['ordernmb'];
         } catch (Exception $e) {

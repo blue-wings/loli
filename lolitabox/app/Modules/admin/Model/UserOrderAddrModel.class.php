@@ -44,6 +44,13 @@ class UserOrderAddrModel extends ViewModel {
             '_table' => 'user_order_send',
             '_on' => 'UserOrderSend.orderid=UserOrder.ordernmb',
             '_type' => 'LEFT'
+        ),
+        'UserOrderSendProductDetail' => array(
+            'productid',
+            'inventory_item_id',
+             '_table' => 'user_order_send_productdetail',
+            '_on' => 'UserOrderSendProductDetail.orderid=UserOrder.ordernmb',
+            '_type' => 'LEFT'
         )
 
 	);
