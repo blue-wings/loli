@@ -37,7 +37,14 @@ class UserOrderAddrModel extends ViewModel {
 			'_table' => 'user_order_address',
 			'_on' => 'UserOrderAddress.id=UserOrder.address_id',
 			'_type' => 'LEFT'
-		)
+		),
+        'UserOrderSend' => array (
+            'proxyorderid',
+            'inventory_out_Id',
+            '_table' => 'user_order_send',
+            '_on' => 'UserOrderSend.orderid=UserOrder.ordernmb',
+            '_type' => 'LEFT'
+        )
 
 	);
 }

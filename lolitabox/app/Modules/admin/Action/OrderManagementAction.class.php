@@ -135,6 +135,11 @@ class OrderManagementAction extends CommonAction {
 			$where ["UserOrderAddress.telphone"] =array('LIKE','%'.$arguments['telphone'].'%');
 		}
 
+        //投递批次
+        if($arguments['inventoryOutId']){
+            $where ["UserOrderSend.inventory_out_id"] =$arguments['inventoryOutId'];
+        }
+
 		//订单日期
 		if($arguments['from'] && $arguments['to']){
 			$where["UserOrder.addtime"]=array(array('egt',$arguments['from'].' 00:00:00'),array('elt',$arguments['to'].' 23:59:59'),'AND');

@@ -9,7 +9,16 @@
 订单号查询：<input name='orderid' type='text' value='{$Think.get.orderid}'>  
 用户ID查询：<input name='userid' type='text' value='{$Think.get.userid}'>
 联系人查询：<input name='linkman' type='text' value='{$Think.get.linkman}'>
-手机号查询：<input name='telphone' type='text' value='{$Think.get.telphone}'><br><br>
+手机号查询：<input name='telphone' type='text' value='{$Think.get.telphone}'>
+    单品id:<input name='productId' type='text' value='{$Think.get.productId}'>
+    投递批次：<input name='inventoryOutId' type='text' value='{$Think.get.inventoryOutId}'>
+    订单类型:
+    <select name='orderType' id='orderType'>
+        <option <eq name="Think.get.orderType" value="1"> selected="selected" </eq> value="1">正常订单</option>
+        <option <eq name="Think.get.orderType" value="0"> selected="selected" </eq> value="0">保管箱订单</option>
+    </select>
+
+    <br><br>
 
 订单日期: 
 <label for="from">From</label>
@@ -35,9 +44,7 @@
     <option value="">微信</option>
     <option value="">app</option>
 </select>
-	<br><br>
-	单品id:<input name='productId' type='text' value='{$Think.get.productId}'>
-	投递批次：<input name='delivery' type='text' value='{$Think.get.delivery}'>
+
 <br><br>
 <input type="button" name="resetpage" value="重置">
 <input type="submit" name="search" vlaue="提交" /><br><br>
