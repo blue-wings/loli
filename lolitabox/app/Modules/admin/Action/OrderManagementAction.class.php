@@ -11,20 +11,20 @@ class OrderManagementAction extends CommonAction {
 	 * update by zhaoxiang 2013-01-25 优化
 	 */
 	public function orderList() {
-		$userorderaddr = D ( "UserOrderAddr" );
 		import ( "@.ORG.Page" ); // 导入分页类库
 
+        $m = $_GET["orderType"]==C("ORDER_TYPE_NORMAL")?D ( "UserOrderAddr" ):D("UserSelfPackageOrderAddr");
 		$where=$this->orderListWhereParam(array_map('filterVar',$_GET));  //查询条件
 
 		// 如果是导出excel添加导出代码
 		if ($_GET['outputexcel']){
-			$list =$userorderaddr->order ( "UserOrder.addtime desc" )->where ( $where ) -> select();
+			$list =$m->order ( "UserOrder.addtime desc" )->where ( $where ) -> select();
 			$this->exportUserOrder($list);
 		}
 
-		$count = $userorderaddr->where ( $where )->count ();
+		$count = $m->where ( $where )->count ();
 		$p = new Page ( $count, 15);
-		$list = $userorderaddr->Distinct(true)->limit ( $p->firstRow . ',' . $p->listRows )->order ( 'UserOrder.addtime DESC' )->where ( $where )->group("ordernmb")->select ();
+		$list = $m->limit ( $p->firstRow . ',' . $p->listRows )->order ( 'UserOrder.addtime DESC' )->where ( $where )->group("ordernmb")->select ();
 		foreach($list as $key=>$val){
 			$realCost = bcdiv($val['cost']+$val["postage"]-$val["giftcard"], 100, 2);
 			$val["realCost"]=$realCost;
@@ -40,7 +40,7 @@ class OrderManagementAction extends CommonAction {
 		}
 		$page = $p->show ();
 
-
+        $this->assign ("orderType", $_GET["orderType"] );
 		$this->assign ("userlist", $list );
 		$this->assign ("page", $page );
 		$this->display();
@@ -48,10 +48,11 @@ class OrderManagementAction extends CommonAction {
 
 	//修改订单状态
     public function changeState(){
-        $result = M("UserOrder")->where(array('ordernmb' => $this->_post('ordernum')))->setField("state", $this->_post('val'));
+        $m = $_POST["orderType"]==C("ORDER_TYPE_NORMAL")?M( "UserOrder" ):M("UserSelfPackageOrder");
+        $result = $m->where(array('ordernmb' => $this->_post('ordernum')))->setField("state", $this->_post('val'));
         if ($result) {
             if ($this->_post('val') == C("USER_ORDER_STATUS_REFUNDED")) {
-                $this->cleanOrderDetail($this->_post('ordernum'));
+                $this->cleanOrderDetail($this->_post('ordernum'), $_POST["orderType"]);
             }
             $this->ajaxReturn($this->_post('val'), 'success', 1);
         } else {
@@ -64,11 +65,12 @@ class OrderManagementAction extends CommonAction {
 	 * 清除订单相关信息
 	 * @author penglele
 	 */
-	public function cleanOrderDetail($orderid){
-		if(!$orderid){
+	public function cleanOrderDetail($orderid, $orderType){
+		if(!$orderid || !$orderType){
 			return false;
 		}
-		$order_state=M("UserOrder")->where("ordernmb=".$orderid)->getField("state");
+        $m = $orderType==C("ORDER_TYPE_NORMAL")?M( "UserOrder" ):M("UserSelfPackageOrder");
+		$order_state=$m->where("ordernmb=".$orderid)->getField("state");
 		//只针对已退款订单
 		if($order_state==C("USER_ORDER_STATUS_REFUNDED")){
 			//用户订单-发送表
@@ -192,11 +194,17 @@ class OrderManagementAction extends CommonAction {
      */	
 	public function productlist(){
         $orderid = trim($_GET["orderid"]);
+        $orderType = $_GET["orderType"];
 
 		/* 提取订单单品列表 */
 		$productsModel=M("Products");
 		$UserOrderSendProductdetail = M ( "UserOrderSendProductdetail" );
-		$where['orderid']=$orderid;
+        if($orderType == C("ORDER_TYPE_NORMAL")){
+            $where['orderid']=$orderid;
+        }else{
+            $where['self_package_order_id']=$orderid;
+        }
+
 		$orderproductlist = $UserOrderSendProductdetail->where ($where)->order('productid ASC')->select ();
 		echo '<table border="1">';
         echo '<tr heighht="20">';
@@ -687,41 +695,13 @@ class OrderManagementAction extends CommonAction {
 	public function workorder() {
 
 		$address_mod=M('userOrderAddress');
-		$userorder_mod=M('userOrder');
+		$userorder_mod=$_GET["orderType"]==C("ORDER_TYPE_NORMAL")?M('userOrder'):M("UserSelfPackageOrder");
+
 		$users_mod=M('Users');
 		$work_mod=M('UserWorkOrder');
 		$infomation_mod=M ('UserWorkOrderInfomation');
 
-		if (($_GET ['ordernmb'] && $_GET ['userid']) || $_GET['number']){
-
-			$ordernmb = $_GET ['ordernmb'];
-			$userid =  $this->_get('userid');
-
-			$orderInfo = $work_mod->where ( array ('order' => $ordernmb) )->find ();
-
-			if($orderInfo){
-				$orderInfo['undone']=$infomation_mod->where ( array ('ordernmb' => $ordernmb,'pid' => 0) )->find ();
-				$orderInfo['complete']=$infomation_mod->where ( array ('ordernmb' => $ordernmb,'pid' => 1) )->find ();
-			}else{
-				//用户订单默认地址ID和购买盒子的ID
-				$orderInfo=$userorder_mod->where(array('ordernmb'=>$ordernmb))->field('address_id')->find();
-
-				if($orderInfo['address_id']){
-					$userInfo=$address_mod->where(array('id'=>$orderInfo['address_id']))->field('linkman,telphone')->find();
-				}else{
-					//如何没有订单默认地址ID 则取第一条
-					$userInfo=$address_mod->where(array('userid'=>$userid))->field('linkman,telphone')->find();
-				}
-
-				$orderInfo['linkman']=$userInfo['linkman'];
-				$orderInfo['telephone']=$userInfo['telphone'];
-				$orderInfo['email']=$users_mod->where (array('userid'=>$userid))->getField ( 'usermail' );
-
-				$orderInfo['order'] = $ordernmb;
-			}
-			$this->assign ( 'orderInfo', $orderInfo );
-
-		}else if($this->_post('sub')){
+		if($this->_post('sub')){
 
 			$ordernum=filterVar($this->_post('hiddenOrderNum'));
 
@@ -800,8 +780,38 @@ class OrderManagementAction extends CommonAction {
 				$this->error("添加失败!");
 			}
 			exit();
-		}
-		$this->display ();
+		}else if (($_GET ['ordernmb'] && $_GET ['userid']) || $_GET['number']){
+
+            $ordernmb = $_GET ['ordernmb'];
+            $userid =  $this->_get('userid');
+
+            $orderInfo = $work_mod->where ( array ('order' => $ordernmb) )->find ();
+
+            if($orderInfo){
+                $orderInfo['undone']=$infomation_mod->where ( array ('ordernmb' => $ordernmb,'pid' => 0) )->find ();
+                $orderInfo['complete']=$infomation_mod->where ( array ('ordernmb' => $ordernmb,'pid' => 1) )->find ();
+            }else{
+                //用户订单默认地址ID和购买盒子的ID
+                $orderInfo=$userorder_mod->where(array('ordernmb'=>$ordernmb))->field('address_id')->find();
+
+                if($orderInfo['address_id']){
+                    $userInfo=$address_mod->where(array('id'=>$orderInfo['address_id']))->field('linkman,telphone')->find();
+                }else{
+                    //如何没有订单默认地址ID 则取第一条
+                    $userInfo=$address_mod->where(array('userid'=>$userid))->field('linkman,telphone')->find();
+                }
+
+                $orderInfo['linkman']=$userInfo['linkman'];
+                $orderInfo['telephone']=$userInfo['telphone'];
+                $orderInfo['email']=$users_mod->where (array('userid'=>$userid))->getField ( 'usermail' );
+
+                $orderInfo['order'] = $ordernmb;
+            }
+            $this->assign ( 'orderInfo', $orderInfo );
+            $this->assign("orderType", $_GET["orderType"]);
+
+        }
+        $this->display ();
 	}
 
 	/**

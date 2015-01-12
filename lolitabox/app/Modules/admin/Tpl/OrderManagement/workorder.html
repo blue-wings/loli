@@ -37,6 +37,7 @@ border:solid #DBDFE6 1px;
 <div style="margin:20px;font-size:14px;color:#408080">工单信息</div>
 <if condition="$orderInfo.undone eq null">
 <form method="POST" action="<{:U('Boxsend/workorder')}>" onsubmit="return checkform()">
+    <input type="hidden" name="orderType" value="{$orderType}">
 <div style="margin-left:100px;font-size:12px;width:220px;">工单问题描述:
 <select name="reason" style="border:solid #DBDFE6 1px;">
 	<option value="支付问题">支付问题</option>
@@ -66,7 +67,7 @@ border:solid #DBDFE6 1px;
 <tr class="hei" ><td  align="center" style="background:#fafafa">自定义备注:</td><td colspan="2">{$orderInfo.undone.note}</td></tr>
 <tr><td  align="center" style="background:#fafafa">处理人:</td><td colspan="2">{$orderInfo.undone.cpeople}</td></tr>
 <tr><td  align="center" style="background:#fafafa">处理时间:</td><td colspan="2">{$orderInfo.undone.time|date="Y-m-d H:i:s",###}</td></tr>
-<tr><td colspan="3" class="input" style=" background:#fdfdfd;"><a href="javascript:void(0);" onclick="editorder('{$orderInfo.undone.pid}','{$orderInfo.undone.reason}','{$orderInfo.undone.status}','{$orderInfo.undone.note}','{$orderInfo.order}')" class="modification" style="border:0;">修改工单信息</a></td></tr>
+<tr><td colspan="3" class="input" style=" background:#fdfdfd;"><a href="javascript:void(0);" onclick="editorder('{$orderInfo.undone.pid}','{$orderInfo.undone.reason}','{$orderInfo.undone.status}','{$orderInfo.undone.note}','{$orderInfo.order}', '{$orderType}')" class="modification" style="border:0;">修改工单信息</a></td></tr>
 </table>
 
 
@@ -78,6 +79,7 @@ border:solid #DBDFE6 1px;
 <if condition="$orderInfo.complete eq null">
 <span class="hiddenn">
 <form method="POST" action="<{:U('Boxsend/workorder')}>">
+    <input type="hidden" name="orderType" value="{$orderType}">
 <div style="margin-left:140px;font-size:12px;width:220px;">处理结果:
 <select name="reason" style="border:solid #DBDFE6 1px;margin-left:10px;">
 	<option value="全额退款">全额退款</option>
@@ -123,13 +125,13 @@ border:solid #DBDFE6 1px;
 	</td>
 </tr>
 <tr><td colspan="3" class="input" style=" background:#fdfdfd;">
-<a href="javascript:void(0);" onclick="editorders('{$orderInfo.order}','{$orderInfo.complete.pid}','{$orderInfo.complete.reason}','{$orderInfo.complete.status}','{$orderInfo.complete.note}','{$orderInfo.order}')" class="modification" style="border:0;">修改工单信息</a>
+<a href="javascript:void(0);" onclick="editorders('{$orderInfo.order}','{$orderInfo.complete.pid}','{$orderInfo.complete.reason}','{$orderInfo.complete.status}','{$orderInfo.complete.note}','{$orderInfo.order}', '{$orderType}')" class="modification" style="border:0;">修改工单信息</a>
 </td></tr>
 </table>
 </if>
 <script>
 //修改订单 s状态,r描述,n备注,pid
-function editorder(pid,reason,status,note,order){
+function editorder(pid,reason,status,note,order, orderType){
 
 	var str="<span class='shower'><form method='POST' action='<{:U('OrderManagement/workorder')}>'>";
 	str+="<div style='margin-left:100px;font-size:12px;width:420px;'>工单问题描述:";
@@ -139,6 +141,7 @@ function editorder(pid,reason,status,note,order){
 	str+="<div style='padding-top:30px;margin-left:0px;width:400px;'><span style='font-size:12px;float:left;'>自定义备注:</span>";
 	str+="<textarea cols='40' rows='5' name='des' class='textnote'  style='margin-left:15px;overflow-y:auto;border:solid #DBDFE6 1px;'>"+note+"</textarea></div><br>";
 	str+="<input type='hidden' name='status' value='0'>";
+    str+="<input type='hidden' name='orderType' value='"+orderType+"'>";
 	str+="<input type='hidden' name='pid' value="+pid+"><input type='hidden' name='order' value='"+order+"'>";
 	str+="<input type='submit' value='提交' name='subb'  style='margin:10px 180px;'></span>";
 	str+="</fo"+"rm>";
@@ -151,7 +154,7 @@ function editorder(pid,reason,status,note,order){
 	$(".textnote").focus();
 }
 
-function editorders(ordernum,pid,reason,status,note,order){
+function editorders(ordernum,pid,reason,status,note,order, orderType){
 	
 	$.ajax({
 		url:"{:U('OrderManagement/isChanngeWorkOrder')}",
@@ -170,6 +173,7 @@ function editorders(ordernum,pid,reason,status,note,order){
 				strogn+="<div style='width:100px;float:left;margin-left:80px;'><input type='radio' name='status' value='0' id='noo' checked  style='border:0'><label for='noo'><span style='margin-left:10px;'>待处理</span></label></div>";
 				strogn+="<div style='float:left;'><input type='radio' name='status' value='1' id='yess' style='border:0;padding-left:100xp'><label for='yess'><span style='margin-left:10px;'>已处理</span></label></div>";
 				strogn+="<input type='hidden' name='pid' value="+pid+"><input type='hidden' name='order' value='"+order+"'>";
+                strogn+="<input type='hidden' name='orderType' value='"+orderType+"'>";
 				strogn+="<input type='submit' value='提交' name='subb'  style='margin:30px 150px;'></span>";
 
 				$("body").append(strogn);

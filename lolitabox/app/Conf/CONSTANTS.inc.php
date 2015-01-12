@@ -91,5 +91,8 @@ return array(
     'USER_ORDER_ADDRESS_NOT_ACTIVE'                 =>0,
 
     'GIFT_CARD_ACTIVATED'                                           =>1,
-    'GIFT_CARD_INACTIVE'                                                =>0
+    'GIFT_CARD_INACTIVE'                                                =>0,
+
+    'ORDER_TYPE_NORMAL'                                                =>1,
+    'ORDER_TYPE_SELF_PACKAGE'                                                =>0,
 );

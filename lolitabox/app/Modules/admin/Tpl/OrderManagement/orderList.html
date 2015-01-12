@@ -92,7 +92,7 @@
               <td bgcolor="#FFFFFF" height="18" class="STYLE2">{$usersendlist.pay_bank}</td>
             <td bgcolor="#FFFFFF" height="18">{$usersendlist.trade_no}</td>
           	<td bgcolor="#FFFFFF">
-          		<a href="javascript:void(0)" onclick="changepaystatus(this,'{$usersendlist[ordernmb]}')" title="点击切换状态">	
+          		<a href="javascript:void(0)" onclick="changepaystatus(this,'{$usersendlist[ordernmb]}', '{$orderType}')" title="点击切换状态">
 					<if condition="$usersendlist.state eq 1">
 						<font color="red">已付</font>
 					<elseif condition="$usersendlist.state eq 2" />
@@ -107,16 +107,16 @@
 			<a target="_blank" href="{:U('User/userList',array('email'=>$usersendlist[usermail]))}">用户名:{$usersendlist[usermail]}，ID：{$usersendlist[userid]}</a>
 			<br/>联系人：{$usersendlist[linkman]}  联系电话：{$usersendlist[telphone]}<br/>
 			{$usersendlist[province]}{$usersendlist[city]}{$usersendlist[district]}{$usersendlist[address]}&nbsp;({$usersendlist[postcode]})<br/>
-			<a href="#" onclick="editAddress('{$usersendlist[ordernmb]}','{$usersendlist[address_id]}', '{$usersendlist[userid]}')"><font color=red>修改地址</font></a>
+			<a href="#" onclick="editAddress('{$usersendlist[ordernmb]}','{$usersendlist[address_id]}', '{$usersendlist[userid]}', '{$orderType}')"><font color=red>修改地址</font></a>
 			<if condition="$usersendlist[sendword] neq ''"><br><div style="background:#eee000">礼品寄语：{$usersendlist[sendword]}</div></if>
 			</td>
 
 			  <td bgcolor="#FFFFFF" height="18" class="STYLE2">
-				  <a href="#" onclick="getOrderProducts('{$usersendlist.ordernmb}')">
+				  <a href="#" onclick="getOrderProducts('{$usersendlist.ordernmb}', '{$orderType}')">
 					  查看产品</a></div>
 			  </td>
 			<td bgcolor="#FFFFFF" height="18" class="STYLE2">
-				<a href="#" onclick="dialogmeseeage('__URL__/workorder/ordernmb/{$usersendlist[ordernmb]}/userid/{$usersendlist[userid]}','创建工单')">
+				<a href="#" onclick="dialogmeseeage('__URL__/workorder/ordernmb/{$usersendlist[ordernmb]}/userid/{$usersendlist[userid]}/orderType/{$orderType}','创建工单')">
 				<if condition="$usersendlist['uord']">查看工单<else />创建工单</if></a></div>
 			</td>
           </tr>
@@ -192,8 +192,8 @@
 		$.dialog({title:"发货情况明细",content:"url:__URL__/send_proxy_info/orderid/"+orderid,width:"600px",height:"500px"});
 	}
 
-    function getOrderProducts(orderid){
-        $.dialog({title:"发货情况明细",content:"url:__URL__/productlist/orderid/"+orderid,width:"600px",height:"500px"});
+    function getOrderProducts(orderid, orderType){
+        $.dialog({title:"发货情况明细",content:"url:__URL__/productlist/orderid/"+orderid+"/orderType/"+orderType,width:"600px",height:"500px"});
     }
 
 	function addproductMuch(){
@@ -285,8 +285,8 @@
 </table>
 <br /><br /><br />
 	<script>
-	function editAddress(orderid, addressId, userid){
-        $.dialog({title:'修改地址',content:'url:__URL__/getAddress/orderid/'+orderid+"/userOrderAddressId/"+addressId+"/userid/"+userid,width:"800px",height:"500px",
+	function editAddress(orderid, addressId, userid, orderType){
+        $.dialog({title:'修改地址',content:'url:__URL__/getAddress/orderid/'+orderid+"/userOrderAddressId/"+addressId+"/userid/"+userid+"/orderType/"+orderType,width:"800px",height:"500px",
             close: function(){
                 this.reload();
             }
@@ -379,7 +379,7 @@
 	}
 
 	//切换订单状态
-	function changepaystatus(obj,ordernum){
+	function changepaystatus(obj,ordernum, orderType){
 
 		var val = $(obj).next("input:hidden");
 		
@@ -397,7 +397,7 @@
 		}
 		
 		var value = val.val()==1?2:1;
-		$.post("__URL__/changeState",{action:'changestate',val:value,ordernum:ordernum},function(ret){
+		$.post("__URL__/changeState",{action:'changestate',val:value,ordernum:ordernum, orderType:orderType},function(ret){
 			ret.data==1?$(obj).html('<font color="red">已付款</font>'):$(obj).html('<font color="#000080">已退款</font>');
 			val.val(ret.data);
 		})	
