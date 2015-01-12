@@ -12,11 +12,6 @@
 手机号查询：<input name='telphone' type='text' value='{$Think.get.telphone}'>
     单品id:<input name='inventoryItemId' type='text' value='{$Think.get.inventoryItemId}'>
     投递批次：<input name='productId' type='text' value='{$Think.get.productId}'>
-    订单类型:
-    <select name='orderType' id='orderType'>
-        <option <eq name="Think.get.orderType" value="1"> selected="selected" </eq> value="1">正常订单</option>
-        <option <eq name="Think.get.orderType" value="0"> selected="selected" </eq> value="0">保管箱订单</option>
-    </select>
 
     <br><br>
 
@@ -25,6 +20,12 @@
 <input type="text" id="from" name="from" value="{$Think.get.from}"/>
 <label for="to">to</label>
 <input type="text" id="to" name="to" value="{$Think.get.to}"/>
+
+    订单类型:
+    <select name='orderType' id='orderType'>
+        <option <eq name="Think.get.orderType" value="1"> selected="selected" </eq> value="1">普通订单</option>
+        <option <eq name="Think.get.orderType" value="0"> selected="selected" </eq> value="0">保管箱订单</option>
+    </select>
 
 订单状态:
 <select name='ifavalid' id='ifavalid'>

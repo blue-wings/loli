@@ -710,6 +710,7 @@ class OrderManagementAction extends CommonAction {
 			if(!$workOrderResult){
 				$data=array(
 				'order'=>$ordernum,
+                'order_type'=>$this->_post('orderType'),
 				'email'=>$this->_post('email'),
 				'linkman'=>$this->_post('linkman'),
 				'telephone'=>$this->_post('telephone'),
@@ -721,6 +722,7 @@ class OrderManagementAction extends CommonAction {
 
 				$map['pid']=0;
 				$map['ordernmb']=$ordernum;
+                $map['order_type']=$this->_post('orderType');
 				$map['reason']=$this->_post('reason');
 				$map['note']=$this->_post('des');
 				$map['cpeople']=$_SESSION ['loginUserName'];
@@ -785,11 +787,16 @@ class OrderManagementAction extends CommonAction {
             $ordernmb = $_GET ['ordernmb'];
             $userid =  $this->_get('userid');
 
-            $orderInfo = $work_mod->where ( array ('order' => $ordernmb) )->find ();
+            if($_GET['number']){
+                $where["id"]=$_GET['number'];
+            }else{
+                $where["order"]=$ordernmb;
+            }
+            $orderInfo = $work_mod->where ($where)->find ();
 
             if($orderInfo){
-                $orderInfo['undone']=$infomation_mod->where ( array ('ordernmb' => $ordernmb,'pid' => 0) )->find ();
-                $orderInfo['complete']=$infomation_mod->where ( array ('ordernmb' => $ordernmb,'pid' => 1) )->find ();
+                $orderInfo['undone']=$infomation_mod->where ( array ('ordernmb' => $orderInfo["order"],'pid' => 0) )->find ();
+                $orderInfo['complete']=$infomation_mod->where ( array ('ordernmb' =>$orderInfo["order"],'pid' => 1) )->find ();
             }else{
                 //用户订单默认地址ID和购买盒子的ID
                 $orderInfo=$userorder_mod->where(array('ordernmb'=>$ordernmb))->field('address_id')->find();
@@ -937,19 +944,19 @@ class OrderManagementAction extends CommonAction {
      */		
 	public function isChanngeWorkOrder(){
 		$infomation_mod=M ('UserWorkOrderInfomation');
-		if($this->_post('ordernum')){
-			$isTrue=$infomation_mod->where(array('ordernmb'=>$this->_post('ordernum'),'pid'=>1))->find();
+        $ordernmb =$this->_post('ordernum');
+		if($ordernmb){
+			$isTrue=$infomation_mod->where(array('ordernmb'=>$ordernmb,'pid'=>1))->find();
 			if(empty($isTrue)){
 				$data=array(
 				'pid'=>1,
-				'ordernmb	'=>$this->_post('ordernum'),
-				'reason'=>'',
-				'note'=>'',
 				'cpeople'=>$_SESSION ['loginUserName'],
 				'time'=>time(),
-				'status'=>2
+				'status'=>2,
+                'ordernmb	'=>$ordernmb
 				);
 				$result=$infomation_mod->add($data);
+                $infomation_mod->where(array("id"=>$result))->save(array("ordernmb"=>$ordernmb));
 				if($result){
 					$this->ajaxReturn(1,'OK',1);
 				}else{

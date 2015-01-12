@@ -36,7 +36,7 @@ border:solid #DBDFE6 1px;
 </table>
 <div style="margin:20px;font-size:14px;color:#408080">工单信息</div>
 <if condition="$orderInfo.undone eq null">
-<form method="POST" action="<{:U('Boxsend/workorder')}>" onsubmit="return checkform()">
+<form method="POST" action="<{:U('OrderManagement/workorder')}>" onsubmit="return checkform()">
     <input type="hidden" name="orderType" value="{$orderType}">
 <div style="margin-left:100px;font-size:12px;width:220px;">工单问题描述:
 <select name="reason" style="border:solid #DBDFE6 1px;">
@@ -78,7 +78,7 @@ border:solid #DBDFE6 1px;
 
 <if condition="$orderInfo.complete eq null">
 <span class="hiddenn">
-<form method="POST" action="<{:U('Boxsend/workorder')}>">
+<form method="POST" action="<{:U('OrderManagement/workorder')}>">
     <input type="hidden" name="orderType" value="{$orderType}">
 <div style="margin-left:140px;font-size:12px;width:220px;">处理结果:
 <select name="reason" style="border:solid #DBDFE6 1px;margin-left:10px;">
@@ -201,7 +201,7 @@ function checkform(){
 function channgeWorkOrder(ordernum){
 
 	$.ajax({
-		url:"{:U('BoxSend/isChanngeWorkOrder')}",
+		url:"{:U('OrderManagement/isChanngeWorkOrder')}",
 		type:"post",
 		dataType:"json",
 		data:"ordernum="+ordernum,
