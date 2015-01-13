@@ -79,24 +79,7 @@ td.tdwidth{
 				<br><br>
 				
 				支付时间:<input name='startdate'  type='text' value='{$Think.get.startdate}'>&nbsp;&nbsp;到&nbsp;&nbsp;<input name='enddate' type='text' value='{$Think.get.enddate}'>
-
-				盒子名称:
-				<select name="bname">
-					<option value="">按盒子名称筛选</option>
-					<volist name="boxlist" id="boxname">
-					<option value="{$boxname.boxid}">{$boxname.boxname}</option>
-					</volist>
-				</select>
-				
-				&nbsp;
-				子订单时间:
-				<select name="child_id">
-					<option value="">请选择发货时间</option>
-					<volist name="timelist" id="vo">
-					<option value="{$vo}">{$vo}</option>
-					</volist>
-				</select>
-				&nbsp;&nbsp;&nbsp;		
+				&nbsp;&nbsp;&nbsp;
 						
 				订单类型
 				<select name="proposer">
@@ -132,18 +115,15 @@ td.tdwidth{
         <td bgcolor="#f3ffe3">
          <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
           <tr background="__PUBLIC__/images/tab_14.gif">
-	    	<td width="2%" height="26"><div align="center" class="STYLE2 STYLE1"></div></td>
 			<td width="3%" height="26"><div align="center" class="STYLE2 STYLE1">序号</div></td>
 			<td width="3%" height="26"><div align="center" class="STYLE2 STYLE1">用户ID</div></td>
             <td width="10%" height="18"><div align="center" class="STYLE2 STYLE1">订单号</div></td>
-            <td width="5%" height="18"><div align="center" class="STYLE2 STYLE1">子订单号</div></td>
-            <td width="12%" height="18"><div align="center" class="STYLE2">盒子名称</div></td>
             <td width="12%" height="18"><div align="center" class="STYLE2">单品数量</div></td>
             <td width="13%" height="18"><div align="center" class="STYLE2">支付时间</div></td>
           </tr>
           <volist name="list" id="list"  key="k">
           <tr height="30px" class="emy">
-             <td bgcolor="#FFFFFF" height="18" class="mmy" align="center"><input type="checkbox" name="order[]"  value ="{$list.ordernmb}-{$list.child_id}"   style="border:0"></td>
+             <td bgcolor="#FFFFFF" height="18" class="mmy" align="center"><input type="checkbox" name="order[]"  value ="{$list.orderid}"   style="border:0"></td>
 			 <td bgcolor="#FFFFFF" height="18" align="center">{$k}</td>
 			 <td bgcolor="#FFFFFF" height="18" align="center">{$list.userid}</td>
              <td bgcolor="#FFFFFF" height="18" align="center">{$list.ordernmb}</td>

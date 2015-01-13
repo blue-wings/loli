@@ -171,10 +171,10 @@ td.tdwidth{
 			 	</if>
 			 </td>
 			 <td bgcolor="#FFFFFF" height="18" align="center">
-			 <if condition="$list.status eq 1 AND $list.type eq 1">
-			 	<a href="javascript:void(0);" 
-				onclick="dialogmeseeage('{:U('Inventory/getOrderInfo',array('outid'=>$list[id],'resour'=>'outOrderEntry'))}');">查看订单</a>
-			 </if>
+			 <!--<if condition="$list.status eq 1 AND $list.type eq 1">-->
+			 	<!--<a href="javascript:void(0);" -->
+				<!--onclick="dialogmeseeage('{:U('Inventory/getOrderInfo',array('outid'=>$list[id],'resour'=>'outOrderEntry'))}');">查看订单</a>-->
+			 <!--</if>-->
 			 <if condition="$list.status eq 1 AND $list.confirmoperator neq '' AND $list.type eq 1">
 			 	<a href="{:U('Inventory/exportOrder',array('outid'=>$list[id]))}">拣货导出</a>
 			 	<a href="{:U('Inventory/exportExpressOrder',array('outid'=>$list[id]))}">快递导出</a>

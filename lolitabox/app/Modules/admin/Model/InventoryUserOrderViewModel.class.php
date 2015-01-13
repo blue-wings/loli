@@ -21,12 +21,7 @@ class InventoryUserOrderViewModel extends ViewModel {
 	'address_id',
 	'_type' => 'LEFT',
 	'_on' => 'UserOrderSend.orderid=UserOrder.ordernmb'
-	),
-	'box'=>array(
-		'name'=>'boxname',
-		'_type' => 'LEFT',
-		'_on' => 'UserOrderSend.boxid=box.boxid'
-	)	
+	)
 	);
 }
 ?>

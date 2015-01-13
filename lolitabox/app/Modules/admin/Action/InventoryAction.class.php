@@ -1357,7 +1357,9 @@ class InventoryAction extends CommonAction {
        */
 	function getOrderInfo(){
 		if($this->_get('outid')){
-			$order_mod=D("InventoryUserOrderView");
+            $outInfo = M("inventoryOut")->where(array('id'=>trim($this->_get('outid'))))->find();
+            $isSelfPackageOrder = $outInfo['type'] == C("INVENTORY_OUT_TYPE_SYSTEM") && $outInfo['ifselfpackage'] == 1;
+			$order_mod=$isSelfPackageOrder?D("InventoryUserSelfPackageOrderView"):D("InventoryUserOrderView");
 
 			$where=$this->orderSystemWhere(array_map('filterVar',$_GET));
 
@@ -1972,10 +1974,8 @@ class InventoryAction extends CommonAction {
 		$pro_mod=M("Products");
 		$brand_mod=M("ProductsBrand");
 		$productmod=D("Products");
-		$category_mod=M("Category");
 		$order_mod=M("UserOrder");
 		$order_address_mod=M("UserOrderAddress");
-		$box_mod=M("Box");
         $out_mod = M("inventoryOut");
         $outInfo = $out_mod->where(array('id'=>trim($outid)))->find();
         $isSelfPackageOrder = $outInfo['type'] == C("INVENTORY_OUT_TYPE_SYSTEM") && $outInfo['ifselfpackage'] == 1;
@@ -1996,7 +1996,7 @@ class InventoryAction extends CommonAction {
 						$product_arr=array();
                         $proinfo = $pro_mod->getByPid($ival['productid']);
 						$item_info=$item_mod->where("id=".$proinfo['inventory_item_id'])->find();
-						$product_arr['price']=$item_info['price'];
+						$product_arr['price']=bcdiv($item_info['price'], 100, 2);
 						$product_arr['pname']=$item_info['name'];
 						$product_arr['norms']=$item_info['norms'];
 						$product_arr['enddate']=(empty($item_info['validdate']) || $item_info['validdate']=="0000-00-00") ? "" : $item_info['validdate'] ;
@@ -2021,12 +2021,11 @@ class InventoryAction extends CommonAction {
                             $orderinfo=$order_mod->where("ordernmb=".$val['orderid'])->find();
                         }
 						$info['list']=$per_arr;
-						$info['totalprice']=$price;
+						$info['totalprice']=bcdiv($price, 100, 2);
 						$info['orderid']=$val['orderid'];
 						if($val['child_id']) $info['orderid']=$info['orderid']."(".$val['child_id'].")";
 						$info['addtime']=$orderinfo['addtime'];
-						$info['linkman']=$order_address_mod->where("orderid=".$val['orderid'])->getfield("linkman");
-						$info['boxname']=$box_mod->where("boxid=".$orderinfo['boxid'])->getField("name");
+						$info['linkman']=$order_address_mod->getById($orderinfo["address_id"])["linkman"];
 						$list[]=$info;
 					}
 				}
