@@ -153,35 +153,6 @@ class ProductAction extends CommonAction{
 	}
 
 	public function add(){
-		$category=M("Category");
-		//调用产品分类，CTYPE=1
-		$clist=$category
-		->field("cid,cname,pcid,ctype,cpath,sortid,concat(cpath,'-',cid) as bpath")
-		->order("bpath,cid")
-		->where("ctype=1")->select();
-		foreach($clist as $key=>$value){
-			$clist[$key]['signnum']= count(explode('-',$value['bpath']))-1;
-			$clist[$key]['marginnum']= (count(explode('-',$value['bpath']))-1)*20;
-		}
-		//调用效果分类,CTYPE=2   功效分类
-		$elist=$category
-		->field("cid,cname")
-		->order("cid")
-		->where("ctype=2")->select();
-
-		//调用品牌分类,CTYPE=3
-		$blist=M('ProductsBrand')->field('id as cid,name as cname')->select();
-		
-		$product_mod=new ProductsModel();
-		$for_skin=$product_mod->getForSkinDefine();
-		$for_people=$product_mod->getForPeopleDefine();
-		$for_hair=$product_mod->getForHairDefine();
-		$this->assign('skin_list',$for_skin);
-		$this->assign('people_list',$for_people);
-		$this->assign('hair_list',$for_hair);
-		$this->assign('clist',$clist);
-		$this->assign('elist',$elist);
-		$this->assign('blist',$blist);
 		$this->display();
 	}
 

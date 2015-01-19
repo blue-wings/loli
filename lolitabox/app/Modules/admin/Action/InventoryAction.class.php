@@ -202,97 +202,139 @@ class InventoryAction extends CommonAction {
 		$this->display();
 	}
 
-
-	/**
-	 *库存单品添加和编辑
-	 *@author litingting
-	 */
-	public function productCreate(){
-        $proinfo = D("Products")->where(array('pid'=>8))->field("pid,pname,firstcid,secondcid,effectcid,pimg,goodssize,goodsprice")->find();
-        $this->assign('pro',$proinfo);
-
-		if($_REQUEST['id'])  {
-			if($_REQUEST['submit']){
-				if($_REQUEST['cid']){
-					$cids=explode("-", $_REQUEST['cid']);
-					if($cids[1]){
-						$_REQUEST['secondcid']=$cids[0];
-						$_REQUEST['firstcid']=$cids[1];
-					}else
-					$this->error("请选择二级分类");
-				}
-				if(false!==M("InventoryItem")->where("id=".$_REQUEST['id'])->save($_REQUEST))
-				$this->success("操作成功");
-				else
-				$this->error("操作失败");
-
-			}
-			else{
-				$info=M("InventoryItem")->getById($_REQUEST['id']);
-				$clist=M("Category")
-				->field("cid,cname,pcid,ctype,cpath,sortid,concat(cpath,'-',cid) as bpath")
-				->order("bpath,cid")
-				->where("ctype=1")->select();
-				$brand_list=M("ProductsBrand")->field("id,name")->select();
-				$this->assign("brandlist",$brand_list);
-				$this->assign("clist",$clist);
-				$this->assign("info",$info);
-				$products = M("Products")->where('inventory_item_id='.$_REQUEST['id'])->select();
-				$this->assign("products",$products);
-				$this->display();
-			}
-			die;
+    public function add(){
+        $category=M("Category");
+        //调用产品分类，CTYPE=1
+        $clist=$category
+            ->field("cid,cname,pcid,ctype,cpath,sortid,concat(cpath,'-',cid) as bpath")
+            ->order("bpath,cid")
+            ->where("ctype=1")->select();
+        foreach($clist as $key=>$value){
+            $clist[$key]['signnum']= count(explode('-',$value['bpath']))-1;
+            $clist[$key]['marginnum']= (count(explode('-',$value['bpath']))-1)*20;
         }
-        else if($this->_post('reid')){
-            //关联ID
-            $proinfo = D("Products")->where(array('pid'=>$this->_post('reid')))->field("pid,pname,firstcid,secondcid,effectcid,pimg,goodssize,goodsprice")->find();
-            $proinfo['type']=M("Category")->where(array('cid'=>$proinfo['secondcid']))->getField("cname");
-            $effarr = M("Category")->query("
-				SELECT cname FROM category WHERE cid IN(
-				SELECT effectcid FROM product_effect_relation WHERE pid = {$proinfo['pid']})
-			");
-			foreach($effarr as $k=>$v){
-				 $effname .=','.$v['cname'];
-			}
-			$proinfo['effname'] = trim($effname,',');
-            if($proinfo){
-                $this->ajaxReturn(1,$proinfo,1);
-            }else{
-                $this->ajaxReturn(0,'未找到相关信息',0);
+        //调用效果分类,CTYPE=2   功效分类
+        $elist=$category
+            ->field("cid,cname")
+            ->order("cid")
+            ->where("ctype=2")->select();
+
+        //调用品牌分类,CTYPE=3
+        $blist=M('ProductsBrand')->field('id as cid,name as cname')->select();
+
+        $product_mod=new ProductsModel();
+        $for_skin=$product_mod->getForSkinDefine();
+        $for_people=$product_mod->getForPeopleDefine();
+        $for_hair=$product_mod->getForHairDefine();
+        $this->assign('skin_list',$for_skin);
+        $this->assign('people_list',$for_people);
+        $this->assign('hair_list',$for_hair);
+        $this->assign('clist',$clist);
+        $this->assign('elist',$elist);
+        $this->assign('blist',$blist);
+        $this->display("productCreate");
+    }
+
+    public function addProduct(){
+        //print_r($_POST);exit;
+        $product=new ProductModel();
+
+        if($data=$product->create()){
+
+            if(empty($data['firstcid'])){
+                $this->error('请选择二级分类!');
             }
+
+            $data['pintro'] = R('Article/remoteimg',array($_POST['pintro']));
+            $data['readme'] = R('Article/remoteimg',array($_POST['readme']));
+            $data['sort_num']=$_POST['sort_num'] ? $_POST['sort_num'] : 0 ;
+
+            $pid=$product->add($data);
+
+            if(pid){
+                //建立产品ID与功效ID对应关系
+                $product_effect=new ProductEffectModel();
+                $effectcid=$_REQUEST["effectcid"];
+                $acount=count($effectcid);
+                for($i=0;$i<$acount;$i++){
+                    $adata[$i]=array(
+                        "pid"=>$pid,
+                        "effectcid"=>$effectcid[$i]
+                    );
+                }
+                $rss=$product_effect->addALL($adata);
+                if($acount==$rss){
+                    $this->success("产品添加成功!ID为:{$pid}",U("Product/index"));
+                }else{
+                    $this->error("产品功效表,未完整填充!请联系管理员检查");
+                }
+                if($data["inventory_item_id"] && $data["inventory"]){
+                    try {
+                        D("InventoryItem")->shelveProductInventory($pid, $data["inventory_item_id"], $data["inventoryInc"]);
+                    }catch(Exception $e){
+                        $this->error($e->getMessage());
+                    }
+                }
+            }else{
+                $this->error("产品添加失败：".$product->getDbError());
+            }
+
+
+        }else {
+            $this->error('数据验证( '.$product->getError().' )');
         }
-        else {
-			if ($_REQUEST ['submit']) {
-				//新增库存单品
-				if ($_REQUEST ['name']) {
-					if ($_REQUEST ['cid']) {
-						$cids = explode ( "-", $_REQUEST ['cid'] );
-						if ($cids [1]) {
-							$_REQUEST ['secondcid'] = $cids [0];
-							$_REQUEST ['firstcid'] = $cids [1];
-						} 
-						else
-							$this->error ( "请选择二级分类" );
-					}
-					if (M ( "InventoryItem" )->add ( $_REQUEST ))  {
-						$this->success("操作成功");
-					}
-					else
-					$this->error ( "操作失败" );
+    }
 
-				} else {
-					$this->error ( "单品名不能为空" );
-				}
-			} else {
-				$clist = M ( "Category" )->field ( "cid,cname,pcid,ctype,cpath,sortid,concat(cpath,'-',cid) as bpath" )->order ( "bpath,cid" )->where ( "ctype=1" )->select ();
-				$brand_list = M ( "ProductsBrand" )->field ( "id,name" )->select ();
-				$this->assign ( "clist", $clist );
-				$this->assign ( "brandlist", $brand_list );
-				$this->display ();
-			}
-		}
-	}
+    public function editProduct(){
+        $item=M("InventoryItem")->getById($_REQUEST['id']);
+        $this->assign("item",$item);
+        $category=M("Category");
+        //调用产品分类，CTYPE=1
+        $clist=$category
+            ->field("cid,cname,pcid,ctype,cpath,sortid,concat(cpath,'-',cid) as bpath")
+            ->order("bpath,cid")
+            ->where("ctype=1")->select();
+        foreach($clist as $key=>$value){
+            $clist[$key]['signnum']= count(explode('-',$value['bpath']))-1;
+            $clist[$key]['marginnum']= (count(explode('-',$value['bpath']))-1)*20;
+        }
+        //调用效果分类,CTYPE=2   功效分类
+        $elist=$category
+            ->field("cid,cname")
+            ->order("cid")
+            ->where("ctype=2")->select();
 
+        //调用品牌分类,CTYPE=3
+        $blist=M('ProductsBrand')->field('id as cid,name as cname')->select();
+
+        $product_mod=new ProductsModel();
+        $for_skin=$product_mod->getForSkinDefine();
+        $for_people=$product_mod->getForPeopleDefine();
+        $for_hair=$product_mod->getForHairDefine();
+        $this->assign('skin_list',$for_skin);
+        $this->assign('people_list',$for_people);
+        $this->assign('hair_list',$for_hair);
+        $this->assign('clist',$clist);
+        $this->assign('elist',$elist);
+        $this->assign('blist',$blist);
+        $this->display("productCreate");
+        $this->display("productCreate");
+    }
+
+    public function updateProduct(){
+        if($_REQUEST['cid']){
+            $cids=explode("-", $_REQUEST['cid']);
+            if($cids[1]){
+                $_REQUEST['secondcid']=$cids[0];
+                $_REQUEST['firstcid']=$cids[1];
+            }else
+                $this->error("请选择二级分类");
+        }
+        if(false!==M("InventoryItem")->where("id=".$_REQUEST['id'])->save($_REQUEST))
+            $this->success("操作成功");
+        else
+            $this->error("操作失败");
+    }
 
 	/**
 	 * 库存单品列表

@@ -188,7 +188,7 @@ span.shownum{color:red;}
  function updateid(id){
 	$.dialog({
 		title:"编辑单品",
-		content:"url:__URL__/productCreate/id/"+id,
+		content:"url:__URL__/editProduct/id/"+id,
 		close:function(){
 			window.location.href='__SELF__';
 		}
@@ -199,7 +199,7 @@ span.shownum{color:red;}
  function addid(){
 	$.dialog({
 		title:"增加库存单品",
-		content:"url:__URL__/productCreate",
+		content:"url:__URL__/add",
 		close:function(){
 			window.location.href='__SELF__';
 		}

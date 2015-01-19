@@ -1,339 +1,279 @@
 <include file="Public:header" />
-<include file='Public:upload' />
-<link rel="stylesheet" href="__PUBLIC__/js/colorbox/colorbox.css">
-<script src="__PUBLIC__/js/colorbox/jquery.colorbox-min.js"></script>
+<style>
+    li { width: 100%; list-style-type:none; float: left; margin-top: 5px}
+    em {color: red}
+</style>
 <table width="100%" cellspacing="1" cellpadding="6" border="0" align="center" class="tborder">
-<tbody><tr>	<td class="tcat">创建产品</td></tr>
+<tbody>
 <tr>
-	<td align="center" class="panelsurround">
-	<form  id='product_form' action="__URL__/addproduct" method="post" enctype="multipart/form-data"
-	onsubmit="return checkform()">
-	<input type="hidden" name="pid" value="{$productinfo[pid]}">
-	<div class="panel">
-		<div align="left">
-			<fieldset class="fieldset">
-			<legend>添加</legend>
-					
-			<div style='width:50%;float:left'>
-			   是否发布:
-			   上架
-			   <if condition="$productinfo.status eq 1">
-			   		<input type="radio" name="status" value="1" checked="checked"/>
-			   <else />
-			   		<input type="radio" name="status" value="1"/>
-			   </if>
-			   &nbsp;&nbsp;&nbsp;&nbsp;
-			   下架
-			   <if condition="$productinfo.status eq 0">
-			   		<input type="radio" name="status" value="0" checked="checked"/>
-			   <else />
-			   		<input type="radio" name="status" value="0"/>
-			   </if>
-			   </br> </br>
-			   产品标题(前台):<input type="text" size="30" name="pname" value="{$productinfo.pname}">  </br> </br> 
-			   产品别名(亮点描述):<input type="text" name="product_alias" value="{$productinfo.product_alias}" size="50"></br> </br> 
-			   子产品列表:	<input type="text" size="30" name="productlist" value="{$productinfo.productlist}"><br><font color="red"> 以英文逗号分隔，如1,2,3,4</font></br> </br> 
-			  <!-- 精彩分享ID列表:<input type="text" size="30" name="sharelist" value="{$productinfo.sharelist}"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<font color="red"> 以英文逗号分隔，如1,2,3,4</font></br> </br>   --> 
-			   <div style="border:1px solid #F00">
-			   		 库存单品ID: <input type="text" name="inventory_item_id" id="inventory_item_id"  value="{$productinfo.inventory_item_id}"><br><br>
-			   		<div>
-				   		<span>库存单品ID</span>
-				   		<span id="inventoryItemId">{$productinfo.inventoryItem.id}</span>
-			   		</div>
-			   		<div>
-			   			<span>库存单品名称</span>
-			   			<span id="inventoryItemName">{$productinfo.inventoryItem.name}</span>
-			   		</div>
-			   		<div>
-			   			<span>入库总数</span>
-			   			<span id="inventoryItemIn">{$productinfo.inventoryItem.inventory_in}</span>
-			   		</div>
-			   		<div>
-			   			<span>实际库存</span>
-			   			<span id="inventoryItemReal">{$productinfo.inventoryItem.inventory_real}</span>
-			   		</div>
-			   		<div>
-			   			最多投递 <span id="max_delivery">{$productinfo.inventoryItem.inventory_estimated}</span> 份到此产品
-			   		</div>
-			   		<div>
-			   			再投递<input type="text" name="inventoryInc">份
-			   		</div>
-			   </div>
-			   产品发售库存: <input type="text" name="inventory"  value="{$productinfo.inventory}" disabled="disabled"><br><br>
-			   产品发售库存减少: <input type="text" name="inventoryreduced"  value="{$productinfo.inventoryreduced}" disabled="disabled"><br><br>
-			   正装规格:	<input type="text" name="goodssize"  value="{$productinfo.goodssize}"><br><br>
-			   正装价格:	<input type="text" name="goodsprice" value='{$productinfo.goodsprice}'>(分)<br><br>
-			   本站普通会员价:	<input type="text" name="price" value='{$productinfo.price}'>(分)<br><br>
-			   本站高级会员价:	<input type="text" name="member_price" value='{$productinfo.member_price}'>(分)<br><br>
-			   每人限购:	<input type="text" name="max_peruser" value='{$productinfo.max_peruser}'>(个)<br><br>
-			   主要成分:	<input type="text" name="maincomponent" value='{$productinfo.maincomponent}'><br><br>
-			   体验装规格:	<input type="text" name="trialsize"  value='{$productinfo.trialsize}'><br><br>
-			   开始日期:<input type="text" size="20" id="start_time" name="start_time" value='{$productinfo.start_time}'><br><br>
-			   截止日期:	<input type="text" size="20" id="end_time" name="end_time" value='{$productinfo.end_time}'><br><br>
-			  产品对应的用户级别：<input type = checkbox value="0" name="user_type[]" <php>if(in_array(0,$usertype_list_selected)) echo " checked";</php>>普通会员</input>
-			  <input type = checkbox value="1" name="user_type[]" <php>if(in_array(1,$usertype_list_selected)) echo " checked";</php>>高级用户</input>
-			  <input type = checkbox value="2" name="user_type[]" <php>if(in_array(2,$usertype_list_selected)) echo " checked";</php>>年度用户</input>
-			  
-			   <input type = checkbox value="3" name="user_type[]" <php>if(in_array(3,$usertype_list_selected)) echo " checked";</php>>新用户</input>
-			    <br><br>
-			  <!-- 调查问卷ID：<input type="text" name="surveyid"  value='{$productinfo.surveyid}'/><br><br> --> 
-			  <!--  心水标签:	<input type="text" name="taglist" size="30"  value='{$productinfo.taglist}'><br><br> --> 
-			  适用肤质：<volist name="skin_list" id="skin"><input type="checkbox" name="for_skin[]" value="{$skin}"  <php>if(in_array($skin,$skin_list_selected)) echo " checked";</php>>{$skin} </volist>
-			  <br><br>
-			  适用发质：<volist name="hair_list" id="hair"><input type="checkbox" name="for_hair[]" value="{$hair}" <php>if(in_array($hair,$hair_list_selected)) echo " checked";</php> >{$hair} </volist>
-			  <br><br>
-			  适用人群：<volist name="people_list" id="people"><input type="checkbox" name="for_people[]" value="{$people}" <php>if(in_array($people,$people_list_selected)) echo " checked";</php>>{$people} </volist>
-			  <br><br>
-			   产品官方网址:	<input type="text" name="officialweburl" size="40" value="{$productinfo[officialweburl]}"><br><br>
-			   广告图片URL:	<input type="text" name="ad_url" size="40" value="{$productinfo[ad_url]}"><br><br>
-				<span style="float:left;">广告图片地址:</span>&nbsp;
-				<input type="text" size="30" name='ad_pic' value="{$productinfo.ad_pic}">
-				<input type="button" id="uploadPicture1" value="上传图片" onclick="uploadPic('ad_pic')"><br>
-				<a href="#showadpic" class="record">显示图片</a>
-				<div style="display:none">
-						<img src="{$productinfo.ad_pic}" height="300" width="300" id="showadpic">
-				</div>
-			   <br/><br/>
-			   产品简介:<br/>	
-			   <textarea name="pintro" id="info" style="width:500px;height:300px;visibility:hidden;">{$productinfo.pintro}</textarea>
-			   <br><br>
-			   <font color=red>使用说明</font>:<br/>
-			   <textarea name="readme" id="instructions" style="width:500px;height:300px;visibility:hidden;">{$productinfo.readme}</textarea>
-			    <br><br>
-			</div>
-			<div style='width:50%;float:left'>
-			产品分享试用观点:<br><textarea name='try_viewpoint'  rows='4'  cols='50'>{$productinfo.try_viewpoint}</textarea><br/>(一行一个观点！用回车换行。)
-			<br/><br/>
-			   销售标签:<input type="text" size="30" name="sale_tag" value="{$productinfo.sale_tag}"> 
-			   <br/>
-			   <span style="padding-left:70px;"><font color="red"> 多个用英文逗号分隔</font></span>
-			   <br/><br/>
-			   推荐属性标签:
-				<select name="commend_tag">
-					<option value="0">全不选</option>
-					<option value="1">最新</option>
-					<option value="2">推荐</option>
-					<option value="3">最热</option>
-					<option value="4">折扣</option>
-					<option value="5">正装</option>
-				</select>
-			   <br/><br/>
-			   品牌分类:	
-			   <input type="text" value='{$Think.get.pbname}' name="pbname"  onkeyup="tips(this.value,'blist')">
-			   <input type="hidden" value='{$productinfo.brandcid}'  name="brandcid">
-				<select name="blist" onchange="setBrandV(this.value,this.options[this.options.selectedIndex].text)">
-						<volist name="blist" id="brandcategory">
-						
-						<option value="{$brandcategory[cid]}"   <php>if($productinfo[brandcid]==$brandcategory[cid]) echo "selected";</php>>{$brandcategory[cname]}</option>
-						</volist>
-						</select><br><br>
-			   所属分类:	
-					<select name="pcid">
-					<volist name="clist" id="productcategory" key="k">
-						<option value="{$productcategory[pcid]}-{$productcategory[cid]}" <php>if($productinfo[firstcid]==$productcategory[pcid] && $productinfo[secondcid]==$productcategory[cid])  echo "selected";</php>>
-						      		<php>
-						      		for($i=0; $i<$productcategory[signnum]; $i++){
-						      			echo "|--";
-						      		}
-						      		</php>
-						{$productcategory[cname]}
-						</option>
-					</volist>
-					</select>【<font color="red">选择分类时请选择至二级分类</font>】<br><br>
-			   功效分类:	
-						<ul id="bar">
-						<volist name="elist" id="effectcategory">
-						  <li><input type="checkbox" name="effectcid[]" value="{$effectcategory[cid]}" <php>if(in_array($effectcategory[cid],$producteffectcidlist)) echo "checked";</php>>{$effectcategory[cname]}
-						  </li>
-						</volist>
-						</ul>
-			   <div style='clear:both;padding-top:75px;height:340px;margin-left:50px;'> 
-			      产品图片:	<input type='text' name="pimg"  value='{$productinfo.pimg}'><input type="button" id="uploadPicture1" value="上传图片" onclick="uploadPic('pimg')">
-			 <div id='show_pic' style='width:400px;height:300px;border:1px solid #777;color:#777;font-size;24px;overflow:auto'><eq name='productinfo.pimg'  value=''>图片预览区域<else/><img src="{$productinfo[pimg]}"></eq></div>
-			   </div>
-			   
-			   <div style="margin-left:50px;">
-			   		产品排序：<input type="text" name="sort_num" value="{$productinfo[sort_num]}"/>
-			   </div>
-			   <br /><br />
-                <div style="padding-top:0px;float:left;margin-left:200px;">
-					<input type="submit" class="button" value="提交表单" />
-				</div>
-   </div>
-    
-	</form>
-			</fieldset>
-	</div>
-<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-min.js"></script>
+    <td class="tcat">新增投递</td>
+</tr>
+<tr>
+<td align="center" class="panelsurround">
+<form id='product_create_form' action="__URL__/addproduct" method="post">
+    <div class="panel">
+        <div align="left">
+            输入库存ID:<input type="text" size="10" name="pname" value="{$productinfo.pname}">  </br> </br>
+            <div id="inventoryItemInfo"></div>
+            <fieldset class="fieldset">
+                <legend>投递属性设置</legend>
+                <div style='width:50%;float:left'>
+                    <ul style="float: left">
+                        <li>
+                            <div style="float: left">
+                                <em>*</em><label>单品名称：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" size="30" name="pname" value="{$productinfo.pname}" tip="填写单品名称" altercss="gray" errormsg="格式：2-10个字符（可包含汉字、数字、字母及下划线）" nullmsg="请您输入单品名称" datatype="s2-10">
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em>*</em><label>普通订阅价格：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" name="price" value='{$productinfo.price}' tip="填写金额" altercss="gray" errormsg="格式：两位小数" nullmsg="请填写正确金额" datatype="price">(元)
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em>*</em><label>高级订阅价格：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" name="member_price" value='{$productinfo.member_price}' tip="填写金额" altercss="gray" errormsg="格式：两位小数" nullmsg="请填写正确金额" datatype="price">(元)
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em></em><label>最大限购：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" name="max_peruser" value='{$productinfo.max_peruser}' tip="填写整数" altercss="gray" errormsg="格式：数字" data-type="n1-16">(个)
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em>*</em><label>开始日期：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" size="20" id="start_time" name="start_time" value='{$productinfo.start_time}' >
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em>*</em><label>截止日期：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" size="20" id="end_time" name="end_time" value='{$productinfo.end_time}'>
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em>*</em><label>投递数目：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" name="inventory" value='{$productinfo.price}' tip="填写整数" altercss="gray" errormsg="格式：数字" nullmsg="请填写正确数字" datatype="n1-16">(个)
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em>*</em><label>投递区域：</label>
+                            </div>
+                            <div style="float: left" >
+                                <input type=checkbox value="0" name="user_type[]" class="user_type"
+                                <php>if(in_array(0,$usertype_list_selected)) echo " checked";</php>
+                                >普通会员</input>
+                                <input type=checkbox value="1" name="user_type[]" class="user_type"
+                                <php>if(in_array(1,$usertype_list_selected)) echo " checked";</php>
+                                >高级用户</input>
+                                <input type=checkbox value="2" name="user_type[]" class="user_type"
+                                <php>if(in_array(2,$usertype_list_selected)) echo " checked";</php>
+                                >年度用户</input>
+                                <input type=checkbox value="3" name="user_type[]" class="user_type"
+                                <php>if(in_array(3,$usertype_list_selected)) echo " checked";</php>
+                                >新用户
+                                </input>
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style='width:50%;float:left'>
+                    <ul style="float: left">
+                        <li>
+                            <div style="float: left">
+                                <em></em><label>推荐属性标签：</label>
+                            </div>
+                            <div style="float: left">
+                                <select name="commend_tag">
+                                    <option value="0">全不选</option>
+                                    <option value="1">最新</option>
+                                    <option value="2">推荐</option>
+                                    <option value="3">最热</option>
+                                    <option value="4">折扣</option>
+                                    <option value="5">正装</option>
+                                </select>
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em></em><label> 编辑亮点：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" size="20" name="spot" value='{$productinfo.spot}'>
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em></em><label> 专题链接：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" size="20" name="project_url" value='{$productinfo.project_url}'>
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em></em><label> 不计运费：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type=checkbox value="1" name="need_postage"
+                                <php>if($productinfo.need_postage==1) echo " checked";</php>
+                                 />
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em></em><label> 进行预告：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type=checkbox value="1" name="need_pre_share"
+                                <php>if($productinfo.need_pre_share==1) echo " checked";</php>
+                                />
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em>*</em><label>预告排序：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" name="pre_share_sort_num" value="{$productinfo[pre_share_sort_num]}"/>
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em>*</em><label>投递排序：</label>
+                            </div>
+                            <div style="float: left">
+                                <input type="text" name="sort_num" value="{$productinfo[sort_num]}"/>
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div>
+        <input type="submit" class="button" value="提交表单"/>
+    </div>
+</form>
+</td>
+</tr>
+</tbody>
+</table>
 <script>
-//提交检查表单
-function checkform(){
-	if($(":text[name='pbname']").val() == ''){
-		alert('请选择品牌分类再提交');
-		return false;	
-	}else if($("select[name='pcid']").val().split('-')[0] == 0){
-		alert("请先选择二级分类再提交!");
-		return false;
-	}else if($(":checkbox[name='effectcid[]'][checked]").length == 0){
-		alert("请先选择功效再提交!");
-		return false;
-	}else if($(":checkbox[name='for_people[]'][checked]").length==0){
-		alert("请先选择适用人群再提交!");
-		return false;
-	}else{
-		return true;
-	}
-}
+    $("#start_time").datetimepicker({
+        dateFormat:"yy-mm-dd",
+        timeFormat : "HH:mm:ss",
+        changeMonth: true,
+        numberOfMonths: 1,
+        onSelect: function( selectedDate ) {
+            $( "#end_time" ).datepicker( "option", "minDate", selectedDate );
+        }
+    });
 
-//编辑器
-KE.show({
-	id : 'info',
-	imageUploadJson : '__PUBLIC__/kindeditor/php/upload_json.php',
-	fileManagerJson : '__PUBLIC__/kindeditor/php/file_manager_json.php',
-	allowFileManager : true,
-	afterCreate : function(id) {
-		KE.event.ctrl(document, 13, function() {
-			KE.util.setData(id);
-			document.forms['myform'].submit();
-		});
-		KE.event.ctrl(KE.g[id].iframeDoc, 13, function() {
-			KE.util.setData(id);
-			document.forms['myform'].submit();
-		});
-	}
-});
-
-KE.show({
-	id : 'instructions',
-	imageUploadJson : '__PUBLIC__/kindeditor/php/upload_json.php',
-	fileManagerJson : '__PUBLIC__/kindeditor/php/file_manager_json.php',
-	allowFileManager : true,
-	afterCreate : function(id) {
-		KE.event.ctrl(document, 13, function() {
-			KE.util.setData(id);
-			document.forms['myform'].submit();
-		});
-		KE.event.ctrl(KE.g[id].iframeDoc, 13, function() {
-			KE.util.setData(id);
-			document.forms['myform'].submit();
-		});
-	}
-});
-
-var commend_tag = "{$productinfo.commend_tag}";
-if(commend_tag){
-	$("select[name='commend_tag'] option[value='"+commend_tag+"']").attr("selected",true);
-}
-
-var pid="{$Think.request.pid}";
-var url="__URL__/editproduct";
-var search1='';
-$(function(){
-	var bcid="{$productinfo['brandcid']}";
-	if(bcid){
-		var selev=$("select[name='blist']").val();
-		var bname=$("select[name='blist']>option[value='"+selev+"']").text();
-		$("input[name='pbname']").val(bname);
-	}
-})
-
-if(pid){
-	$("#product_form").attr("action",url);
-}
-$(function(){
-	var status="{$productinfo['status']}";
-	if(status==0){
-		$("#status").attr('src','/admin/Public/images/010.gif');
-	}else{
-		$("#status").attr('src','/admin/Public/images/status_1.gif');
-	}
-})
-
-
-function tips(v,name){
-	if(v != search1){
-		$.ajax({
-			url:"{:U('Shop/index')}",
-			type:"post",
-			dataType:"json",
-			data:"brandname="+v+'&n='+Math.random(),
-			success: function(chkresult){
-				if(parseInt(chkresult.status)==1){
-					var data=chkresult.data;
-					$("select[name='"+name+"']").empty();
-					var i=0;
-					$("select[name='"+name+"']").prepend("<option>请选择品牌</option>");
-					for(i in data){
-						$("select[name='"+name+"']").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
-					}
-				}
-			}
-		})
-	}
-}
-function setBrandV(val,txt){
-	$("input[name='brandcid']").val(val);
-	$("input[name='pbname']").val(txt);
-}
-
-$("input[name='pimg']").blur(function(){
-var img=$(this).val();
-if(img)$("#show_pic").html("<img src='"+img+"'>");
-});
-$(".record").colorbox({inline:true,height:"70%",width:"30%"});
-$("#start_time").datetimepicker({
-	dateFormat:"yy-mm-dd",
-	timeFormat : "HH:mm:ss",
-	changeMonth: true,
-	numberOfMonths: 1,
-	onSelect: function( selectedDate ) {
-		$( "#end_time" ).datepicker( "option", "minDate", selectedDate );
-	}
-});
-
-$("#end_time").datetimepicker({
-	dateFormat:"yy-mm-dd",
-	timeFormat : "HH:mm:ss",
-	changeMonth: true,
-	numberOfMonths: 1,
-	onSelect: function( selectedDate ) {
-		$( "#start_time" ).datepicker( "option", "maxDate", selectedDate );
-	}
-});
-
-$("#expiration_date").datepicker({
-	dateFormat:"yy-mm-dd",
-	changeMonth: true,
-	numberOfMonths: 1
-})
-
-$("#inventory_item_id").keyup(function(){
-	var inventoryItemId = $(this).val();
-	if(inventoryItemId){
-		$.post("/admin/Inventory/getInfo",{inventoryItemId:inventoryItemId},function(rel){
-			var id="";
-			var name="";
-			var inventoryIn="";
-			var inventoryOut="";
-			var real="";
-			var estimated="";
-			if(rel.status){
-				console.log(rel.info);
-				var  info = rel.info;
-				id=info.id;
-				name=info.name;
-				inventoryIn=info.inventory_in;
-				real=info.inventory_real;
-				estimated=info.inventory_estimated;
-			}
-			$("#inventoryItemId").text(id);
-			$("#inventoryItemName").text(name);
-			$("#inventoryItemIn").text(inventoryIn);
-			$("#inventoryItemReal").text(real);
-			$("#inventoryItemEstimated").text(estimated);
-			$("#max_delivery").text(estimated);
-		})
-	}
-})	
+    $("#end_time").datetimepicker({
+        dateFormat:"yy-mm-dd",
+        timeFormat : "HH:mm:ss",
+        changeMonth: true,
+        numberOfMonths: 1,
+        onSelect: function( selectedDate ) {
+            $( "#start_time" ).datepicker( "option", "maxDate", selectedDate );
+        }
+    });
+    $(function(){
+        $("#product_create_form").Validform({
+            tiptype:2,
+            datatype:{
+                "price": /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/
+            },
+            beforeSubmit:function(curform){
+                var flag = false;
+                var userTypes = $(".user_type");
+                $.each(userTypes, function (index, ele) {
+                    if ($(ele).attr("checked")) {
+                        flag = true;
+                    }
+                })
+                if(!flag){
+                    alert("请选择投递区域");
+                    return false;
+                }
+                if(!$("#start_time").val() || !$("#end_time").val()){
+                    alert("请选择开始时间和结束时间");
+                    console.log();
+                    return false;
+                }
+                return false;
+            } ,
+            ajaxPost:true,
+            callback:function(data){
+                alert(data.info);
+            }
+        });
+    })
 </script>
-<include file="Public:footer" />
+<include file="Public:footer"/>
