@@ -1,7 +1,28 @@
 <?php
 
-class InventoryItemModel extends model{
-	
+class InventoryItemModel extends Model{
+
+    protected $_auto=array(
+        array('for_skin','getSkinList',3,'callback'),
+        array('for_people','getPeopleList',3,'callback'),
+        array('for_hair','getHairList',3,'callback'),
+    );
+
+    function getSkinList(){
+        $str=implode(",", $_POST["for_skin"]);
+        return $str;
+    }
+
+    function getPeopleList(){
+        $str=implode(",", $_POST["for_people"]);
+        return $str;
+    }
+
+    function getHairList(){
+        $str=implode(",", $_POST["for_hair"]);
+        return $str;
+    }
+
     /**
 	 * 入库单审核后，更新对应库存的各个指标
 	 */

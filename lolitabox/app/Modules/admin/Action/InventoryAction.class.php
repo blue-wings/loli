@@ -340,7 +340,9 @@ class InventoryAction extends CommonAction {
         }
         $_REQUEST["goodsprice"]=$_REQUEST["goodsprice"]*100;
         $_REQUEST["trialprice"]=$_REQUEST["trialprice"]*100;
-        if(false!==M("InventoryItem")->where("id=".$_REQUEST['id'])->save($_REQUEST))
+        $inventoryItem=new InventoryItemModel();
+        $data=D("inventoryItem")->create();
+        if(false!==$inventoryItem->where("id=".$_REQUEST['id'])->save($data))
             $this->success("操作成功");
         else
             $this->error("操作失败");

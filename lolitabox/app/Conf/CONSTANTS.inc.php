@@ -95,4 +95,10 @@ return array(
 
     'ORDER_TYPE_NORMAL'                                                =>1,
     'ORDER_TYPE_SELF_PACKAGE'                                                =>0,
+
+    'PRODUCT_NOT_NEED_POSTAGE'                                          =>0,
+    'PRODUCT_NEED_POSTAGE'                                          =>1,
+
+    'PRODUCT_NOT_NEED_PRE_SHARE'                                          =>0,
+    'PRODUCT_NEED_PRE_SHARE'                                          =>1
 );

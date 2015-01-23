@@ -870,6 +870,15 @@ class ProductsModel extends Model {
 		$array_hair=array('所有',  '中性',  '干性',  '油性',  '敏感',  '染发',  '烫发');
 		return $array_hair;
 	}
+
+    /**
+     * 获取产品适合发质属性列表
+     * @author zhenghong
+     */
+    public function getForUserDefine(){
+        $array_user=array('普通会员',  '高级用户',  '年度用户',  '新用户');
+        return $array_user;
+    }
 	
 	/**
 	 * 在数据库锁的保护下减小已使用投放量

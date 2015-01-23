@@ -11,9 +11,10 @@
 <tr>
 <td align="center" class="panelsurround">
 <form id='product_create_form' action="__URL__/addproduct" method="post">
+    <input type="hidden" name="pid" value="{$productinfo.pid}">
     <div class="panel">
         <div align="left">
-            输入库存ID:<input type="text" size="10" name="pname" value="{$productinfo.pname}">  </br> </br>
+            输入库存ID:<input type="text" size="10" name="inventory_item_id" value="{$productinfo.inventory_item_id}">  </br> </br>
             <div id="inventoryItemInfo"></div>
             <fieldset class="fieldset">
                 <legend>投递属性设置</legend>
@@ -25,6 +26,22 @@
                             </div>
                             <div style="float: left">
                                 <input type="text" size="30" name="pname" value="{$productinfo.pname}" tip="填写单品名称" altercss="gray" errormsg="格式：2-10个字符（可包含汉字、数字、字母及下划线）" nullmsg="请您输入单品名称" datatype="s2-10">
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left">
+                                <em></em><label>状态：</label>
+                            </div>
+                            <div style="float: left">
+                                <select name="status">
+                                    <option value="0"
+                                    <php>if($productinfo["status"] == 1) echo " selected";</php>>开放</option>
+                                    <option value="1"
+                                    <php>if($productinfo["status"] == 0) echo " selected";</php>>>关闭</option>
+                                </select>
                             </div>
                             <div class="tips" style="float: left; width: 150px">
                                 <div class="Validform_checktip" ></div>
@@ -90,30 +107,7 @@
                                 <em>*</em><label>投递数目：</label>
                             </div>
                             <div style="float: left">
-                                <input type="text" name="inventory" value='{$productinfo.price}' tip="填写整数" altercss="gray" errormsg="格式：数字" nullmsg="请填写正确数字" datatype="n1-16">(个)
-                            </div>
-                            <div class="tips" style="float: left; width: 150px">
-                                <div class="Validform_checktip" ></div>
-                            </div>
-                        </li>
-                        <li>
-                            <div style="float: left">
-                                <em>*</em><label>投递区域：</label>
-                            </div>
-                            <div style="float: left" >
-                                <input type=checkbox value="0" name="user_type[]" class="user_type"
-                                <php>if(in_array(0,$usertype_list_selected)) echo " checked";</php>
-                                >普通会员</input>
-                                <input type=checkbox value="1" name="user_type[]" class="user_type"
-                                <php>if(in_array(1,$usertype_list_selected)) echo " checked";</php>
-                                >高级用户</input>
-                                <input type=checkbox value="2" name="user_type[]" class="user_type"
-                                <php>if(in_array(2,$usertype_list_selected)) echo " checked";</php>
-                                >年度用户</input>
-                                <input type=checkbox value="3" name="user_type[]" class="user_type"
-                                <php>if(in_array(3,$usertype_list_selected)) echo " checked";</php>
-                                >新用户
-                                </input>
+                                <input type="text" name="inventory" value='{$productinfo.inventory}' tip="填写整数" altercss="gray" errormsg="格式：数字" nullmsg="请填写正确数字" datatype="n1-16">(个)
                             </div>
                             <div class="tips" style="float: left; width: 150px">
                                 <div class="Validform_checktip" ></div>
@@ -129,12 +123,18 @@
                             </div>
                             <div style="float: left">
                                 <select name="commend_tag">
-                                    <option value="0">全不选</option>
-                                    <option value="1">最新</option>
-                                    <option value="2">推荐</option>
-                                    <option value="3">最热</option>
-                                    <option value="4">折扣</option>
-                                    <option value="5">正装</option>
+                                    <option value="0"
+                                    <php>if($productinfo["commend_tag"] == 0) echo " selected";</php>>全不选</option>
+                                    <option value="1"
+                                    <php>if($productinfo["commend_tag"] == 1) echo " selected";</php>>最新</option>
+                                    <option value="2"
+                                    <php>if($productinfo["commend_tag"] == 2) echo " selected";</php>>推荐</option>
+                                    <option value="3"
+                                    <php>if($productinfo["commend_tag"] == 3) echo " selected";</php>>最热</option>
+                                    <option value="4"
+                                    <php>if($productinfo["commend_tag"] == 4) echo " selected";</php>>折扣</option>
+                                    <option value="5"
+                                    <php>if($productinfo["commend_tag"] == 5) echo " selected";</php>>正装</option>
                                 </select>
                             </div>
                             <div class="tips" style="float: left; width: 150px">
@@ -169,7 +169,7 @@
                             </div>
                             <div style="float: left">
                                 <input type=checkbox value="1" name="need_postage"
-                                <php>if($productinfo.need_postage==1) echo " checked";</php>
+                                <php>if($productinfo["need_postage"]==1) echo " checked";</php>
                                  />
                             </div>
                             <div class="tips" style="float: left; width: 150px">
@@ -182,7 +182,7 @@
                             </div>
                             <div style="float: left">
                                 <input type=checkbox value="1" name="need_pre_share"
-                                <php>if($productinfo.need_pre_share==1) echo " checked";</php>
+                                <php>if($productinfo["need_pre_share"]==1) echo " checked";</php>
                                 />
                             </div>
                             <div class="tips" style="float: left; width: 150px">
@@ -211,6 +211,29 @@
                                 <div class="Validform_checktip" ></div>
                             </div>
                         </li>
+                        <li>
+                            <div style="float: left">
+                                <em>*</em><label>投递区域：</label>
+                            </div>
+                            <div style="float: left" >
+                                <input type=checkbox value="0" name="user_type[]" class="user_type"
+                                <php>if(in_array(0,$usertype_list_selected)) echo " checked";</php>
+                                >普通会员</input>
+                                <input type=checkbox value="1" name="user_type[]" class="user_type"
+                                <php>if(in_array(1,$usertype_list_selected)) echo " checked";</php>
+                                >高级用户</input>
+                                <input type=checkbox value="2" name="user_type[]" class="user_type"
+                                <php>if(in_array(2,$usertype_list_selected)) echo " checked";</php>
+                                >年度用户</input>
+                                <input type=checkbox value="3" name="user_type[]" class="user_type"
+                                <php>if(in_array(3,$usertype_list_selected)) echo " checked";</php>
+                                >新用户
+                                </input>
+                            </div>
+                            <div class="tips" style="float: left; width: 150px">
+                                <div class="Validform_checktip" ></div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </fieldset>
@@ -225,6 +248,11 @@
 </tbody>
 </table>
 <script>
+    var id="{$Think.request.pid}";
+    var url="__URL__/editproduct";
+    if(id){
+        $("#product_create_form").attr("action",url);
+    }
     $("#start_time").datetimepicker({
         dateFormat:"yy-mm-dd",
         timeFormat : "HH:mm:ss",
@@ -264,10 +292,9 @@
                 }
                 if(!$("#start_time").val() || !$("#end_time").val()){
                     alert("请选择开始时间和结束时间");
-                    console.log();
                     return false;
                 }
-                return false;
+                return true;
             } ,
             ajaxPost:true,
             callback:function(data){

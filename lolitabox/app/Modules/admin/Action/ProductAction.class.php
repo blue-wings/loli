@@ -164,34 +164,15 @@ class ProductAction extends CommonAction{
 		$product=new ProductModel();
 		
 		if($data=$product->create()){
-
-			if(empty($data['firstcid'])){
-				$this->error('请选择二级分类!');
-			}
-			
-			$data['pintro'] = R('Article/remoteimg',array($_POST['pintro']));
-			$data['readme'] = R('Article/remoteimg',array($_POST['readme']));
+            $data["need_postage"]=$_POST['need_postage'] ? $_POST['need_postage'] : C("PRODUCT_NOT_NEED_POSTAGE") ;
+            $data["need_pre_share"]=$_POST['need_pre_share'] ? $_POST['need_pre_share'] : C("PRODUCT_NOT_NEED_PRE_SHARE") ;
 			$data['sort_num']=$_POST['sort_num'] ? $_POST['sort_num'] : 0 ;
+            $data['pre_share_sort_num']=$_POST['pre_share_sort_num'] ? $_POST['sort_num'] : 0 ;
+            $data["price"]=$data["price"]*100;
+            $data["member_price"]=$data["member_price"]*100;
 			
 			$pid=$product->add($data);
-
 			if(pid){
-				//建立产品ID与功效ID对应关系
-				$product_effect=new ProductEffectModel();
-				$effectcid=$_REQUEST["effectcid"];
-				$acount=count($effectcid);
-				for($i=0;$i<$acount;$i++){
-					$adata[$i]=array(
-					"pid"=>$pid,
-					"effectcid"=>$effectcid[$i]
-					);
-				}
-				$rss=$product_effect->addALL($adata);
-				if($acount==$rss){
-					$this->success("产品添加成功!ID为:{$pid}",U("Product/index"));
-				}else{
-					$this->error("产品功效表,未完整填充!请联系管理员检查");
-				}
 				if($data["inventory_item_id"] && $data["inventory"]){
 					try {
 						D("InventoryItem")->shelveProductInventory($pid, $data["inventory_item_id"], $data["inventoryInc"]);
@@ -199,11 +180,10 @@ class ProductAction extends CommonAction{
 						$this->error($e->getMessage());	
 					}
 				}
+                $this->success("产品添加成功!ID为:{$pid}",U("Product/index"));
 			}else{
 				$this->error("产品添加失败：".$product->getDbError());
 			}
-
-
 		}else {
 			$this->error('数据验证( '.$product->getError().' )');
 		}
@@ -212,7 +192,7 @@ class ProductAction extends CommonAction{
 	//改变产品加V状态
 	function changevStatus(){
 		if($this->_post("productid")){
-			$result = M("Products")->where(array('pid'=>$this->_post('productid')))->setField("if_super",$this->_post('status'));
+			$result = M("Products")->where(array('pid'=>$this->_post('productid')))->setField("status",$this->_post('status'));
 		}else if($this->_post("brandid")){
 			$result = M("ProductsBrand")->where(array('id'=>$this->_post('brandid')))->setField("if_super",$this->_post('status'));
 		}
@@ -229,118 +209,24 @@ class ProductAction extends CommonAction{
 		$pid=$_REQUEST["pid"];
 		$product=new ProductModel();
 		$productinfo=$product->getByPid($pid);
-		$category=M("Category");
-		//调用产品分类，CTYPE=1
-		$clist=$category
-		->field("cid,cname,pcid,ctype,cpath,sortid,concat(cpath,'-',cid) as bpath")
-		->order("bpath,cid")
-		->where("ctype=1")->select();
-		foreach($clist as $key=>$value){
-			$clist[$key]['signnum']= count(explode('-',$value['bpath']))-1;
-			$clist[$key]['marginnum']= (count(explode('-',$value['bpath']))-1)*20;
-		}
-		//调用效果分类,CTYPE=2
-		$elist=$category
-		->field("cid,cname")
-		->order("cid")
-		->where("ctype=2")->select();
 
-		//调用品牌分类,CTYPE=3
-		$blist=M('ProductsBrand')
-		->field('id as cid,name as cname')
-		->select();
+        $productinfo["price"]=bcdiv($productinfo["price"], 100, 2);
+        $productinfo["member_price"]=bcdiv($productinfo["member_price"], 100, 2);
+		$this->assign('usertype_list_selected',D("Products")->getForUserDefine());
 
-		//调用产品与效果分类对应关系
-		$producteffect=new ProductEffectModel();
-		$where="pid=".$pid;
-		$producteffectlist=$producteffect->field('effectcid')->where($where)->select();
-		while(list($k,$v)=each($producteffectlist)){
-			$tlist[]=$producteffectlist[$k]['effectcid'];
-		}
-		$producteffectcids=implode(",",$tlist);		
-		$product_mod=new ProductsModel();
-		$for_skin=$product_mod->getForSkinDefine();
-		$for_people=$product_mod->getForPeopleDefine();
-		$for_hair=$product_mod->getForHairDefine();
-		
-		$invetoryItemId = $productinfo["inventory_item_id"];
-		if($invetoryItemId){
-			$inventoryItem = M("InventoryItem")->where("id=".$invetoryItemId)->find();
-			$productinfo["inventoryItem"]=$inventoryItem;
-		}
-		
-		$this->assign('skin_list',$for_skin);
-		$this->assign('skin_list_selected',explode(",",$productinfo["for_skin"]));
-		$this->assign('people_list',$for_people);
-		$this->assign('people_list_selected',explode(",",$productinfo["for_people"]));
-		$this->assign('hair_list',$for_hair);
-		$this->assign('hair_list_selected',explode(",",$productinfo["for_hair"]));
-	    $this->assign('usertype_list_selected',explode(",",$productinfo["user_type"]));
-	    		
 		$this->assign("productinfo",$productinfo);
-		$this->assign('clist',$clist);
-		$this->assign('elist',$elist);
-		$this->assign('blist',$blist);
-		$this->assign('producteffectcidlist',$tlist); //产品与功效关系
 		$this->display("add");
 	}
 
 
 	public function editproduct(){
-		$product=new ProductModel();
-		if($_REQUEST['ac']=='changestatus')
-		{
-			if($_REQUEST['status']!==null && $_REQUEST['pid'])
-			{
-				$data['status']=$_REQUEST['status'];
-				$flag=$product->where("pid=".$_REQUEST['pid'])->save($data);
-				if($flag)
-				$this->ajaxReturn($data['status'],"操作成功",1);
-				else
-				$this->ajaxReturn($data['status'],"操作失败",0);
-			}
-			else
-			$this->ajaxReturn(0,"没有参数",0);
-			die;
-		}
-		if($data=$product->create()){
-			
-
-			/**如果用户选择了新的图片，则进行图片重新上传**/
-			if(strlen($_FILES[pimg][name])>0) {
-				$data['pimg']=$this->_upload();
-				//删除旧图片（略）
-			}
-			if(false!==$product->save($data)){
-
-				//建立产品ID与功效ID对应关系
-				$pid=$_POST["pid"];
-				$product_effect=new ProductEffectModel();
-				$product_effect->where("pid=".$pid)->delete(); //清空关系，准备重新写入
-				$effectcid=$_REQUEST["effectcid"];
-				$acount=count($effectcid);
-				for($i=0;$i<$acount;$i++){
-					$adata[$i]=array(
-					"pid"=>$pid,
-					"effectcid"=>$effectcid[$i]
-					);
-				}
-				$product_effect->addALL($adata);
-				
-				try {
-					D("InventoryItem")->shelveProductInventory($pid, $data["inventory_item_id"], $_POST["inventoryInc"]);
-				}catch(Exception $e){
-					$this->error($e->getMessage());
-				}
-				$this->success('操作成功');
-			}
-			else{
-				$this->error('操作失败'.$product->getDbError());
-			}
-		}
-		else {
-			$this->error('操作失败：数据验证( '.$product->getError().' )');
-		}
+        $_REQUEST["price"]=$_REQUEST["price"]*100;
+        $_REQUEST["member_price"]=$_REQUEST["member_price"]*100;
+        if(false!==D("Product")->where("pid=".$_REQUEST['pid'])->save($_REQUEST)){
+            $this->success("操作成功");
+        }else{
+            $this->error("操作失败");
+        }
 	}
 
 
