@@ -565,6 +565,73 @@ tag_index where tagname=cname and sid=cid and tagcategory=14))";
 		}
 
 		$this->ajaxReturn($prolist,'查询成功!',1);
-	}    
+	}
+
+
+    /**
+    +----------------------------------------------------------
+     * JS:kindeditor插件提交的文本中的远程图片转存到本地
+     * 存储目录:/data/userdata/年/月/日/
+    +----------------------------------------------------------
+     * @access protected
+    +----------------------------------------------------------
+     * @param string $data 文本
+    +----------------------------------------------------------
+     * @return void 返回过滤之后的文本
+    +----------------------------------------------------------
+     * @throws ThinkExecption
+    +----------------------------------------------------------
+     */
+    public  function remoteimg($data,$create_time=null){
+        if(!empty($create_time)){
+            $time_array=array();
+            $time_array=explode('-',$create_time);
+            //文件保存目录路径
+            $imgPath = USER_DATA_DIR_ROOT.DIRECTORY_SEPARATOR.$time_array[0].DIRECTORY_SEPARATOR.$time_array[1].DIRECTORY_SEPARATOR.$time_array[2].DIRECTORY_SEPARATOR;
+            $imgUrl_one="/data/userdata/".$time_array[0]."/".$time_array[1].'/'.$time_array[2].'/';
+        }else{
+            $imgPath = USER_DATA_DIR_ROOT.DIRECTORY_SEPARATOR.date("Y").DIRECTORY_SEPARATOR.date("m").DIRECTORY_SEPARATOR.date("d").DIRECTORY_SEPARATOR;
+            $imgUrl_one ="/data/userdata/".date("Y")."/".date("m").'/'.date("d").'/';
+        }
+
+        import("ORG.Util.Image");
+        //日期名
+        $milliSecond = time();
+        $img_arr = array();
+
+        $data=html_entity_decode($data);
+
+        $pattern='/<[img|IMG].*?src=[\'|\"](http.*?[gif|jpg|jpeg|bmp|png])[\'|\"].*?[\/]?>/';
+        preg_match_all($pattern,$data,$img_array);
+
+        $img_arr=array_unique($img_array[1]);
+
+        if(empty($img_array[1]))
+        {
+            return $data;
+        }
+        $arr=array();
+        foreach($img_arr as $key =>$value){
+            $get_file = @file_get_contents($value);
+            $arr=explode('.',$value);
+            $count=count($arr);
+
+            $rand = rand(1,1000);
+
+            $fileurl = $imgPath.$milliSecond.$key.$rand.'.'.$arr[$count-1];
+            $imgUrl=$imgUrl_one.$milliSecond.$key.$rand.'.'.$arr[$count-1];
+
+            if($get_file)
+            {
+                dir_create($imgPath);
+                $fp = @fopen($fileurl,'w');
+                @fwrite($fp,$get_file);
+                @fclose($fp);
+                Image::thumb($fileurl,$fileurl,"",500,500);
+            }
+            $data=str_replace($value,$imgUrl,$data);
+        }
+        return $data;
+    }
 }
 ?>

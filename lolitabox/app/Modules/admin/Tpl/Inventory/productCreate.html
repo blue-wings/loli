@@ -17,21 +17,21 @@
                     单品名称:<input type="text" size="30" name="name" value="{$item.name}">  </br> </br>
                     试用装规格:	<input type="text" name="trialsize"  value="{$item.trialsize}"><br><br>
                     正装规格:	<input type="text" name="goodssize"  value="{$item.goodssize}"><br><br>
-                    试用装价格:	<input type="text" name="goodsprice" value='{$item.goodsprice}'>(元)<br><br>
+                    试用装价格:	<input type="text" name="trialprice" value='{$item.trialprice}'>(元)<br><br>
                     正装价格:	<input type="text" name="goodsprice" value='{$item.goodsprice}'>(元)<br><br>
                     有效期:<input type="text" size="20" id="validdate" name="validdate" value='{$item.validdate}'><br><br>
                     物料类别:<select name="material">
                         <option value="0"
-                        <php>if(item.material==0) echo " selected";</php>
+                        <php>if($item["material"] == 0) echo " selected";</php>
                         >所有物料类别</option>
                         <option value="1"
-                        <php>if(item.material==1) echo " selected";</php>
+                        <php>if($item["material"]==1) echo " selected";</php>
                         >正装</option>
                         <option value="2"
-                        <php>if(item.material==2) echo " selected";</php>
+                        <php>if($item["material"]==2) echo " selected";</php>
                         >试用装</option>
                         <option value="3"
-                        <php>if(item.material==3) echo " selected";</php>
+                        <php>if($item["material"]==3) echo " selected";</php>
                         >耗材</option>
                     </select><br><br>
                     货架号:	<input type="text" name="shelfinfo" value='{$item.shelfinfo}'><br><br>

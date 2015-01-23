@@ -237,57 +237,63 @@ class InventoryAction extends CommonAction {
 
     public function addProduct(){
         //print_r($_POST);exit;
-        $product=new ProductModel();
+        $inventoryItem=new InventoryItemModel();
 
-        if($data=$product->create()){
+        if($data=$inventoryItem->create()){
 
-            if(empty($data['firstcid'])){
+            $cid = $_POST["cid"];
+            $data["firstcid"]=split("-", $cid)[0];
+            $data["secondcid"]=split("-", $cid)[1];
+            if(empty($data['secondcid'])){
                 $this->error('请选择二级分类!');
             }
+            $data["goodsprice"]=$data["goodsprice"]*100;
+            $data["trialprice"]=$data["trialprice"]*100;
+            $data['pintro'] = $this->remoteimg($_POST['pintro']);
+            $data['readme'] = $this->remoteimg($_POST['readme']);
 
-            $data['pintro'] = R('Article/remoteimg',array($_POST['pintro']));
-            $data['readme'] = R('Article/remoteimg',array($_POST['readme']));
-            $data['sort_num']=$_POST['sort_num'] ? $_POST['sort_num'] : 0 ;
+            $inventoryItemId=$inventoryItem->add($data);
 
-            $pid=$product->add($data);
-
-            if(pid){
+            if($inventoryItemId){
                 //建立产品ID与功效ID对应关系
-                $product_effect=new ProductEffectModel();
+                $product_effect=new InventoryItemEffectModel();
                 $effectcid=$_REQUEST["effectcid"];
                 $acount=count($effectcid);
                 for($i=0;$i<$acount;$i++){
                     $adata[$i]=array(
-                        "pid"=>$pid,
+                        "inventoryItemId"=>$inventoryItemId,
                         "effectcid"=>$effectcid[$i]
                     );
                 }
                 $rss=$product_effect->addALL($adata);
                 if($acount==$rss){
-                    $this->success("产品添加成功!ID为:{$pid}",U("Product/index"));
+                    $this->success("产品添加成功!ID为:{$inventoryItemId}",U("Inventory/index"));
                 }else{
                     $this->error("产品功效表,未完整填充!请联系管理员检查");
                 }
-                if($data["inventory_item_id"] && $data["inventory"]){
-                    try {
-                        D("InventoryItem")->shelveProductInventory($pid, $data["inventory_item_id"], $data["inventoryInc"]);
-                    }catch(Exception $e){
-                        $this->error($e->getMessage());
-                    }
-                }
             }else{
-                $this->error("产品添加失败：".$product->getDbError());
+                $this->error("添加库存单品失败：".$inventoryItem->getDbError());
             }
-
-
         }else {
-            $this->error('数据验证( '.$product->getError().' )');
+            $this->error('数据验证( '.$inventoryItem->getError().' )');
         }
     }
 
     public function editProduct(){
         $item=M("InventoryItem")->getById($_REQUEST['id']);
+        $item["goodsprice"]=bcdiv($item["goodsprice"], 100, 2);
+        $item["trialprice"]=bcdiv($item["trialprice"], 100, 2);
         $this->assign("item",$item);
+
+        //调用产品与效果分类对应关系
+        $inventoryEffect=new InventoryItemEffectModel();
+        $where="inventoryItemId=".$_REQUEST['id'];
+        $inventoryEffectlist=$inventoryEffect->field('effectcid')->where($where)->select();
+        while(list($k,$v)=each($inventoryEffectlist)){
+            $tlist[]=$inventoryEffectlist[$k]['effectcid'];
+        }
+        $this->assign('producteffectcidlist',$tlist); //产品与功效关系
+
         $category=M("Category");
         //调用产品分类，CTYPE=1
         $clist=$category
@@ -312,12 +318,14 @@ class InventoryAction extends CommonAction {
         $for_people=$product_mod->getForPeopleDefine();
         $for_hair=$product_mod->getForHairDefine();
         $this->assign('skin_list',$for_skin);
+        $this->assign('skin_list_selected',explode(",",$item["for_skin"]));
         $this->assign('people_list',$for_people);
+        $this->assign('people_list_selected',explode(",",$item["for_people"]));
         $this->assign('hair_list',$for_hair);
+        $this->assign('hair_list_selected',explode(",",$item["for_hair"]));
         $this->assign('clist',$clist);
         $this->assign('elist',$elist);
         $this->assign('blist',$blist);
-        $this->display("productCreate");
         $this->display("productCreate");
     }
 
@@ -325,11 +333,13 @@ class InventoryAction extends CommonAction {
         if($_REQUEST['cid']){
             $cids=explode("-", $_REQUEST['cid']);
             if($cids[1]){
-                $_REQUEST['secondcid']=$cids[0];
-                $_REQUEST['firstcid']=$cids[1];
+                $_REQUEST['secondcid']=$cids[1];
+                $_REQUEST['firstcid']=$cids[0];
             }else
                 $this->error("请选择二级分类");
         }
+        $_REQUEST["goodsprice"]=$_REQUEST["goodsprice"]*100;
+        $_REQUEST["trialprice"]=$_REQUEST["trialprice"]*100;
         if(false!==M("InventoryItem")->where("id=".$_REQUEST['id'])->save($_REQUEST))
             $this->success("操作成功");
         else
