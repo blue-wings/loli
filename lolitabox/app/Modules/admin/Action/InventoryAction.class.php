@@ -338,10 +338,10 @@ class InventoryAction extends CommonAction {
             }else
                 $this->error("请选择二级分类");
         }
-        $_REQUEST["goodsprice"]=$_REQUEST["goodsprice"]*100;
-        $_REQUEST["trialprice"]=$_REQUEST["trialprice"]*100;
         $inventoryItem=new InventoryItemModel();
         $data=D("inventoryItem")->create();
+		$data["goodsprice"]=$data["goodsprice"]*100;
+		$data["trialprice"]=$data["trialprice"]*100;
         if(false!==$inventoryItem->where("id=".$_REQUEST['id'])->save($data))
             $this->success("操作成功");
         else

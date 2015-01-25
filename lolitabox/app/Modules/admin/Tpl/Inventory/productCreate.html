@@ -52,9 +52,9 @@
 
                 <div style='width:50%;float:left'>
                     品牌分类:
-                    <select name="brandcid">
-                        <volist name="blist" id="brandcategory">
-                            <option value="{$brandcategory[cid]}"   <php>if($item[brandcid]==$brandcategory[cid]) echo "selected";</php>>{$brandcategory[cname]}</option>
+                    <select name="brandid">
+                        <volist name="blist" id="brand">
+                            <option value="{$brand[cid]}"   <php>if($item[brandid]==$brand[cid]) echo "selected";</php>>{$brand[cname]}</option>
                         </volist>
                     </select><br><br>
                     所属分类:

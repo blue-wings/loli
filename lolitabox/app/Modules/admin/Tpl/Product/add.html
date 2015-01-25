@@ -22,17 +22,6 @@
                     <ul style="float: left">
                         <li>
                             <div style="float: left">
-                                <em>*</em><label>单品名称：</label>
-                            </div>
-                            <div style="float: left">
-                                <input type="text" size="30" name="pname" value="{$productinfo.pname}" tip="填写单品名称" altercss="gray" errormsg="格式：2-10个字符（可包含汉字、数字、字母及下划线）" nullmsg="请您输入单品名称" datatype="s2-10">
-                            </div>
-                            <div class="tips" style="float: left; width: 150px">
-                                <div class="Validform_checktip" ></div>
-                            </div>
-                        </li>
-                        <li>
-                            <div style="float: left">
                                 <em></em><label>状态：</label>
                             </div>
                             <div style="float: left">
@@ -40,7 +29,7 @@
                                     <option value="0"
                                     <php>if($productinfo["status"] == 1) echo " selected";</php>>开放</option>
                                     <option value="1"
-                                    <php>if($productinfo["status"] == 0) echo " selected";</php>>>关闭</option>
+                                    <php>if($productinfo["status"] == 0) echo " selected";</php>>关闭</option>
                                 </select>
                             </div>
                             <div class="tips" style="float: left; width: 150px">

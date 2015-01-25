@@ -21,11 +21,11 @@ span.shownum{color:red;}
                                    </volist>
                                </select><br><br>
 
-                类别:<select name='category'>
-                               <option value=''>不限</option>
-                               <option value='正装'>正装</option>
-                               <option value='耗材'>耗材</option>
-                               <option value='试用装'>试用装</option>
+				物料类别:<select name='material'>
+                               <option value='0'>不限</option>
+                               <option value='1'>正装</option>
+                               <option value='2'>耗材</option>
+                               <option value='3'>试用装</option>
                           </select>&nbsp;&nbsp;
                  分类：<select name='cid'>
                           <option value="">不限</option>
@@ -36,23 +36,9 @@ span.shownum{color:red;}
                         </select>                          
                           <input type='submit'  value='查询' style="width:100px;">
                <input name="export" value="导出查询内容" type="submit">
-			   <input type="button" onclick="selectPrice()" value="显示总价值">			   
                  <span id="showL"></span>
 				</form>
 				
-				<div style="display:none">
-					<div id="showlist">	
-						查找:<input type="text" name='search' value="">
-						 <p>一共有<span class="shownum"><php>echo count($brandInventoryProductsNum);</php></span>个品牌</p>	
-							<ul id="showl">
-								<volist name="brandInventoryProductsNum" id="pnum">
-									<li>
-										<a href="javascript:void(0)" onclick="searchresult('{$pnum.id}')">{$pnum.name}({$pnum.countid})</a>
-									<li>
-								</volist>
-							</ul>
-					</div>		
-				</div>
 		</fieldset>
 	</div>
 </div>
@@ -92,16 +78,15 @@ span.shownum{color:red;}
 								<td width="5%" height="20">单品ID</td>
 								<td width="17%" height="20">单品名称</td>
 								<td width="10%" height="20">所属品牌</td>
-								<td width="5%" height="20">等级</td>
 								<td width="8%" height="10">规格</td>
 								<td width="5%" height="10">类别</td>
 								<td width="5%" height="10">预计出库数</td>
 								<td width="5%" height="10">理论库存量</td>
 								<td width="8%" height="10">实际库存量</td>
 								<!-- <td width="5%" height="10">兑换周期</td> -->
-								<td width="6%" height="10">价格</td>
+								<td width="6%" height="10">价格(元)</td>
 								<td width="8%" height="10">有效期</td>
-								<td width="6%" height="10">关联产品id</td>
+								<td width="8%" height="10">重量(KG)</td>
 								<td width="20%" height="10">操作</td>
 							</tr>
 							<volist name="list" id="vo" emtpy="还没有统计数据" key='k'>
@@ -111,9 +96,11 @@ span.shownum{color:red;}
 							    <a href="#" onclick="dialogmeseeage('{:U('Inventory/inOutInfo',array('pid'=>$vo[id]))}','{$vo.name}  出入库明细表')">{$vo.name}</a>
 							    </td>
      						     <td >{$vo.brandname}</td>
-     						     <td >{$vo.brandgrade}</td>
-     						     <td >{$vo.norms}</td>
-     						      <td >{$vo.category}</td>
+     						     <td >试用装规格:{$vo.trialsize}<br>正装规格:{$vo.goodssize}</td>
+     						      <td >
+									  <php>if($vo["material"] == 0) echo " 不限";if($vo["material"] == 1) echo "正装";if($vo["material"] == 2) echo "耗材";if($vo["material"] == 3) echo "试用装";
+									  </php>
+								  </td>
      						      <td >
      						      	<if condition="$vo['planOut'] gt 0">
      						      		<a href="#" onclick="dialogmeseeage('{:U('Inventory/selectProcuctInOrder',array('pid'=>$vo[id]))}','预计出库数')">{$vo['planOut']}</a>
@@ -128,9 +115,11 @@ span.shownum{color:red;}
 									<eq name="vo.exchange_interval" value="0">无限制<else /><font color="red">{$vo.exchange_interval}</font>天</eq>
 								 </td>
      						    -->  
-     						      <td >{$vo[price]}</td>
+     						      <td >
+									  正装价格:<php>echo bcdiv($vo['goodsprice'], 100, 2);</php><br>试用装价格:<php>echo bcdiv($vo['trialprice'], 100, 2);</php>
+								  </td>
      						     <td>{$vo[validdate]}</td>
-     						     <td ><a href="{:U("Product/index",array('pid'=>$vo[relation_id]))}">{$vo.relation_id}</td>
+								<td><php>echo bcdiv($vo[weight], 1000, 3);</php></td>
      						    <td height="25"> <a href="javascript:void(0)" onclick="updateid('{$vo.id}')">编辑</a><if condition="$vo[inventory_in] elt 0"> |
      						     <a href="javascript:void(0)"  onclick="deleteid('{$vo.id}')">删除</a></if></td>
 							</tr>
@@ -207,36 +196,6 @@ span.shownum{color:red;}
 	).max();
  }
  
- pregpattern({
-	"id":"单品ID",
-	"inventory_estimated":"理论库存量",
-	"inventory_real":"实际库存量",
-	"relation_id":"关联产品id",
-	"exchange_interval":"兑换周期"
-})
-
-function selectPrice(){
-	$.ajax({
-		url:"__ACTION__",
-		type:"post",
-		dataType:"json",
-		data:"selectP=All",
-		success: function(chkresult){
-			if(parseInt(chkresult.status)==1){
-				$("#showL").text("总价值:"+chkresult.data+"元").show();
-			}else{
-				alert(chkresult.info);
-			}
-		}
-	})
-}
-
-var brtype="{$Think.get.brandtype}";
-
-if(brtype){
-	$("select[name='brandtype']").val(brtype);
-}
-
 
 $("input[name='brandname']").keyup(callback);
 function callback(){
@@ -275,22 +234,6 @@ if(order){
 }
 if(cid){
 	$("select[name='cid']").val(cid);
-}
-$(function(){
-	$(":text[name='search']").keyup(function(){
-		var str = $(this).val();
-		$("#showl li a").each(function(i,dom){
-			if($(dom).text().indexOf(str) == -1){
-				$(this).parent().hide();	
-			}else{
-				$(this).parent().show();
-			}
-		})
-	})
-})
-function searchresult(pid){
-	$("select[name='brandid']").val(pid);
-	$("#myform").submit();
 }
 </script>
 <include file="Public:footer" />
