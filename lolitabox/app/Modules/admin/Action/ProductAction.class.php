@@ -222,7 +222,9 @@ class ProductAction extends CommonAction{
 	public function editproduct(){
         $_REQUEST["price"]=$_REQUEST["price"]*100;
         $_REQUEST["member_price"]=$_REQUEST["member_price"]*100;
-        if(false!==D("Product")->where("pid=".$_REQUEST['pid'])->save($_REQUEST)){
+		$productModel=new ProductModel();
+		$data=$productModel->create();
+        if(false!==$productModel->where("pid=".$_REQUEST['pid'])->save($data)){
             $this->success("操作成功");
         }else{
             $this->error("操作失败");
