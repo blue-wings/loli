@@ -147,23 +147,33 @@ class subscribeAction extends commonAction{
 				$categoryIds .= ",";
 			}
 		}
-		$sql = "select count(distinct(p.pid)) as count from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$productType.",p.user_type) and p.end_time> now() and (inventory - inventoryreduced)>0 and status= ".C("PRODUCT_STATUS_PUBLISHED")." and p.firstcid in (" .$categoryIds .")";
+        $sql = "select count(p.pid) as count from products as p, inventory_item as item where p.inventory_item_id=item.id and p.end_time> now() and (inventory - inventoryreduced)>0 and p.status= ".C("PRODUCT_STATUS_PUBLISHED")." and FIND_IN_SET(".$productType.",p.user_type) and item.firstcid in (" .$categoryIds .")";
 		$model= new Model();
 		$productCount = $model->query($sql);
 		$count = $productCount[0]['count'];
 		$p = new Page($count,8);
 		$pageSql = $p->firstRow.','.$p->listRows;
-		$productSql = "select distinct(p.pid) as productIds from products  as p, product_effect_relation as per where p.pid=per.pid and FIND_IN_SET(".$productType.",p.user_type) and p.end_time> now() and (inventory - inventoryreduced)>0 and status =".C("PRODUCT_STATUS_PUBLISHED")." and p.firstcid in (" .$categoryIds .")" ."order by p.pid limit " . $pageSql;
+		$productSql = "select p.pid as productIds, p.inventory_item_id as inventoryItemIds  from products as p, inventory_item as item where p.inventory_item_id=item.id and p.end_time> now() and (inventory - inventoryreduced)>0 and p.status= ".C("PRODUCT_STATUS_PUBLISHED")." and FIND_IN_SET(".$productType.",p.user_type) and item.firstcid in (" .$categoryIds .")" ."order by p.sort_num limit " . $pageSql;
 		$prodcutIdList = $model->query($productSql);
 		$productIdsStr = "";
+        $inventoryItemIdsStr = "";
 		for($i=0; $i<count($prodcutIdList); $i++){
 			$productIdsStr .= $prodcutIdList[$i]["productIds"];
+            $inventoryItemIdsStr .= $prodcutIdList[$i]["inventoryItemIds"];
 			if($i != count($prodcutIdList)-1){
 				$productIdsStr .= ",";
+                $inventoryItemIdsStr .=",";
 			}	
 		}
-		$where = array("in", $productIdsStr);
 		$products = D("Products")->where("pid in (".$productIdsStr.")")->select();
+        $inventoryItems = M("InventoryItem")->where("id in (".$inventoryItemIdsStr.")")->select();
+        foreach($inventoryItems as $index=>$inventoryItem){
+            $inventoryMap[$inventoryItem["id"]]=$inventoryItem;
+        }
+        foreach($products as $index => $product){
+            $product["inventoryItem"]=$inventoryMap[$product["inventory_item_id"]];
+            $products[$index]=$product;
+        }
 		$page=$p->show();
 		$this->assign('page',$page);
 		return $products;
@@ -176,7 +186,7 @@ class subscribeAction extends commonAction{
         $startTime = date("Y-m-d H:i:s",time());
         $where["start_time"]=array('egt',$startTime);
         $where["status"]=c('PRODUCT_STATUS_PUBLISHED');
-        $futureProdcutsList = $productsModel->where($where)->order("start_time ASC")->limit(6)->select();
+        $futureProdcutsList = $productsModel->where($where)->order("pre_share_sort_num ASC")->limit(6)->select();
         $count = count($futureProdcutsList);
         $futureProductFirst = NULL;
         $futureProducts = array();
@@ -192,18 +202,44 @@ class subscribeAction extends commonAction{
 			}	
         }
         
-        $endTime = date("Y-m-d");
 		$whereClosed["end_time"]=array('elt',$startTime);
 		$whereClosed["status"]=c('PRODUCT_STATUS_PUBLISHED');
 		$closedProducts = $productsModel->where($whereClosed)->order("end_time DESC")->limit(5)->select();
 		for($i=0; $i<count($closedProducts); $i++){
 			$closedProducts[$i]["end_time_seconds"] = strtotime($closedProducts[$i]["end_time"]);	
 		}
+        $futureProductFirst = $this->fillInventoryItems($futureProductFirst, true);
+        $futureProducts = $this->fillInventoryItems($futureProducts, false);
+        $closedProducts = $this->fillInventoryItems($closedProducts, false);
 		$this->assign("futureProductFirst",$futureProductFirst);
 		$this->assign("futureProducts",$futureProducts);
 		$this->assign("closedProducts",$closedProducts);
 		$this->display();
 	}
+
+    private function fillInventoryItems($products, $single){
+        if($single==true){
+            $inventoryItem = M("InventoryItem")->getById($products["inventory_item_id"]);
+            $products["inventoryItem"]=$inventoryItem;
+            return $products;
+        }
+        $inventoryItemIdsStr = "";
+        for($i=0; $i<count($products); $i++){
+            $inventoryItemIdsStr .= $products[$i]["inventory_Item_Id"];
+            if($i != count($products)-1){
+                $inventoryItemIdsStr .=",";
+            }
+        }
+        $inventoryItems = M("InventoryItem")->where("id in (".$inventoryItemIdsStr.")")->select();
+        foreach($inventoryItems as $index=>$inventoryItem){
+            $inventoryMap[$inventoryItem["id"]]=$inventoryItem;
+        }
+        foreach($products as $index => $product){
+            $product["inventoryItem"]=$inventoryMap[$product["inventory_item_id"]];
+            $products[$index]=$product;
+        }
+        return $products;
+    }
 
     public function getAllSubscribeFirstCategories(){
         $firstCategories = M("Category")->where(array("ctype"=>1, "pcid"=>0))->select();

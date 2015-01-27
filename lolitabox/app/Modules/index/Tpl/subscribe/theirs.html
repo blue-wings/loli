@@ -22,7 +22,7 @@ body {background-image:none}
 					<dl>
 						<dt class="name">
 							<a href="javascript:void(0)" onclick="dialog_products('<{$futureProductFirst.pid}>')">
-								<img src="<{$futureProductFirst.pimg}>" width="354" height="379"}>
+								<img src="<{$futureProductFirst.inventoryItem.pimg}>" width="354" height="379"}>
 							</a>
 						</dt>
 						<dd class="countDown" clock="clock" countDownSeconds="<{$futureProductFirst.start_time_seconds}>" style="background-color:#fa2d96;height:46px; text-align:center; font-size:22">
@@ -47,11 +47,11 @@ body {background-image:none}
 						<div  style="width:230px;margin-left:20px" class="box">
 							<dl>
 								<dt class="name" style="height:45px; width:230px; text-align:left; font-size:13">
-									<{$product.pname}>
+									<{$product.inventoryItem.name}>
 								</dt>
 								<dd>
 									<a href="javascript:void(0)" onclick="dialog_products('<{$product.pid}>')">
-										<img src="<{$product.pimg}>" width="230" height="161">
+										<img src="<{$product.inventoryItem.pimg}>" width="230" height="161">
 									</a>
 									<notempty name="product.commend_tags_class"> 
 										<i class="<{$product.commend_tags_class}>"></i> 
@@ -77,11 +77,11 @@ body {background-image:none}
 					<div  style="width:223px; float:left; margin-right:15px" class="box">
 						<dl>
 							<dt class="name" style="height:46px; text-align:center; font-size:13">
-								<{$product.pname}>
+								<{$product.inventoryItem.name}>
 							</dt>
 							<dd>
 								<a href="javascript:void(0)" onclick="dialog_products('<{$product.pid}>')">
-									<img src="<{$product.pimg}>" width="223" height="201">
+									<img src="<{$product.inventoryItem.pimg}>" width="223" height="201">
 								</a>
 								<notempty name="product.commend_tags_class"> 
 									<i class="<{$product.commend_tags_class}>"></i> 
