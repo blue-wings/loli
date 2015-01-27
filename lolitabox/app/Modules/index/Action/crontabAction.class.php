@@ -30,7 +30,8 @@ class crontabAction extends commonAction {
                 }
 				$products = D("UserOrderSendProductdetail")->getUserOrderProducts($order["ordernmb"]);
 				foreach ($products as $product){
-					D("Products")->minusInventoryReducedInDBLock($product["pid"], $product["product_num"]);
+                    $product = D("DBLock")->getSingleProductLock($product["pid"]);
+					D("Products")->minusInventoryReduced($product["pid"], $product["product_num"]);
 				}
 				D("UserOrder")->where(array("ordernmb"=>$order["ordernmb"]))->save(array("ifavalid"=>C("ORDER_IFAVALID_OVERDUE")));
                 D("DBLock")->getSingleUserLock($order["userid"]);

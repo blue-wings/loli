@@ -881,14 +881,14 @@ class ProductsModel extends Model {
     }
 	
 	/**
-	 * 在数据库锁的保护下减小已使用投放量
+	 * 减小已使用投放量
 	 * @param unknown_type $productId
 	 * @param unknown_type $num
 	 * @throws Exception
 	 */
-    public function minusInventoryReducedInDBLock($productId, $num)
+    public function minusInventoryReduced($productId, $num)
     {
-        $product = D("DBLock")->getSingleProductLock($productId);
+        $product = $this->getById($productId);
         if ($product["inventoryreduced"] >= $num) {
             $param["pid"] = $product["pid"];
             $param["inventoryreduced"] = $product["inventoryreduced"] - $num;
@@ -899,13 +899,13 @@ class ProductsModel extends Model {
     }
 
 	/**
-	 * 在数据库锁的保护下增加已使用投放量
+	 * 增加已使用投放量
 	 * @param unknown_type $productId
 	 * @param unknown_type $num
 	 */
-    public function addInventoryReducedInDBLock($productId, $num)
+    public function addInventoryReduced($productId, $num)
     {
-        $product = D("DBLock")->getSingleProductLock($productId);
+        $product = $this->getById($productId);
         if (($product["inventory"] - $product["inventoryreduced"] - $num) >= 0) {
             $param["pid"] = $product["pid"];
             $param["inventoryreduced"] = $product["inventoryreduced"] + $num;
@@ -916,13 +916,13 @@ class ProductsModel extends Model {
     }
 	
 	/**
-	 * 在数据库锁的保护下减小全部投放量
+	 * 减小全部投放量
 	 * @param unknown_type $productId
 	 * @param unknown_type $num
 	 * @throws Exception
 	 */
-	public function minusInventoryInDBLock($productId, $num){
-        $product = D("DBLock")->getSingleProductLock($productId);
+	public function minusInventory($productId, $num){
+        $product = $this->getById($productId);
         if ($product["inventory"] > $num) {
           $param["pid"] = $product["pid"];
           $param["inventory"] = $product["inventory"] - $num;
@@ -933,12 +933,12 @@ class ProductsModel extends Model {
 	}
 
 	/**
-	 * 在数据库锁的保护下增加全部投放量
+	 * 增加全部投放量
 	 * @param unknown_type $productId
 	 * @param unknown_type $num
 	 */
-	public function addInventoryInDBLock($productId, $num){
-        $product = D("DBLock")->getSingleProductLock($productId);
+	public function addInventory($productId, $num){
+        $product = $this->getById($productId);
         $param["pid"]=$product["pid"];
 		$param["inventory"]= $product["inventory"] + $num;
 		$this->save($param);

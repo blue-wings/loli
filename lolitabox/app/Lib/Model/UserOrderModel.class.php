@@ -108,7 +108,8 @@ class UserOrderModel extends Model
                         throw new Exception($product["pname"] . "购买超出限制, 您最多能购买" . $remainNum . "件");
                     }
                 }
-                D("Products")->addInventoryReducedInDBLock($product["pid"], $productNum);
+                D("DBLock")->getSingleProductLock($product["pid"]);
+                D("Products")->addInventoryReduced($product["pid"], $productNum);
             }
 
             $data['ordernmb'] = date("YmdHis") . rand(100, 999);
