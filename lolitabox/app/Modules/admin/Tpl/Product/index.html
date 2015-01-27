@@ -10,38 +10,38 @@
 	单品名称:<input id="inventory_item_name" name="inventory_item_name" type='text'/>
 <br>
 	投递区域:
-	<select id="u59_input" class="text_sketch">
-		<option selected="" value="所有投递区">所有投递区</option>
-		<option value="新会员区">新会员区</option>
-		<option value="普通会员区">普通会员区</option>
-		<option value="高级会员区">高级会员区</option>
+	<select id="user_type" name="user_type" class="text_sketch">
+		<option selected="" value="">所有投递区</option>
+		<option value="3">新会员区</option>
+		<option value="0">普通会员区</option>
+		<option value="1">高级会员区</option>
 	</select>
 	投递周期:
-	<select id="u68_input" class="text_sketch">
+	<select id="duration" name="duration" class="text_sketch">
 		<option selected="" value="所有投递周期">所有投递周期</option>
-		<option value="投递未开始">投递未开始</option>
-		<option value="投递周期中">投递周期中</option>
-		<option value="投递期结束">投递期结束</option>
+		<option value="0">投递未开始</option>
+		<option value="1">投递周期中</option>
+		<option value="2">投递期结束</option>
 	</select>
 	投递状态:
-	<select id="u71_input" class="text_sketch">
-		<option value="所有投递状态">所有投递状态</option>
-		<option value="正常">正常</option>
-		<option value="结束">结束</option>
+	<select id="status" name="status" class="text_sketch">
+		<option value="">所有投递状态</option>
+		<option value="1">开启</option>
+		<option value="0">关闭</option>
 	</select>
 	默认排序:
-	<select id="u74_input" class="text_sketch">
+	<select id="order" name="order" class="text_sketch">
 		<option selected="" value="按批次ID倒序">按批次ID倒序</option>
-		<option value="按批次ID正序">按批次ID正序</option>
-		<option value="按人工排序倒序">按人工排序倒序</option>
-		<option value="按人工排序正序">按人工排序正序</option>
-		<option value="按预告倒序">按预告倒序</option>
-		<option value="按预告正序">按预告正序</option>
-		<option value="按投递开始日期倒序">按投递开始日期倒序</option>
-		<option value="按投递开始日期正序">按投递开始日期正序</option>
-		<option value="按投递结束日期倒序">按投递结束日期倒序</option>
-		<option value="按投递借宿日期正序">按投递借宿日期正序</option>
-		<option value="按已定数量倒序">按已定数量倒序</option>
+		<option value="id asc">按批次ID正序</option>
+		<option value="sort_num desc">按人工排序倒序</option>
+		<option value="sort_num asc">按人工排序正序</option>
+		<option value="pre_share_sort_num desc">按预告倒序</option>
+		<option value="pre_share_sort_num asc">按预告正序</option>
+		<option value="start_time desc">按投递开始日期倒序</option>
+		<option value="start_time asc">按投递开始日期正序</option>
+		<option value="end_time sec">按投递结束日期倒序</option>
+		<option value="end_time asc">按投递借宿日期正序</option>
+		<option value="inventoryreduced desc">按已定数量倒序</option>
 	</select>
 	<br>
 <input type="button" name="resetpage" value="重置">&nbsp;&nbsp;
@@ -58,9 +58,9 @@
         <td width="9" background="__PUBLIC__/images/tab_12.gif">&nbsp;</td>
         <td bgcolor="#f3ffe3"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#c0de98">
           <tr background="__PUBLIC__/images/tab_14.gif" align="center" id="awarp">
-            <td width="7%" height="18">ID</td>
+            <td width="7%" height="18">id</td>
             <td width="14%" height="18">投递区域</td>
-            <td width="10%" height="18">单品ID</td>
+            <td width="10%" height="18">单品id</td>
             <td width="10%" height="18">单品名称</td>
             <td width="10%" height="18">投递周期</td>
             <td width="5%" height="18">售罄时间</td>
@@ -70,51 +70,35 @@
             <td width="5%" height="18">已定数量</td>
             <td width="5%" height="18">实际库存</td>
             <td width="5%" height="18">人工排序</td>
-			  <td width="5%" height="18">预告排序</td>
+			<td width="5%" height="18">预告排序</td>
+            <td width="5%" height="18">状态</td>
             <td width="7%" height="18">编辑</td>
            <!-- <td width="7%" height="18"><div align="center" class="STYLE2">删除</div></td> --> 	   
           </tr>
           <volist name="list" id="productlist" emtpy="这里一片空白" key="k">
           <tr>
-            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE1">
-              <input name="checkbox" type="checkbox" class="STYLE2" value="{$productlist[pid]}"/>
-            </div></td>
             <td height="18" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$productlist.pid}</div></td>
-            <td height="18" bgcolor="#FFFFFF"><div align="left" class="STYLE2 STYLE1">
-            <a href="/products/{$productlist.pid}" target="_blank">
-            {$productlist.pname}</a></div>
-            </td>
-            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$productlist.firstcname}</div></td>
-            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$productlist.secondcname}</div></td>
-            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$productlist.brandname}</div></td>
-            <td height="18" bgcolor="#FFFFFF"><div align="center" >{$productlist.goodssize}</div></td>
-            <td height="18" bgcolor="#FFFFFF"><div align="center" >{$productlist.goodsprice}</div></td>
-			<td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2">
-				<a href="javascript:void(0)" onclick="pic_dialog('{$productlist.pid}')">编辑</a></div>
-			</td>
-			<td align="center" height="18" bgcolor="#FFFFFF"><a href="#" onclick="dialogmeseeage('__URL__/channel/pid/{$productlist[pid]}','渠道管理')">管理</a></td>
-			 <td height="18" bgcolor="#FFFFFF" align="center">
-				<span onclick="changeProductStatus('{$productlist[pid]}','{$k}')" id='img_{$k}'>
-					<if condition="$productlist.status eq 1">
-					<img src='__PUBLIC__/images/status_1.gif' height='15' width='15'  id="status" style="cursor: pointer">
-					<else />
-					<img src='__PUBLIC__/images/status_0.gif' height='15' width='15'  id="status" style="cursor: pointer">
-					</if>
-					</span>
-				<input type="hidden" value='{$productlist.status}' id='val_{$k}'>
-			 </td>
-			 <td bgcolor="#FFFFFF" align="center">
-					{$productlist.fans_num}
-			 </td>
-			 <td height="18" bgcolor="#FFFFFF" align="center">
-				<a href="javascript:void(0)" onclick="channelv(this,'{$productlist.pid}')"><img src='__PUBLIC__/images/status_{$productlist.if_super}.gif'></a>
-				<input type="hidden" value="{$productlist.if_super}">
-			 </td>
-             <td height="18" bgcolor="#FFFFFF"><div align="center"><img src="__PUBLIC__/images/037.gif" width="9" height="9" /><span class="STYLE1"> [</span><a href="__URL__/edit/pid/{$productlist.pid}">编辑</a><span class="STYLE1">]</span></div></td>
+              <td height="18" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$productlist.user_type}</div></td>
+              <td height="18" bgcolor="#FFFFFF" class="STYLE2"><div align="center" class="STYLE2 STYLE1">{$productlist.inventory_item_id}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$productlist.name}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$productlist.duration}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$productlist.sale_out_time}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" class="STYLE2 STYLE1">{$productlist.inventory}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" >{$productlist.totalPayedNum}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" >普通:{$productlist.price}元<br>会员:{$productlist.member_price}元</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" >{$productlist.inventoryreduced}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" >{$productlist.inventory_real}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" >{$productlist.sort_num}</div></td>
+            <td height="18" bgcolor="#FFFFFF"><div align="center" >{$productlist.pre_share_sort_num}</div></td>
+			 <td height="18" bgcolor="#FFFFFF" align="center"><div align="center" >{$productlist.status}</div></td>
+             <td height="18" bgcolor="#FFFFFF"><div align="center">
+                 <img src="__PUBLIC__/images/037.gif" width="9" height="9" /><span class="STYLE1"> [</span><a href="__URL__/edit/pid/{$productlist.pid}">编辑</a><span class="STYLE1">]</span></div>
+             </td>
            <!--<td height="18" bgcolor="#FFFFFF"><div align="center"><span class="STYLE2"><img src="__PUBLIC__/images/010.gif" width="9" height="9" /> </span>  <span class="STYLE1">[</span><a onclick="return confirm('确认将此信息删除吗?')" href="__URL__/del/pid/{$productlist.pid}">删除</a><span class="STYLE1">]</span></div></td> -->
           </tr>
 		</volist>
-        </table></td>
+        </table>
+        </td>
         <td width="9" background="__PUBLIC__/images/tab_16.gif">&nbsp;</td>
       </tr>
     </table></td>
@@ -135,124 +119,5 @@
   </tr>
 </table>
 <script>
-
-function pic_dialog(id){
-	$.dialog({
-		content:"url:__URL__/picManager/pid/"+id,
-		title:"产品图片管理",
-	}).max()
-}
-
-
-function changeProductStatus(pid,key){
-	var v=$("#val_"+key);
-	$.ajax({
-		url:"{:U('Product/changeProductStatus')}",
-		type:"post",
-		dataType:"json",
-		data:"pid="+pid+'&status='+v.val(),
-		success: function(chkresult){
-			if(parseInt(chkresult.status)==1){
-
-				if(v.val()==0){
-					$("#img_"+key+">img").attr('src','__PUBLIC__/images/status_1.gif');
-					v.val('1');
-				}else{
-					$("#img_"+key+">img").attr('src','__PUBLIC__/images/010.gif');
-					v.val('0');
-				}
-			}else{
-				alert(chkresult.info);
-			}
-		}
-	})
-}
-$(":button[name='selectAll']").toggle(
-function(){
-	$(":checkbox[name='checkbox']").attr("checked",true);
-},
-function(){
-	$(":checkbox[name='checkbox']").attr("checked",false);
-}
-);
-
-function get_product_list(){
-	var list=$(":checkbox[name='checkbox']:checked");
-	var string="";
-	for(var i=0;i<list.length;i++){
-		string+=$(":checkbox[name='checkbox']:checked:eq("+i+")").val()+",";
-	}
-	return string;
-}
-
-function dat_change_status(type){
-	var status=1;
-	if(type=='close')
-	status=0;
-	var pid_list=get_product_list();
-	if(pid_list==''){
-		alert("请选择产品");
-		return false;
-	}
-
-	$.ajax({
-		type:"post",
-		url:"{:U('Product/changeProductStatus')}",
-		dataType:"json",
-		data:"type=dat&prolist="+pid_list+"&status="+status,
-		success:function(data){
-			alert(data.info);
-			window.location.href="__SELF__";
-		}
-	})
-}
-
-$("#add_fans").click(function(){
-	var pid_list=get_product_list();
-	if(pid_list==''){
-		alert("请选择产品");
-		return false;
-	}
-	$("#userid_list").val(pid_list);
-	$("#add_fans").dialog({
-		title:"批量加粉",
-		content:$("#userinfo_div").html()
-	})
-})
-
-$("#addfans_submit").click(function(){
- if($("#add_fansnum").val() <=0){
-	 $("#add_fansnum").focus();
-	 return false;
- }
- var api=$.dialog.tips('正在处理，请稍候...',600);
- $.ajax({
-	 type:"post",
-	 url:"__URL__/addFans",
-	 data:$("#add_fans_form").serialize(),
-	 dataType:"json",
-	 success:function(data){
-		 api.close();
-		 $.dialog.tips(data.info);
-		 setTimeout("api_addfans.close();",3000);
-	 }
- })
- return false;
-})
-
-//order排序
-pregpattern({
-			"pid":"ID",
-			"goodsprice":"价格",
-			"fans_num":"粉丝数"
-			});
 </script>
-<div id="userinfo_div" style="display: none">
-	<form action="__URL__/addFans" method="post" name="add_fans_form"  id="add_fans_form">
-	    <input type="hidden"  name="type"  value="2" id="type">
-		<input type="hidden"  name="userid_list" value="" id="userid_list">
-		粉丝数量：<input name="add_fansnum" type="text" value="0" id="add_fansnum"><br>
-		<input type="submit"  id="addfans_submit" value="添加粉丝">
-	</form>
-</div>
 <include file="Public:footer" />

@@ -14,7 +14,7 @@
     <input type="hidden" name="pid" value="{$productinfo.pid}">
     <div class="panel">
         <div align="left">
-            输入库存ID:<input type="text" size="10" name="inventory_item_id" value="{$productinfo.inventory_item_id}">  </br> </br>
+            输入库存ID:<input type="text" size="10" name="inventory_item_id" value="{$productinfo.inventory_item_id}" <php>if($productinfo["inventory_item_id"] != null) echo "disabled";</php>>  </br> </br>
             <div id="inventoryItemInfo"></div>
             <fieldset class="fieldset">
                 <legend>投递属性设置</legend>
@@ -96,7 +96,7 @@
                                 <em>*</em><label>投递数目：</label>
                             </div>
                             <div style="float: left">
-                                <input type="text" name="inventory" value='{$productinfo.inventory}' tip="填写整数" altercss="gray" errormsg="格式：数字" nullmsg="请填写正确数字" datatype="n1-16">(个)
+                                <input type="text" name="inventory" value='{$productinfo.inventory}' tip="填写整数" altercss="gray" errormsg="格式：数字" nullmsg="请填写正确数字" datatype="n1-16" <php>if($productinfo["inventory_item_id"] != null) echo disabled</php>>(个)
                             </div>
                             <div class="tips" style="float: left; width: 150px">
                                 <div class="Validform_checktip" ></div>

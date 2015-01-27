@@ -6,90 +6,81 @@ class ProductAction extends CommonAction{
 	public function index(){
 
 		$where = array();
-		$pname = trim($this->_request("pname"));
-		$pid=trim($this->_request("pid"));
-		$brandcid = $_REQUEST['brandcid'];
-		$product=new ProductModel();
-
-		if (!empty($pname)) {
-			$where['pname'] = array('like',"%".$pname."%");
-		}
-		if($_GET['bid']){
-			$where['brandcid']=filterVar($_GET['bid']);
-		}
-		if (!empty($brandcid)) {
-			$where['brandcid'] = $brandcid;
-		}
-		if($_REQUEST['status']!==null && $_REQUEST['status']!=='')
-		{
-			$where['status']=$_REQUEST['status'];
-		}
-		if($pid){
-			$where['pid']=$pid;
-		}
-
-		if($this->_get('brandtype')){
-			$where['brandcid']=array('exp',"IN(SELECT id FROM products_brand WHERE brandtype ='".$this->_get('brandtype')."')");
-		}
-
-		if($this->_get('cooperation')){
-			if($this->_get('cooperation')==1){
-				$where['pid']=array('exp',"IN(SELECT relation_id FROM `inventory_item`)");
-			}else{
-				$where['pid']=array('exp',"NOT IN(SELECT relation_id FROM `inventory_item`)");
-			}
-		}
-
-		//筛选加V
-		if($this->_get("channelv")=== '0'){
-			$where['if_super']=0;
-		}else if($this->_get("channelv")==1){
-			$where['if_super']=1;
-		}
-
-		//如果是导出excel添加导出代码
-		if(isset($_REQUEST['outputexcel'])){
-			$list=$product->order('pid desc')->where($where)->select();
-			//整理列表数据,根据CID获取CNAME
-			foreach($list as $key=>$value){
-				$list[$key]['firstcname']= $this->getCname($list[$key]['firstcid']);
-				$list[$key]['secondcname']= $this->getCname($list[$key]['secondcid']);
-				$list[$key]['brandname']= $this->getCname($list[$key]['brandcid']);
-			}
-			$str = "ID,产品名称,分类,子类,品牌名称,容量,价格,库存\n";
-			foreach ($list as $key=>$value){
-				$str .= $value['pid'].",".$value['pname'].",".$value['firstcname'].",".$value['secondcname'].",".$value['brandname'].",".$value['goodssize'].",".$value['goodsprice'].",".$value['inventory']."\n";
-			}
-			outputExcel(iconv("UTF-8","GBK",date("Y-m-d")."查询产品列表"),$str);
-			exit;
-		}
-
-		if($this->_get('order')){
-			$order=$this->returnOrdertype($_GET);
+        if(!empty($_GET["id"])){
+            $where["id"]=$_GET["id"];
+        }
+        if(!empty($_GET["inventory_item_id"])){
+            $where["inventory_item_id"]=$_GET["inventory_item_id"];
+        }
+        if(!empty($_GET["name"])){
+            $where["name"]=$_GET["name"];
+        }
+        if(!empty($_GET["user_type"])){
+            $where["user_type"]='FIND_IN_SET("'.$_GET["user_type"].'", user_type)';
+        }
+        if(!empty($_GET["duration"])){
+            if($_GET["duration"]==0){
+                $where["_string"]="start_time<now()";
+            }else if($_GET["duration"]==1){
+                $where["_string"]="start_time<now()";
+                $where["_string"]="end_time>now()";
+            }else if($_GET["duration"]==2){
+                $where["_string"]="end_time<now()";
+            }
+        }
+        if(!empty($_GET["status"])){
+            $where["status"]=$_GET["status"];
+        }
+		if(!empty($_GET["order"])){
+			$order=$_GET["order"];
 		}else{
 			$order= "pid DESC";
 		}
 
-
 		import("@.ORG.Page"); //导入分页类库
-		$count=$product->where($where)->count(); //记录总数
+		$count=D("ProductInventoryView")->where($where)->count(); //记录总数
 		$p = new Page($count, 25); //每页显示25条记录
-		$list=$product->where($where)->limit($p->firstRow . ',' . $p->listRows)->field("product_alias",true)->order($order)->select();
+		$list=D("ProductInventoryView")->where($where)->limit($p->firstRow . ',' . $p->listRows)->order($order)->select();
 		$page = $p->show();
 
-		//整理列表数据,根据CID获取CNAME
-		foreach($list as $key=>$value){
-			$list[$key]['firstcname']= $this->getCname($list[$key]['firstcid']);
-			$list[$key]['secondcname']= $this->getCname($list[$key]['secondcid']);
-			$list[$key]['brandname']= M("ProductsBrand")->where("id={$list[$key]['brandcid']}")->getField("name");
-		}
+        foreach($list as $key=>$product){
+            $startTime = $product["start_time"];
+            $endTime=$product["end_time"];
+            $curTime = date("Y-m-d H:i:s",time());
+            if($curTime<$startTime){
+                $product["duration"]="投递未开始";
+            }else if($startTime<$curTime && $curTime<$endTime){
+                $product["duration"]="投递周期中";
+            }else if($curTime>$endTime){
+                $product["duration"]="投递期结束";
+            }
+            $product["price"]=bcdiv($product["price"], 100, 2);
+            $product["member_price"]=bcdiv($product["member_price"], 100, 2);
+            $userTypeStr = "";
+            if(isset($product["user_type"])){
+                $userTypes = split(",", $product["user_type"]);
+                foreach($userTypes as $index=>$userType){
+                    if($userType == 0){
+                        $userTypeStr .= "普通会员区 ";
+                    }
+                    if($userType == 1){
+                        $userTypeStr .= "高级会员区 ";
+                    }
+                    if($userType == 3){
+                        $userTypeStr .= "新会员区 ";
+                    }
+                }
+                $product["user_type"]=$userTypeStr;
+            }
+            if($product["status"]==0){
+                $product["status"]="关闭";
+            }
+            if($product["status"]==1){
+                $product["status"]="开启";
+            }
+            $list[$key]=$product;
+        }
 
-		//获取品牌名称的下拉列表
-		$brandname=$_REQUEST['brandname'];
-		$brandlist=M("ProductsBrand")->where("name like '%$brandname%'")->select();
-		$categoryModel=M("Category");
-		$this->assign("brandcid", $brandcid);
-		$this->assign("brandlist", $brandlist);
 		$this->assign("page", $page);
 		$this->assign('list',$list);
 		$this->display();
@@ -160,33 +151,34 @@ class ProductAction extends CommonAction{
 	 * 执行添加产品信息操作
 	 */
 	public function addproduct(){
-		//print_r($_POST);exit;
 		$product=new ProductModel();
-		
 		if($data=$product->create()){
-            $data["need_postage"]=$_POST['need_postage'] ? $_POST['need_postage'] : C("PRODUCT_NOT_NEED_POSTAGE") ;
-            $data["need_pre_share"]=$_POST['need_pre_share'] ? $_POST['need_pre_share'] : C("PRODUCT_NOT_NEED_PRE_SHARE") ;
-			$data['sort_num']=$_POST['sort_num'] ? $_POST['sort_num'] : 0 ;
-            $data['pre_share_sort_num']=$_POST['pre_share_sort_num'] ? $_POST['sort_num'] : 0 ;
-            $data["price"]=$data["price"]*100;
-            $data["member_price"]=$data["member_price"]*100;
-			
-			$pid=$product->add($data);
-			if(pid){
-				if($data["inventory_item_id"] && $data["inventory"]){
-					try {
-						D("InventoryItem")->shelveProductInventory($pid, $data["inventory_item_id"], $data["inventoryInc"]);
-					}catch(Exception $e){
-						$this->error($e->getMessage());	
-					}
-				}
-                $this->success("产品添加成功!ID为:{$pid}",U("Product/index"));
-			}else{
-				$this->error("产品添加失败：".$product->getDbError());
-			}
-		}else {
-			$this->error('数据验证( '.$product->getError().' )');
-		}
+            $inventoryItemId = $data["inventory_item_id"];
+            try{
+                M()->startTrans();
+                $inventoryItem = D("DBLock")->getSingleInventoryItemLock($inventoryItemId);
+                if(!$inventoryItem){
+                    $this->error('库存单品ID不存在');
+                }
+                $inventory = $data["inventory"];
+                D("InventoryItem")->shelveProductInventory($inventoryItemId, $inventory);
+
+                $data["need_postage"]=$_POST['need_postage'] ? $_POST['need_postage'] : C("PRODUCT_NOT_NEED_POSTAGE") ;
+                $data["need_pre_share"]=$_POST['need_pre_share'] ? $_POST['need_pre_share'] : C("PRODUCT_NOT_NEED_PRE_SHARE") ;
+                $data['sort_num']=$_POST['sort_num'] ? $_POST['sort_num'] : 0 ;
+                $data['pre_share_sort_num']=$_POST['pre_share_sort_num'] ? $_POST['sort_num'] : 0 ;
+                $data["price"]=$data["price"]*100;
+                $data["member_price"]=$data["member_price"]*100;
+                $pid=$product->add($data);
+                M()->commit();
+            }catch (Exception $e){
+                M()->rollback();
+                $this->error($e->getMessage());
+            }
+            $this->success("产品添加成功!ID为:{$pid}",U("Product/index"));
+        }else {
+            $this->error('数据验证( '.$product->getError().' )');
+        }
 	}
 
 	//改变产品加V状态

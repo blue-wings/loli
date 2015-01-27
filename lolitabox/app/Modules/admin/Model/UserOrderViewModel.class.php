@@ -3,7 +3,7 @@ class UserOrderViewModel extends ViewModel {
 
 	protected $viewFields = array (
 		'UserOrder' => array (
-			'ordernmb','userid','boxid','type','trade_no','coupon','discount','addtime','paytime','address_id',
+			'ordernmb','userid','boxid','type','trade_no','coupon','discount','addtime','paytime','address_id','status',
 			'_table' => 'user_order',
 			'_type' => 'LEFT'
 		),
