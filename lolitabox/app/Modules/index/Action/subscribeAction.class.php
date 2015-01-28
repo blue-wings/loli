@@ -186,6 +186,7 @@ class subscribeAction extends commonAction{
         $startTime = date("Y-m-d H:i:s",time());
         $where["start_time"]=array('egt',$startTime);
         $where["status"]=c('PRODUCT_STATUS_PUBLISHED');
+        $where["need_pre_share"]=C("PRODUCT_NEED_PRE_SHARE");
         $futureProdcutsList = $productsModel->where($where)->order("pre_share_sort_num ASC")->limit(6)->select();
         $count = count($futureProdcutsList);
         $futureProductFirst = NULL;
