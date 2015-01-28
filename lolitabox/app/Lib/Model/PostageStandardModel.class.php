@@ -77,6 +77,9 @@ class PostageStandardModel extends Model {
 		foreach ($userOrderprductDetails as $userOrderprductDetail){
 			$whereProduct["pid"]= $userOrderprductDetail["productid"];
 			$product = $productsModel->where($whereProduct)->find();
+            if($product["need_postage"]==C("PRODUCT_NOT_NEED_POSTAGE")){
+                continue;
+            }
 			if(!$product){
 				throw_exception("无效的productId，无法计算邮费"); 	
 			}
